@@ -11,5 +11,26 @@
 		<pattern value="/inicio" />
 		<view-id value="/inicio.xhtml" />
 	</url-mapping>
+	
+	<url-mapping id="usuarios">
+		<pattern value="/seg/usuarios" />
+		<view-id value="/seguridad/usuarios.xhtml" />
+	</url-mapping>
+	
+	<url-mapping id="perfiles">
+		<pattern value="/seg/perfiles" />
+		<view-id value="/seguridad/perfiles.xhtml" />
+	</url-mapping>
+	
+	<!-- ERRORES -->	
+	<url-mapping id="error">
+		<pattern value="/err/sesion" />
+		<view-id value="/errores/error_sesion.xhtml" />
+	</url-mapping>
+	
+	<url-mapping id="error404">
+		<pattern value="/err/nopag" />
+		<view-id value="/errores/error_no_pag.xhtml" />
+	</url-mapping>
 
 </pretty-config>

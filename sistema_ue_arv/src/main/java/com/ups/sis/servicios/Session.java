@@ -17,8 +17,11 @@ public class Session {
 
 	public static String getUserName() {
 		HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
-		return session.getAttribute("username").toString();
-
+		try {
+			return session.getAttribute("username").toString();	
+		} catch (Exception e) {
+			return null;
+		}
 	}
 
 	public static String getEquipo() {

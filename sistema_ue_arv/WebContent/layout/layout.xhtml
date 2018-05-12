@@ -14,10 +14,12 @@
 	<link type="text/css" rel="stylesheet" href="#{request.contextPath}/recursos/schedule/schedule.css" />
 	<link type="text/css" rel="stylesheet" href="#{request.contextPath}/recursos/css/nanoscroller.css" />
 	<link type="text/css" rel="stylesheet" href="#{request.contextPath}/recursos/css/layout-montreal.css" />
+	<link type="text/css" rel="stylesheet" href="#{request.contextPath}/recursos/theme.css" />
+
 
 	<script type="text/javascript" src="#{request.contextPath}/recursos/moment/moment.js"></script>
 	<script type="text/javascript" src="#{request.contextPath}/recursos/schedule/schedule.js"></script>
-	
+
 	<script type="text/javascript" src="#{request.contextPath}/recursos/js/nanoscroller.js"></script>
 	<script type="text/javascript" src="#{request.contextPath}/recursos/js/layout.js"></script>
 	
@@ -50,16 +52,26 @@
 		<!-- TOPBAR -->
 		<div class="layout-topbar">
 			<h:form>
-			<a href="" class="logo">
-				<img src="#{request.contextPath}/recursos/images/SISMACC2.png" style="margin-top: -5px; height: auto; width: auto" />
-			</a> 
-			<a id="menu-button" href="#"> 
-				<i class="fa fa-align-left"></i>
-			</a> 
-			
-			<a id="right-sidebar-button" href="#"> 
-				<i class="fa fa-sign-out"></i>							
-			</a>
+				<a href="" class="logo">
+					<img src="#{request.contextPath}/recursos/images/SISMACC2.png" style="margin-top: -5px; height: auto; width: auto" />
+				</a> 
+				
+				<a id="menu-button" href="#"> 
+					<i class="fa fa-align-left"></i>
+				</a> 
+					
+				<a id="right-sidebar-button" href="#"> 
+					<p:commandLink style="display: inline-block; position: absolute; right: 0; width: 60px; height: 60px; line-height: 60px; font-size: 30px; color: #ffffff; text-align: center;" 
+						action="#{login.logout}" ajax="false" title="Salir">
+						<span class="fa fa-sign-out"></span>						
+						<p:confirm header="Confirmación" message="¿Está seguro(a) que desea salir del sistema?" icon="fa fa-warning" />
+					</p:commandLink>							
+				</a>
+																					
+				<p:confirmDialog id="confirmMenu" global="true" showEffect="fade" hideEffect="fade">
+					<p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" icon="fa fa-check" />
+					<p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="fa fa-close" />
+				</p:confirmDialog>				
 			</h:form>
 			
 		</div>		
@@ -81,18 +93,29 @@
 		<div class="layout-main">
 			<div class="route-bar">
 				<div class="route-bar-breadcrumb">
-					<i class="fa fa-home"></i> <span> </span>
-						<ui:insert name="titulo" />
+					<ui:insert name="titulo" />
 				</div>			
-				<ul class="route-bar-menu">					
-					<li><a href="#" data-tooltip="Calendar"> <i
-							class="fa fa-calendar"></i>
-					</a></li>
-					<li><a href="#" data-tooltip="Help"> <i
-							class="fa fa-life-saver"></i>
-					</a></li>
+				<ul class="route-bar-menu">			
+					<li>
+						<p:commandLink oncomplete="PF('calendario').show()">
+							<i class="fa fa-calendar"></i>
+						</p:commandLink>
+					</li>					
+					<li>
+						<p:commandLink oncomplete="PF('ayuda').show()">
+							<i class="fa fa-life-saver"></i>
+						</p:commandLink>
+					</li>				
 				</ul>
 			</div>
+			
+			<p:sidebar widgetVar="calendario" position="right" baseZIndex="10000" style="width: 50%">
+			    <h1 style="font-weight:normal">Calendario</h1>	    
+			</p:sidebar>
+			
+			<p:sidebar widgetVar="ayuda" position="right" baseZIndex="10000" style="width: 30%">
+			    <h1 style="font-weight:normal">Ayuda</h1>			    
+			</p:sidebar>
 
 			<div class="layout-main-content">
 				<div class="dashboard">
@@ -114,7 +137,7 @@
 
 	<p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" 
 		resizable="false" showHeader="false" style="background-color: transparent; border: none">
-		<p:graphicImage value="/recursos/images/LOADER.gif" />
+		<p:graphicImage value="/recursos/images/LOADER.gif" width="80" />
 	</p:dialog>
 	
 	<script type="text/javascript">

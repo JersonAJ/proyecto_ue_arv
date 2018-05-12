@@ -12,19 +12,28 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
+import com.ups.sis.servicios.Session;
+
+
 /**
  * @author Jerson Armijos Jaén
  * @version 1.0
  */
 
-@ManagedBean(name = "inicio")
+@ManagedBean(name = "general")
 @ViewScoped
-public class Inicio implements Serializable {
+public class General implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	@PostConstruct
 	public void init() {	
 		
+	}
+	
+	public String validaSesion() {		 
+	    if (Session.getUserName() == null) 
+	        return "/errores/error_sesion.xhtml";	    
+	    return null;
 	}
 }

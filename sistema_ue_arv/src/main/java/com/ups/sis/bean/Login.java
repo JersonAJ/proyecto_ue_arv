@@ -68,6 +68,15 @@ public class Login implements Serializable {
 		return navegacion.redirectToLogin();
 	}
 	
+	public String getIniciales() {
+		try {
+			return usuario.substring(0, 2).toUpperCase();	
+		} catch (Exception e) {
+			return "";
+		}	
+	}
+	
+	// GNS
 	public String getUsuario() {
 		return usuario;
 	}

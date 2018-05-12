@@ -2127,7 +2127,8 @@ body a {
 
 .layout-wrapper .layout-sidebar.layout-sidebar-dark .user-profile li.menuitem-active>a
 	{
-	color: #3f94a6;
+	/*color: #3f94a6;*/
+	color: #ffffff;
 }
 
 .layout-wrapper .layout-sidebar.layout-sidebar-dark .user-profile li.menuitem-active>a i
@@ -2349,17 +2350,20 @@ body a {
 }
 
 .usermenu>li.menuitem-active>a {
-	padding-left: 8px;
-	border-left: 4px solid #3f94a6;
-	color: #3f94a6;
+	/*padding-left: 8px;*/
+	/*border-left: 4px solid #ffffff;*/
+	color: #ffffff;	
+	/*color: #3f94a6;*/
 }
 
 .usermenu>li.menuitem-active>a i {
-	color: #3f94a6;
+	color: #ffffff;
+	/*color: #3f94a6;*/
 }
 
 .usermenu>li.menuitem-active>a span {
-	color: #3f94a6;
+	color: #ffffff;
+	/*color: #3f94a6;*/
 }
 
 .usermenu>li.menuitem-active>a i.layout-menuitem-toggler {

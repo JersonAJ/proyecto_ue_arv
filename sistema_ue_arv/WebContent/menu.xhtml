@@ -13,22 +13,45 @@
 				<span>Inicio</span>
 			</p:link>
 		</li>		
+		
+		<li id="om_seg" role="menuitem">
+			<a href="#">
+				<i class="fa fa-lock"></i>
+				<span>Seguridad</span>
+				<i class="layout-menuitem-toggler fa fa-fw fa-angle-down"></i>
+			</a>
+			<ul role="menu">
+				<li id="om_m_usu" role="menuitem">
+					<p:link outcome="/seguridad/usuarios"> 		
+						<i class="fa fa-edit"/>				
+						<span>Usuarios</span>
+					</p:link>
+				</li>
+			
+				<li id="om_m_per" role="menuitem">
+					<p:link outcome="/seguridad/perfiles">		
+						<i class="fa fa-edit"/>						
+						<span>Perfiles</span>
+					</p:link>
+				</li>				
+			</ul>
+		</li>	
 						
-		<li id="om_matriculacions" role="menuitem">
+		<li id="om_man" role="menuitem">
 			<a href="#">
 				<i class="fa fa-cog"></i>
 				<span>Mantenimientos</span>
 				<i class="layout-menuitem-toggler fa fa-fw fa-angle-down"></i>
 			</a>
 			<ul role="menu">
-				<li id="om_m_" role="menuitem">
+				<li id="om_m_cur" role="menuitem">
 					<p:link>		
 						<i class="fa fa-edit"/>				
 						<span>Cursos</span>
 					</p:link>
 				</li>
 			
-				<li id="om_m_tipoco" role="menuitem">
+				<li id="om_m_pro" role="menuitem">
 					<p:link>		
 						<i class="fa fa-edit"/>						
 						<span>Profesores</span>

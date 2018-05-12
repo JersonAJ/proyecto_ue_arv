@@ -48,38 +48,28 @@
 </div>
 
 <body class="login-body">
-	<h:form id="frmLogin">
-	
-		<p:growl id="mensageGeneral" showDetail="true" sticky="false" />
 		
-		<div class="login-panel ui-fluid">	
-			<div class="ui-g-login">
-				<div class="ui-g-12 login-icon-container" style="text-align: center">
-					<img src="#{request.contextPath}/recursos/images/ESCUELA_ARV2.png" width="100%" class="login-icon" />
-				</div>
-				<div class="ui-g-12 ui-lg-12 ui-md-12 logo-container" style="text-align: center; color: #324759; font-size: 35px; font-weigth: bold">
-					<span class="login-summary">Inicio de sesión</span>				
-				</div>
-				<div class="ui-g-12 ui-lg-12 ui-md-12">
-					<div class="ui-inputgroup">
-	            		<span class="ui-inputgroup-addon"><i class="fa fa-user"></i></span>
-			            <p:inputText placeholder="Usuario" value="#{login.usuario}" />      
-			        </div>			
-				</div>
-				<div class="ui-g-12 ui-lg-12 ui-md-12">
-					<div class="ui-inputgroup">
-	            		<span class="ui-inputgroup-addon"><i class="fa fa-key"></i></span>
-	            		<p:password value="#{login.password}" placeholder="Contraseña" />		                  
-			        </div>				
-				</div>
+	<h:form>
+		<div class="login-panel ui-fluid" style="padding: 5%;">		
+			<div align="center">
+				<p:outputPanel style="border: 2px solid #8f3b4f; padding: 10px; width: 50%; margin-top: 10%; margin-bottom: 20px; text-align: center;">
+					<p:outputLabel style="font-size: 24px; color: #8f3b4f; font-weight: 800;">
+						Página no encontrada				
+						<br/> <br/>
+						<div align="center">
+							<span style="font-size: 45px">
+								<i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+							</span>
+						</div>
+					</p:outputLabel>
+				</p:outputPanel>
 				
-				<div class="ui-g-12 ui-lg-12 ui-md-12 button-container" style="text-align: center">
-					<p:commandButton value="Ingresar" ajax="false" action="#{login.ingresar}"  icon="fa fa-sign-in" 
-						style="text-shadow: none; width: 150px" update="mensageGeneral" />
-				</div>
-			</div>			
+				<p:link value="Iniciar sesión" outcome="/login.xhtml" 
+					style="background: #ffffff; border: 1px solid #8f3b4f; border-radius: 3px; font-size: 14px; font-weight: bold; padding: 5px;" />
+			</div>		
 		</div>
 	</h:form>
+	
 </body>
 
 <div class="login-bottombar">

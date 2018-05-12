@@ -25,6 +25,12 @@
 		<servlet-name>Faces Servlet</servlet-name>
 		<url-pattern>*.xhtml</url-pattern>
 	</servlet-mapping>
+
+	<error-page>
+		<error-code>404</error-code>
+		<location>/errores/error_no_pag.xhtml</location>
+	</error-page>
+
 	<context-param>
 		<param-name>primefaces.THEME</param-name>
 		<param-value>omega</param-value>
