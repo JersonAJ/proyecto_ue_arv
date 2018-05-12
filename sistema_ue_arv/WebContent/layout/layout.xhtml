@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+	
+<h:head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+    
+	<link type="text/css" rel="stylesheet" href="#{request.contextPath}/recursos/schedule/schedule.css" />
+	<link type="text/css" rel="stylesheet" href="#{request.contextPath}/recursos/css/nanoscroller.css" />
+	<link type="text/css" rel="stylesheet" href="#{request.contextPath}/recursos/css/layout-montreal.css" />
+
+	<script type="text/javascript" src="#{request.contextPath}/recursos/moment/moment.js"></script>
+	<script type="text/javascript" src="#{request.contextPath}/recursos/schedule/schedule.js"></script>
+	
+	<script type="text/javascript" src="#{request.contextPath}/recursos/js/nanoscroller.js"></script>
+	<script type="text/javascript" src="#{request.contextPath}/recursos/js/layout.js"></script>
+	
+	<link rel="shortcut icon" href="#{request.contextPath}/recursos/images/FAVICON.png" type="image/x-icon" />
+	<title>SisMACC</title>
+	
+	<script type="text/javascript">
+		if (window.PrimeFaces) {
+			PrimeFaces.settings.locale = 'en_ES';
+		}
+	</script>	
+	
+	<style>
+		body  {
+	    	background: url("#{request.contextPath}/recursos/images/BACKGROUND2.jpg") no-repeat center center fixed;
+		    background-color: white;
+		    background-size: cover;
+		}
+		
+		.main-content {
+			padding: 0;
+		}
+	</style>
+</h:head>
+
+<h:body class="main-body">
+
+	<div class="layout-wrapper">
+
+		<!-- TOPBAR -->
+		<div class="layout-topbar">
+			<h:form>
+			<a href="" class="logo">
+				<img src="#{request.contextPath}/recursos/images/SISMACC2.png" style="margin-top: -5px; height: auto; width: auto" />
+			</a> 
+			<a id="menu-button" href="#"> 
+				<i class="fa fa-align-left"></i>
+			</a> 
+			
+			<a id="right-sidebar-button" href="#"> 
+				<i class="fa fa-sign-out"></i>							
+			</a>
+			</h:form>
+			
+		</div>		
+		
+		<!-- SIDEBAR -->
+		<div class="layout-sidebar layout-sidebar-dark ">
+			<div id="nano-container" class="nano">
+				<div class="nano-content sidebar-scroll-content">
+					
+					<ui:include src="/sesion.xhtml" />
+
+					<ui:include src="/menu.xhtml" />	
+				
+				</div>
+			</div>
+		</div>
+		
+		<!-- CONTENT -->		
+		<div class="layout-main">
+			<div class="route-bar">
+				<div class="route-bar-breadcrumb">
+					<i class="fa fa-home"></i> <span> </span>
+						<ui:insert name="titulo" />
+				</div>			
+				<ul class="route-bar-menu">					
+					<li><a href="#" data-tooltip="Calendar"> <i
+							class="fa fa-calendar"></i>
+					</a></li>
+					<li><a href="#" data-tooltip="Help"> <i
+							class="fa fa-life-saver"></i>
+					</a></li>
+				</ul>
+			</div>
+
+			<div class="layout-main-content">
+				<div class="dashboard">
+					<div class="ui-g">
+						<ui:insert name="content" />
+					</div>
+				</div>
+			</div>
+		
+			<div class="login-bottombar" style="background: white">
+				<div align="center" style="padding: 10px; color: #324759;">
+					Copyright © 2018 | Universidad Politécnica Salesiana
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
+
+	<p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" 
+		resizable="false" showHeader="false" style="background-color: transparent; border: none">
+		<p:graphicImage value="/recursos/images/LOADER.gif" />
+	</p:dialog>
+	
+	<script type="text/javascript">
+		PrimeFaces.locales['es'] = {
+			closeText : 'Cerrar',
+			prevText : 'Anterior',
+			nextText : 'Siguiente',
+			monthNames : [ 'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo',
+					'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre',
+					'Noviembre', 'Diciembre' ],
+			monthNamesShort : [ 'Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun',
+					'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic' ],
+			dayNames : [ 'Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves',
+					'Viernes', 'Sábado' ],
+			dayNamesShort : [ 'Dom', 'Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab' ],
+			dayNamesMin : [ 'D', 'L', 'M', 'M', 'J', 'V', 'S' ],
+			weekHeader : 'Semana',
+			firstDay : 1,
+			isRTL : false,
+			showMonthAfterYear : false,
+			yearSuffix : '',
+			timeOnlyTitle : 'Sólo hora',
+			timeText : 'Tiempo',
+			hourText : 'Hora',
+			minuteText : 'Minuto',
+			secondText : 'Segundo',
+			currentText : 'Fecha actual',
+			ampm : false,
+			month : 'Mes',
+			week : 'Semana',
+			day : 'Día',
+			allDayText : 'Todo el día'
+		};
+	</script>
+</h:body>
+</html>

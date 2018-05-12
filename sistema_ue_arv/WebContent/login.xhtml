@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+	
+<h:head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+			
+	<link type="text/css" rel="stylesheet" href="#{request.contextPath}/recursos/css/layout-montreal.css" />
+	
+	<script type="text/javascript" src="#{request.contextPath}/recursos/components.js"></script>
+	
+	<link rel="shortcut icon" href="#{request.contextPath}/recursos/images/FAVICON.png" type="image/x-icon" />
+	<title>SisMACC</title>
+		
+	<style>
+		body  {
+	    	background: url("#{request.contextPath}/recursos/images/BACKGROUND.jpg") no-repeat center center fixed;
+		    background-color: white;
+		    background-size: cover;
+		}
+	</style>	
+</h:head>
+
+<div class="login-topbar" style="display: inline-flex">
+	<a class="logo">
+		<img src="#{request.contextPath}/recursos/images/SIS2.png" />
+	</a>	
+</div>
+
+<body class="login-body">
+	<h:form id="frmLogin">
+	
+	<p:growl id="mensageGeneral" showDetail="true" sticky="false" />
+	
+	<div class="login-panel ui-fluid">	
+		<div class="ui-g-login">
+			<div class="ui-g-12 login-icon-container" style="text-align: center">
+				<img src="#{request.contextPath}/recursos/images/ESCUELA_ARV2.png" width="100%" class="login-icon" />
+			</div>
+			<div class="ui-g-12 ui-lg-12 ui-md-12 logo-container" style="text-align: center; color: #324759; font-size: 35px; font-weigth: bold">
+				<span class="login-summary">Inicio de sesión</span>				
+			</div>
+			<div class="ui-g-12 ui-lg-12 ui-md-12">
+				<div class="ui-inputgroup">
+            		<span class="ui-inputgroup-addon"><i class="fa fa-user"></i></span>
+		            <p:inputText placeholder="Usuario" value="#{login.usuario}" />      
+		        </div>			
+			</div>
+			<div class="ui-g-12 ui-lg-12 ui-md-12">
+				<div class="ui-inputgroup">
+            		<span class="ui-inputgroup-addon"><i class="fa fa-key"></i></span>
+            		<p:password value="#{login.password}" placeholder="Contraseña" />		                  
+		        </div>				
+			</div>
+			
+			<div class="ui-g-12 ui-lg-12 ui-md-12 button-container" style="text-align: center">
+				<p:commandButton value="Ingresar" ajax="false" action="#{login.ingresar}"  icon="fa fa-sign-in" 
+					style="text-shadow: none; width: 150px" update="mensageGeneral" />
+			</div>
+		</div>			
+	</div>
+	</h:form>
+</body>
+
+<div class="login-bottombar">
+<div align="center" style="padding: 10px; color: #324759;">
+Copyright © 2018 | Universidad Politécnica Salesiana
+</div>
+</div>
+
+</html>

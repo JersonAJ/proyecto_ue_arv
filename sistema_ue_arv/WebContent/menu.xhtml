@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">	
+		
+	<ul id="j_idt52" class="layout-menu">
+		
+		<li id="om_inicio" role="menuitem">
+			<p:link outcome="/inicio">
+				<i class="fa fa-home"/>
+				<span>Inicio</span>
+			</p:link>
+		</li>		
+						
+		<li id="om_matriculacions" role="menuitem">
+			<a href="#">
+				<i class="fa fa-cog"></i>
+				<span>Mantenimientos</span>
+				<i class="layout-menuitem-toggler fa fa-fw fa-angle-down"></i>
+			</a>
+			<ul role="menu">
+				<li id="om_m_" role="menuitem">
+					<p:link>		
+						<i class="fa fa-edit"/>				
+						<span>Cursos</span>
+					</p:link>
+				</li>
+			
+				<li id="om_m_tipoco" role="menuitem">
+					<p:link>		
+						<i class="fa fa-edit"/>						
+						<span>Profesores</span>
+					</p:link>
+				</li>		
+			</ul>
+		</li>					
+	</ul>
+		
+	<script id="j_idt52_s" type="text/javascript">
+		PrimeFaces.cw("California", "me", {	id : "j_idt52" });
+	</script>	
+							
+</html>
