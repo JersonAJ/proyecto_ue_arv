@@ -1,7 +1,46 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<persistence version="2.0" xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<persistence version="2.0"
+	xmlns="http://java.sun.com/xml/ns/persistence"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
 
-	<persistence-unit name=""></persistence-unit>
-	
+	<persistence-unit name="">
+		<class>com.ups.sis.entidades.CalAsignatura</class>
+		<class>com.ups.sis.entidades.CalAsistencia</class>
+		<class>com.ups.sis.entidades.CalCalificacion</class>
+		<class>com.ups.sis.entidades.CalComportamiento</class>
+		<class>com.ups.sis.entidades.CalControl</class>
+		<class>com.ups.sis.entidades.CalEscala</class>
+		<class>com.ups.sis.entidades.CalFalta</class>
+		<class>com.ups.sis.entidades.CalReparto</class>
+		<class>com.ups.sis.entidades.CatalogoCab</class>
+		<class>com.ups.sis.entidades.CatalogoDet</class>
+		<class>com.ups.sis.entidades.GesDescuento</class>
+		<class>com.ups.sis.entidades.GesPension</class>
+		<class>com.ups.sis.entidades.MatCurso</class>
+		<class>com.ups.sis.entidades.MatDocente</class>
+		<class>com.ups.sis.entidades.MatEstudiante</class>
+		<class>com.ups.sis.entidades.MatMatricula</class>
+		<class>com.ups.sis.entidades.MatOferta</class>
+		<class>com.ups.sis.entidades.MatParalelo</class>
+		<class>com.ups.sis.entidades.MatPeriodo</class>
+		<class>com.ups.sis.entidades.MatRepresentante</class>
+		<class>com.ups.sis.entidades.SegMenu</class>
+		<class>com.ups.sis.entidades.SegPerfil</class>
+		<class>com.ups.sis.entidades.SegUsuario</class>
+
+
+		<properties>
+			<property name="hibernate.connection.driver_class"
+				value="com.mysql.jdbc.Driver" />
+			<property name="hibernate.connection.user" value="root" />
+			<property name="hibernate.connection.password" value="root" />
+			<property name="hibernate.connection.url"
+				value="jdbc:mysql://localhost:3306/sismacc" />
+			<property name="hibernate.show_sql" value="true" />
+			<property name="hibernate.hbm2ddl.auto" value="update" />
+		</properties>
+
+	</persistence-unit>
+
 </persistence>
