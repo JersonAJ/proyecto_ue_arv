@@ -47,7 +47,7 @@
 	</a>	
 </div>
 
-<body class="login-body">
+<h:body class="login-body">
 	<h:form id="frmLogin">
 	
 		<p:growl id="mensageGeneral" showDetail="true" sticky="false" />
@@ -63,7 +63,7 @@
 				<div class="ui-g-12 ui-lg-12 ui-md-12">
 					<div class="ui-inputgroup">
 	            		<span class="ui-inputgroup-addon"><i class="fa fa-user"></i></span>
-			            <p:inputText placeholder="Usuario" value="#{login.usuario}" />      
+			          	<p:inputText id="usuario" value="#{login.usuario}" placeholder="Usuario" />      
 			        </div>			
 				</div>
 				<div class="ui-g-12 ui-lg-12 ui-md-12">
@@ -80,7 +80,7 @@
 			</div>			
 		</div>
 	</h:form>
-</body>
+</h:body>
 
 <div class="login-bottombar">
 <div align="center" style="padding: 10px; color: #324759;">
