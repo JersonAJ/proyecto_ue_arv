@@ -10,12 +10,12 @@
 	<div class="user-profile">
 		<div align="center" style="padding: 15px;">
 			<div align="center" style="width: 80px; border: 2px solid white; border-radius: 25px; font-weight: bold">
-				<p:outputLabel style="font-weight: bold; font-size: 35px;" value="#{login.getIniciales()}" />
+				<p:outputLabel style="font-weight: bold; font-size: 35px;">#{login.getIniciales()}</p:outputLabel>
 			</div>
 		</div>
 		
 		<a id="sidebar-profile-button" href="#"> 
-			<span class="sidebar-profile-name"> #{login.usuario} </span> 
+			<span class="sidebar-profile-name"> #{login.getNombre()} </span> 
 			<span class="sidebar-profile-role" style="padding-top: 5px;">#{login.getPerfil()}</span>
 		</a>
 				

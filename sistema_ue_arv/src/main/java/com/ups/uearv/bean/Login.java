@@ -15,6 +15,8 @@ import javax.faces.context.FacesContext;
 
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.lang.WordUtils;
+
 import com.ups.uearv.servicios.DAO;
 import com.ups.uearv.servicios.Session;
 
@@ -80,7 +82,15 @@ public class Login implements Serializable {
 	
 	public String getPerfil() {
 		try {						
-			return DAO.getPerfil(usuario);	
+			return WordUtils.capitalizeFully(DAO.getPerfil(usuario));	
+		} catch (Exception e) {
+			return "";
+		}	
+	}
+	
+	public String getNombre() {
+		try {						
+			return WordUtils.capitalizeFully(DAO.getNombre(usuario));	
 		} catch (Exception e) {
 			return "";
 		}	

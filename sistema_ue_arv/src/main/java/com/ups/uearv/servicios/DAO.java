@@ -124,5 +124,16 @@ public class DAO {
 		String perfil = String.valueOf(obj);
 
 		return perfil;
-	}	
+	}
+	
+	public static String getNombre(String usuario) {
+		Query query = em.createNativeQuery(
+				" SELECT CONCAT(IFNULL(SUBSTRING_INDEX(nombres, ' ', 1), ''), ' ', IFNULL(SUBSTRING_INDEX(apellidos, ' ', 1), '')) FROM seg_usuario WHERE id_usuario = '" + usuario + "' ");
+		List<Object> result = query.getResultList();
+		Iterator<Object> itr = result.iterator();
+		Object obj = (Object) itr.next();
+		String nombre = String.valueOf(obj);
+
+		return nombre;
+	}		
 }

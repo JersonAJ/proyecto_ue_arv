@@ -9,29 +9,25 @@
 		
 		<li id="om_inicio" role="menuitem">
 			<p:link outcome="/inicio">
-				<i class="fa fa-home"/>
-				<span>Inicio</span>
+				<i class="fa fa-home"/>	<span>Inicio</span>
 			</p:link>
 		</li>		
 		
 		<li id="om_seg" role="menuitem">
 			<a href="#">
-				<i class="fa fa-lock"></i>
-				<span>Seguridad</span>
+				<i class="fa fa-lock"></i> <span>Seguridad</span>
 				<i class="layout-menuitem-toggler fa fa-fw fa-angle-down"></i>
 			</a>
 			<ul role="menu">
-				<li id="om_m_usu" role="menuitem">
-					<p:link outcome="/seguridad/usuarios"> 		
-						<i class="fa fa-edit"/>				
-						<span>Usuarios</span>
-					</p:link>
-				</li>
-			
 				<li id="om_m_per" role="menuitem">
 					<p:link outcome="/seguridad/perfiles">		
-						<i class="fa fa-edit"/>						
-						<span>Perfiles</span>
+						<i class="fa fa-minus"/>	<span>Perfiles</span>
+					</p:link>
+				</li>
+				
+				<li id="om_m_usu" role="menuitem">
+					<p:link outcome="/seguridad/usuarios"> 		
+						<i class="fa fa-minus"/>	<span>Usuarios</span>
 					</p:link>
 				</li>				
 			</ul>
@@ -39,30 +35,79 @@
 						
 		<li id="om_man" role="menuitem">
 			<a href="#">
-				<i class="fa fa-cog"></i>
-				<span>Mantenimientos</span>
+				<i class="fa fa-cog"></i> <span>Mantenimientos</span>
 				<i class="layout-menuitem-toggler fa fa-fw fa-angle-down"></i>
 			</a>
 			<ul role="menu">
 				<li id="om_m_cur" role="menuitem">
 					<p:link>		
-						<i class="fa fa-edit"/>				
-						<span>Cursos</span>
+						<i class="fa fa-minus"/> <span>Cursos</span>
 					</p:link>
 				</li>
 			
-				<li id="om_m_pro" role="menuitem">
+				<li id="om_m_doc" role="menuitem">
 					<p:link>		
-						<i class="fa fa-edit"/>						
-						<span>Profesores</span>
+						<i class="fa fa-minus"/> <span>Docentes</span>
 					</p:link>
 				</li>		
 			</ul>
-		</li>					
+		</li>
+		
+		<li id="om_mat" role="menuitem">
+			<a href="#">
+				<i class="fa fa-address-card"></i> <span>Matriculación</span>
+				<i class="layout-menuitem-toggler fa fa-fw fa-angle-down"></i>
+			</a>
+			<ul role="menu">
+				<li id="om_m_rep" role="menuitem">
+					<p:link>		
+						<i class="fa fa-minus"/> <span>Representantes</span>
+					</p:link>
+				</li>
+				<li id="om_m_est" role="menuitem">
+					<p:link>		
+						<i class="fa fa-minus"/> <span>Estudiantes</span>
+					</p:link>
+				</li>
+			</ul>
+		</li>
+		
+		
+		<li id="om_ges" role="menuitem">
+			<a href="#">
+				<i class="fa fa-money"></i> <span>Gestión de cobros</span>
+				<i class="layout-menuitem-toggler fa fa-fw fa-angle-down"></i>
+			</a>
+			<ul role="menu">
+				<li id="om_m_des" role="menuitem">
+					<p:link>		
+						<i class="fa fa-minus"/> <span>Descuentos</span>
+					</p:link>
+				</li>
+				<li id="om_m_pen" role="menuitem">
+					<p:link>		
+						<i class="fa fa-minus"/> <span>Pensiones</span>
+					</p:link>
+				</li>
+			</ul>
+		</li>
+		
+		<li id="om_cal" role="menuitem">
+			<a href="#">
+				<i class="fa fa-book"></i> <span>Calificaciones</span>
+				<i class="layout-menuitem-toggler fa fa-fw fa-angle-down"></i>
+			</a>
+			<ul role="menu">
+				<li id="om_m_con" role="menuitem">
+					<p:link>		
+						<i class="fa fa-minus"/> <span>Control académico</span>
+					</p:link>
+				</li>				
+			</ul>
+		</li>																									
 	</ul>
 		
 	<script id="j_idt52_s" type="text/javascript">
 		PrimeFaces.cw("California", "me", {	id : "j_idt52" });
-	</script>	
-							
+	</script>								
 </html>
