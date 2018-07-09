@@ -78,6 +78,14 @@ public class Login implements Serializable {
 		}	
 	}
 	
+	public String getPerfil() {
+		try {						
+			return DAO.getPerfil(usuario);	
+		} catch (Exception e) {
+			return "";
+		}	
+	}
+	
 	// GNS
 	public String getUsuario() {
 		return usuario;

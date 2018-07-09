@@ -105,7 +105,8 @@ public class DAO {
 
 	// SEGURIDAD
 	public static String getClaveUsuario(String usuario) {
-		Query query = em.createNativeQuery(" select clave from seg_usuario where id_usuario = '" + usuario + "' ");
+		Query query = em.createNativeQuery(
+				" SELECT clave FROM seg_usuario WHERE id_usuario = '" + usuario + "' ");
 		List<Object> result = query.getResultList();
 		Iterator<Object> itr = result.iterator();
 		Object obj = (Object) itr.next();
@@ -113,4 +114,15 @@ public class DAO {
 
 		return clave;
 	}
+
+	public static String getPerfil(String usuario) {
+		Query query = em.createNativeQuery(
+				" SELECT k.descripcion FROM seg_usuario u INNER JOIN seg_perfil k ON k.id_perfil = u.id_perfil WHERE id_usuario = '" + usuario + "' ");
+		List<Object> result = query.getResultList();
+		Iterator<Object> itr = result.iterator();
+		Object obj = (Object) itr.next();
+		String perfil = String.valueOf(obj);
+
+		return perfil;
+	}	
 }
