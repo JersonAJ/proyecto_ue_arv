@@ -12,14 +12,14 @@
 		<view-id value="/inicio.xhtml" />
 	</url-mapping>
 	
-	<url-mapping id="usuarios">
-		<pattern value="/seg/usuarios" />
-		<view-id value="/seguridad/usuarios.xhtml" />
+	<url-mapping id="usuario">
+		<pattern value="/seg/usuario" />
+		<view-id value="/seguridad/usuario.xhtml" />
 	</url-mapping>
 	
-	<url-mapping id="perfiles">
-		<pattern value="/seg/perfiles" />
-		<view-id value="/seguridad/perfiles.xhtml" />
+	<url-mapping id="perfil">
+		<pattern value="/seg/perfil" />
+		<view-id value="/seguridad/perfil.xhtml" />
 	</url-mapping>
 	
 	<!-- ERRORES -->	

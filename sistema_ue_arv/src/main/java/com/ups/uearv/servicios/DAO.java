@@ -72,17 +72,19 @@ public class DAO {
 	}
 
 	// INGRESAR - ACTUALIZAR
-	public static void saveOrUpdate(Object o, int op) {
-		try {
-			em.getTransaction().begin();
-			if (op == 0) {
+	public static boolean saveOrUpdate(Object o, int op, EntityManager em) {
+		boolean ban = true;
+		try {			
+			if (op == 0 || op == 2) {
 				em.persist(o);
-			} else if (op == 1) {
+			} else if (op == 1 || op == 3) {
 				em.merge(o);
-			}
-			em.getTransaction().commit();
+			}			
 		} catch (Exception e) {
+			e.printStackTrace();
+			ban = false;
 		}
+		return ban; // retorna true|false
 	}
 
 	// ELIMINAR

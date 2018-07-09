@@ -1794,7 +1794,7 @@ body .ui-inputfield {
 	-moz-border-radius: 0;
 	-webkit-border-radius: 0;
 	border-radius: 0;
-	font-size: 14px;
+	font-size: 12px;
 }
 
 body .ui-inputfield.ui-state-hover {
@@ -2108,7 +2108,7 @@ body .ui-chkbox {
 	display: inline-block;
 	vertical-align: middle;
 	margin: 0;
-	width: 20px;
+	width: auto;
 	height: 20px;
 }
 
@@ -3843,10 +3843,10 @@ body .ui-datatable .ui-paginator.ui-paginator-bottom .ui-paginator-pages
 
 body .ui-datatable thead th {
 	background-color: #ffffff;
-	padding: 8px 16px;
-	border-color: #d6d7d9;
-	color: #212121;
-	font-size: 16px;
+    padding: 5px 10px;
+    border-color: #d6d7d9;
+    color: #212121;
+    font-size: 12px;
 }
 
 body .ui-datatable thead th.ui-state-hover {
@@ -5367,7 +5367,7 @@ body .ui-dialog .ui-dialog-titlebar .ui-dialog-title {
 }
 
 body .ui-dialog .ui-dialog-titlebar .ui-dialog-titlebar-icon {
-	color: #ffffff;
+	color: #353536;
 	border: 0 none;
 	-moz-transition: color 0.3s;
 	-o-transition: color 0.3s;
