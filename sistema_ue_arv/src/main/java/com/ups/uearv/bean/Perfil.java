@@ -36,7 +36,7 @@ public class Perfil implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	String id_perfil = "";
+	String idPerfil = "";
 	String descripcion = "";
 	boolean ckEstado = false;
 
@@ -88,7 +88,7 @@ public class Perfil implements Serializable {
 
 			SegPerfil ob = new SegPerfil();
 			if (accion == 1) {
-				ob = DAO.buscarSegPerfil("from SegPerfil c where c.idPerfil = " + id_perfil);
+				ob = DAO.buscarSegPerfil("from SegPerfil c where c.idPerfil = " + idPerfil);
 			}
 			
 			ob.setDescripcion(descripcion);
@@ -130,12 +130,12 @@ public class Perfil implements Serializable {
 
 	
 	// GETTERS AND SETTERS	
-	public String getId_perfil() {
-		return id_perfil;
+	public String getIdPerfil() {
+		return idPerfil;
 	}
 
-	public void setId_perfil(String id_perfil) {
-		this.id_perfil = id_perfil;
+	public void setIdPerfil(String idPerfil) {
+		this.idPerfil = idPerfil;
 	}
 
 	public String getDescripcion() {
