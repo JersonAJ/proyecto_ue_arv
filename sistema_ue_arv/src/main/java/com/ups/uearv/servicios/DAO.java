@@ -10,6 +10,7 @@ import javax.persistence.NoResultException;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 
+import com.ups.uearv.entidades.SegMenu;
 import com.ups.uearv.entidades.SegPerfil;
 import com.ups.uearv.entidades.SegUsuario;
 
@@ -42,6 +43,19 @@ public class DAO {
 			list = (List<SegUsuario>) em.createNativeQuery(njpql, SegUsuario.class).getResultList();
 
 			for (SegUsuario tb : list)
+				em.refresh(tb);
+
+		} catch (Exception e) {
+		}
+		return list;
+	}
+	
+	public static List<SegMenu> nqSegMenu(String njpql) {
+		List<SegMenu> list = new ArrayList<SegMenu>();
+		try {
+			list = (List<SegMenu>) em.createNativeQuery(njpql, SegMenu.class).getResultList();
+
+			for (SegMenu tb : list)
 				em.refresh(tb);
 
 		} catch (Exception e) {
@@ -115,6 +129,11 @@ public class DAO {
 		String clave = String.valueOf(obj);
 
 		return clave;
+	}
+	
+	public static List<Object> getConsultaMenu(String idPerfil, int idMenuPadre) {
+		Query query = em.createNativeQuery(" CALL consulta_menu_perfil (" + idPerfil + ", " + idMenuPadre + ") ");
+		return query.getResultList();
 	}
 
 	public static String getPerfil(String usuario) {

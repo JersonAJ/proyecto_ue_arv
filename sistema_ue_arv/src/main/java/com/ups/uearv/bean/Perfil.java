@@ -9,6 +9,7 @@ import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -42,8 +43,11 @@ public class Perfil implements Serializable {
 
 	String itBuscar = "";
 	boolean ckMostrarIC = false;
-	
+
 	private List<SegPerfil> perfilList = new ArrayList<SegPerfil>();
+
+	private List<PerfilMenu> menuSegList = new ArrayList<PerfilMenu>();
+	private List<PerfilMenu> menuMantList = new ArrayList<PerfilMenu>();
 
 	private static EntityManagerFactory emf = Persistence.createEntityManagerFactory("sismacc");
 
@@ -51,12 +55,13 @@ public class Perfil implements Serializable {
 
 	String mensaje = "";
 	String mensajeTitulo = "Mensaje del sistema";
-	
+
 	String jpql = "";
+
 
 	@PostConstruct
 	public void init() {	
-		buscar();
+		buscar();	
 	}
 
 	// CONSULTA
@@ -72,10 +77,10 @@ public class Perfil implements Serializable {
 			jpql = "SELECT * FROM Seg_Perfil WHERE descripcion LIKE '%" + itBuscar	+ "%' ORDER BY descripcion";
 		else 		
 			jpql = "select * from Seg_Perfil WHERE descripcion like '%" + itBuscar	+ "%' AND estado = 'AC' ORDER BY descripcion";
-		
+
 		llenarLista(jpql);
 	}
-	
+
 	// INGRESO - ACTUALIZACION
 	public void guardar() {		
 		EntityManager em = emf.createEntityManager();
@@ -90,7 +95,7 @@ public class Perfil implements Serializable {
 			if (accion == 1) {
 				ob = DAO.buscarSegPerfil("from SegPerfil c where c.idPerfil = " + idPerfil);
 			}
-			
+
 			ob.setDescripcion(descripcion);
 			ob.setEstado(estado);
 			if (accion == 0) {
@@ -116,7 +121,7 @@ public class Perfil implements Serializable {
 		}	
 		em.close();		
 	}
-	
+
 	public void closeDialogo() {
 		init();
 	}
@@ -128,7 +133,76 @@ public class Perfil implements Serializable {
 		return ban;
 	}
 
+	public void guardarMenu() {
+
+	}
+
+	public List<PerfilMenu> cargaMenuSeg(String perfil, int padre) {
+		menuSegList.clear();
+		List<Object> result = DAO.getConsultaMenu(perfil, padre);
+		Iterator<Object> itr = result.iterator();
+		for (int k = 0; k < result.size(); k++) {
+			Object[] obj = (Object[]) itr.next();
+
+			PerfilMenu m = new PerfilMenu();
+			m.setPerfil(Integer.parseInt(obj[0].toString()));
+			m.setMenu(Integer.parseInt(obj[1].toString()));
+			m.setDescripcion(obj[2].toString());
+			m.setSeleccion(obj[3].toString());
+			menuSegList.add(m);
+		}
+		return menuSegList;
+	}
 	
+	public List<PerfilMenu> cargaMenuMant(String perfil, int padre) {
+		menuMantList.clear();
+		List<Object> result = DAO.getConsultaMenu(perfil, padre);
+		Iterator<Object> itr = result.iterator();
+		for (int k = 0; k < result.size(); k++) {
+			Object[] obj = (Object[]) itr.next();
+
+			PerfilMenu m = new PerfilMenu();
+			m.setPerfil(Integer.parseInt(obj[0].toString()));
+			m.setMenu(Integer.parseInt(obj[1].toString()));
+			m.setDescripcion(obj[2].toString());
+			m.setSeleccion(obj[3].toString());
+			menuMantList.add(m);
+		}
+		return menuMantList;
+	}
+
+	public class PerfilMenu {
+		int perfil;
+		int menu;
+		String descripcion;
+		String seleccion;
+
+		public int getPerfil() {
+			return perfil;
+		}
+		public void setPerfil(int perfil) {
+			this.perfil = perfil;
+		}
+		public int getMenu() {
+			return menu;
+		}
+		public void setMenu(int menu) {
+			this.menu = menu;
+		}
+		public String getDescripcion() {
+			return descripcion;
+		}
+		public void setDescripcion(String descripcion) {
+			this.descripcion = descripcion;
+		}
+		public String getSeleccion() {
+			return seleccion;
+		}
+		public void setSeleccion(String seleccion) {
+			this.seleccion = seleccion;
+		}		
+	}
+
 	// GETTERS AND SETTERS	
 	public String getIdPerfil() {
 		return idPerfil;
@@ -184,5 +258,21 @@ public class Perfil implements Serializable {
 
 	public void setPerfilList(List<SegPerfil> perfilList) {
 		this.perfilList = perfilList;
+	}
+
+	public List<PerfilMenu> getMenuSegList() {
+		return menuSegList;
+	}
+
+	public void setMenuSegList(List<PerfilMenu> menuSegList) {
+		this.menuSegList = menuSegList;
+	}
+
+	public List<PerfilMenu> getMenuMantList() {
+		return menuMantList;
+	}
+
+	public void setMenuMantList(List<PerfilMenu> menuMantList) {
+		this.menuMantList = menuMantList;
 	}
 }

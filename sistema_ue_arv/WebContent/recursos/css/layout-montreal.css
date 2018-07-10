@@ -4,7 +4,7 @@
 @font-face {
 	font-family: 'Source Sans Pro';
 	font-style: normal;
-	font-weight: 300;	
+	font-weight: 300;
 }
 /* source-sans-pro-regular - latin-ext_latin */
 @font-face {
@@ -180,28 +180,26 @@ to {
 }
 
 .ui-g-login {
-    margin: auto;
-    background: #bdbdbd80;
-    padding: 5px;
-    width: 300px;
-    border: 1px solid #a87380;
-    border-radius: 10px;
-    box-shadow: 15px 15px 10px 0 rgba(0, 0, 0, 0.2);
-    min-height: 380px;
+	margin: auto;
+	background: #bdbdbd80;
+	padding: 5px;
+	width: 300px;
+	border: 1px solid #a87380;
+	border-radius: 10px;
+	box-shadow: 15px 15px 10px 0 rgba(0, 0, 0, 0.2);
+	min-height: 380px;
 }
-
 
 .ui-g-login.form-group>div {
 	padding: 8px;
 }
 
 .ui-g {
-    margin: auto;
-    background: #bdbdbd80;
-    padding: 10px;
-    border: 1px solid #a87380;       
+	margin: auto;
+	background: #bdbdbd80;
+	padding: 10px;
+	border: 1px solid #a87380;
 }
-
 
 .ui-g.form-group>div {
 	padding: 8px;
@@ -954,6 +952,7 @@ to {
 
 .login-body .login-topbar .logo img {
 	/*height: 40px;*/
+	
 }
 
 .login-body .login-image {
@@ -969,7 +968,7 @@ to {
 	-webkit-box-sizing: border-box;
 	-moz-box-sizing: border-box;
 	box-sizing: border-box;
-	padding: 10% 0 0 0;	
+	padding: 10% 0 0 0;
 }
 
 .login-body .login-panel .login-icon {
@@ -981,14 +980,16 @@ to {
 	padding: 0;
 }
 
-.login-body .login-panel .ui-g .ui-g-login .logo-container .login-summary {
+.login-body .login-panel .ui-g .ui-g-login .logo-container .login-summary
+	{
 	line-height: 48px;
 	font-size: 35px;
 	font-weight: bold;
 	text-align: left;
 }
 
-.login-body .login-panel .ui-g .ui-g-login .logo-container .login-detail {
+.login-body .login-panel .ui-g .ui-g-login .logo-container .login-detail
+	{
 	line-height: 20px;
 	font-size: 16px;
 	text-align: left;
@@ -999,7 +1000,7 @@ to {
 }
 
 .login-body .login-panel .ui-g .ui-g-login .ui-g-12 .ui-inputfield {
-	display: block;	
+	display: block;
 }
 
 .login-body .login-panel .ui-g .ui-g-login .ui-g-12.chkbox-container a {
@@ -2351,7 +2352,7 @@ body a {
 .usermenu>li.menuitem-active>a {
 	/*padding-left: 8px;*/
 	/*border-left: 4px solid #ffffff;*/
-	color: #ffffff;	
+	color: #ffffff;
 	/*color: #3f94a6;*/
 }
 
@@ -2464,6 +2465,12 @@ body a {
 	margin-left: 0;
 }
 
+.layout-bottombar {
+	background: white;	
+	bottom: 0;
+	width: 100%;
+}
+
 @media screen and (min-width: 1025px) {
 	.layout-wrapper .layout-main {
 		padding-top: 60px;
@@ -2474,7 +2481,7 @@ body a {
 	}
 	.layout-wrapper.layout-wrapper-overlay-sidebar .layout-main {
 		margin-left: 0;
-	}
+	}	
 }
 
 @media screen and (max-width: 1024px) {

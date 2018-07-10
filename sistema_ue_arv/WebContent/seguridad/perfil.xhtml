@@ -68,6 +68,18 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 						</p:commandLink>							
 					</p:outputPanel>
 			    </p:column>
+			    
+			     <p:column headerText="Permisos(Menú)" width="20">
+			    	<p:outputPanel style="text-align: center">
+						<p:commandLink update=":form:pnlMenu" oncomplete="PF('dglMenu').show()">	
+							<i class="fa fa-key" />
+													
+							<f:setPropertyActionListener value="#{perfil.cargaMenuSeg(dtPerfil.idPerfil, 1)}" target="#{perfil.menuSegList}" />							
+							<f:setPropertyActionListener value="#{perfil.cargaMenuMant(dtPerfil.idPerfil, 4)}" target="#{perfil.menuMantList}" />
+																					
+						</p:commandLink>							
+					</p:outputPanel>
+			    </p:column>
 			</p:dataTable>
 			
 			<!-- INGRESO | ACTUALIZACION -->
@@ -91,6 +103,59 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 				</h:panelGrid>
 			</p:dialog>			
 			
+			
+			<!-- PERMISOS / MENU  -->
+			<p:dialog header="Permisos(Menú)" widgetVar="dglMenu" modal="true" closable="true" maximizable="false" resizable="false" width="400px">
+			
+			<p:ajax event="close" update="form" listener="#{perfil.closeDialogo}" />			
+				 <p:accordionPanel id="pnlMenu">
+			        <p:tab title="Seguridad">
+				        <p:dataTable id="dtSeg" var="dtSeg" value="#{perfil.menuSegList}">
+							<p:column visible="false">
+						          <h:outputText value="#{dtSeg.perfil}" />
+						      </p:column>				        
+						  		        <p:column visible="false">
+						          <h:outputText value="#{dtSeg.menu}" />
+						      </p:column>				        
+						      <p:column headerText="Submenu">
+						          <h:outputText value="#{dtSeg.descripcion}" />
+						      </p:column>
+						      <p:column width="50" headerText="Habilitar">
+						          <p:outputPanel style="text-align: center">
+						          	<h:selectBooleanCheckbox value="#{dtSeg.seleccion}" />
+						          </p:outputPanel>						          
+						      </p:column>
+				  		</p:dataTable>					
+			        </p:tab>
+			        <p:tab title="Mantenimientos">
+			           <p:dataTable id="dtMant" var="dtMant" value="#{perfil.menuMantList}">
+							<p:column visible="false">
+						          <h:outputText value="#{dtMant.perfil}" />
+						      </p:column>				        
+						  		        <p:column visible="false">
+						          <h:outputText value="#{dtMant.menu}" />
+						      </p:column>				        
+						      <p:column headerText="Submenu">
+						          <h:outputText value="#{dtMant.descripcion}" />
+						      </p:column>
+						      <p:column width="50" headerText="Habilitar">
+						          <p:outputPanel style="text-align: center">
+						          	<h:selectBooleanCheckbox value="#{dtMant.seleccion}" />
+						          </p:outputPanel>						          
+						      </p:column>
+				  		</p:dataTable>					
+			        </p:tab>
+			        <p:tab title="Matriculación">
+			           
+			        </p:tab>
+			        <p:tab title="Gestion de cobros">
+			           
+			        </p:tab>
+			        <p:tab title="Calificaciones">
+			           
+			        </p:tab>
+			    </p:accordionPanel>									
+			</p:dialog>			
 						
 	   	</h:form>    	    
 	</ui:define>		

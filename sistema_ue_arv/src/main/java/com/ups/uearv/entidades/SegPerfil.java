@@ -3,7 +3,6 @@ package com.ups.uearv.entidades;
 import java.io.Serializable;
 import javax.persistence.*;
 import java.util.Date;
-import java.util.List;
 
 
 /**
@@ -38,15 +37,7 @@ public class SegPerfil implements Serializable {
 
 	@Column(name="usuario_ing")
 	private String usuarioIng;
-
-	//bi-directional many-to-many association to SegMenu
-	@ManyToMany(mappedBy="segPerfils")
-	private List<SegMenu> segMenus;
-
-	//bi-directional many-to-one association to SegUsuario
-	@OneToMany(mappedBy="segPerfil")
-	private List<SegUsuario> segUsuarios;
-
+	
 	public SegPerfil() {
 	}
 
@@ -105,35 +96,4 @@ public class SegPerfil implements Serializable {
 	public void setUsuarioIng(String usuarioIng) {
 		this.usuarioIng = usuarioIng;
 	}
-
-	public List<SegMenu> getSegMenus() {
-		return this.segMenus;
-	}
-
-	public void setSegMenus(List<SegMenu> segMenus) {
-		this.segMenus = segMenus;
-	}
-
-	public List<SegUsuario> getSegUsuarios() {
-		return this.segUsuarios;
-	}
-
-	public void setSegUsuarios(List<SegUsuario> segUsuarios) {
-		this.segUsuarios = segUsuarios;
-	}
-
-	public SegUsuario addSegUsuario(SegUsuario segUsuario) {
-		getSegUsuarios().add(segUsuario);
-		segUsuario.setSegPerfil(this);
-
-		return segUsuario;
-	}
-
-	public SegUsuario removeSegUsuario(SegUsuario segUsuario) {
-		getSegUsuarios().remove(segUsuario);
-		segUsuario.setSegPerfil(null);
-
-		return segUsuario;
-	}
-
 }

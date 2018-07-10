@@ -2,7 +2,6 @@ package com.ups.uearv.entidades;
 
 import java.io.Serializable;
 import javax.persistence.*;
-import java.util.List;
 
 
 /**
@@ -23,21 +22,10 @@ public class SegMenu implements Serializable {
 
 	private String estado;
 
-	private String ruta;
+	@Column(name="id_padre")
+	private int idPadre;
 
-	//bi-directional many-to-many association to SegPerfil
-	@ManyToMany
-	@JoinTable(
-		name="seg_perfil_menu"
-		, joinColumns={
-			@JoinColumn(name="id_menu")
-			}
-		, inverseJoinColumns={
-			@JoinColumn(name="id_perfil")
-			}
-		)
-	private List<SegPerfil> segPerfils;
-
+	
 	public SegMenu() {
 	}
 
@@ -65,20 +53,11 @@ public class SegMenu implements Serializable {
 		this.estado = estado;
 	}
 
-	public String getRuta() {
-		return this.ruta;
+	public int getIdPadre() {
+		return idPadre;
 	}
 
-	public void setRuta(String ruta) {
-		this.ruta = ruta;
+	public void setIdPadre(int idPadre) {
+		this.idPadre = idPadre;
 	}
-
-	public List<SegPerfil> getSegPerfils() {
-		return this.segPerfils;
-	}
-
-	public void setSegPerfils(List<SegPerfil> segPerfils) {
-		this.segPerfils = segPerfils;
-	}
-
 }

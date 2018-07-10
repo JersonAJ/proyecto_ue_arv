@@ -29,11 +29,6 @@ public class SegUsuario implements Serializable {
 	@Column(name="sn_bloqueado")
 	private String snBloqueado;
 
-	//bi-directional many-to-one association to SegPerfil
-	@ManyToOne
-	@JoinColumn(name="id_perfil")
-	private SegPerfil segPerfil;
-
 	public SegUsuario() {
 	}
 
@@ -84,13 +79,4 @@ public class SegUsuario implements Serializable {
 	public void setSnBloqueado(String snBloqueado) {
 		this.snBloqueado = snBloqueado;
 	}
-
-	public SegPerfil getSegPerfil() {
-		return this.segPerfil;
-	}
-
-	public void setSegPerfil(SegPerfil segPerfil) {
-		this.segPerfil = segPerfil;
-	}
-
 }
