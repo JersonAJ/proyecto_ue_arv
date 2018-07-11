@@ -21,7 +21,10 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
+import com.ups.uearv.entidades.SegMenu;
 import com.ups.uearv.entidades.SegPerfil;
+import com.ups.uearv.entidades.SegPerfilMenu;
+import com.ups.uearv.entidades.SegPerfilMenuPK;
 import com.ups.uearv.servicios.DAO;
 import com.ups.uearv.servicios.Session;
 
@@ -47,7 +50,10 @@ public class Perfil implements Serializable {
 	private List<SegPerfil> perfilList = new ArrayList<SegPerfil>();
 
 	private List<PerfilMenu> menuSegList = new ArrayList<PerfilMenu>();
-	private List<PerfilMenu> menuMantList = new ArrayList<PerfilMenu>();
+	private List<PerfilMenu> menuManList = new ArrayList<PerfilMenu>();
+	private List<PerfilMenu> menuMatList = new ArrayList<PerfilMenu>();
+	private List<PerfilMenu> menuGesList = new ArrayList<PerfilMenu>();
+	private List<PerfilMenu> menuCalList = new ArrayList<PerfilMenu>();
 
 	private static EntityManagerFactory emf = Persistence.createEntityManagerFactory("sismacc");
 
@@ -133,29 +139,49 @@ public class Perfil implements Serializable {
 		return ban;
 	}
 
-	public void guardarMenu() {
-
+	public void habilitaMenu(int perfil, int menu, boolean seleccion) {
+		SegPerfilMenuPK pk = new SegPerfilMenuPK();
+		pk.setIdPerfil(perfil);
+		pk.setIdMenu(menu);
+		SegPerfilMenu mp = new SegPerfilMenu();
+		mp.setId(pk);
+		EntityManager em = emf.createEntityManager();
+		em.getTransaction().begin();
+		try {
+			if (seleccion) {
+				if(DAO.saveOrUpdate(mp, 0, em))
+					em.getTransaction().commit();				
+			}
+			else 
+				DAO.deleteSegPerfilMenu(mp);
+		} catch (Exception e) {
+			em.getTransaction().rollback();
+		}	
+		em.close();
 	}
 
 	public List<PerfilMenu> cargaMenuSeg(String perfil, int padre) {
-		menuSegList.clear();
-		List<Object> result = DAO.getConsultaMenu(perfil, padre);
-		Iterator<Object> itr = result.iterator();
-		for (int k = 0; k < result.size(); k++) {
-			Object[] obj = (Object[]) itr.next();
-
-			PerfilMenu m = new PerfilMenu();
-			m.setPerfil(Integer.parseInt(obj[0].toString()));
-			m.setMenu(Integer.parseInt(obj[1].toString()));
-			m.setDescripcion(obj[2].toString());
-			m.setSeleccion(obj[3].toString());
-			menuSegList.add(m);
-		}
-		return menuSegList;
+		return consultaMenu(menuSegList, perfil, padre);		
 	}
 	
-	public List<PerfilMenu> cargaMenuMant(String perfil, int padre) {
-		menuMantList.clear();
+	public List<PerfilMenu> cargaMenuMan(String perfil, int padre) {
+		return consultaMenu(menuManList, perfil, padre);
+	}
+	
+	public List<PerfilMenu> cargaMenuMat(String perfil, int padre) {
+		return consultaMenu(menuMatList, perfil, padre);
+	} 
+	
+	public List<PerfilMenu> cargaMenuGes(String perfil, int padre) {
+		return consultaMenu(menuGesList, perfil, padre);
+	} 
+	
+	public List<PerfilMenu> cargaMenuCal(String perfil, int padre) {
+		return consultaMenu(menuCalList, perfil, padre);
+	} 	
+	
+	public List<PerfilMenu> consultaMenu(List<PerfilMenu> list, String perfil, int padre) {
+		list.clear();
 		List<Object> result = DAO.getConsultaMenu(perfil, padre);
 		Iterator<Object> itr = result.iterator();
 		for (int k = 0; k < result.size(); k++) {
@@ -166,9 +192,9 @@ public class Perfil implements Serializable {
 			m.setMenu(Integer.parseInt(obj[1].toString()));
 			m.setDescripcion(obj[2].toString());
 			m.setSeleccion(obj[3].toString());
-			menuMantList.add(m);
+			list.add(m);
 		}
-		return menuMantList;
+		return list;
 	}
 
 	public class PerfilMenu {
@@ -268,11 +294,35 @@ public class Perfil implements Serializable {
 		this.menuSegList = menuSegList;
 	}
 
-	public List<PerfilMenu> getMenuMantList() {
-		return menuMantList;
+	public List<PerfilMenu> getMenuManList() {
+		return menuManList;
 	}
 
-	public void setMenuMantList(List<PerfilMenu> menuMantList) {
-		this.menuMantList = menuMantList;
+	public void setMenuManList(List<PerfilMenu> menuManList) {
+		this.menuManList = menuManList;
+	}
+
+	public List<PerfilMenu> getMenuMatList() {
+		return menuMatList;
+	}
+
+	public void setMenuMatList(List<PerfilMenu> menuMatList) {
+		this.menuMatList = menuMatList;
+	}
+
+	public List<PerfilMenu> getMenuGesList() {
+		return menuGesList;
+	}
+
+	public void setMenuGesList(List<PerfilMenu> menuGesList) {
+		this.menuGesList = menuGesList;
+	}
+
+	public List<PerfilMenu> getMenuCalList() {
+		return menuCalList;
+	}
+
+	public void setMenuCalList(List<PerfilMenu> menuCalList) {
+		this.menuCalList = menuCalList;
 	}
 }

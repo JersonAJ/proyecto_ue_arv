@@ -12,6 +12,7 @@ import javax.persistence.Query;
 
 import com.ups.uearv.entidades.SegMenu;
 import com.ups.uearv.entidades.SegPerfil;
+import com.ups.uearv.entidades.SegPerfilMenu;
 import com.ups.uearv.entidades.SegUsuario;
 
 /**
@@ -118,6 +119,13 @@ public class DAO {
 		em.getTransaction().commit();
 	}
 
+	public static void deleteSegPerfilMenu(SegPerfilMenu e) {
+		em.find(SegPerfilMenu.class, e.getId());
+		em.getTransaction().begin();
+		e = em.merge(e);
+		em.remove(e);
+		em.getTransaction().commit();
+	}
 
 	// SEGURIDAD
 	public static String getClaveUsuario(String usuario) {

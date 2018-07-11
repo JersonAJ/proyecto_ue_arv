@@ -1273,7 +1273,7 @@
 }
 
 .ui-icon-check:before {
-	content: "";
+	content: "\f00c";
 }
 
 .ui-icon-bullet {
@@ -3340,8 +3340,8 @@ body .ui-notificationbar {
 
 body .ui-accordion .ui-accordion-header {
 	background-color: #f1f1f1;
-	padding: 8px 16px;
-	margin-bottom: 8px;
+	padding: 5px 15px;
+	margin-bottom: 0px;
 	color: #212121;
 	font-weight: 700;
 	-moz-transition: background-color 0.3s;
@@ -3407,7 +3407,7 @@ body .ui-accordion .ui-accordion-header .ui-icon.ui-icon-triangle-1-s:before
 }
 
 body .ui-accordion .ui-accordion-content {
-	padding: 16px;
+	padding: 5px;
 	border: 0 none;
 }
 
@@ -3917,7 +3917,7 @@ body .ui-datatable .ui-datatable-data tr.ui-row-editing.ui-datatable-even,
 }
 
 body .ui-datatable .ui-datatable-data tr td {
-	padding: 4px 8px 5px 8px;
+	padding: 2px 10px;
 }
 
 body .ui-datatable .ui-datatable-data tr td.ui-editable-column input {

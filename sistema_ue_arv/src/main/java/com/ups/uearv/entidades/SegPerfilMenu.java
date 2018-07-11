@@ -14,7 +14,7 @@ import javax.persistence.*;
 public class SegPerfilMenu implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@Id
+	@EmbeddedId
 	private SegPerfilMenuPK id;
 
 	public SegPerfilMenu() {
