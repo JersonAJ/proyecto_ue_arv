@@ -49,6 +49,7 @@ public class Login implements Serializable {
 				if (valor.equals(pass)) {
 					HttpSession httpSession = Session.getSession();
 					httpSession.setAttribute("username", usuario);
+															
 					return navegacion.redirectToInicio();
 				}
 			}

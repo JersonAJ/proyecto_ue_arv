@@ -21,7 +21,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
-import com.ups.uearv.entidades.SegMenu;
 import com.ups.uearv.entidades.SegPerfil;
 import com.ups.uearv.entidades.SegPerfilMenu;
 import com.ups.uearv.entidades.SegPerfilMenuPK;
@@ -30,7 +29,7 @@ import com.ups.uearv.servicios.Session;
 
 
 /**
- * @author Jerson Armijos Jaén
+ * @author Jerson Armijos Jaén - Raysa Solano
  * @version 1.0
  */
 
@@ -182,7 +181,7 @@ public class Perfil implements Serializable {
 	
 	public List<PerfilMenu> consultaMenu(List<PerfilMenu> list, String perfil, int padre) {
 		list.clear();
-		List<Object> result = DAO.getConsultaMenu(perfil, padre);
+		List<Object> result = DAO.consultaMenu(perfil, padre);
 		Iterator<Object> itr = result.iterator();
 		for (int k = 0; k < result.size(); k++) {
 			Object[] obj = (Object[]) itr.next();

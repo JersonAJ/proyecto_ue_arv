@@ -139,8 +139,15 @@ public class DAO {
 		return clave;
 	}
 	
-	public static List<Object> getConsultaMenu(String idPerfil, int idMenuPadre) {
+	public static List<Object> consultaMenu(String idPerfil, int idMenuPadre) {
 		Query query = em.createNativeQuery(" CALL consulta_menu_perfil (" + idPerfil + ", " + idMenuPadre + ") ");
+		return query.getResultList();
+	}
+	
+	public static List<Object> obtenerMenu(String usuario) {	
+		int idPerfil = DAO.buscarSegUsuario(" from SegUsuario u where u.idUsuario = '" + usuario + "'").getIdPerfil();
+		
+		Query query = em.createNativeQuery(" SELECT id_menu FROM seg_perfil_menu WHERE id_perfil = " + idPerfil);
 		return query.getResultList();
 	}
 
