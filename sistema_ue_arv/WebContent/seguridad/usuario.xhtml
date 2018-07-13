@@ -13,7 +13,37 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 			    <f:viewAction action="#{general.validaSesion}" />
 			</f:metadata>
 				
-			<br/><br/>
+			<p:growl id="msgRegistro" for="msgRegistro" showDetail="true" autoUpdate="true" closable="true" />
+			
+			<p:outputPanel style="background-color: white; padding: 5px;">
+				<p:commandLink update=":form:pnl" oncomplete="PF('dgl').show();">
+					<i class="fa fa-plus-circle" />
+					<span>Agregar</span>
+					
+					<f:setPropertyActionListener value="" target="#{usuario.descripcion}" />	
+					<f:setPropertyActionListener value="true" target="#{perfil.ckEstado}" />
+					<f:setPropertyActionListener value="0" target="#{perfil.accion}" />
+										
+				</p:commandLink>					
+			</p:outputPanel> 
+			
+			<!-- CONSULTA -->	
+			<style>				
+				.ui-datatable thead th, .ui-datatable tbody td, .ui-datatable tfoot td, .ui-datatable tfoot th { padding: 2px 10px; }
+			</style>
+			<br/>		
+			<p:outputPanel>
+			   <p:inputText style="width: 500px" value="#{usuario.itBuscar}" placeholder="Buscar por usuario">
+				<p:ajax event="keyup" update="dt" listener="#{usuario.buscar}"/>
+			     	</p:inputText>	
+				<p:spacer width="10px" />
+			
+				<h:selectBooleanCheckbox value="#{usuario.ckMostrarIC}">
+	    			<p:ajax update="dt" listener="#{usuario.buscar}" />
+	 			</h:selectBooleanCheckbox> Mostrar inactivos     			     			      				      		      			
+			</p:outputPanel>
+			 				 	
+			<p:separator />
 						
 	   	</h:form>    	    
 	</ui:define>		

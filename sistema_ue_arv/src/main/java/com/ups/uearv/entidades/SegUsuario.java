@@ -31,6 +31,8 @@ public class SegUsuario implements Serializable {
 
 	@Column(name="sn_bloqueado")
 	private String snBloqueado;
+	
+	private String estado;
 
 	public SegUsuario() {
 	}
@@ -89,5 +91,13 @@ public class SegUsuario implements Serializable {
 
 	public void setIdPerfil(int idPerfil) {
 		this.idPerfil = idPerfil;
+	}
+
+	public String getEstado() {
+		return estado;
+	}
+
+	public void setEstado(String estado) {
+		this.estado = estado;
 	}
 }

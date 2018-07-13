@@ -64,7 +64,7 @@ public class General implements Serializable {
 	String displayMatriculacion = "none";
 	String displayPeriodos = "none";
 	String displayOfertas = "none";
-	String displayRepreentantes = "none";
+	String displayRepresentantes = "none";
 	String displayEstudiantes = "none";
 	String displayMatriculas = "none";
 	String displayMatReportes = "none";
@@ -138,7 +138,7 @@ public class General implements Serializable {
 					mat = true;
 					break;
 				case 16:
-					displayRepreentantes = "";
+					displayRepresentantes = "";
 					mat = true;
 					break;
 				case 17:
@@ -179,11 +179,11 @@ public class General implements Serializable {
 					break;
 				}
 			}
-		if (seg) { displaySeguridad = ""; }
-		if (man) { displayMantenimientos = ""; }
-		if (mat) { displayMatriculacion = ""; }
-		if (ges) { displayGestion = ""; }
-		if (cal) { displayCalificaciones = ""; }		
+		if (seg) { displaySeguridad = ""; } // 1
+		if (man) { displayMantenimientos = ""; } // 4
+		if (mat) { displayMatriculacion = ""; } // 13
+		if (ges) { displayGestion = ""; } // 20
+		if (cal) { displayCalificaciones = ""; } // 24		
 		}
 	}
 	
@@ -307,12 +307,12 @@ public class General implements Serializable {
 		this.displayOfertas = displayOfertas;
 	}
 
-	public String getDisplayRepreentantes() {
-		return displayRepreentantes;
+	public String getDisplayRepresentantes() {
+		return displayRepresentantes;
 	}
 
-	public void setDisplayRepreentantes(String displayRepreentantes) {
-		this.displayRepreentantes = displayRepreentantes;
+	public void setDisplayRepresentantes(String displayRepresentantes) {
+		this.displayRepresentantes = displayRepresentantes;
 	}
 
 	public String getDisplayEstudiantes() {

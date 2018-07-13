@@ -71,9 +71,11 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 			    
 			     <p:column headerText="Permisos(Menú)" width="20">
 			    	<p:outputPanel style="text-align: center">
-						<p:commandLink update=":form:pnlMenu" oncomplete="PF('dglMenu').show()">	
+						<p:commandLink update=":form:dglMenu" oncomplete="PF('dglMenu').show()">	
 							<i class="fa fa-key" />
 													
+							<f:setPropertyActionListener value="#{dtPerfil.descripcion}" target="#{perfil.descripcion}" />	
+							
 							<f:setPropertyActionListener value="#{perfil.cargaMenuSeg(dtPerfil.idPerfil, 1)}" target="#{perfil.menuSegList}" />							
 							<f:setPropertyActionListener value="#{perfil.cargaMenuMan(dtPerfil.idPerfil, 4)}" target="#{perfil.menuManList}" />
 							<f:setPropertyActionListener value="#{perfil.cargaMenuMat(dtPerfil.idPerfil, 13)}" target="#{perfil.menuMatList}" />
@@ -115,11 +117,11 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 			div[id="form:pnlMenu:dtGes"] thead { display:none; }
 			div[id="form:pnlMenu:dtCal"] thead { display:none; }
 			</style>
-			<p:dialog header="Permisos(Menú)" widgetVar="dglMenu" modal="true" closable="true" maximizable="false" resizable="false" width="400px">
+			<p:dialog header="Permisos(Menú) - #{perfil.descripcion}" id="dglMenu" widgetVar="dglMenu" modal="true" closable="true" maximizable="false" resizable="false" width="400px">
 			
 			<p:ajax event="close" update="form" listener="#{perfil.closeDialogo}" />			
 				 <p:accordionPanel id="pnlMenu">
-			        <p:tab title="Seguridad">
+				 	<p:tab title="Seguridad">
 				        <p:dataTable id="dtSeg" var="dtSeg" value="#{perfil.menuSegList}">
 							<p:column visible="false"> <h:outputText value="#{dtSeg.perfil}" /> </p:column> 
 						    <p:column visible="false"> <h:outputText value="#{dtSeg.menu}" /> </p:column>				        

@@ -81,7 +81,7 @@ public class Perfil implements Serializable {
 		if (ckMostrarIC) 
 			jpql = "SELECT * FROM Seg_Perfil WHERE descripcion LIKE '%" + itBuscar	+ "%' ORDER BY descripcion";
 		else 		
-			jpql = "select * from Seg_Perfil WHERE descripcion like '%" + itBuscar	+ "%' AND estado = 'AC' ORDER BY descripcion";
+			jpql = "SELECT * FROM Seg_Perfil WHERE descripcion LIKE '%" + itBuscar	+ "%' AND estado = 'AC' ORDER BY descripcion";
 
 		llenarLista(jpql);
 	}

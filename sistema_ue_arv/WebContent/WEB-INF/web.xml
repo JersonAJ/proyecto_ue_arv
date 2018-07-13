@@ -30,6 +30,11 @@
 		<error-code>404</error-code>
 		<location>/errores/error_no_pag.xhtml</location>
 	</error-page>
+	
+	<error-page>
+	    <error-code>500</error-code>
+	    <location>/errores/error_no_pag.xhtml</location>
+	</error-page>
 
 	<context-param>
 		<param-name>primefaces.THEME</param-name>
