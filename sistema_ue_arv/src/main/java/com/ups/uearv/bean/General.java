@@ -53,35 +53,44 @@ public class General implements Serializable {
 	String clave1 = "";
 	String clave2 = "";
 	
-	public void cambiarClave() {		
+	public void cambiarClave() {
 
-		if (clave1.equals(clave2)) {
-			EntityManagerFactory emf = Persistence.createEntityManagerFactory("sismacc");
-			EntityManager em = emf.createEntityManager();
-			em.getTransaction().begin();
-			try {
-				SegUsuario ob = new SegUsuario();
-				ob = DAO.buscarSegUsuario("from SegUsuario c where c.idUsuario = '" + Session.getUserName() + "'");
-				ob.setClave(clave1);
+		if (!clave1.equals("")) {
+			if (clave1.equals(clave2)) {
+				EntityManagerFactory emf = Persistence.createEntityManagerFactory("sismacc");
+				EntityManager em = emf.createEntityManager();
+				em.getTransaction().begin();
+				try {
+					SegUsuario ob = new SegUsuario();
+					ob = DAO.buscarSegUsuario("from SegUsuario c where c.idUsuario = '" + Session.getUserName() + "'");
+					ob.setClave(clave1);
 
-				if (DAO.saveOrUpdate(ob, 1, em)) {
-					em.getTransaction().commit();  
-					mensaje = "Cambio de clave exitoso";
-					FacesContext.getCurrentInstance().addMessage("msgRegistro", new FacesMessage(FacesMessage.SEVERITY_INFO, mensajeTitulo, mensaje));
+					if (DAO.saveOrUpdate(ob, 1, em)) {
+						em.getTransaction().commit();
+						mensaje = "Cambio de clave exitoso";
+						FacesContext.getCurrentInstance().addMessage("msgRegistro",
+								new FacesMessage(FacesMessage.SEVERITY_INFO, mensajeTitulo, mensaje));
 
-				} else {
+					} else {
+						em.getTransaction().rollback();
+						mensaje = "Error al cambiar la clave";
+						FacesContext.getCurrentInstance().addMessage("msgRegistro",
+								new FacesMessage(FacesMessage.SEVERITY_ERROR, mensajeTitulo, mensaje));
+					}
+				} catch (Exception e) {
 					em.getTransaction().rollback();
-					mensaje = "Error al cambiar la clave";
-					FacesContext.getCurrentInstance().addMessage("msgRegistro", new FacesMessage(FacesMessage.SEVERITY_ERROR, mensajeTitulo, mensaje));
-				}		
-			} catch (Exception e) {
-				em.getTransaction().rollback();
-				e.printStackTrace();
-			}	
-			em.close();		
-		}else {
-			mensaje = "Las claves ingresadas deben ser iguales";
-			FacesContext.getCurrentInstance().addMessage("msgRegistro", new FacesMessage(FacesMessage.SEVERITY_ERROR, mensajeTitulo, mensaje));
+					e.printStackTrace();
+				}
+				em.close();
+			} else {
+				mensaje = "Las claves ingresadas deben ser iguales";
+				FacesContext.getCurrentInstance().addMessage("msgRegistro",
+						new FacesMessage(FacesMessage.SEVERITY_ERROR, mensajeTitulo, mensaje));
+			}
+		} else {
+			mensaje = "Debe ingresar la nueva clave";
+			FacesContext.getCurrentInstance().addMessage("msgRegistro",
+					new FacesMessage(FacesMessage.SEVERITY_ERROR, mensajeTitulo, mensaje));
 		}
 	}
 	
