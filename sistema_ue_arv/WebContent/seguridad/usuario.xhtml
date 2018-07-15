@@ -8,21 +8,28 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 	<ui:define name="titulo"><i class="fa fa-lock" /> Seguridad / Usuarios</ui:define>
 	
 	<ui:define name="content">									
-		<h:form>
+		<h:form id="form" style="width: 100%">
 			<f:metadata>		    
 			    <f:viewAction action="#{general.validaSesion}" />
 			</f:metadata>
 				
-			<p:growl id="msgRegistro" for="msgRegistro" showDetail="true" autoUpdate="true" closable="true" />
+			<p:growl id="msgRegistro" for="msgRegistro" showDetail="true" closable="true" />
 			
 			<p:outputPanel style="background-color: white; padding: 5px;">
 				<p:commandLink update=":form:pnl" oncomplete="PF('dgl').show();">
 					<i class="fa fa-plus-circle" />
 					<span>Agregar</span>
 					
-					<f:setPropertyActionListener value="" target="#{usuario.descripcion}" />	
-					<f:setPropertyActionListener value="true" target="#{perfil.ckEstado}" />
-					<f:setPropertyActionListener value="0" target="#{perfil.accion}" />
+					<f:setPropertyActionListener value="" target="#{usuario.idUsuario}" />
+					<f:setPropertyActionListener value="" target="#{usuario.idPerfil}" />
+					<f:setPropertyActionListener value="" target="#{usuario.nombres}" />	
+					<f:setPropertyActionListener value="" target="#{usuario.apellidos}" />
+					<f:setPropertyActionListener value="" target="#{usuario.clave}" />
+					<f:setPropertyActionListener value="0" target="#{usuario.intentos}" />
+					<f:setPropertyActionListener value="false" target="#{usuario.ckBloqueado}" />
+					<f:setPropertyActionListener value="true" target="#{usuario.ckEstado}" />
+					<f:setPropertyActionListener value="true" target="#{usuario.ckNuevo}" />
+					<f:setPropertyActionListener value="0" target="#{usuario.accion}" />
 										
 				</p:commandLink>					
 			</p:outputPanel> 
@@ -33,7 +40,7 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 			</style>
 			<br/>		
 			<p:outputPanel>
-			   <p:inputText style="width: 500px" value="#{usuario.itBuscar}" placeholder="Buscar por usuario">
+			   <p:inputText style="width: 500px" value="#{usuario.itBuscar}" placeholder="Buscar por nombres o apellidos">
 				<p:ajax event="keyup" update="dt" listener="#{usuario.buscar}"/>
 			     	</p:inputText>	
 				<p:spacer width="10px" />
@@ -44,6 +51,91 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 			</p:outputPanel>
 			 				 	
 			<p:separator />
+			
+			<p:dataTable id="dt" var="dtUsuario" value="#{usuario.usuarioList}" tableStyle="width: auto; min-width: 100%;" emptyMessage="No existen datos a mostrar" >
+			 
+			    <p:column headerText="Usuario">
+			        <h:outputText value="#{dtUsuario.idUsuario}" />
+			    </p:column>
+			    
+			    <p:column headerText="Nombre completo">
+			        <h:outputText value="#{dtUsuario.apellidos} #{dtUsuario.nombres}" />
+			    </p:column>
+			    
+			    <p:column headerText="Perfil">
+			        <h:outputText value="#{usuario.getPerfil(dtUsuario.idPerfil)}" />
+			    </p:column>
+								    
+			    <p:column headerText="Bloqueado" width="20" style="text-align: center">
+			    	<h:selectBooleanCheckbox value="#{dtUsuario.snBloqueado eq 'S'? true:false}" disabled="true" />			        
+			    </p:column>
+			    
+			    <p:column headerText="Activo" width="20" style="text-align: center">
+			    	<h:selectBooleanCheckbox value="#{dtUsuario.estado eq 'AC'? true:false}" disabled="true" />			        
+			    </p:column>
+			    
+			    <p:column headerText="Editar" width="20">
+			    	<p:outputPanel style="text-align: center">
+						<p:commandLink update=":form:pnl" oncomplete="PF('dgl').show()">	
+							<i class="fa fa-pencil" />
+													
+							<f:setPropertyActionListener value="#{dtUsuario.idUsuario}" target="#{usuario.idUsuario}" />
+							<f:setPropertyActionListener value="#{dtUsuario.idPerfil}" target="#{usuario.idPerfil}" />
+							<f:setPropertyActionListener value="#{dtUsuario.nombres}" target="#{usuario.nombres}" />	
+							<f:setPropertyActionListener value="#{dtUsuario.apellidos}" target="#{usuario.apellidos}" />
+							<f:setPropertyActionListener value="#{dtUsuario.intentos}" target="#{usuario.intentos}" />
+							<f:setPropertyActionListener value="#{dtUsuario.clave}" target="#{usuario.clave}" />
+							<f:setPropertyActionListener value="#{usuario.getEstado(dtUsuario.estado)}" target="#{usuario.ckEstado}" />
+							<f:setPropertyActionListener value="#{usuario.getBloqueado(dtUsuario.snBloqueado)}" target="#{usuario.ckBloqueado}" />
+							<f:setPropertyActionListener value="#{usuario.getNuevo(dtUsuario.snNuevo)}" target="#{usuario.ckNuevo}" />
+							<f:setPropertyActionListener value="1" target="#{usuario.accion}" />
+																					
+						</p:commandLink>							
+					</p:outputPanel>
+			    </p:column>			  
+			</p:dataTable>
+			
+			<!-- INGRESO | ACTUALIZACION -->
+			<p:dialog header="Datos usuario" widgetVar="dgl" modal="true" closable="true" maximizable="false" resizable="false" width="400px">
+			
+			<p:ajax event="close" update="form" listener="#{usuario.closeDialogo}" />
+			
+				<h:panelGrid id="pnl" columns="2" cellpadding="0" style="width: auto; min-width: 100%;" columnClasses="ui-grid-col-4,ui-grid-col-8">
+										
+					<p:outputPanel style="text-align: end; margin-right: 5px">Usuario:</p:outputPanel>
+					<p:inputText value="#{usuario.idUsuario}" style="width: 50%" disabled="#{usuario.accion eq 1? true:false}" />
+					
+					<p:outputPanel style="text-align: end; margin-right: 5px">Perfil:</p:outputPanel>
+					<p:selectOneMenu value="#{usuario.idPerfil}">
+						<f:selectItems value="#{usuario.listPerfiles}" />		
+					</p:selectOneMenu>
+					
+					<p:outputPanel style="text-align: end; margin-right: 5px">Nombres:</p:outputPanel>
+					<p:inputText value="#{usuario.nombres}" style="width: 90%" />
+					
+					<p:outputPanel style="text-align: end; margin-right: 5px">Apellidos:</p:outputPanel>
+					<p:inputText value="#{usuario.apellidos}" style="width: 90%" />
+									
+					<p:outputPanel style="text-align: end; margin-right: 5px">Intentos:</p:outputPanel>
+					<p:inputNumber decimalPlaces="0" value="#{usuario.intentos}" inputStyle="width: 30px"/>
+					
+					<p:outputPanel style="text-align: end; margin-right: 5px">Bloqueado:</p:outputPanel>
+					<h:selectBooleanCheckbox value="#{usuario.ckBloqueado}" />
+					
+					<p:outputPanel style="text-align: end; margin-right: 5px">Cambio de clave:</p:outputPanel>
+					<h:selectBooleanCheckbox value="#{usuario.ckNuevo}" />
+					
+					<p:outputPanel style="text-align: end; margin-right: 5px">Activo:</p:outputPanel>
+					<h:selectBooleanCheckbox value="#{usuario.ckEstado}" />
+					
+					<f:facet name = "footer"><br/>
+					    <h:panelGroup style = "display:block; text-align:center">
+					      	<p:commandButton id="btnGuardar" value="Guardar" icon="fa fa-save" actionListener="#{usuario.guardar}" update="form" />	
+						</h:panelGroup>
+					</f:facet>						
+				</h:panelGrid>
+			</p:dialog>			
+			
 						
 	   	</h:form>    	    
 	</ui:define>		

@@ -33,6 +33,9 @@ public class SegUsuario implements Serializable {
 	private String snBloqueado;
 	
 	private String estado;
+	
+	@Column(name="sn_nuevo")
+	private String snNuevo;
 
 	public SegUsuario() {
 	}
@@ -99,5 +102,13 @@ public class SegUsuario implements Serializable {
 
 	public void setEstado(String estado) {
 		this.estado = estado;
+	}
+
+	public String getSnNuevo() {
+		return snNuevo;
+	}
+
+	public void setSnNuevo(String snNuevo) {
+		this.snNuevo = snNuevo;
 	}
 }

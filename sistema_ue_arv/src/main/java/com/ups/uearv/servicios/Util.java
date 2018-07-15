@@ -60,11 +60,8 @@ public class Util {
 		}
 		return items;
 	}
-
 	
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args) throws IOException {		
 		
-		System.out.println(DAO.getClaveUsuario("admin"));
-
 	}
 }

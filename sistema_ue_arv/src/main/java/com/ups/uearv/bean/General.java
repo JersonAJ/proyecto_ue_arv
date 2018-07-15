@@ -10,9 +10,15 @@ import java.util.Iterator;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 
+import com.ups.uearv.entidades.SegUsuario;
 import com.ups.uearv.servicios.DAO;
 import com.ups.uearv.servicios.Session;
 
@@ -26,6 +32,9 @@ import com.ups.uearv.servicios.Session;
 @ViewScoped
 public class General implements Serializable {
 
+	String mensaje = "";
+	String mensajeTitulo = "Mensaje del sistema";
+	
 	private static final long serialVersionUID = 1L;
 
 	@PostConstruct
@@ -33,13 +42,62 @@ public class General implements Serializable {
 		validaMenuSistema();
 	}
 	
-	// 
+	// VALIDAR SESION
 	public String validaSesion() {		 
 	    if (Session.getUserName() == null) 
 	        return "/errores/error_sesion.xhtml";	    
 	    return null;
 	}
 	
+	// CAMBIO DE CLAVE
+	String clave1 = "";
+	String clave2 = "";
+	
+	public void cambiarClave() {		
+
+		if (clave1.equals(clave2)) {
+			EntityManagerFactory emf = Persistence.createEntityManagerFactory("sismacc");
+			EntityManager em = emf.createEntityManager();
+			em.getTransaction().begin();
+			try {
+				SegUsuario ob = new SegUsuario();
+				ob = DAO.buscarSegUsuario("from SegUsuario c where c.idUsuario = '" + Session.getUserName() + "'");
+				ob.setClave(clave1);
+
+				if (DAO.saveOrUpdate(ob, 1, em)) {
+					em.getTransaction().commit();  
+					mensaje = "Cambio de clave exitoso";
+					FacesContext.getCurrentInstance().addMessage("msgRegistro", new FacesMessage(FacesMessage.SEVERITY_INFO, mensajeTitulo, mensaje));
+
+				} else {
+					em.getTransaction().rollback();
+					mensaje = "Error al cambiar la clave";
+					FacesContext.getCurrentInstance().addMessage("msgRegistro", new FacesMessage(FacesMessage.SEVERITY_ERROR, mensajeTitulo, mensaje));
+				}		
+			} catch (Exception e) {
+				em.getTransaction().rollback();
+				e.printStackTrace();
+			}	
+			em.close();		
+		}else {
+			mensaje = "Las claves ingresadas deben ser iguales";
+			FacesContext.getCurrentInstance().addMessage("msgRegistro", new FacesMessage(FacesMessage.SEVERITY_ERROR, mensajeTitulo, mensaje));
+		}
+	}
+	
+	public String getClave1() {
+		return clave1;
+	}
+	public void setClave1(String clave1) {
+		this.clave1 = clave1;
+	}
+	public String getClave2() {
+		return clave2;
+	}
+	public void setClave2(String clave2) {
+		this.clave2 = clave2;
+	}
+
 	// VALIDAR MENU		
 	boolean seg = false;
 	boolean man = false;

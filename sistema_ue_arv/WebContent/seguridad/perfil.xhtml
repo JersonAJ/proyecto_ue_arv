@@ -12,9 +12,9 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 			<f:metadata>		    
 			    <f:viewAction action="#{general.validaSesion}" />
 			</f:metadata>
-		
-			<p:growl id="msgRegistro" for="msgRegistro" showDetail="true" autoUpdate="true" closable="true" />
 			
+			<p:growl id="msgRegistro" for="msgRegistro" showDetail="true" closable="true" />
+								
 			<p:outputPanel style="background-color: white; padding: 5px;">
 				<p:commandLink update=":form:pnl" oncomplete="PF('dgl').show();">
 					<i class="fa fa-plus-circle" />
@@ -72,7 +72,7 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 			     <p:column headerText="Permisos(Menú)" width="20">
 			    	<p:outputPanel style="text-align: center">
 						<p:commandLink update=":form:dglMenu" oncomplete="PF('dglMenu').show()">	
-							<i class="fa fa-key" />
+							<i class="fa fa-bars" />
 													
 							<f:setPropertyActionListener value="#{dtPerfil.descripcion}" target="#{perfil.descripcion}" />	
 							
@@ -94,10 +94,10 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 			
 				<h:panelGrid id="pnl" columns="2" cellpadding="0" style="width: auto; min-width: 100%;" columnClasses="ui-grid-col-4,ui-grid-col-8">
 										
-					<p:outputPanel style="text-align: end; margin-right: 5px">Descripción</p:outputPanel>
+					<p:outputPanel style="text-align: end; margin-right: 5px">Descripción:</p:outputPanel>
 					<p:inputText value="#{perfil.descripcion}" style="width: 90%" />
 								
-					<p:outputPanel style="text-align: end; margin-right: 5px">Activo</p:outputPanel>
+					<p:outputPanel style="text-align: end; margin-right: 5px">Activo:</p:outputPanel>
 					<h:selectBooleanCheckbox value="#{perfil.ckEstado}" />
 					
 					<f:facet name = "footer"><br/>

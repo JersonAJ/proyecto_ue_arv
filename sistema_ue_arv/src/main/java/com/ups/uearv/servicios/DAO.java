@@ -128,17 +128,6 @@ public class DAO {
 	}
 
 	// SEGURIDAD
-	public static String getClaveUsuario(String usuario) {
-		Query query = em.createNativeQuery(
-				" SELECT clave FROM seg_usuario WHERE id_usuario = '" + usuario + "' ");
-		List<Object> result = query.getResultList();
-		Iterator<Object> itr = result.iterator();
-		Object obj = (Object) itr.next();
-		String clave = String.valueOf(obj);
-
-		return clave;
-	}
-	
 	public static List<Object> consultaMenu(String idPerfil, int idMenuPadre) {
 		Query query = em.createNativeQuery(" CALL consulta_menu_perfil (" + idPerfil + ", " + idMenuPadre + ") ");
 		return query.getResultList();
@@ -160,6 +149,11 @@ public class DAO {
 		String perfil = String.valueOf(obj);
 
 		return perfil;
+	}
+	
+	public static Query getPerfiles() {
+		Query query = em.createNativeQuery(" SELECT id_perfil, descripcion FROM seg_perfil WHERE estado = 'AC'");
+		return query;
 	}
 	
 	public static String getNombre(String usuario) {

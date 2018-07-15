@@ -17,6 +17,7 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang.WordUtils;
 
+import com.ups.uearv.entidades.SegUsuario;
 import com.ups.uearv.servicios.DAO;
 import com.ups.uearv.servicios.Session;
 
@@ -41,19 +42,31 @@ public class Login implements Serializable {
 	
 	public String ingresar() {
 		try {
-			String pass = "";
-			pass = DAO.getClaveUsuario(usuario);
 
+			SegUsuario u = DAO.buscarSegUsuario("from SegUsuario c where c.idUsuario = '" + usuario + "'");
+
+			String pass = u.getClave();
+			String bloq = u.getSnBloqueado();
+			String esta = u.getEstado();
+
+			if (esta.equals("IC")) {
+				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error de acceso:", "El usuario se encuentra inactivo"));
+				usuario = null;
+				return navegacion.toLogin();
+			}			
+			if (bloq.equals("S")) {
+				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error de acceso:", "El usuario se encuentra bloqueado"));
+				usuario = null;
+				return navegacion.toLogin();
+			}			
 			if (pass != null) {
-				String valor = password;
-				if (valor.equals(pass)) {
+				if (password.equals(pass)) {
 					HttpSession httpSession = Session.getSession();
 					httpSession.setAttribute("username", usuario);
-															
+
 					return navegacion.redirectToInicio();
-				}
-			}
-			
+				} 
+			}			
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error de acceso:", "Usuario o contraseña incorrecta"));
 			usuario = null;
 			return navegacion.toLogin();
