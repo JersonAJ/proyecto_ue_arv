@@ -37,6 +37,8 @@ public class CalAsignatura implements Serializable {
 	private int horas;
 
 	private String nombre;
+	
+	private String nivel;
 
 	@Column(name="usuario_act")
 	private String usuarioAct;
@@ -121,6 +123,14 @@ public class CalAsignatura implements Serializable {
 
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
+	}
+
+	public String getNivel() {
+		return nivel;
+	}
+
+	public void setNivel(String nivel) {
+		this.nivel = nivel;
 	}
 
 	public String getUsuarioAct() {

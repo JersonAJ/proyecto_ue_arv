@@ -18,6 +18,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
+import org.primefaces.context.RequestContext;
+
 import com.ups.uearv.entidades.SegUsuario;
 import com.ups.uearv.servicios.DAO;
 import com.ups.uearv.servicios.Session;
@@ -40,6 +42,8 @@ public class General implements Serializable {
 	@PostConstruct
 	public void init() {	
 		validaMenuSistema();
+		mostrarCambioClave();
+				
 	}
 	
 	// VALIDAR SESION
@@ -49,6 +53,28 @@ public class General implements Serializable {
 	    return null;
 	}
 	
+	// MOSTRAR CAMBIO DE CLAVE
+	String displayMensajeClave = "none";
+	
+	@SuppressWarnings("deprecation")
+	public void mostrarCambioClave() {		
+		if (Session.getUserName() != null) {
+			SegUsuario ob = DAO.buscarSegUsuario("from SegUsuario c where c.idUsuario = '" + Session.getUserName() + "'");
+			if (ob.getSnNuevo().equals("S")) {
+				RequestContext context = RequestContext.getCurrentInstance();
+				context.execute("PF('dglClave').show();");
+				displayMensajeClave ="";	
+			}		
+		}
+	}
+		
+	public String getDisplayMensajeClave() {
+		return displayMensajeClave;
+	}
+	public void setDisplayMensajeClave(String displayMensajeClave) {
+		this.displayMensajeClave = displayMensajeClave;
+	}
+
 	// CAMBIO DE CLAVE
 	String clave1 = "";
 	String clave2 = "";
@@ -63,6 +89,7 @@ public class General implements Serializable {
 				try {
 					SegUsuario ob = new SegUsuario();
 					ob = DAO.buscarSegUsuario("from SegUsuario c where c.idUsuario = '" + Session.getUserName() + "'");
+					ob.setSnNuevo("N");
 					ob.setClave(clave1);
 
 					if (DAO.saveOrUpdate(ob, 1, em)) {
@@ -70,6 +97,7 @@ public class General implements Serializable {
 						mensaje = "Cambio de clave exitoso";
 						FacesContext.getCurrentInstance().addMessage("msgRegistro",
 								new FacesMessage(FacesMessage.SEVERITY_INFO, mensajeTitulo, mensaje));
+						displayMensajeClave = "none";
 
 					} else {
 						em.getTransaction().rollback();

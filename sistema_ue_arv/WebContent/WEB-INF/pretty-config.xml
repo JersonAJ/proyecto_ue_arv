@@ -2,16 +2,19 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://ocpsoft.org/xml/ns/prettyfaces/rewrite-config-prettyfaces.xsd">
 
+	<!-- LOGIN -->
 	<url-mapping id="login">
 		<pattern value="/login" />
 		<view-id value="/login.xhtml" />
 	</url-mapping>
 	
+	<!-- INICIO -->
 	<url-mapping id="inicio">
 		<pattern value="/inicio" />
 		<view-id value="/inicio.xhtml" />
 	</url-mapping>
 	
+	<!-- ERRORES -->
 	<url-mapping id="usuario">
 		<pattern value="/seg/usuario" />
 		<view-id value="/seguridad/usuario.xhtml" />
@@ -20,6 +23,12 @@
 	<url-mapping id="perfil">
 		<pattern value="/seg/perfil" />
 		<view-id value="/seguridad/perfil.xhtml" />
+	</url-mapping>
+
+	<!-- MANTENIMIENTOS -->
+	<url-mapping id="catalogo">
+		<pattern value="/man/catalogo" />
+		<view-id value="/mantenimientos/catalogo.xhtml" />
 	</url-mapping>
 	
 	<!-- ERRORES -->	

@@ -34,8 +34,6 @@ public class MatCurso implements Serializable {
 
 	private String nivel;
 
-	private String subnivel;
-
 	@Column(name="usuario_act")
 	private String usuarioAct;
 
@@ -99,14 +97,6 @@ public class MatCurso implements Serializable {
 
 	public void setNivel(String nivel) {
 		this.nivel = nivel;
-	}
-
-	public String getSubnivel() {
-		return this.subnivel;
-	}
-
-	public void setSubnivel(String subnivel) {
-		this.subnivel = subnivel;
 	}
 
 	public String getUsuarioAct() {

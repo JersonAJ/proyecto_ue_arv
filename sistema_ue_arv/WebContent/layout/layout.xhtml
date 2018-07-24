@@ -119,11 +119,13 @@
 					<h:form>
 						<p:growl id="msgRegistro" for="msgRegistro" showDetail="true" closable="true" />
 						
-						<p:dialog header="Cambiar clave" widgetVar="dglClave" modal="true" 
-							closable="true" maximizable="false" resizable="false" width="400px">
+						<p:dialog header="Cambiar clave" widgetVar="dglClave" modal="true" closable="true" maximizable="false" resizable="false" width="400px">
+							
+							<p:outputPanel id="pnlMsj" style="background-color: #fff7b2; border: 1px solid #a7a7a7; padding: 5px; margin-bottom: 10px; margin-top: -5px;
+								text-align: center; display: #{general.displayMensajeClave}">Por seguridad se recomienda que cambie la clave.</p:outputPanel>
 							
 							<h:panelGrid id="pnl" columns="2" cellpadding="0" style="width: auto; min-width: 100%;" columnClasses="ui-grid-col-5,ui-grid-col-7">
-							
+								
 								<p:outputPanel style="text-align: end; margin-right: 5px">Ingrese nueva clave:</p:outputPanel>
 								<p:password value="#{general.clave1}" />
 				                
@@ -133,7 +135,7 @@
 								<f:facet name = "footer"><br/>
 								    <h:panelGroup style = "display:block; text-align:center">
 								      	<p:commandButton id="btnCambiar" value="Cambiar" icon="fa fa-refresh" 
-								      	actionListener="#{general.cambiarClave}" update="msgRegistro" />	
+								      		actionListener="#{general.cambiarClave}" update="msgRegistro pnlMsj" />	
 									</h:panelGroup>
 								</f:facet>					
 							</h:panelGrid>
