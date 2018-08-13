@@ -5,7 +5,7 @@ xmlns:h="http://xmlns.jcp.org/jsf/html"
 xmlns:p="http://primefaces.org/ui"
 xmlns:f="http://xmlns.jcp.org/jsf/core">
 			
-	<ui:define name="titulo"><i class="fa fa-lock" /> Seguridad / catalogos</ui:define>
+	<ui:define name="titulo"><i class="fa fa-cog" /> Mantenimientos / Catálogo</ui:define>
 	
 	<ui:define name="content">									
 		<h:form id="form" style="width: 100%">
@@ -15,125 +15,45 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 				
 			<p:growl id="msgRegistro" for="msgRegistro" showDetail="true" closable="true" />
 			
-			<p:outputPanel style="background-color: white; padding: 5px;">
-				<p:commandLink update=":form:pnl" oncomplete="PF('dgl').show();">
-					<i class="fa fa-plus-circle" />
-					<span>Agregar</span>
-					
-					<f:setPropertyActionListener value="" target="#{catalogo.idcatalogo}" />
-					<f:setPropertyActionListener value="" target="#{catalogo.idPerfil}" />
-					<f:setPropertyActionListener value="" target="#{catalogo.nombres}" />	
-					<f:setPropertyActionListener value="" target="#{catalogo.apellidos}" />
-					<f:setPropertyActionListener value="" target="#{catalogo.clave}" />
-					<f:setPropertyActionListener value="0" target="#{catalogo.intentos}" />
-					<f:setPropertyActionListener value="false" target="#{catalogo.ckBloqueado}" />
-					<f:setPropertyActionListener value="true" target="#{catalogo.ckEstado}" />
-					<f:setPropertyActionListener value="true" target="#{catalogo.ckNuevo}" />
-					<f:setPropertyActionListener value="0" target="#{catalogo.accion}" />
-										
-				</p:commandLink>					
-			</p:outputPanel> 
-			
+						
 			<!-- CONSULTA -->	
 			<style>				
 				.ui-datatable thead th, .ui-datatable tbody td, .ui-datatable tfoot td, .ui-datatable tfoot th { padding: 2px 10px; }
 			</style>
 			<br/>		
 			<p:outputPanel>
-			   <p:inputText style="width: 500px" value="#{catalogo.itBuscar}" placeholder="Buscar por nombres o apellidos">
-				<p:ajax event="keyup" update="dt" listener="#{catalogo.buscar}"/>
-			     	</p:inputText>	
-				<p:spacer width="10px" />
-			
-				<h:selectBooleanCheckbox value="#{catalogo.ckMostrarIC}">
-	    			<p:ajax update="dt" listener="#{catalogo.buscar}" />
-	 			</h:selectBooleanCheckbox> Mostrar inactivos     			     			      				      		      			
+			   <p:inputText style="width: 500px" value="#{catalogo.itBuscar}" placeholder="Buscar por descripción">
+					<p:ajax event="keyup" update="dt" listener="#{catalogo.buscar}"/>
+			   </p:inputText>							     			      				      		      			
 			</p:outputPanel>
 			 				 	
 			<p:separator />
 			
-			<p:dataTable id="dt" var="dtcatalogo" value="#{catalogo.catalogoList}" tableStyle="width: auto; min-width: 100%;" emptyMessage="No existen datos a mostrar" >
+			<p:dataTable id="dt" var="dtCatalogo" value="#{catalogo.catalogoCabList}" tableStyle="width: auto; min-width: 100%;" emptyMessage="No existen datos a mostrar" >
 			 
-			    <p:column headerText="catalogo">
-			        <h:outputText value="#{dtcatalogo.idcatalogo}" />
-			    </p:column>
+			    <p:column headerText="Descripción">
+			        <h:outputText value="#{dtCatalogo.descripcion}" />
+			    </p:column>			  
 			    
-			    <p:column headerText="Nombre completo">
-			        <h:outputText value="#{dtcatalogo.apellidos} #{dtcatalogo.nombres}" />
-			    </p:column>
-			    
-			    <p:column headerText="Perfil">
-			        <h:outputText value="#{catalogo.getPerfil(dtcatalogo.idPerfil)}" />
-			    </p:column>
-								    
-			    <p:column headerText="Bloqueado" width="20" style="text-align: center">
-			    	<h:selectBooleanCheckbox value="#{dtcatalogo.snBloqueado eq 'S'? true:false}" disabled="true" />			        
-			    </p:column>
-			    
-			    <p:column headerText="Activo" width="20" style="text-align: center">
-			    	<h:selectBooleanCheckbox value="#{dtcatalogo.estado eq 'AC'? true:false}" disabled="true" />			        
-			    </p:column>
-			    
-			    <p:column headerText="Editar" width="20">
+			    <p:column headerText="Detalle" width="50">
 			    	<p:outputPanel style="text-align: center">
-						<p:commandLink update=":form:pnl" oncomplete="PF('dgl').show()">	
-							<i class="fa fa-pencil" />
+						<p:commandLink update=":form:dgl" oncomplete="PF('dgl').show()">	
+							<i class="fa fa-bars" />
 													
-							<f:setPropertyActionListener value="#{dtcatalogo.idcatalogo}" target="#{catalogo.idcatalogo}" />
-							<f:setPropertyActionListener value="#{dtcatalogo.idPerfil}" target="#{catalogo.idPerfil}" />
-							<f:setPropertyActionListener value="#{dtcatalogo.nombres}" target="#{catalogo.nombres}" />	
-							<f:setPropertyActionListener value="#{dtcatalogo.apellidos}" target="#{catalogo.apellidos}" />
-							<f:setPropertyActionListener value="#{dtcatalogo.intentos}" target="#{catalogo.intentos}" />
-							<f:setPropertyActionListener value="#{dtcatalogo.clave}" target="#{catalogo.clave}" />
-							<f:setPropertyActionListener value="#{catalogo.getEstado(dtcatalogo.estado)}" target="#{catalogo.ckEstado}" />
-							<f:setPropertyActionListener value="#{catalogo.getBloqueado(dtcatalogo.snBloqueado)}" target="#{catalogo.ckBloqueado}" />
-							<f:setPropertyActionListener value="#{catalogo.getNuevo(dtcatalogo.snNuevo)}" target="#{catalogo.ckNuevo}" />
-							<f:setPropertyActionListener value="1" target="#{catalogo.accion}" />
-																					
+							<f:setPropertyActionListener value="#{dtCatalogo.descripcion}" target="#{catalogo.descripcion}" />	
+																																		
 						</p:commandLink>							
 					</p:outputPanel>
-			    </p:column>			  
+			    </p:column>  
+			   			   
 			</p:dataTable>
 			
 			<!-- INGRESO | ACTUALIZACION -->
-			<p:dialog header="Datos catalogo" widgetVar="dgl" modal="true" closable="true" maximizable="false" resizable="false" width="400px">
+			<p:dialog id="dgl" header="Detalle Catálogo" widgetVar="dgl" modal="true" closable="true" maximizable="false" resizable="false" width="500px">
 			
 			<p:ajax event="close" update="form" listener="#{catalogo.closeDialogo}" />
 			
-				<h:panelGrid id="pnl" columns="2" cellpadding="0" style="width: auto; min-width: 100%;" columnClasses="ui-grid-col-4,ui-grid-col-8">
-										
-					<p:outputPanel style="text-align: end; margin-right: 5px">catalogo:</p:outputPanel>
-					<p:inputText value="#{catalogo.idcatalogo}" style="width: 50%" disabled="#{catalogo.accion eq 1? true:false}" />
-					
-					<p:outputPanel style="text-align: end; margin-right: 5px">Perfil:</p:outputPanel>
-					<p:selectOneMenu value="#{catalogo.idPerfil}">
-						<f:selectItems value="#{catalogo.listPerfiles}" />		
-					</p:selectOneMenu>
-					
-					<p:outputPanel style="text-align: end; margin-right: 5px">Nombres:</p:outputPanel>
-					<p:inputText value="#{catalogo.nombres}" style="width: 90%" />
-					
-					<p:outputPanel style="text-align: end; margin-right: 5px">Apellidos:</p:outputPanel>
-					<p:inputText value="#{catalogo.apellidos}" style="width: 90%" />
-									
-					<p:outputPanel style="text-align: end; margin-right: 5px">Intentos:</p:outputPanel>
-					<p:inputNumber decimalPlaces="0" value="#{catalogo.intentos}" inputStyle="width: 30px"/>
-					
-					<p:outputPanel style="text-align: end; margin-right: 5px">Bloqueado:</p:outputPanel>
-					<h:selectBooleanCheckbox value="#{catalogo.ckBloqueado}" />
-					
-					<p:outputPanel style="text-align: end; margin-right: 5px">Cambio de clave:</p:outputPanel>
-					<h:selectBooleanCheckbox value="#{catalogo.ckNuevo}" />
-					
-					<p:outputPanel style="text-align: end; margin-right: 5px">Activo:</p:outputPanel>
-					<h:selectBooleanCheckbox value="#{catalogo.ckEstado}" />
-					
-					<f:facet name = "footer"><br/>
-					    <h:panelGroup style = "display:block; text-align:center">
-					      	<p:commandButton id="btnGuardar" value="Guardar" icon="fa fa-save" actionListener="#{catalogo.guardar}" update="form" />	
-						</h:panelGroup>
-					</f:facet>						
-				</h:panelGrid>
+			
 			</p:dialog>			
 			
 						

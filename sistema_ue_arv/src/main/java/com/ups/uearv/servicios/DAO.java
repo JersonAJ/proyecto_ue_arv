@@ -10,6 +10,7 @@ import javax.persistence.NoResultException;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 
+import com.ups.uearv.entidades.CatalogoCab;
 import com.ups.uearv.entidades.SegMenu;
 import com.ups.uearv.entidades.SegPerfil;
 import com.ups.uearv.entidades.SegPerfilMenu;
@@ -63,6 +64,21 @@ public class DAO {
 		}
 		return list;
 	}
+	
+	public static List<CatalogoCab> nqCatalogoCab(String njpql) {
+		List<CatalogoCab> list = new ArrayList<CatalogoCab>();
+		try {
+			list = (List<CatalogoCab>) em.createNativeQuery(njpql, CatalogoCab.class).getResultList();
+
+			for (CatalogoCab tb : list)
+				em.refresh(tb);
+
+		} catch (Exception e) {
+		}
+		return list;
+	}
+	
+	
 
 	public static SegPerfil buscarSegPerfil(String jpql) {
 		try {
@@ -134,10 +150,15 @@ public class DAO {
 	}
 	
 	public static List<Object> obtenerMenu(String usuario) {	
-		int idPerfil = DAO.buscarSegUsuario(" from SegUsuario u where u.idUsuario = '" + usuario + "'").getIdPerfil();
+		try {
+			int idPerfil = DAO.buscarSegUsuario(" from SegUsuario u where u.idUsuario = '" + usuario + "'").getIdPerfil();
+			
+			Query query = em.createNativeQuery(" SELECT id_menu FROM seg_perfil_menu WHERE id_perfil = " + idPerfil);
+			return query.getResultList();
+		} catch (Exception e) {
+			return null;
+		}
 		
-		Query query = em.createNativeQuery(" SELECT id_menu FROM seg_perfil_menu WHERE id_perfil = " + idPerfil);
-		return query.getResultList();
 	}
 
 	public static String getPerfil(String usuario) {

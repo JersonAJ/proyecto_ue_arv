@@ -36,26 +36,26 @@ public class General implements Serializable {
 
 	String mensaje = "";
 	String mensajeTitulo = "Mensaje del sistema";
-	
+
 	private static final long serialVersionUID = 1L;
 
 	@PostConstruct
 	public void init() {	
 		validaMenuSistema();
 		mostrarCambioClave();
-				
+
 	}
-	
+
 	// VALIDAR SESION
 	public String validaSesion() {		 
-	    if (Session.getUserName() == null) 
-	        return "/errores/error_sesion.xhtml";	    
-	    return null;
+		if (Session.getUserName() == null) 
+			return "/errores/error_sesion.xhtml";	    
+		return null;
 	}
-	
+
 	// MOSTRAR CAMBIO DE CLAVE
 	String displayMensajeClave = "none";
-	
+
 	@SuppressWarnings("deprecation")
 	public void mostrarCambioClave() {		
 		if (Session.getUserName() != null) {
@@ -67,7 +67,7 @@ public class General implements Serializable {
 			}		
 		}
 	}
-		
+
 	public String getDisplayMensajeClave() {
 		return displayMensajeClave;
 	}
@@ -78,7 +78,7 @@ public class General implements Serializable {
 	// CAMBIO DE CLAVE
 	String clave1 = "";
 	String clave2 = "";
-	
+
 	public void cambiarClave() {
 
 		if (!clave1.equals("")) {
@@ -121,7 +121,7 @@ public class General implements Serializable {
 					new FacesMessage(FacesMessage.SEVERITY_ERROR, mensajeTitulo, mensaje));
 		}
 	}
-	
+
 	public String getClave1() {
 		return clave1;
 	}
@@ -141,11 +141,11 @@ public class General implements Serializable {
 	boolean mat = false;
 	boolean ges = false;
 	boolean cal = false;
-	
+
 	String displaySeguridad = "none";
 	String displayPerfiles = "none";
 	String displayUsuarios = "none";
-	
+
 	String displayMantenimientos = "none";
 	String displayCatalogo = "none";
 	String displayCursos = "none";
@@ -163,125 +163,129 @@ public class General implements Serializable {
 	String displayEstudiantes = "none";
 	String displayMatriculas = "none";
 	String displayMatReportes = "none";
-	
+
 	String displayGestion = "none";
 	String displayDescuentos = "none";
 	String displayPensiones = "none";
 	String displayGesReportes = "none";
-	
+
 	String displayCalificaciones = "none";
 	String displayControl = "none";
 	String displayAsistencias = "none";
 	String displayCalReportes = "none";
-	
+
 	public void validaMenuSistema() {
-		List<Object> result = DAO.obtenerMenu(Session.getUserName());
-		Iterator<Object> itr = result.iterator();
-		if (result.size() != 0) {
-			for (int k = 0; k < result.size(); k++) {
-				Object obj = (Object) itr.next();
+		try {
+			List<Object> result = DAO.obtenerMenu(Session.getUserName());
+			Iterator<Object> itr = result.iterator();
+			if (result.size() != 0) {
+				for (int k = 0; k < result.size(); k++) {
+					Object obj = (Object) itr.next();
 
-				int idMenu = Integer.parseInt(obj.toString());
+					int idMenu = Integer.parseInt(obj.toString());
 
-				switch (idMenu) {
-				case 2:
-					displayPerfiles = "";
-					seg = true;
-					break;
-				case 3:
-					displayUsuarios = "";
-					seg = true;
-					break;
-				case 5:
-					displayCatalogo = "";
-					man = true;
-					break;
-				case 6:
-					displayCursos = "";
-					man = true;
-					break;
-				case 7:
-					displayDocentes = "";
-					man = true;
-					break;
-				case 8:
-					displayAsignaturas = "";
-					man = true;
-					break;
-				case 9:
-					displayRepartos = "";
-					man = true;
-					break;
-				case 10:
-					displayEscalas = "";
-					man = true;
-					break;
-				case 11:
-					displayComportamientos = "";
-					man = true;
-					break;
-				case 12:
-					displayParalelos = "";
-					man = true;
-					break;
-				case 14:
-					displayPeriodos = "";
-					seg = true;
-					break;
-				case 15:
-					displayOfertas = "";
-					mat = true;
-					break;
-				case 16:
-					displayRepresentantes = "";
-					mat = true;
-					break;
-				case 17:
-					displayEstudiantes = "";
-					mat = true;
-					break;
-				case 18:
-					displayMatriculas = "";
-					mat = true;
-					break;
-				case 19:
-					displayMatReportes = "";
-					mat = true;
-					break;
-				case 21:
-					displayDescuentos = "";
-					ges = true;
-					break;
-				case 22:
-					displayPensiones = "";
-					ges = true;
-					break;
-				case 23:
-					displayGesReportes = "";
-					ges = true;
-					break;
-				case 25:
-					displayControl = "";
-					cal = true;
-					break;
-				case 26:
-					displayAsistencias = "";
-					cal = true;
-					break;
-				case 27:
-					displayCalReportes = "";
-					cal = true;
-					break;
+					switch (idMenu) {
+					case 2:
+						displayPerfiles = "";
+						seg = true;
+						break;
+					case 3:
+						displayUsuarios = "";
+						seg = true;
+						break;
+					case 5:
+						displayCatalogo = "";
+						man = true;
+						break;
+					case 6:
+						displayCursos = "";
+						man = true;
+						break;
+					case 7:
+						displayDocentes = "";
+						man = true;
+						break;
+					case 8:
+						displayAsignaturas = "";
+						man = true;
+						break;
+					case 9:
+						displayRepartos = "";
+						man = true;
+						break;
+					case 10:
+						displayEscalas = "";
+						man = true;
+						break;
+					case 11:
+						displayComportamientos = "";
+						man = true;
+						break;
+					case 12:
+						displayParalelos = "";
+						man = true;
+						break;
+					case 14:
+						displayPeriodos = "";
+						seg = true;
+						break;
+					case 15:
+						displayOfertas = "";
+						mat = true;
+						break;
+					case 16:
+						displayRepresentantes = "";
+						mat = true;
+						break;
+					case 17:
+						displayEstudiantes = "";
+						mat = true;
+						break;
+					case 18:
+						displayMatriculas = "";
+						mat = true;
+						break;
+					case 19:
+						displayMatReportes = "";
+						mat = true;
+						break;
+					case 21:
+						displayDescuentos = "";
+						ges = true;
+						break;
+					case 22:
+						displayPensiones = "";
+						ges = true;
+						break;
+					case 23:
+						displayGesReportes = "";
+						ges = true;
+						break;
+					case 25:
+						displayControl = "";
+						cal = true;
+						break;
+					case 26:
+						displayAsistencias = "";
+						cal = true;
+						break;
+					case 27:
+						displayCalReportes = "";
+						cal = true;
+						break;
+					}
 				}
+				if (seg) { displaySeguridad = ""; } // 1
+				if (man) { displayMantenimientos = ""; } // 4
+				if (mat) { displayMatriculacion = ""; } // 13
+				if (ges) { displayGestion = ""; } // 20
+				if (cal) { displayCalificaciones = ""; } // 24		
 			}
-		if (seg) { displaySeguridad = ""; } // 1
-		if (man) { displayMantenimientos = ""; } // 4
-		if (mat) { displayMatriculacion = ""; } // 13
-		if (ges) { displayGestion = ""; } // 20
-		if (cal) { displayCalificaciones = ""; } // 24		
+		} catch (Exception e) {
+			System.out.println("Error en validaMenuSistema() de tipo " + e);
 		}
 	}
-	
+
 	public String getDisplaySeguridad() {
 		return displaySeguridad;
 	}
