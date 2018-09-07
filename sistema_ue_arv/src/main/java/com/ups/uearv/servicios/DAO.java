@@ -11,6 +11,7 @@ import javax.persistence.Persistence;
 import javax.persistence.Query;
 
 import com.ups.uearv.entidades.CatalogoCab;
+import com.ups.uearv.entidades.CatalogoDet;
 import com.ups.uearv.entidades.SegMenu;
 import com.ups.uearv.entidades.SegPerfil;
 import com.ups.uearv.entidades.SegPerfilMenu;
@@ -78,7 +79,18 @@ public class DAO {
 		return list;
 	}
 	
-	
+	public static List<CatalogoDet> nqCatalogoDet(String njpql) {
+		List<CatalogoDet> list = new ArrayList<CatalogoDet>();
+		try {
+			list = (List<CatalogoDet>) em.createNativeQuery(njpql, CatalogoDet.class).getResultList();
+
+			for (CatalogoDet tb : list)
+				em.refresh(tb);
+
+		} catch (Exception e) {
+		}
+		return list;
+	}
 
 	public static SegPerfil buscarSegPerfil(String jpql) {
 		try {

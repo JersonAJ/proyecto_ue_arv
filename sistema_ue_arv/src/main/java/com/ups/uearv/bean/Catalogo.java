@@ -20,6 +20,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
 import com.ups.uearv.entidades.CatalogoCab;
+import com.ups.uearv.entidades.CatalogoDet;
 import com.ups.uearv.entidades.SegPerfil;
 import com.ups.uearv.entidades.SegUsuario;
 import com.ups.uearv.servicios.DAO;
@@ -41,6 +42,7 @@ public class Catalogo implements Serializable {
 	boolean ckMostrarIC = false;
 
 	private List<CatalogoCab> catalogoCabList = new ArrayList<CatalogoCab>();
+	private List<CatalogoDet> catalogoDetList = new ArrayList<CatalogoDet>();
 	
 	String descripcion = "";
 
@@ -70,9 +72,20 @@ public class Catalogo implements Serializable {
 	}
 
 	public void buscar() {		
-			jpql = "SELECT * FROM catalogo_cab WHERE (grupo LIKE '%" + itBuscar + "%' OR descripcion LIKE '%" + itBuscar
-					+ "%') AND estado = 'AC' ORDER BY grupo, descripcion";
-				llenarLista(jpql);
+		jpql = "SELECT * FROM catalogo_cab WHERE (grupo LIKE '%" + itBuscar + "%' OR descripcion LIKE '%" + itBuscar
+				+ "%') AND estado = 'AC' ORDER BY grupo, descripcion";
+		llenarLista(jpql);
+	}
+	
+	
+	public List<CatalogoDet> getCatalogoDetalle(String cab) {
+		catalogoDetList.clear();
+		jpql = "SELECT * FROM catalogo_det WHERE codigo_cab = '"+ cab + "' and estado = 'AC'";
+		List<CatalogoDet> l = DAO.nqCatalogoDet(jpql); 
+		for (CatalogoDet in : l) 
+			catalogoDetList.add(in);	
+		
+		return catalogoDetList;
 	}
 
 	// INGRESO - ACTUALIZACION
@@ -91,40 +104,37 @@ public class Catalogo implements Serializable {
 	public String getItBuscar() {
 		return itBuscar;
 	}
-
 	public void setItBuscar(String itBuscar) {
 		this.itBuscar = itBuscar;
 	}
-
 	public boolean isCkMostrarIC() {
 		return ckMostrarIC;
 	}
-
 	public void setCkMostrarIC(boolean ckMostrarIC) {
 		this.ckMostrarIC = ckMostrarIC;
 	}
-
 	public int getAccion() {
 		return accion;
 	}
-
 	public void setAccion(int accion) {
 		this.accion = accion;
 	}
-
 	public List<CatalogoCab> getCatalogoCabList() {
 		return catalogoCabList;
 	}
-
 	public void setCatalogoCabList(List<CatalogoCab> catalogoCabList) {
 		this.catalogoCabList = catalogoCabList;
 	}
-
 	public String getDescripcion() {
 		return descripcion;
 	}
-
 	public void setDescripcion(String descripcion) {
 		this.descripcion = descripcion;
+	}
+	public List<CatalogoDet> getCatalogoDetList() {
+		return catalogoDetList;
+	}
+	public void setCatalogoDetList(List<CatalogoDet> catalogoDetList) {
+		this.catalogoDetList = catalogoDetList;
 	}
 }
