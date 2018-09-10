@@ -14,9 +14,8 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 			</f:metadata>
 				
 			<p:growl id="msgRegistro" for="msgRegistro" showDetail="true" closable="true" />
-			
-						
-			<!-- CONSULTA -->	
+									
+			<!-- CONSULTA -->
 			<style>				
 				.ui-datatable thead th, .ui-datatable tbody td, .ui-datatable tfoot td, .ui-datatable tfoot th { padding: 2px 10px; }
 			</style>
@@ -32,7 +31,7 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 			<p:dataTable id="dt" var="dtCatalogo" value="#{catalogo.catalogoCabList}" tableStyle="width: auto; min-width: 100%;" emptyMessage="No existen datos a mostrar">
 			    <p:column headerText="Descripción">
 			        <h:outputText value="#{dtCatalogo.descripcion}" />
-			    </p:column>			  
+			    </p:column>  
 			    
 			    <p:column headerText="Detalle" width="50">
 			    	<p:outputPanel style="text-align: center">
@@ -65,15 +64,14 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 			    
 			    <p:column headerText="Acción" width="50">
 			    	<p:outputPanel style="text-align: center">
-							
+						<p:commandLink>	
+							<i class="fa fa-trash" style="color: red" />
+						</p:commandLink>	
 					</p:outputPanel>
 			    </p:column>			   			   
 			</p:dataTable>
 			
-			</p:dialog>			
-			
-						
+			</p:dialog>					
 	   	</h:form>    	    
-	</ui:define>		
-	
+	</ui:define>			
 </ui:composition>

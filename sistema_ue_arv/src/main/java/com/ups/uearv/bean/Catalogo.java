@@ -43,9 +43,8 @@ public class Catalogo implements Serializable {
 
 	private List<CatalogoCab> catalogoCabList = new ArrayList<CatalogoCab>();
 	private List<CatalogoDet> catalogoDetList = new ArrayList<CatalogoDet>();
-	
-	String descripcion = "";
 
+	String descripcion = "";
 
 	private static EntityManagerFactory emf = Persistence.createEntityManagerFactory("sismacc");
 
@@ -59,7 +58,6 @@ public class Catalogo implements Serializable {
 
 	@PostConstruct
 	public void init() {			
-		
 		buscar();	
 	}
 
@@ -76,15 +74,14 @@ public class Catalogo implements Serializable {
 				+ "%') AND estado = 'AC' ORDER BY grupo, descripcion";
 		llenarLista(jpql);
 	}
-	
-	
+
 	public List<CatalogoDet> getCatalogoDetalle(String cab) {
 		catalogoDetList.clear();
 		jpql = "SELECT * FROM catalogo_det WHERE codigo_cab = '"+ cab + "' and estado = 'AC'";
 		List<CatalogoDet> l = DAO.nqCatalogoDet(jpql); 
 		for (CatalogoDet in : l) 
 			catalogoDetList.add(in);	
-		
+
 		return catalogoDetList;
 	}
 
@@ -99,7 +96,7 @@ public class Catalogo implements Serializable {
 			ban = false;
 		return ban;
 	}
-	
+
 	// GETTERS AND SETTERS	
 	public String getItBuscar() {
 		return itBuscar;
