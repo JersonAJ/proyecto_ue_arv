@@ -13,8 +13,8 @@
 /*Data*/
 /*Menu*/
 .ui-icon-carat-1-n {
-	background: none;
-	display: inline-block;
+	background: none !important;
+	display: inline-grid;
 	font: normal normal normal 14px/1 FontAwesome;
 	font-size: inherit;
 	text-rendering: auto;
@@ -29,8 +29,8 @@
 }
 
 .ui-icon-carat-1-e {
-	background: none;
-	display: inline-block;
+	background: none !important;
+	display: inline-grid;
 	font: normal normal normal 14px/1 FontAwesome;
 	font-size: inherit;
 	text-rendering: auto;
@@ -45,8 +45,8 @@
 }
 
 .ui-icon-carat-1-s {
-	background: none;
-	display: inline-block;
+	background: none !important;
+	display: inline-grid;
 	font: normal normal normal 14px/1 FontAwesome;
 	font-size: inherit;
 	text-rendering: auto;
@@ -61,8 +61,8 @@
 }
 
 .ui-icon-carat-1-w {
-	background: none;
-	display: inline-block;
+	background: none !important;
+	display: inline-grid;
 	font: normal normal normal 14px/1 FontAwesome;
 	font-size: inherit;
 	text-rendering: auto;
@@ -77,8 +77,8 @@
 }
 
 .ui-icon-carat-2-n-s {
-	background: none;
-	display: inline-block;
+	background: none !important;
+	display: inline-grid;
 	font: normal normal normal 14px/1 FontAwesome;
 	font-size: inherit;
 	text-rendering: auto;
@@ -93,8 +93,8 @@
 }
 
 .ui-icon-triangle-1-n {
-	background: none;
-	display: inline-block;
+	background: none !important;
+	display: inline-grid;
 	font: normal normal normal 14px/1 FontAwesome;
 	font-size: inherit;
 	text-rendering: auto;
@@ -109,8 +109,8 @@
 }
 
 .ui-icon-triangle-1-e {
-	background: none;
-	display: inline-block;
+	background: none !important;
+	display: inline-grid;
 	font: normal normal normal 14px/1 FontAwesome;
 	font-size: inherit;
 	text-rendering: auto;
@@ -125,8 +125,8 @@
 }
 
 .ui-icon-triangle-1-s {
-	background: none;
-	display: inline-block;
+	background: none !important;
+	display: inline-grid;
 	font: normal normal normal 14px/1 FontAwesome;
 	font-size: inherit;
 	text-rendering: auto;
@@ -141,8 +141,8 @@
 }
 
 .ui-icon-triangle-1-w {
-	background: none;
-	display: inline-block;
+	background: none !important;
+	display: inline-grid;
 	font: normal normal normal 14px/1 FontAwesome;
 	font-size: inherit;
 	text-rendering: auto;
@@ -157,8 +157,8 @@
 }
 
 .ui-icon-triangle-2-n-s {
-	background: none;
-	display: inline-block;
+	background: none !important;
+	display: inline-grid;
 	font: normal normal normal 14px/1 FontAwesome;
 	font-size: inherit;
 	text-rendering: auto;
@@ -173,8 +173,8 @@
 }
 
 .ui-icon-arrowrefresh-1-w {
-	background: none;
-	display: inline-block;
+	background: none !important;
+	display: inline-grid;
 	font: normal normal normal 14px/1 FontAwesome;
 	font-size: inherit;
 	text-rendering: auto;
@@ -189,8 +189,8 @@
 }
 
 .ui-icon-arrow-1-n {
-	background: none;
-	display: inline-block;
+	background: none !important;
+	display: inline-grid;
 	font: normal normal normal 14px/1 FontAwesome;
 	font-size: inherit;
 	text-rendering: auto;
@@ -205,8 +205,8 @@
 }
 
 .ui-icon-arrow-1-e {
-	background: none;
-	display: inline-block;
+	background: none !important;
+	display: inline-grid;
 	font: normal normal normal 14px/1 FontAwesome;
 	font-size: inherit;
 	text-rendering: auto;
@@ -221,8 +221,8 @@
 }
 
 .ui-icon-arrow-1-s {
-	background: none;
-	display: inline-block;
+	background: none !important;
+	display: inline-grid;
 	font: normal normal normal 14px/1 FontAwesome;
 	font-size: inherit;
 	text-rendering: auto;
@@ -237,8 +237,8 @@
 }
 
 .ui-icon-arrow-1-w {
-	background: none;
-	display: inline-block;
+	background: none !important;
+	display: inline-grid;
 	font: normal normal normal 14px/1 FontAwesome;
 	font-size: inherit;
 	text-rendering: auto;
@@ -253,8 +253,8 @@
 }
 
 .ui-icon-arrow-2-n-s {
-	background: none;
-	display: inline-block;
+	background: none !important;
+	display: inline-grid;
 	font: normal normal normal 14px/1 FontAwesome;
 	font-size: inherit;
 	text-rendering: auto;
@@ -269,8 +269,8 @@
 }
 
 .ui-icon-arrow-2-e-w {
-	background: none;
-	display: inline-block;
+	background: none !important;
+	display: inline-grid;
 	font: normal normal normal 14px/1 FontAwesome;
 	font-size: inherit;
 	text-rendering: auto;
@@ -285,8 +285,8 @@
 }
 
 .ui-icon-arrowthick-1-n {
-	background: none;
-	display: inline-block;
+	background: none !important;
+	display: inline-grid;
 	font: normal normal normal 14px/1 FontAwesome;
 	font-size: inherit;
 	text-rendering: auto;
@@ -301,8 +301,8 @@
 }
 
 .ui-icon-arrowthick-1-e {
-	background: none;
-	display: inline-block;
+	background: none !important;
+	display: inline-grid;
 	font: normal normal normal 14px/1 FontAwesome;
 	font-size: inherit;
 	text-rendering: auto;
@@ -317,8 +317,8 @@
 }
 
 .ui-icon-arrowthick-1-s {
-	background: none;
-	display: inline-block;
+	background: none !important;
+	display: inline-grid;
 	font: normal normal normal 14px/1 FontAwesome;
 	font-size: inherit;
 	text-rendering: auto;
@@ -333,8 +333,8 @@
 }
 
 .ui-icon-arrowthick-1-w {
-	background: none;
-	display: inline-block;
+	background: none !important;
+	display: inline-grid;
 	font: normal normal normal 14px/1 FontAwesome;
 	font-size: inherit;
 	text-rendering: auto;
@@ -349,8 +349,8 @@
 }
 
 .ui-icon-arrow-4 {
-	background: none;
-	display: inline-block;
+	background: none !important;
+	display: inline-grid;
 	font: normal normal normal 14px/1 FontAwesome;
 	font-size: inherit;
 	text-rendering: auto;
@@ -365,8 +365,8 @@
 }
 
 .ui-icon-arrow-4-diag {
-	background: none;
-	display: inline-block;
+	background: none !important;
+	display: inline-grid;
 	font: normal normal normal 14px/1 FontAwesome;
 	font-size: inherit;
 	text-rendering: auto;
@@ -381,8 +381,8 @@
 }
 
 .ui-icon-extlink {
-	background: none;
-	display: inline-block;
+	background: none !important;
+	display: inline-grid;
 	font: normal normal normal 14px/1 FontAwesome;
 	font-size: inherit;
 	text-rendering: auto;
@@ -397,8 +397,8 @@
 }
 
 .ui-icon-newwin {
-	background: none;
-	display: inline-block;
+	background: none !important;
+	display: inline-grid;
 	font: normal normal normal 14px/1 FontAwesome;
 	font-size: inherit;
 	text-rendering: auto;
@@ -413,8 +413,8 @@
 }
 
 .ui-icon-refresh {
-	background: none;
-	display: inline-block;
+	background: none !important;
+	display: inline-grid;
 	font: normal normal normal 14px/1 FontAwesome;
 	font-size: inherit;
 	text-rendering: auto;
@@ -429,8 +429,8 @@
 }
 
 .ui-icon-shuffle {
-	background: none;
-	display: inline-block;
+	background: none !important;
+	display: inline-grid;
 	font: normal normal normal 14px/1 FontAwesome;
 	font-size: inherit;
 	text-rendering: auto;
@@ -445,8 +445,8 @@
 }
 
 .ui-icon-transfer-e-w {
-	background: none;
-	display: inline-block;
+	background: none !important;
+	display: inline-grid;
 	font: normal normal normal 14px/1 FontAwesome;
 	font-size: inherit;
 	text-rendering: auto;
@@ -461,8 +461,8 @@
 }
 
 .ui-icon-folder-collapsed {
-	background: none;
-	display: inline-block;
+	background: none !important;
+	display: inline-grid;
 	font: normal normal normal 14px/1 FontAwesome;
 	font-size: inherit;
 	text-rendering: auto;
@@ -477,8 +477,8 @@
 }
 
 .ui-icon-folder-open {
-	background: none;
-	display: inline-block;
+	background: none !important;
+	display: inline-grid;
 	font: normal normal normal 14px/1 FontAwesome;
 	font-size: inherit;
 	text-rendering: auto;
@@ -493,8 +493,8 @@
 }
 
 .ui-icon-document {
-	background: none;
-	display: inline-block;
+	background: none !important;
+	display: inline-grid;
 	font: normal normal normal 14px/1 FontAwesome;
 	font-size: inherit;
 	text-rendering: auto;
@@ -509,8 +509,8 @@
 }
 
 .ui-icon-note {
-	background: none;
-	display: inline-block;
+	background: none !important;
+	display: inline-grid;
 	font: normal normal normal 14px/1 FontAwesome;
 	font-size: inherit;
 	text-rendering: auto;
@@ -525,8 +525,8 @@
 }
 
 .ui-icon-mail-open {
-	background: none;
-	display: inline-block;
+	background: none !important;
+	display: inline-grid;
 	font: normal normal normal 14px/1 FontAwesome;
 	font-size: inherit;
 	text-rendering: auto;
@@ -541,8 +541,8 @@
 }
 
 .ui-icon-suitcase {
-	background: none;
-	display: inline-block;
+	background: none !important;
+	display: inline-grid;
 	font: normal normal normal 14px/1 FontAwesome;
 	font-size: inherit;
 	text-rendering: auto;
@@ -557,8 +557,8 @@
 }
 
 .ui-icon-comment {
-	background: none;
-	display: inline-block;
+	background: none !important;
+	display: inline-grid;
 	font: normal normal normal 14px/1 FontAwesome;
 	font-size: inherit;
 	text-rendering: auto;
@@ -573,8 +573,8 @@
 }
 
 .ui-icon-person {
-	background: none;
-	display: inline-block;
+	background: none !important;
+	display: inline-grid;
 	font: normal normal normal 14px/1 FontAwesome;
 	font-size: inherit;
 	text-rendering: auto;
@@ -589,8 +589,8 @@
 }
 
 .ui-icon-print {
-	background: none;
-	display: inline-block;
+	background: none !important;
+	display: inline-grid;
 	font: normal normal normal 14px/1 FontAwesome;
 	font-size: inherit;
 	text-rendering: auto;
@@ -605,8 +605,8 @@
 }
 
 .ui-icon-trash {
-	background: none;
-	display: inline-block;
+	background: none !important;
+	display: inline-grid;
 	font: normal normal normal 14px/1 FontAwesome;
 	font-size: inherit;
 	text-rendering: auto;
@@ -621,8 +621,8 @@
 }
 
 .ui-icon-locked {
-	background: none;
-	display: inline-block;
+	background: none !important;
+	display: inline-grid;
 	font: normal normal normal 14px/1 FontAwesome;
 	font-size: inherit;
 	text-rendering: auto;
@@ -637,8 +637,8 @@
 }
 
 .ui-icon-unlocked {
-	background: none;
-	display: inline-block;
+	background: none !important;
+	display: inline-grid;
 	font: normal normal normal 14px/1 FontAwesome;
 	font-size: inherit;
 	text-rendering: auto;
@@ -653,8 +653,8 @@
 }
 
 .ui-icon-bookmark {
-	background: none;
-	display: inline-block;
+	background: none !important;
+	display: inline-grid;
 	font: normal normal normal 14px/1 FontAwesome;
 	font-size: inherit;
 	text-rendering: auto;
@@ -669,8 +669,8 @@
 }
 
 .ui-icon-tag {
-	background: none;
-	display: inline-block;
+	background: none !important;
+	display: inline-grid;
 	font: normal normal normal 14px/1 FontAwesome;
 	font-size: inherit;
 	text-rendering: auto;
@@ -685,8 +685,8 @@
 }
 
 .ui-icon-home {
-	background: none;
-	display: inline-block;
+	background: none !important;
+	display: inline-grid;
 	font: normal normal normal 14px/1 FontAwesome;
 	font-size: inherit;
 	text-rendering: auto;
@@ -701,8 +701,8 @@
 }
 
 .ui-icon-flag {
-	background: none;
-	display: inline-block;
+	background: none !important;
+	display: inline-grid;
 	font: normal normal normal 14px/1 FontAwesome;
 	font-size: inherit;
 	text-rendering: auto;
@@ -717,8 +717,8 @@
 }
 
 .ui-icon-calendar {
-	background: none;
-	display: inline-block;
+	background: none !important;
+	display: inline-grid;
 	font: normal normal normal 14px/1 FontAwesome;
 	font-size: inherit;
 	text-rendering: auto;
@@ -733,8 +733,8 @@
 }
 
 .ui-icon-cart {
-	background: none;
-	display: inline-block;
+	background: none !important;
+	display: inline-grid;
 	font: normal normal normal 14px/1 FontAwesome;
 	font-size: inherit;
 	text-rendering: auto;
@@ -749,8 +749,8 @@
 }
 
 .ui-icon-pencil {
-	background: none;
-	display: inline-block;
+	background: none !important;
+	display: inline-grid;
 	font: normal normal normal 14px/1 FontAwesome;
 	font-size: inherit;
 	text-rendering: auto;
@@ -765,8 +765,8 @@
 }
 
 .ui-icon-clock {
-	background: none;
-	display: inline-block;
+	background: none !important;
+	display: inline-grid;
 	font: normal normal normal 14px/1 FontAwesome;
 	font-size: inherit;
 	text-rendering: auto;
@@ -781,8 +781,8 @@
 }
 
 .ui-icon-disk {
-	background: none;
-	display: inline-block;
+	background: none !important;
+	display: inline-grid;
 	font: normal normal normal 14px/1 FontAwesome;
 	font-size: inherit;
 	text-rendering: auto;
@@ -797,8 +797,8 @@
 }
 
 .ui-icon-calculator {
-	background: none;
-	display: inline-block;
+	background: none !important;
+	display: inline-grid;
 	font: normal normal normal 14px/1 FontAwesome;
 	font-size: inherit;
 	text-rendering: auto;
@@ -813,8 +813,8 @@
 }
 
 .ui-icon-zoomin {
-	background: none;
-	display: inline-block;
+	background: none !important;
+	display: inline-grid;
 	font: normal normal normal 14px/1 FontAwesome;
 	font-size: inherit;
 	text-rendering: auto;
@@ -829,8 +829,8 @@
 }
 
 .ui-icon-zoomout {
-	background: none;
-	display: inline-block;
+	background: none !important;
+	display: inline-grid;
 	font: normal normal normal 14px/1 FontAwesome;
 	font-size: inherit;
 	text-rendering: auto;
@@ -845,8 +845,8 @@
 }
 
 .ui-icon-search {
-	background: none;
-	display: inline-block;
+	background: none !important;
+	display: inline-grid;
 	font: normal normal normal 14px/1 FontAwesome;
 	font-size: inherit;
 	text-rendering: auto;
@@ -861,8 +861,8 @@
 }
 
 .ui-icon-wrench {
-	background: none;
-	display: inline-block;
+	background: none !important;
+	display: inline-grid;
 	font: normal normal normal 14px/1 FontAwesome;
 	font-size: inherit;
 	text-rendering: auto;
@@ -877,8 +877,8 @@
 }
 
 .ui-icon-gear {
-	background: none;
-	display: inline-block;
+	background: none !important;
+	display: inline-grid;
 	font: normal normal normal 14px/1 FontAwesome;
 	font-size: inherit;
 	text-rendering: auto;
@@ -893,8 +893,8 @@
 }
 
 .ui-icon-heart {
-	background: none;
-	display: inline-block;
+	background: none !important;
+	display: inline-grid;
 	font: normal normal normal 14px/1 FontAwesome;
 	font-size: inherit;
 	text-rendering: auto;
@@ -909,8 +909,8 @@
 }
 
 .ui-icon-star {
-	background: none;
-	display: inline-block;
+	background: none !important;
+	display: inline-grid;
 	font: normal normal normal 14px/1 FontAwesome;
 	font-size: inherit;
 	text-rendering: auto;
@@ -925,8 +925,8 @@
 }
 
 .ui-icon-link {
-	background: none;
-	display: inline-block;
+	background: none !important;
+	display: inline-grid;
 	font: normal normal normal 14px/1 FontAwesome;
 	font-size: inherit;
 	text-rendering: auto;
@@ -941,8 +941,8 @@
 }
 
 .ui-icon-cancel {
-	background: none;
-	display: inline-block;
+	background: none !important;
+	display: inline-grid;
 	font: normal normal normal 14px/1 FontAwesome;
 	font-size: inherit;
 	text-rendering: auto;
@@ -957,8 +957,8 @@
 }
 
 .ui-icon-plus {
-	background: none;
-	display: inline-block;
+	background: none !important;
+	display: inline-grid;
 	font: normal normal normal 14px/1 FontAwesome;
 	font-size: inherit;
 	text-rendering: auto;
@@ -973,8 +973,8 @@
 }
 
 .ui-icon-plusthick {
-	background: none;
-	display: inline-block;
+	background: none !important;
+	display: inline-grid;
 	font: normal normal normal 14px/1 FontAwesome;
 	font-size: inherit;
 	text-rendering: auto;
@@ -989,8 +989,8 @@
 }
 
 .ui-icon-minus {
-	background: none;
-	display: inline-block;
+	background: none !important;
+	display: inline-grid;
 	font: normal normal normal 14px/1 FontAwesome;
 	font-size: inherit;
 	text-rendering: auto;
@@ -1005,8 +1005,8 @@
 }
 
 .ui-icon-minusthick {
-	background: none;
-	display: inline-block;
+	background: none !important;
+	display: inline-grid;
 	font: normal normal normal 14px/1 FontAwesome;
 	font-size: inherit;
 	text-rendering: auto;
@@ -1021,8 +1021,8 @@
 }
 
 .ui-icon-closethick {
-	background: none;
-	display: inline-block;
+	background: none !important;
+	display: inline-grid;
 	font: normal normal normal 14px/1 FontAwesome;
 	font-size: inherit;
 	text-rendering: auto;
@@ -1037,8 +1037,8 @@
 }
 
 .ui-icon-close {
-	background: none;
-	display: inline-block;
+	background: none !important;
+	display: inline-grid;
 	font: normal normal normal 14px/1 FontAwesome;
 	font-size: inherit;
 	text-rendering: auto;
@@ -1053,8 +1053,8 @@
 }
 
 .ui-icon-key {
-	background: none;
-	display: inline-block;
+	background: none !important;
+	display: inline-grid;
 	font: normal normal normal 14px/1 FontAwesome;
 	font-size: inherit;
 	text-rendering: auto;
@@ -1069,8 +1069,8 @@
 }
 
 .ui-icon-lightbulb {
-	background: none;
-	display: inline-block;
+	background: none !important;
+	display: inline-grid;
 	font: normal normal normal 14px/1 FontAwesome;
 	font-size: inherit;
 	text-rendering: auto;
@@ -1085,8 +1085,8 @@
 }
 
 .ui-icon-scissors {
-	background: none;
-	display: inline-block;
+	background: none !important;
+	display: inline-grid;
 	font: normal normal normal 14px/1 FontAwesome;
 	font-size: inherit;
 	text-rendering: auto;
@@ -1101,8 +1101,8 @@
 }
 
 .ui-icon-clipboard {
-	background: none;
-	display: inline-block;
+	background: none !important;
+	display: inline-grid;
 	font: normal normal normal 14px/1 FontAwesome;
 	font-size: inherit;
 	text-rendering: auto;
@@ -1117,8 +1117,8 @@
 }
 
 .ui-icon-copy {
-	background: none;
-	display: inline-block;
+	background: none !important;
+	display: inline-grid;
 	font: normal normal normal 14px/1 FontAwesome;
 	font-size: inherit;
 	text-rendering: auto;
@@ -1133,8 +1133,8 @@
 }
 
 .ui-icon-contact {
-	background: none;
-	display: inline-block;
+	background: none !important;
+	display: inline-grid;
 	font: normal normal normal 14px/1 FontAwesome;
 	font-size: inherit;
 	text-rendering: auto;
@@ -1149,8 +1149,8 @@
 }
 
 .ui-icon-image {
-	background: none;
-	display: inline-block;
+	background: none !important;
+	display: inline-grid;
 	font: normal normal normal 14px/1 FontAwesome;
 	font-size: inherit;
 	text-rendering: auto;
@@ -1165,8 +1165,8 @@
 }
 
 .ui-icon-video {
-	background: none;
-	display: inline-block;
+	background: none !important;
+	display: inline-grid;
 	font: normal normal normal 14px/1 FontAwesome;
 	font-size: inherit;
 	text-rendering: auto;
@@ -1181,8 +1181,8 @@
 }
 
 .ui-icon-music {
-	background: none;
-	display: inline-block;
+	background: none !important;
+	display: inline-grid;
 	font: normal normal normal 14px/1 FontAwesome;
 	font-size: inherit;
 	text-rendering: auto;
@@ -1197,8 +1197,8 @@
 }
 
 .ui-icon-alert {
-	background: none;
-	display: inline-block;
+	background: none !important;
+	display: inline-grid;
 	font: normal normal normal 14px/1 FontAwesome;
 	font-size: inherit;
 	text-rendering: auto;
@@ -1213,8 +1213,8 @@
 }
 
 .ui-icon-info {
-	background: none;
-	display: inline-block;
+	background: none !important;
+	display: inline-grid;
 	font: normal normal normal 14px/1 FontAwesome;
 	font-size: inherit;
 	text-rendering: auto;
@@ -1229,8 +1229,8 @@
 }
 
 .ui-icon-notice {
-	background: none;
-	display: inline-block;
+	background: none !important;
+	display: inline-grid;
 	font: normal normal normal 14px/1 FontAwesome;
 	font-size: inherit;
 	text-rendering: auto;
@@ -1245,8 +1245,8 @@
 }
 
 .ui-icon-help {
-	background: none;
-	display: inline-block;
+	background: none !important;
+	display: inline-grid;
 	font: normal normal normal 14px/1 FontAwesome;
 	font-size: inherit;
 	text-rendering: auto;
@@ -1261,8 +1261,8 @@
 }
 
 .ui-icon-check {
-	background: none;
-	display: inline-block;
+	background: none !important;
+	display: inline-grid;
 	font: normal normal normal 14px/1 FontAwesome;
 	font-size: inherit;
 	text-rendering: auto;
@@ -1277,8 +1277,8 @@
 }
 
 .ui-icon-bullet {
-	background: none;
-	display: inline-block;
+	background: none !important;
+	display: inline-grid;
 	font: normal normal normal 14px/1 FontAwesome;
 	font-size: inherit;
 	text-rendering: auto;
@@ -1293,8 +1293,8 @@
 }
 
 .ui-icon-radio-off {
-	background: none;
-	display: inline-block;
+	background: none !important;
+	display: inline-grid;
 	font: normal normal normal 14px/1 FontAwesome;
 	font-size: inherit;
 	text-rendering: auto;
@@ -1309,8 +1309,8 @@
 }
 
 .ui-icon-radio-on {
-	background: none;
-	display: inline-block;
+	background: none !important;
+	display: inline-grid;
 	font: normal normal normal 14px/1 FontAwesome;
 	font-size: inherit;
 	text-rendering: auto;
@@ -1325,8 +1325,8 @@
 }
 
 .ui-icon-pin-s {
-	background: none;
-	display: inline-block;
+	background: none !important;
+	display: inline-grid;
 	font: normal normal normal 14px/1 FontAwesome;
 	font-size: inherit;
 	text-rendering: auto;
@@ -1341,8 +1341,8 @@
 }
 
 .ui-icon-play {
-	background: none;
-	display: inline-block;
+	background: none !important;
+	display: inline-grid;
 	font: normal normal normal 14px/1 FontAwesome;
 	font-size: inherit;
 	text-rendering: auto;
@@ -1357,8 +1357,8 @@
 }
 
 .ui-icon-pause {
-	background: none;
-	display: inline-block;
+	background: none !important;
+	display: inline-grid;
 	font: normal normal normal 14px/1 FontAwesome;
 	font-size: inherit;
 	text-rendering: auto;
@@ -1373,8 +1373,8 @@
 }
 
 .ui-icon-seek-next {
-	background: none;
-	display: inline-block;
+	background: none !important;
+	display: inline-grid;
 	font: normal normal normal 14px/1 FontAwesome;
 	font-size: inherit;
 	text-rendering: auto;
@@ -1389,8 +1389,8 @@
 }
 
 .ui-icon-seek-prev {
-	background: none;
-	display: inline-block;
+	background: none !important;
+	display: inline-grid;
 	font: normal normal normal 14px/1 FontAwesome;
 	font-size: inherit;
 	text-rendering: auto;
@@ -1405,8 +1405,8 @@
 }
 
 .ui-icon-seek-end {
-	background: none;
-	display: inline-block;
+	background: none !important;
+	display: inline-grid;
 	font: normal normal normal 14px/1 FontAwesome;
 	font-size: inherit;
 	text-rendering: auto;
@@ -1421,8 +1421,8 @@
 }
 
 .ui-icon-seek-first {
-	background: none;
-	display: inline-block;
+	background: none !important;
+	display: inline-grid;
 	font: normal normal normal 14px/1 FontAwesome;
 	font-size: inherit;
 	text-rendering: auto;
@@ -1437,8 +1437,8 @@
 }
 
 .ui-icon-stop {
-	background: none;
-	display: inline-block;
+	background: none !important;
+	display: inline-grid;
 	font: normal normal normal 14px/1 FontAwesome;
 	font-size: inherit;
 	text-rendering: auto;
@@ -1453,8 +1453,8 @@
 }
 
 .ui-icon-eject {
-	background: none;
-	display: inline-block;
+	background: none !important;
+	display: inline-grid;
 	font: normal normal normal 14px/1 FontAwesome;
 	font-size: inherit;
 	text-rendering: auto;
@@ -1469,8 +1469,8 @@
 }
 
 .ui-icon-volume-off {
-	background: none;
-	display: inline-block;
+	background: none !important;
+	display: inline-grid;
 	font: normal normal normal 14px/1 FontAwesome;
 	font-size: inherit;
 	text-rendering: auto;
@@ -1485,8 +1485,8 @@
 }
 
 .ui-icon-volume-on {
-	background: none;
-	display: inline-block;
+	background: none !important;
+	display: inline-grid;
 	font: normal normal normal 14px/1 FontAwesome;
 	font-size: inherit;
 	text-rendering: auto;
@@ -1501,8 +1501,8 @@
 }
 
 .ui-icon-power {
-	background: none;
-	display: inline-block;
+	background: none !important;
+	display: inline-grid;
 	font: normal normal normal 14px/1 FontAwesome;
 	font-size: inherit;
 	text-rendering: auto;
@@ -1517,8 +1517,8 @@
 }
 
 .ui-icon-signal {
-	background: none;
-	display: inline-block;
+	background: none !important;
+	display: inline-grid;
 	font: normal normal normal 14px/1 FontAwesome;
 	font-size: inherit;
 	text-rendering: auto;
@@ -1533,8 +1533,8 @@
 }
 
 .ui-icon-battery-0 {
-	background: none;
-	display: inline-block;
+	background: none !important;
+	display: inline-grid;
 	font: normal normal normal 14px/1 FontAwesome;
 	font-size: inherit;
 	text-rendering: auto;
@@ -1549,8 +1549,8 @@
 }
 
 .ui-icon-battery-1 {
-	background: none;
-	display: inline-block;
+	background: none !important;
+	display: inline-grid;
 	font: normal normal normal 14px/1 FontAwesome;
 	font-size: inherit;
 	text-rendering: auto;
@@ -1565,8 +1565,8 @@
 }
 
 .ui-icon-battery-2 {
-	background: none;
-	display: inline-block;
+	background: none !important;
+	display: inline-grid;
 	font: normal normal normal 14px/1 FontAwesome;
 	font-size: inherit;
 	text-rendering: auto;
@@ -1581,8 +1581,8 @@
 }
 
 .ui-icon-battery-3 {
-	background: none;
-	display: inline-block;
+	background: none !important;
+	display: inline-grid;
 	font: normal normal normal 14px/1 FontAwesome;
 	font-size: inherit;
 	text-rendering: auto;
@@ -1597,8 +1597,8 @@
 }
 
 .ui-icon-circle-plus {
-	background: none;
-	display: inline-block;
+	background: none !important;
+	display: inline-grid;
 	font: normal normal normal 14px/1 FontAwesome;
 	font-size: inherit;
 	text-rendering: auto;
@@ -1613,8 +1613,8 @@
 }
 
 .ui-icon-circle-minus {
-	background: none;
-	display: inline-block;
+	background: none !important;
+	display: inline-grid;
 	font: normal normal normal 14px/1 FontAwesome;
 	font-size: inherit;
 	text-rendering: auto;
@@ -1629,8 +1629,8 @@
 }
 
 .ui-icon-circle-triangle-e {
-	background: none;
-	display: inline-block;
+	background: none !important;
+	display: inline-grid;
 	font: normal normal normal 14px/1 FontAwesome;
 	font-size: inherit;
 	text-rendering: auto;
@@ -1645,8 +1645,8 @@
 }
 
 .ui-icon-circle-triangle-s {
-	background: none;
-	display: inline-block;
+	background: none !important;
+	display: inline-grid;
 	font: normal normal normal 14px/1 FontAwesome;
 	font-size: inherit;
 	text-rendering: auto;
@@ -1661,8 +1661,8 @@
 }
 
 .ui-icon-circle-triangle-w {
-	background: none;
-	display: inline-block;
+	background: none !important;
+	display: inline-grid;
 	font: normal normal normal 14px/1 FontAwesome;
 	font-size: inherit;
 	text-rendering: auto;
@@ -1677,8 +1677,8 @@
 }
 
 .ui-icon-circle-triangle-n {
-	background: none;
-	display: inline-block;
+	background: none !important;
+	display: inline-grid;
 	font: normal normal normal 14px/1 FontAwesome;
 	font-size: inherit;
 	text-rendering: auto;
@@ -2105,7 +2105,7 @@ body .ui-button.grey-btn.ui-state-active {
 }
 
 body .ui-chkbox {
-	display: inline-block;
+	display: inline-grid;
 	vertical-align: middle;
 	margin: 0;
 	width: auto;
@@ -2149,7 +2149,7 @@ body .ui-chkbox .ui-chkbox-box.ui-state-focus {
 }
 
 body .ui-chkbox .ui-chkbox-box .ui-chkbox-icon {
-	display: inline-block;
+	display: inline-grid;
 	line-height: inherit;
 }
 
@@ -2163,7 +2163,7 @@ body .ui-fluid .ui-chips, body .ui-fluid .ui-chips-container {
 }
 
 body .ui-radiobutton {
-	display: inline-block;
+	display: inline-grid;
 	vertical-align: middle;
 	margin: 0;
 	width: 1.5em;
@@ -2210,7 +2210,7 @@ body .ui-radiobutton .ui-radiobutton-box .ui-icon-bullet {
 	width: 12px;
 	height: 12px;
 	margin-left: 0;
-	display: inline-block;
+	display: inline-grid;
 	line-height: inherit;
 	background-color: #8f3b4f;
 	min-width: 12px;
@@ -2233,7 +2233,7 @@ body .ui-selectoneradio .ui-grid-row>div {
 
 body .ui-selectmanycheckbox.ui-grid label, body .ui-selectoneradio.ui-grid label
 	{
-	display: inline-block;
+	display: inline-grid;
 	vertical-align: middle;
 	margin: 0 0 0 8px;
 }
@@ -2279,8 +2279,8 @@ body .ui-inputswitch.ui-inputswitch-checked .ui-inputswitch-on {
 
 body .ui-autocomplete .ui-autocomplete-dropdown .ui-icon-triangle-1-s {
 	margin-top: -6px;
-	background: none;
-	display: inline-block;
+	background: none !important;
+	display: inline-grid;
 	font: normal normal normal 14px/1 FontAwesome;
 	font-size: inherit;
 	text-rendering: auto;
@@ -2360,8 +2360,8 @@ body .ui-selectonemenu .ui-selectonemenu-trigger {
 
 body .ui-selectonemenu .ui-selectonemenu-trigger .ui-icon-triangle-1-s {
 	margin-top: 6px;
-	background: none;
-	display: inline-block;
+	background: none !important;
+	display: inline-grid;
 	font: normal normal normal 14px/1 FontAwesome;
 	font-size: inherit;
 	text-rendering: auto;
@@ -2471,8 +2471,8 @@ body .ui-fluid .ui-selectcheckboxmenu .ui-selectcheckboxmenu-trigger .ui-icon-tr
 	{
 	position: relative;
 	margin-top: 7px;
-	background: none;
-	display: inline-block;
+	background: none !important;
+	display: inline-grid;
 	font: normal normal normal 14px/1 FontAwesome;
 	font-size: inherit;
 	text-rendering: auto;
@@ -2515,8 +2515,8 @@ body .ui-selectcheckboxmenu .ui-selectcheckboxmenu-trigger .ui-icon-triangle-1-s
 	{
 	position: relative;
 	margin-top: 6px;
-	background: none;
-	display: inline-block;
+	background: none !important;
+	display: inline-grid;
 	font: normal normal normal 14px/1 FontAwesome;
 	font-size: inherit;
 	text-rendering: auto;
@@ -2617,8 +2617,8 @@ body .ui-selectcheckboxmenu-panel .ui-selectcheckboxmenu-header .ui-selectcheckb
 	padding: 0;
 	margin-left: 10px;
 	right: 4px;
-	background: none;
-	display: inline-block;
+	background: none !important;
+	display: inline-grid;
 	font: normal normal normal 14px/1 FontAwesome;
 	font-size: inherit;
 	text-rendering: auto;
@@ -2657,7 +2657,7 @@ body .ui-selectcheckboxmenu-panel .ui-selectcheckboxmenu-items .ui-selectcheckbo
 	{
 	position: static;
 	margin-top: 0;
-	display: inline-block;
+	display: inline-grid;
 	vertical-align: middle;
 }
 
@@ -2665,7 +2665,7 @@ body .ui-selectcheckboxmenu-panel .ui-selectcheckboxmenu-items .ui-selectcheckbo
 	{
 	padding: 0;
 	margin: 0 0 0 8px;
-	display: inline-block;
+	display: inline-grid;
 	vertical-align: middle;
 }
 
@@ -2763,12 +2763,12 @@ body .ui-multiselectlistbox .ui-multiselectlistbox-item.ui-state-highlight
 
 body .ui-rating .ui-rating-cancel {
 	float: none;
-	display: inline-block;
+	display: inline-grid;
 }
 
 body .ui-rating .ui-rating-cancel a {
-	background: none;
-	display: inline-block;
+	background: none !important;
+	display: inline-grid;
 	font: normal normal normal 14px/1 FontAwesome;
 	font-size: inherit;
 	text-rendering: auto;
@@ -2797,12 +2797,12 @@ body .ui-rating .ui-rating-cancel a:hover {
 
 body .ui-rating .ui-rating-star {
 	float: none;
-	display: inline-block;
+	display: inline-grid;
 }
 
 body .ui-rating .ui-rating-star a {
-	background: none;
-	display: inline-block;
+	background: none !important;
+	display: inline-grid;
 	font: normal normal normal 14px/1 FontAwesome;
 	font-size: inherit;
 	text-rendering: auto;
@@ -2827,8 +2827,8 @@ body .ui-rating .ui-rating-star a:hover {
 
 body .ui-rating .ui-rating-star-on a {
 	color: #8f3b4f;
-	background: none;
-	display: inline-block;
+	background: none !important;
+	display: inline-grid;
 	font: normal normal normal 14px/1 FontAwesome;
 	font-size: inherit;
 	text-rendering: auto;
@@ -3004,8 +3004,8 @@ body .ui-splitbutton.ui-buttonset .ui-button {
 
 body .ui-splitbutton.ui-buttonset .ui-button .ui-icon-triangle-1-s {
 	margin-top: -8px;
-	background: none;
-	display: inline-block;
+	background: none !important;
+	display: inline-grid;
 	font: normal normal normal 14px/1 FontAwesome;
 	font-size: inherit;
 	text-rendering: auto;
@@ -3053,8 +3053,8 @@ body .ui-datepicker .ui-datepicker-header .ui-datepicker-prev {
 	cursor: pointer;
 	top: 12px;
 	color: #ffffff;
-	background: none;
-	display: inline-block;
+	background: none !important;
+	display: inline-grid;
 	font: normal normal normal 14px/1 FontAwesome;
 	font-size: inherit;
 	text-rendering: auto;
@@ -3087,8 +3087,8 @@ body .ui-datepicker .ui-datepicker-header .ui-datepicker-next {
 	cursor: pointer;
 	top: 12px;
 	color: #ffffff;
-	background: none;
-	display: inline-block;
+	background: none !important;
+	display: inline-grid;
 	font: normal normal normal 14px/1 FontAwesome;
 	font-size: inherit;
 	text-rendering: auto;
@@ -3189,8 +3189,8 @@ body .ui-fileupload .ui-fileupload-buttonbar .ui-button {
 
 body .ui-fileupload .ui-fileupload-buttonbar .ui-button.ui-fileupload-upload .ui-icon
 	{
-	background: none;
-	display: inline-block;
+	background: none !important;
+	display: inline-grid;
 	font: normal normal normal 14px/1 FontAwesome;
 	font-size: inherit;
 	text-rendering: auto;
@@ -3320,7 +3320,7 @@ body .ui-fieldset .ui-fieldset-legend {
 
 body .ui-fieldset .ui-fieldset-legend .ui-fieldset-toggler {
 	float: none;
-	display: inline-block;
+	display: inline-grid;
 	vertical-align: middle;
 	margin-right: 8px;
 }
@@ -3374,8 +3374,8 @@ body .ui-accordion .ui-accordion-header .ui-icon {
 	-o-transition: color 0.3s;
 	-webkit-transition: color 0.3s;
 	transition: color 0.3s;
-	background: none;
-	display: inline-block;
+	background: none !important;
+	display: inline-grid;
 	font: normal normal normal 14px/1 FontAwesome;
 	font-size: inherit;
 	text-rendering: auto;
@@ -3390,8 +3390,8 @@ body .ui-accordion .ui-accordion-header .ui-icon:before {
 }
 
 body .ui-accordion .ui-accordion-header .ui-icon.ui-icon-triangle-1-s {
-	background: none;
-	display: inline-block;
+	background: none !important;
+	display: inline-grid;
 	font: normal normal normal 14px/1 FontAwesome;
 	font-size: inherit;
 	text-rendering: auto;
@@ -3714,8 +3714,8 @@ body .ui-paginator .ui-paginator-current {
 }
 
 body .ui-paginator .ui-paginator-first {
-	background: none;
-	display: inline-block;
+	background: none !important;
+	display: inline-grid;
 	font: normal normal normal 14px/1 FontAwesome;
 	font-size: inherit;
 	text-rendering: auto;
@@ -3730,8 +3730,8 @@ body .ui-paginator .ui-paginator-first:before {
 }
 
 body .ui-paginator .ui-paginator-prev {
-	background: none;
-	display: inline-block;
+	background: none !important;
+	display: inline-grid;
 	font: normal normal normal 14px/1 FontAwesome;
 	font-size: inherit;
 	text-rendering: auto;
@@ -3746,8 +3746,8 @@ body .ui-paginator .ui-paginator-prev:before {
 }
 
 body .ui-paginator .ui-paginator-next {
-	background: none;
-	display: inline-block;
+	background: none !important;
+	display: inline-grid;
 	font: normal normal normal 14px/1 FontAwesome;
 	font-size: inherit;
 	text-rendering: auto;
@@ -3762,8 +3762,8 @@ body .ui-paginator .ui-paginator-next:before {
 }
 
 body .ui-paginator .ui-paginator-last {
-	background: none;
-	display: inline-block;
+	background: none !important;
+	display: inline-grid;
 	font: normal normal normal 14px/1 FontAwesome;
 	font-size: inherit;
 	text-rendering: auto;
@@ -3843,10 +3843,10 @@ body .ui-datatable .ui-paginator.ui-paginator-bottom .ui-paginator-pages
 
 body .ui-datatable thead th {
 	background-color: #ffffff;
-    padding: 5px 10px;
-    border-color: #d6d7d9;
-    color: #212121;
-    font-size: 12px;
+	padding: 5px 10px;
+	border-color: #d6d7d9;
+	color: #212121;
+	font-size: 12px;
 }
 
 body .ui-datatable thead th.ui-state-hover {
@@ -4074,8 +4074,8 @@ body .ui-datascroller .ui-datascroller-header {
 }
 
 body .ui-picklist .ui-picklist-buttons .ui-icon-arrow-1-n {
-	background: none;
-	display: inline-block;
+	background: none !important;
+	display: inline-grid;
 	font: normal normal normal 14px/1 FontAwesome;
 	font-size: inherit;
 	text-rendering: auto;
@@ -4090,8 +4090,8 @@ body .ui-picklist .ui-picklist-buttons .ui-icon-arrow-1-n:before {
 }
 
 body .ui-picklist .ui-picklist-buttons .ui-icon-arrowstop-1-n {
-	background: none;
-	display: inline-block;
+	background: none !important;
+	display: inline-grid;
 	font: normal normal normal 14px/1 FontAwesome;
 	font-size: inherit;
 	text-rendering: auto;
@@ -4106,8 +4106,8 @@ body .ui-picklist .ui-picklist-buttons .ui-icon-arrowstop-1-n:before {
 }
 
 body .ui-picklist .ui-picklist-buttons .ui-icon-arrow-1-s {
-	background: none;
-	display: inline-block;
+	background: none !important;
+	display: inline-grid;
 	font: normal normal normal 14px/1 FontAwesome;
 	font-size: inherit;
 	text-rendering: auto;
@@ -4122,8 +4122,8 @@ body .ui-picklist .ui-picklist-buttons .ui-icon-arrow-1-s:before {
 }
 
 body .ui-picklist .ui-picklist-buttons .ui-icon-arrowstop-1-s {
-	background: none;
-	display: inline-block;
+	background: none !important;
+	display: inline-grid;
 	font: normal normal normal 14px/1 FontAwesome;
 	font-size: inherit;
 	text-rendering: auto;
@@ -4138,8 +4138,8 @@ body .ui-picklist .ui-picklist-buttons .ui-icon-arrowstop-1-s:before {
 }
 
 body .ui-picklist .ui-picklist-buttons .ui-icon-arrow-1-e {
-	background: none;
-	display: inline-block;
+	background: none !important;
+	display: inline-grid;
 	font: normal normal normal 14px/1 FontAwesome;
 	font-size: inherit;
 	text-rendering: auto;
@@ -4154,8 +4154,8 @@ body .ui-picklist .ui-picklist-buttons .ui-icon-arrow-1-e:before {
 }
 
 body .ui-picklist .ui-picklist-buttons .ui-icon-arrowstop-1-e {
-	background: none;
-	display: inline-block;
+	background: none !important;
+	display: inline-grid;
 	font: normal normal normal 14px/1 FontAwesome;
 	font-size: inherit;
 	text-rendering: auto;
@@ -4170,8 +4170,8 @@ body .ui-picklist .ui-picklist-buttons .ui-icon-arrowstop-1-e:before {
 }
 
 body .ui-picklist .ui-picklist-buttons .ui-icon-arrow-1-w {
-	background: none;
-	display: inline-block;
+	background: none !important;
+	display: inline-grid;
 	font: normal normal normal 14px/1 FontAwesome;
 	font-size: inherit;
 	text-rendering: auto;
@@ -4186,8 +4186,8 @@ body .ui-picklist .ui-picklist-buttons .ui-icon-arrow-1-w:before {
 }
 
 body .ui-picklist .ui-picklist-buttons .ui-icon-arrowstop-1-w {
-	background: none;
-	display: inline-block;
+	background: none !important;
+	display: inline-grid;
 	font: normal normal normal 14px/1 FontAwesome;
 	font-size: inherit;
 	text-rendering: auto;
@@ -4232,8 +4232,8 @@ body .ui-picklist .ui-picklist-list .ui-picklist-item.ui-state-hover {
 		margin-right: 0;
 	}
 	body .ui-picklist .ui-picklist-buttons .ui-icon-arrow-1-e {
-		background: none;
-		display: inline-block;
+		background: none !important;
+		display: inline-grid;
 		font: normal normal normal 14px/1 FontAwesome;
 		font-size: inherit;
 		text-rendering: auto;
@@ -4246,8 +4246,8 @@ body .ui-picklist .ui-picklist-list .ui-picklist-item.ui-state-hover {
 		content: "";
 	}
 	body .ui-picklist .ui-picklist-buttons .ui-icon-arrowstop-1-e {
-		background: none;
-		display: inline-block;
+		background: none !important;
+		display: inline-grid;
 		font: normal normal normal 14px/1 FontAwesome;
 		font-size: inherit;
 		text-rendering: auto;
@@ -4260,8 +4260,8 @@ body .ui-picklist .ui-picklist-list .ui-picklist-item.ui-state-hover {
 		content: "";
 	}
 	body .ui-picklist .ui-picklist-buttons .ui-icon-arrow-1-w {
-		background: none;
-		display: inline-block;
+		background: none !important;
+		display: inline-grid;
 		font: normal normal normal 14px/1 FontAwesome;
 		font-size: inherit;
 		text-rendering: auto;
@@ -4274,8 +4274,8 @@ body .ui-picklist .ui-picklist-list .ui-picklist-item.ui-state-hover {
 		content: "";
 	}
 	body .ui-picklist .ui-picklist-buttons .ui-icon-arrowstop-1-w {
-		background: none;
-		display: inline-block;
+		background: none !important;
+		display: inline-grid;
 		font: normal normal normal 14px/1 FontAwesome;
 		font-size: inherit;
 		text-rendering: auto;
@@ -4290,8 +4290,8 @@ body .ui-picklist .ui-picklist-list .ui-picklist-item.ui-state-hover {
 }
 
 body .ui-orderlist .ui-orderlist-controls .ui-icon-arrow-1-n {
-	background: none;
-	display: inline-block;
+	background: none !important;
+	display: inline-grid;
 	font: normal normal normal 14px/1 FontAwesome;
 	font-size: inherit;
 	text-rendering: auto;
@@ -4306,8 +4306,8 @@ body .ui-orderlist .ui-orderlist-controls .ui-icon-arrow-1-n:before {
 }
 
 body .ui-orderlist .ui-orderlist-controls .ui-icon-arrowstop-1-n {
-	background: none;
-	display: inline-block;
+	background: none !important;
+	display: inline-grid;
 	font: normal normal normal 14px/1 FontAwesome;
 	font-size: inherit;
 	text-rendering: auto;
@@ -4323,8 +4323,8 @@ body .ui-orderlist .ui-orderlist-controls .ui-icon-arrowstop-1-n:before
 }
 
 body .ui-orderlist .ui-orderlist-controls .ui-icon-arrow-1-s {
-	background: none;
-	display: inline-block;
+	background: none !important;
+	display: inline-grid;
 	font: normal normal normal 14px/1 FontAwesome;
 	font-size: inherit;
 	text-rendering: auto;
@@ -4339,8 +4339,8 @@ body .ui-orderlist .ui-orderlist-controls .ui-icon-arrow-1-s:before {
 }
 
 body .ui-orderlist .ui-orderlist-controls .ui-icon-arrowstop-1-s {
-	background: none;
-	display: inline-block;
+	background: none !important;
+	display: inline-grid;
 	font: normal normal normal 14px/1 FontAwesome;
 	font-size: inherit;
 	text-rendering: auto;
@@ -4441,8 +4441,8 @@ body .ui-carousel .ui-carousel-button {
 }
 
 body .ui-carousel .ui-carousel-button.ui-carousel-next-button {
-	background: none;
-	display: inline-block;
+	background: none !important;
+	display: inline-grid;
 	font: normal normal normal 14px/1 FontAwesome;
 	font-size: inherit;
 	text-rendering: auto;
@@ -4458,8 +4458,8 @@ body .ui-carousel .ui-carousel-button.ui-carousel-next-button:before {
 }
 
 body .ui-carousel .ui-carousel-button.ui-carousel-prev-button {
-	background: none;
-	display: inline-block;
+	background: none !important;
+	display: inline-grid;
 	font: normal normal normal 14px/1 FontAwesome;
 	font-size: inherit;
 	text-rendering: auto;
@@ -4490,8 +4490,8 @@ body .ui-carousel .ui-carousel-page-links .ui-carousel-page-link {
 	padding-right: 3px;
 	color: #ffffff;
 	font-size: 12px;
-	background: none;
-	display: inline-block;
+	background: none !important;
+	display: inline-grid;
 	font: normal normal normal 14px/1 FontAwesome;
 	font-size: inherit;
 	text-rendering: auto;
@@ -4594,7 +4594,7 @@ body .ui-treetable .ui-treetable-data tr td {
 body .ui-treetable .ui-treetable-data tr td .ui-treetable-toggler {
 	font-size: 16px;
 	vertical-align: middle;
-	display: inline-block;
+	display: inline-grid;
 	float: none;
 	margin: 0 6px 0 0;
 	position: relative;
@@ -4608,7 +4608,7 @@ body .ui-treetable .ui-treetable-data tr td .ui-treetable-toggler.ui-icon-triang
 
 body .ui-treetable .ui-treetable-data tr td .ui-chkbox {
 	vertical-align: middle;
-	display: inline-block;
+	display: inline-grid;
 	float: none;
 	margin: 0 8px 0 0;
 	position: relative;
@@ -4621,8 +4621,8 @@ body .ui-treetable .ui-treetable-data tr td .ui-chkbox .ui-chkbox-icon {
 
 body .ui-treetable .ui-treetable-data tr td .ui-chkbox .ui-chkbox-icon.ui-icon-minus
 	{
-	background: none;
-	display: inline-block;
+	background: none !important;
+	display: inline-grid;
 	font: normal normal normal 14px/1 FontAwesome;
 	font-size: inherit;
 	text-rendering: auto;
@@ -4668,12 +4668,12 @@ body .ui-tree .ui-treenode {
 body .ui-tree .ui-treenode .ui-treenode-content .ui-tree-toggler {
 	font-size: 16px;
 	vertical-align: middle;
-	display: inline-block;
+	display: inline-grid;
 	float: none;
 	margin: 0 4px 0 0;
 	height: auto;
-	background: none;
-	display: inline-block;
+	background: none !important;
+	display: inline-grid;
 	font: normal normal normal 14px/1 FontAwesome;
 	font-size: inherit;
 	text-rendering: auto;
@@ -4690,8 +4690,8 @@ body .ui-tree .ui-treenode .ui-treenode-content .ui-tree-toggler:before
 
 body .ui-tree .ui-treenode .ui-treenode-content .ui-tree-toggler.ui-icon-triangle-1-s
 	{
-	background: none;
-	display: inline-block;
+	background: none !important;
+	display: inline-grid;
 	font: normal normal normal 14px/1 FontAwesome;
 	font-size: inherit;
 	text-rendering: auto;
@@ -4708,8 +4708,8 @@ body .ui-tree .ui-treenode .ui-treenode-content .ui-tree-toggler.ui-icon-triangl
 
 body .ui-tree .ui-treenode .ui-treenode-content .ui-tree-toggler.ui-icon-minus
 	{
-	background: none;
-	display: inline-block;
+	background: none !important;
+	display: inline-grid;
 	font: normal normal normal 14px/1 FontAwesome;
 	font-size: inherit;
 	text-rendering: auto;
@@ -4734,7 +4734,7 @@ body .ui-tree .ui-treenode .ui-treenode-content .ui-treenode-leaf-icon {
 
 body .ui-tree .ui-treenode .ui-treenode-content .ui-treenode-icon {
 	vertical-align: middle;
-	display: inline-block;
+	display: inline-grid;
 	margin: 0 6px 0 0;
 	font-size: 16px;
 }
@@ -4742,7 +4742,7 @@ body .ui-tree .ui-treenode .ui-treenode-content .ui-treenode-icon {
 body .ui-tree .ui-treenode .ui-treenode-content .ui-treenode-label {
 	margin: 0;
 	vertical-align: middle;
-	display: inline-block;
+	display: inline-grid;
 	padding: 0;
 }
 
@@ -4769,8 +4769,8 @@ body .ui-tree .ui-treenode .ui-treenode-content .ui-chkbox {
 
 body .ui-tree .ui-treenode .ui-treenode-content .ui-chkbox .ui-icon-minus
 	{
-	background: none;
-	display: inline-block;
+	background: none !important;
+	display: inline-grid;
 	font: normal normal normal 14px/1 FontAwesome;
 	font-size: inherit;
 	text-rendering: auto;
@@ -4788,8 +4788,8 @@ body .ui-tree .ui-treenode .ui-treenode-content .ui-chkbox .ui-icon-minus:before
 
 body .ui-tree .ui-treenode .ui-treenode-content[aria-selected="true"] :before
 	{
-	background: none;
-	display: inline-block;
+	background: none !important;
+	display: inline-grid;
 	font: normal normal normal 14px/1 FontAwesome;
 	font-size: inherit;
 	text-rendering: auto;
@@ -4806,8 +4806,8 @@ body .ui-tree .ui-treenode .ui-treenode-content[aria-selected="true"] :before:be
 
 body .ui-tree .ui-treenode .ui-treenode-content[aria-selected="true"] :after
 	{
-	background: none;
-	display: inline-block;
+	background: none !important;
+	display: inline-grid;
 	font: normal normal normal 14px/1 FontAwesome;
 	font-size: inherit;
 	text-rendering: auto;
@@ -4920,8 +4920,8 @@ body .fc .fc-toolbar .fc-left .fc-button-group .fc-prev-button {
 
 body .fc .fc-toolbar .fc-left .fc-button-group .ui-icon-circle-triangle-w
 	{
-	background: none;
-	display: inline-block;
+	background: none !important;
+	display: inline-grid;
 	font: normal normal normal 14px/1 FontAwesome;
 	font-size: inherit;
 	text-rendering: auto;
@@ -4940,8 +4940,8 @@ body .fc .fc-toolbar .fc-left .fc-button-group .ui-icon-circle-triangle-w:before
 
 body .fc .fc-toolbar .fc-left .fc-button-group .ui-icon-circle-triangle-e
 	{
-	background: none;
-	display: inline-block;
+	background: none !important;
+	display: inline-grid;
 	font: normal normal normal 14px/1 FontAwesome;
 	font-size: inherit;
 	text-rendering: auto;
@@ -5019,8 +5019,8 @@ body .ui-messages .ui-messages-info {
 }
 
 body .ui-messages .ui-messages-info .ui-messages-info-icon {
-	background: none;
-	display: inline-block;
+	background: none !important;
+	display: inline-grid;
 	font: normal normal normal 14px/1 FontAwesome;
 	font-size: inherit;
 	text-rendering: auto;
@@ -5043,8 +5043,8 @@ body .ui-messages .ui-messages-warn {
 }
 
 body .ui-messages .ui-messages-warn .ui-messages-warn-icon {
-	background: none;
-	display: inline-block;
+	background: none !important;
+	display: inline-grid;
 	font: normal normal normal 14px/1 FontAwesome;
 	font-size: inherit;
 	text-rendering: auto;
@@ -5067,8 +5067,8 @@ body .ui-messages .ui-messages-error {
 }
 
 body .ui-messages .ui-messages-error .ui-messages-error-icon {
-	background: none;
-	display: inline-block;
+	background: none !important;
+	display: inline-grid;
 	font: normal normal normal 14px/1 FontAwesome;
 	font-size: inherit;
 	text-rendering: auto;
@@ -5091,8 +5091,8 @@ body .ui-messages .ui-messages-fatal {
 }
 
 body .ui-messages .ui-messages-fatal .ui-messages-fatal-icon {
-	background: none;
-	display: inline-block;
+	background: none !important;
+	display: inline-grid;
 	font: normal normal normal 14px/1 FontAwesome;
 	font-size: inherit;
 	text-rendering: auto;
@@ -5128,8 +5128,8 @@ body .ui-message.ui-message-info {
 }
 
 body .ui-message.ui-message-info .ui-message-info-icon {
-	background: none;
-	display: inline-block;
+	background: none !important;
+	display: inline-grid;
 	font: normal normal normal 14px/1 FontAwesome;
 	font-size: inherit;
 	text-rendering: auto;
@@ -5152,8 +5152,8 @@ body .ui-message.ui-message-warn {
 }
 
 body .ui-message.ui-message-warn .ui-message-warn-icon {
-	background: none;
-	display: inline-block;
+	background: none !important;
+	display: inline-grid;
 	font: normal normal normal 14px/1 FontAwesome;
 	font-size: inherit;
 	text-rendering: auto;
@@ -5176,8 +5176,8 @@ body .ui-message.ui-message-error {
 }
 
 body .ui-message.ui-message-error .ui-message-error-icon {
-	background: none;
-	display: inline-block;
+	background: none !important;
+	display: inline-grid;
 	font: normal normal normal 14px/1 FontAwesome;
 	font-size: inherit;
 	text-rendering: auto;
@@ -5200,8 +5200,8 @@ body .ui-message.ui-message-fatal {
 }
 
 body .ui-message.ui-message-fatal .ui-message-fatal-icon {
-	background: none;
-	display: inline-block;
+	background: none !important;
+	display: inline-grid;
 	font: normal normal normal 14px/1 FontAwesome;
 	font-size: inherit;
 	text-rendering: auto;
@@ -5236,8 +5236,8 @@ body .ui-growl .ui-growl-item-container.ui-growl-info {
 }
 
 body .ui-growl .ui-growl-item-container.ui-growl-info .ui-growl-image {
-	background: none;
-	display: inline-block;
+	background: none !important;
+	display: inline-grid;
 	font: normal normal normal 14px/1 FontAwesome;
 	font-size: inherit;
 	text-rendering: auto;
@@ -5260,8 +5260,8 @@ body .ui-growl .ui-growl-item-container.ui-growl-warn {
 }
 
 body .ui-growl .ui-growl-item-container.ui-growl-warn .ui-growl-image {
-	background: none;
-	display: inline-block;
+	background: none !important;
+	display: inline-grid;
 	font: normal normal normal 14px/1 FontAwesome;
 	font-size: inherit;
 	text-rendering: auto;
@@ -5284,8 +5284,8 @@ body .ui-growl .ui-growl-item-container.ui-growl-error {
 }
 
 body .ui-growl .ui-growl-item-container.ui-growl-error .ui-growl-image {
-	background: none;
-	display: inline-block;
+	background: none !important;
+	display: inline-grid;
 	font: normal normal normal 14px/1 FontAwesome;
 	font-size: inherit;
 	text-rendering: auto;
@@ -5308,8 +5308,8 @@ body .ui-growl .ui-growl-item-container.ui-growl-fatal {
 }
 
 body .ui-growl .ui-growl-item-container.ui-growl-fatal .ui-growl-image {
-	background: none;
-	display: inline-block;
+	background: none !important;
+	display: inline-grid;
 	font: normal normal normal 14px/1 FontAwesome;
 	font-size: inherit;
 	text-rendering: auto;
@@ -5437,7 +5437,7 @@ body .ui-dialog.ui-confirm-dialog .ui-dialog-content {
 
 body .ui-dialog.ui-confirm-dialog .ui-dialog-content>span {
 	float: none;
-	display: inline-block;
+	display: inline-grid;
 	vertical-align: middle;
 	line-height: 14px;
 	margin: 0;
@@ -5488,8 +5488,8 @@ body .ui-lightbox .ui-lightbox-content-wrapper {
 }
 
 body .ui-lightbox .ui-lightbox-content-wrapper .ui-lightbox-nav-left {
-	background: none;
-	display: inline-block;
+	background: none !important;
+	display: inline-grid;
 	font: normal normal normal 14px/1 FontAwesome;
 	font-size: inherit;
 	text-rendering: auto;
@@ -5527,8 +5527,8 @@ body .ui-lightbox .ui-lightbox-content-wrapper .ui-lightbox-nav-left span
 }
 
 body .ui-lightbox .ui-lightbox-content-wrapper .ui-lightbox-nav-right {
-	background: none;
-	display: inline-block;
+	background: none !important;
+	display: inline-grid;
 	font: normal normal normal 14px/1 FontAwesome;
 	font-size: inherit;
 	text-rendering: auto;
@@ -5580,7 +5580,7 @@ body .ui-breadcrumb {
 
 body .ui-breadcrumb ul li {
 	float: none;
-	display: inline-block;
+	display: inline-grid;
 	vertical-align: middle;
 }
 
@@ -5592,8 +5592,8 @@ body .ui-breadcrumb ul li .ui-menuitem-link {
 }
 
 body .ui-breadcrumb ul li.ui-breadcrumb-chevron {
-	background: none;
-	display: inline-block;
+	background: none !important;
+	display: inline-grid;
 	font: normal normal normal 14px/1 FontAwesome;
 	font-size: inherit;
 	text-rendering: auto;
@@ -5647,7 +5647,7 @@ body .ui-steps .ui-steps-item .ui-steps-number {
 }
 
 body .ui-steps .ui-steps-item .ui-steps-title {
-	display: inline-block;
+	display: inline-grid;
 	font-weight: 600;
 	color: #2e8540;
 }
@@ -5719,8 +5719,8 @@ body .ui-menu .ui-menu-list .ui-widget-header h3 {
 body .ui-menu .ui-menu-list .ui-widget-header h3 .ui-icon-triangle-1-s {
 	margin-top: -6px;
 	margin-left: 2px;
-	background: none;
-	display: inline-block;
+	background: none !important;
+	display: inline-grid;
 	font: normal normal normal 14px/1 FontAwesome;
 	font-size: inherit;
 	text-rendering: auto;
@@ -5738,8 +5738,8 @@ body .ui-menu .ui-menu-list .ui-widget-header h3 .ui-icon-triangle-1-s:before
 body .ui-menu .ui-menu-list .ui-widget-header h3 .ui-icon-triangle-1-e {
 	margin-top: -6px;
 	margin-left: 2px;
-	background: none;
-	display: inline-block;
+	background: none !important;
+	display: inline-grid;
 	font: normal normal normal 14px/1 FontAwesome;
 	font-size: inherit;
 	text-rendering: auto;
@@ -5822,8 +5822,8 @@ body .ui-menu .ui-menu-list .ui-menuitem .ui-menuitem-link .ui-menuitem-text
 
 body .ui-menu .ui-menu-list .ui-menuitem .ui-menuitem-link .ui-icon-triangle-1-e
 	{
-	background: none;
-	display: inline-block;
+	background: none !important;
+	display: inline-grid;
 	font: normal normal normal 14px/1 FontAwesome;
 	font-size: inherit;
 	text-rendering: auto;
@@ -5840,8 +5840,8 @@ body .ui-menu .ui-menu-list .ui-menuitem .ui-menuitem-link .ui-icon-triangle-1-e
 
 body .ui-menu .ui-menu-list .ui-menuitem .ui-menuitem-link .ui-icon-triangle-1-s
 	{
-	background: none;
-	display: inline-block;
+	background: none !important;
+	display: inline-grid;
 	font: normal normal normal 14px/1 FontAwesome;
 	font-size: inherit;
 	text-rendering: auto;
@@ -5876,7 +5876,7 @@ body .ui-menu.ui-menubar>.ui-menu-list {
 
 body .ui-menu.ui-menubar>.ui-menu-list>.ui-menuitem {
 	width: auto;
-	display: inline-block;
+	display: inline-grid;
 }
 
 body .ui-menu.ui-menubar>.ui-menu-list>.ui-menuitem>.ui-menuitem-link {
@@ -5889,7 +5889,7 @@ body .ui-menu.ui-menubar>.ui-menu-list>.ui-menuitem>.ui-menuitem-link .ui-icon
 	{
 	float: none;
 	vertical-align: middle;
-	display: inline-block;
+	display: inline-grid;
 }
 
 body .ui-menu.ui-menubar>.ui-menu-list>.ui-menuitem.ui-menuitem-active>.ui-menuitem-link
@@ -5960,8 +5960,8 @@ body .ui-menu.ui-slidemenu .ui-slidemenu-backward {
 
 body .ui-menu.ui-slidemenu .ui-slidemenu-backward .ui-icon-triangle-1-w
 	{
-	background: none;
-	display: inline-block;
+	background: none !important;
+	display: inline-grid;
 	font: normal normal normal 14px/1 FontAwesome;
 	font-size: inherit;
 	text-rendering: auto;
@@ -6023,7 +6023,7 @@ body .ui-tabmenu .ui-tabmenu-nav .ui-tabmenuitem .ui-menuitem-link .ui-menuitem-
 	body .ui-tabmenu .ui-tabmenu-nav .ui-tabmenuitem .ui-menuitem-link .ui-menuitem-text
 	{
 	vertical-align: middle;
-	display: inline-block;
+	display: inline-grid;
 	float: none;
 	margin-right: 4px;
 }
@@ -6057,8 +6057,8 @@ body .ui-panelmenu .ui-panelmenu-header>span, body .ui-panelmenu .ui-panelmenu-h
 body .ui-panelmenu .ui-panelmenu-header .ui-icon-triangle-1-s {
 	margin-top: -6px;
 	margin-left: 2px;
-	background: none;
-	display: inline-block;
+	background: none !important;
+	display: inline-grid;
 	font: normal normal normal 14px/1 FontAwesome;
 	font-size: inherit;
 	text-rendering: auto;
@@ -6075,8 +6075,8 @@ body .ui-panelmenu .ui-panelmenu-header .ui-icon-triangle-1-s:before {
 body .ui-panelmenu .ui-panelmenu-header .ui-icon-triangle-1-e {
 	margin-top: -7px;
 	margin-left: 2px;
-	background: none;
-	display: inline-block;
+	background: none !important;
+	display: inline-grid;
 	font: normal normal normal 14px/1 FontAwesome;
 	font-size: inherit;
 	text-rendering: auto;
@@ -6120,7 +6120,7 @@ body .ui-panelmenu .ui-panelmenu-content .ui-menuitem-link.ui-state-hover
 
 body .ui-panelmenu .ui-panelmenu-content .ui-menuitem-link>span.ui-icon
 	{
-	display: inline-block;
+	display: inline-grid;
 	vertical-align: middle;
 	left: auto;
 	margin-right: 4px;
@@ -6133,7 +6133,7 @@ body .ui-panelmenu .ui-panelmenu-content .ui-menuitem-link>span.ui-icon.ui-panel
 
 body .ui-panelmenu .ui-panelmenu-content .ui-menuitem-link .ui-menuitem-text
 	{
-	display: inline-block;
+	display: inline-grid;
 	vertical-align: middle;
 }
 
@@ -6158,8 +6158,8 @@ body .ui-clock {
 }
 
 body .ui-galleria .ui-galleria-nav-prev {
-	background: none;
-	display: inline-block;
+	background: none !important;
+	display: inline-grid;
 	font: normal normal normal 14px/1 FontAwesome;
 	font-size: inherit;
 	text-rendering: auto;
@@ -6175,8 +6175,8 @@ body .ui-galleria .ui-galleria-nav-prev:before {
 }
 
 body .ui-galleria .ui-galleria-nav-next {
-	background: none;
-	display: inline-block;
+	background: none !important;
+	display: inline-grid;
 	font: normal normal normal 14px/1 FontAwesome;
 	font-size: inherit;
 	text-rendering: auto;
@@ -6202,7 +6202,7 @@ body .ui-log .ui-log-header {
 }
 
 body .ui-log .ui-log-header .ui-log-button {
-	display: inline-block;
+	display: inline-grid;
 	position: static;
 	margin-right: 4px;
 	color: #ffffff;
@@ -6231,3 +6231,7 @@ body .ui-log .ui-log-content {
 }
 
 /* Add your customizations of layout here */
+.ui-state-highlight a, .ui-widget-content .ui-state-highlight a,
+	.ui-widget-header .ui-state-highlight a {
+	color: #ffffff;
+}

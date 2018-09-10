@@ -62,6 +62,12 @@ public class Util {
 	}
 	
 	public static void main(String[] args) throws IOException {		
+		String codigo = "CA011";
 		
+		int num = Integer.parseInt(codigo.substring(2, 5)) + 1;
+		String abv = codigo.substring(0, 2);
+		
+		System.out.println(num);
+		System.out.println(abv);
 	}
 }

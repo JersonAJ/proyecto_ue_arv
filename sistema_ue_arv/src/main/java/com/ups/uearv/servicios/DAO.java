@@ -113,6 +113,17 @@ public class DAO {
 			return null;
 		}
 	}
+	
+	public static CatalogoCab buscarCatalogoCab(String jpql) {
+		try {
+			Query query = em.createQuery(jpql);
+			CatalogoCab u = (CatalogoCab) query.getSingleResult();
+			em.refresh(u);
+			return u;
+		} catch (NoResultException e) {
+			return null;
+		}
+	}
 
 	// INGRESAR - ACTUALIZAR
 	public static boolean saveOrUpdate(Object o, int op, EntityManager em) {

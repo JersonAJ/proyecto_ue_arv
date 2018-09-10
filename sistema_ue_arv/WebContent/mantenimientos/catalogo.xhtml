@@ -38,6 +38,7 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 						<p:commandLink update=":form:dgl" oncomplete="PF('dgl').show()">	
 							<i class="fa fa-bars" />		
 																		
+							<f:setPropertyActionListener value="#{dtCatalogo.codigoCab}" target="#{catalogo.codigoCab}" />
 							<f:setPropertyActionListener value="#{dtCatalogo.descripcion}" target="#{catalogo.descripcion}" />									
 							<f:setPropertyActionListener value="#{catalogo.getCatalogoDetalle(dtCatalogo.codigoCab)}" target="#{catalogo.catalogoDetList}" />
 																																							
@@ -51,24 +52,47 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 			
 			<p:ajax event="close" update="form" listener="#{catalogo.closeDialogo}" />
 		
-			<div align="center">
-				<p:outputLabel value="#{catalogo.descripcion}" style="font-weight: bold; font-size: 15px" />
-			</div>
-			<br/>
-			<p:dataTable id="dtDet" var="dtDetalle" value="#{catalogo.catalogoDetList}" tableStyle="width: auto; min-width: 100%;" 
-				emptyMessage="No existen datos a mostrar">
+			<div align="center">				
+				<p:inputText id="descripcionDet" placeholder="Nueva(o) #{catalogo.descripcion}" value="#{catalogo.descripcionDet}" style="width: 50%" />
+				<p:spacer width="5px" />
+				<p:commandLink actionListener="#{catalogo.agregar}" update="dtDetalle">
+					<i class="fa fa-plus-circle" style="font-size: 15px" title="Agregar" />				
+				</p:commandLink>			
+			</div>			
+			<br/>	
+			
+			<p:dataTable id="dtDetalle" var="dtDetalle" value="#{catalogo.catalogoDetList}" tableStyle="width: auto; min-width: 100%;" 
+				emptyMessage="No existen datos a mostrar" editable="true">
+				
+				<f:facet name="header">
+					<div style="display: inline-flex">
+						<h:selectBooleanCheckbox value="#{catalogo.ckMostrarIC}">
+			    			<p:ajax update="dtDetalle" listener="#{catalogo.buscarDet}" />
+			 			</h:selectBooleanCheckbox> 
+			 			<h:outputLabel value="Mostrar inactivos" style="font-size: 11px; font-weight: normal; color: black; margin-top: 4px;" />
+			 		</div>
+				</f:facet>
+				
+				<p:ajax event="rowEdit" listener="#{catalogo.onRowEdit}" />
+       			<p:ajax event="rowEditCancel" listener="#{catalogo.onRowCancel}" />
 				
 			    <p:column headerText="Descripción">
-			        <h:outputText value="#{dtDetalle.descripcion}" />
-			    </p:column>			  
+				    <p:cellEditor>
+						<f:facet name="output"><h:outputText value="#{dtDetalle.descripcion}" /></f:facet>
+						<f:facet name="input"><p:inputText id="itDescripcionDet" value="#{dtDetalle.descripcion}" style="width:100%"/></f:facet>
+					</p:cellEditor>	   
+			    </p:column>
 			    
-			    <p:column headerText="Acción" width="50">
-			    	<p:outputPanel style="text-align: center">
-						<p:commandLink>	
-							<i class="fa fa-trash" style="color: red" />
-						</p:commandLink>	
-					</p:outputPanel>
-			    </p:column>			   			   
+			    <p:column headerText="Activo" style="text-align: center" width="50">
+				    <p:cellEditor>
+		               <f:facet name="output"><h:selectBooleanCheckbox value="#{catalogo.getEstadoDet(dtDetalle.estado)}" disabled="true" /></f:facet>
+		               <f:facet name="input"><h:selectBooleanCheckbox value="#{catalogo.ckEstadoDet}" disabled="false"/></f:facet>
+		          	</p:cellEditor>			       
+			    </p:column>
+			    
+			    <p:column headerText="Editar" style="text-align: center" width="50">
+		        	<p:rowEditor />
+		       	</p:column>		     
 			</p:dataTable>
 			
 			</p:dialog>					
