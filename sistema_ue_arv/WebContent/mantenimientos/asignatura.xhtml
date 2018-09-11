@@ -1,0 +1,97 @@
+<ui:composition template="/layout/layout.xhtml"
+xmlns="http://www.w3.org/1999/xhtml"
+xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+xmlns:h="http://xmlns.jcp.org/jsf/html"
+xmlns:p="http://primefaces.org/ui"
+xmlns:f="http://xmlns.jcp.org/jsf/core">
+			
+	<ui:define name="titulo"><i class="fa fa-cog" /> Mantenimientos / Asignaturas</ui:define>
+	
+	<ui:define name="content">									
+		<h:form id="form" style="width: 100%">
+			<f:metadata>		    
+			    <f:viewAction action="#{general.validaSesion}" />
+			</f:metadata>
+				
+			<p:growl id="msgRegistro" for="msgRegistro" showDetail="true" closable="true" />
+			
+			<p:outputPanel style="background-color: white; padding: 5px;">
+				<p:commandLink update=":form:pnl" oncomplete="PF('dgl').show();">
+					<i class="fa fa-plus-circle" />
+					<span>Agregar</span>					
+															
+				</p:commandLink>					
+			</p:outputPanel> 
+			
+			<!-- CONSULTA -->	
+			<style>				
+				.ui-datatable thead th, .ui-datatable tbody td, .ui-datatable tfoot td, .ui-datatable tfoot th { padding: 2px 10px; }
+			</style>
+			<br/>		
+			<p:outputPanel>
+			   <p:inputText style="width: 500px" value="#{curso.itBuscar}" placeholder="Buscar por nivel o curso">
+				<p:ajax event="keyup" update="dt" listener="#{curso.buscar}"/>
+			     	</p:inputText>	
+				<p:spacer width="10px" />
+			
+				<div style="display: inline-flex">
+					<h:selectBooleanCheckbox value="#{curso.ckMostrarIC}">
+	    				<p:ajax update="dt" listener="#{curso.buscar}" />
+	 				</h:selectBooleanCheckbox> 
+		 			<h:outputLabel value="Mostrar inactivos" style="font-size: 12px; font-weight: normal; color: black; margin-top: 4px;" />			 				
+		 		</div>	 			     			         			     			      				      		      			
+			</p:outputPanel>
+			 				 	
+			<p:separator />
+			
+			<p:dataTable id="dt" var="dtcurso" value="#{curso.cursoList}" tableStyle="width: auto; min-width: 100%;" emptyMessage="No existen datos a mostrar" >
+			 
+			    <p:column headerText="Descripción">
+			        <h:outputText value="#{dtcurso.descripcion}" />
+			    </p:column>
+						    
+			    <p:column headerText="Activo" width="20" style="text-align: center">
+			    	<h:selectBooleanCheckbox value="#{dtcurso.estado eq 'AC'? true:false}" disabled="true" />			        
+			    </p:column>
+			    
+			    <p:column headerText="Editar" width="20">
+			    	<p:outputPanel style="text-align: center">
+						<p:commandLink update=":form:pnl" oncomplete="PF('dgl').show()">	
+							<i class="fa fa-pencil" />
+																																						
+						</p:commandLink>							
+					</p:outputPanel>
+			    </p:column>			  
+			</p:dataTable>
+			
+			<!-- INGRESO | ACTUALIZACION -->
+			<p:dialog header="Datos Curso" widgetVar="dgl" modal="true" closable="true" maximizable="false" resizable="false" width="400px">
+			
+			<p:ajax event="close" update="form" listener="#{curso.closeDialogo}" />
+			
+				<h:panelGrid id="pnl" columns="2" cellpadding="0" style="width: auto; min-width: 100%;" columnClasses="ui-grid-col-4,ui-grid-col-8">
+										
+					<p:outputPanel style="text-align: end; margin-right: 5px">Descripción:</p:outputPanel>
+					<p:inputText value="#{curso.itDescripcion}" style="width: 90%" />
+										
+					<p:outputPanel style="text-align: end; margin-right: 5px">Nivel:</p:outputPanel>
+					<p:selectOneMenu value="#{curso.soNivel}">
+						<f:selectItems value="#{curso.listNiveles}" />		
+					</p:selectOneMenu>					
+										
+					<p:outputPanel style="text-align: end; margin-right: 5px">Activo:</p:outputPanel>
+					<h:selectBooleanCheckbox value="#{curso.ckEstado}" />
+					
+					<f:facet name = "footer"><br/>
+					    <h:panelGroup style = "display:block; text-align:center">
+					      	<p:commandButton id="btnGuardar" value="Guardar" icon="fa fa-save" actionListener="#{curso.guardar}" update="form" />	
+						</h:panelGroup>
+					</f:facet>						
+				</h:panelGrid>
+			</p:dialog>			
+			
+						
+	   	</h:form>    	    
+	</ui:define>		
+	
+</ui:composition>

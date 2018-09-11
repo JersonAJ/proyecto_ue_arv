@@ -21,6 +21,7 @@ import org.apache.commons.lang.WordUtils;
 import com.ups.uearv.entidades.SegUsuario;
 import com.ups.uearv.servicios.DAO;
 import com.ups.uearv.servicios.Session;
+import com.ups.uearv.servicios.Util;
 
 /**
  * @author Jerson Armijos - Raysa Solano
@@ -43,7 +44,6 @@ public class Login implements Serializable {
 	
 	public String ingresar() {
 		try {
-
 			SegUsuario u = DAO.buscarSegUsuario("from SegUsuario c where c.idUsuario = '" + usuario + "'");
 
 			String pass = u.getClave();
@@ -61,6 +61,7 @@ public class Login implements Serializable {
 				return navegacion.toLogin();
 			}			
 			if (pass != null) {
+				password = Util.generaSHA256(password);
 				if (password.equals(pass)) {
 					HttpSession httpSession = Session.getSession();
 					httpSession.setAttribute("username", usuario);

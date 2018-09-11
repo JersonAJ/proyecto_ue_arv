@@ -40,7 +40,7 @@ public class Perfil implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	String idPerfil = "";
-	String descripcion = "";
+	String itDescripcion = "";
 	boolean ckEstado = false;
 
 	String itBuscar = "";
@@ -101,7 +101,7 @@ public class Perfil implements Serializable {
 				ob = DAO.buscarSegPerfil("from SegPerfil c where c.idPerfil = " + idPerfil);
 			}
 
-			ob.setDescripcion(descripcion);
+			ob.setDescripcion(itDescripcion);
 			ob.setEstado(estado);
 			if (accion == 0) {
 				ob.setUsuarioIng(Session.getUserName());			
@@ -229,98 +229,75 @@ public class Perfil implements Serializable {
 	}
 
 	// GETTERS AND SETTERS	
-	public String getIdPerfil() {
-		return idPerfil;
-	}
-
-	public void setIdPerfil(String idPerfil) {
-		this.idPerfil = idPerfil;
-	}
-
-	public String getDescripcion() {
-		return descripcion;
-	}
-
-	public void setDescripcion(String descripcion) {
-		this.descripcion = descripcion;
-	}
-
 	public boolean isCkEstado() {
 		return ckEstado;
 	}
-
+	public String getIdPerfil() {
+		return idPerfil;
+	}
+	public void setIdPerfil(String idPerfil) {
+		this.idPerfil = idPerfil;
+	}
+	public String getItDescripcion() {
+		return itDescripcion;
+	}
+	public void setItDescripcion(String itDescripcion) {
+		this.itDescripcion = itDescripcion;
+	}
 	public void setCkEstado(boolean ckEstado) {
 		this.ckEstado = ckEstado;
 	}
-
 	public String getItBuscar() {
 		return itBuscar;
 	}
-
 	public void setItBuscar(String itBuscar) {
 		this.itBuscar = itBuscar;
 	}
-
 	public boolean isCkMostrarIC() {
 		return ckMostrarIC;
 	}
-
 	public void setCkMostrarIC(boolean ckMostrarIC) {
 		this.ckMostrarIC = ckMostrarIC;
 	}
-
 	public int getAccion() {
 		return accion;
 	}
-
 	public void setAccion(int accion) {
 		this.accion = accion;
 	}
-
 	public List<SegPerfil> getPerfilList() {
 		return perfilList;
 	}
-
 	public void setPerfilList(List<SegPerfil> perfilList) {
 		this.perfilList = perfilList;
 	}
-
 	public List<PerfilMenu> getMenuSegList() {
 		return menuSegList;
 	}
-
 	public void setMenuSegList(List<PerfilMenu> menuSegList) {
 		this.menuSegList = menuSegList;
 	}
-
 	public List<PerfilMenu> getMenuManList() {
 		return menuManList;
 	}
-
 	public void setMenuManList(List<PerfilMenu> menuManList) {
 		this.menuManList = menuManList;
 	}
-
 	public List<PerfilMenu> getMenuMatList() {
 		return menuMatList;
 	}
-
 	public void setMenuMatList(List<PerfilMenu> menuMatList) {
 		this.menuMatList = menuMatList;
 	}
-
 	public List<PerfilMenu> getMenuGesList() {
 		return menuGesList;
 	}
-
 	public void setMenuGesList(List<PerfilMenu> menuGesList) {
 		this.menuGesList = menuGesList;
 	}
-
 	public List<PerfilMenu> getMenuCalList() {
 		return menuCalList;
 	}
-
 	public void setMenuCalList(List<PerfilMenu> menuCalList) {
 		this.menuCalList = menuCalList;
 	}

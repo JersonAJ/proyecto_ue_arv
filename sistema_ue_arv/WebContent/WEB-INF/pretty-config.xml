@@ -27,8 +27,43 @@
 
 	<!-- MANTENIMIENTOS -->
 	<url-mapping id="catalogo">
-		<pattern value="/man/catalogo" />
+		<pattern value="/man/catalog" />
 		<view-id value="/mantenimientos/catalogo.xhtml" />
+	</url-mapping>
+	
+	<url-mapping id="curso">
+		<pattern value="/man/curso" />
+		<view-id value="/mantenimientos/curso.xhtml" />
+	</url-mapping>
+	
+	<url-mapping id="docente">
+		<pattern value="/man/docente" />
+		<view-id value="/mantenimientos/docente.xhtml" />
+	</url-mapping>
+	
+	<url-mapping id="asignatura">
+		<pattern value="/man/asignatura" />
+		<view-id value="/mantenimientos/asignatura.xhtml" />
+	</url-mapping>
+	
+	<url-mapping id="escala">
+		<pattern value="/man/escala" />
+		<view-id value="/mantenimientos/escala.xhtml" />
+	</url-mapping>
+	
+	<url-mapping id="reparto">
+		<pattern value="/man/reparto" />
+		<view-id value="/mantenimientos/reparto.xhtml" />
+	</url-mapping>
+	
+	<url-mapping id="comportamiento">
+		<pattern value="/man/comportamiento" />
+		<view-id value="/mantenimientos/comportamiento.xhtml" />
+	</url-mapping>
+	
+	<url-mapping id="paralelo">
+		<pattern value="/man/paralelo" />
+		<view-id value="/mantenimientos/paralelo.xhtml" />
 	</url-mapping>
 	
 	<!-- ERRORES -->	

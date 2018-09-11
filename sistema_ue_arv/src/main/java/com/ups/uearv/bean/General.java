@@ -23,6 +23,7 @@ import org.primefaces.context.RequestContext;
 import com.ups.uearv.entidades.SegUsuario;
 import com.ups.uearv.servicios.DAO;
 import com.ups.uearv.servicios.Session;
+import com.ups.uearv.servicios.Util;
 
 
 /**
@@ -90,7 +91,7 @@ public class General implements Serializable {
 					SegUsuario ob = new SegUsuario();
 					ob = DAO.buscarSegUsuario("from SegUsuario c where c.idUsuario = '" + Session.getUserName() + "'");
 					ob.setSnNuevo("N");
-					ob.setClave(clave1);
+					ob.setClave(Util.generaSHA256(clave1));
 
 					if (DAO.saveOrUpdate(ob, 1, em)) {
 						em.getTransaction().commit();

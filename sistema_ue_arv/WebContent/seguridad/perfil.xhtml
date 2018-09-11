@@ -20,7 +20,7 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 					<i class="fa fa-plus-circle" />
 					<span>Agregar</span>
 					
-					<f:setPropertyActionListener value="" target="#{perfil.descripcion}" />	
+					<f:setPropertyActionListener value="" target="#{perfil.itDescripcion}" />	
 					<f:setPropertyActionListener value="true" target="#{perfil.ckEstado}" />
 					<f:setPropertyActionListener value="0" target="#{perfil.accion}" />
 										
@@ -38,9 +38,12 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 			     	</p:inputText>	
 				<p:spacer width="10px" />
 			
-				<h:selectBooleanCheckbox value="#{perfil.ckMostrarIC}">
-	    			<p:ajax update="dt" listener="#{perfil.buscar}" />
-	 			</h:selectBooleanCheckbox> Mostrar inactivos     			     			      				      		      			
+				<div style="display: inline-flex">
+					<h:selectBooleanCheckbox value="#{perfil.ckMostrarIC}">
+	    				<p:ajax update="dt" listener="#{perfil.buscar}" />
+	 				</h:selectBooleanCheckbox> 
+		 			<h:outputLabel value="Mostrar inactivos" style="font-size: 12px; font-weight: normal; color: black; margin-top: 4px;" />			 				
+		 		</div>	 			     	     			      				      		      			
 			</p:outputPanel>
 			 				 	
 			<p:separator />
@@ -48,7 +51,7 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 			<p:dataTable id="dt" var="dtPerfil" value="#{perfil.perfilList}" tableStyle="width: auto; min-width: 100%;" emptyMessage="No existen datos a mostrar" >
 			 
 			    <p:column headerText="Descripción">
-			        <h:outputText value="#{dtPerfil.descripcion}" />
+			        <h:outputText value="#{dtPerfil.descripcion}"/>
 			    </p:column>
 								    
 			    <p:column headerText="Activo" width="20" style="text-align: center">
@@ -61,7 +64,7 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 							<i class="fa fa-pencil" />
 													
 							<f:setPropertyActionListener value="#{dtPerfil.idPerfil}" target="#{perfil.idPerfil}" />
-							<f:setPropertyActionListener value="#{dtPerfil.descripcion}" target="#{perfil.descripcion}" />	
+							<f:setPropertyActionListener value="#{dtPerfil.descripcion}" target="#{perfil.itDescripcion}" />	
 							<f:setPropertyActionListener value="#{perfil.getEstado(dtPerfil.estado)}" target="#{perfil.ckEstado}" />
 							<f:setPropertyActionListener value="1" target="#{perfil.accion}" />
 																					
@@ -74,7 +77,7 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 						<p:commandLink update=":form:dglMenu" oncomplete="PF('dglMenu').show()">	
 							<i class="fa fa-bars" />
 													
-							<f:setPropertyActionListener value="#{dtPerfil.descripcion}" target="#{perfil.descripcion}" />	
+							<f:setPropertyActionListener value="#{dtPerfil.descripcion}" target="#{perfil.itDescripcion}" />	
 							
 							<f:setPropertyActionListener value="#{perfil.cargaMenuSeg(dtPerfil.idPerfil, 1)}" target="#{perfil.menuSegList}" />							
 							<f:setPropertyActionListener value="#{perfil.cargaMenuMan(dtPerfil.idPerfil, 4)}" target="#{perfil.menuManList}" />
@@ -95,7 +98,7 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 				<h:panelGrid id="pnl" columns="2" cellpadding="0" style="width: auto; min-width: 100%;" columnClasses="ui-grid-col-4,ui-grid-col-8">
 										
 					<p:outputPanel style="text-align: end; margin-right: 5px">Descripción:</p:outputPanel>
-					<p:inputText value="#{perfil.descripcion}" style="width: 90%" />
+					<p:inputText value="#{perfil.itDescripcion}" style="width: 90%" />
 								
 					<p:outputPanel style="text-align: end; margin-right: 5px">Activo:</p:outputPanel>
 					<h:selectBooleanCheckbox value="#{perfil.ckEstado}" />
@@ -117,7 +120,7 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 			div[id="form:pnlMenu:dtGes"] thead { display:none; }
 			div[id="form:pnlMenu:dtCal"] thead { display:none; }
 			</style>
-			<p:dialog header="Permisos(Menú) - #{perfil.descripcion}" id="dglMenu" widgetVar="dglMenu" modal="true" closable="true" maximizable="false" resizable="false" width="400px">
+			<p:dialog header="Permisos(Menú) - #{perfil.itDescripcion}" id="dglMenu" widgetVar="dglMenu" modal="true" closable="true" maximizable="false" resizable="false" width="400px">
 			
 			<p:ajax event="close" update="form" listener="#{perfil.closeDialogo}" />			
 				 <p:accordionPanel id="pnlMenu">
@@ -131,7 +134,7 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 						          	<h:selectBooleanCheckbox value="#{dtSeg.seleccion}">
 						          		 <p:ajax listener="#{perfil.habilitaMenu(dtSeg.perfil,dtSeg.menu,dtSeg.seleccion)}" />
 						          	</h:selectBooleanCheckbox>
-						          </p:outputPanel>						          
+						          </p:outputPanel>
 						    </p:column>
 				  		</p:dataTable>					
 			        </p:tab>
