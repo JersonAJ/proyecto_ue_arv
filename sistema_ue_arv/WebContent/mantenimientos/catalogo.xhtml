@@ -13,7 +13,7 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 			    <f:viewAction action="#{general.validaSesion}" />
 			</f:metadata>
 				
-			<p:growl id="msgRegistro" for="msgRegistro" showDetail="true" closable="true" />
+			<p:growl id="growl" for="growl" showDetail="true" closable="true" />
 									
 			<!-- CONSULTA -->
 			<style>				
@@ -40,6 +40,7 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 																		
 							<f:setPropertyActionListener value="#{dtCatalogo.codigoCab}" target="#{catalogo.codigoCab}" />
 							<f:setPropertyActionListener value="#{dtCatalogo.descripcion}" target="#{catalogo.descripcion}" />									
+							<f:setPropertyActionListener value="" target="#{catalogo.descripcionDet}" />
 							<f:setPropertyActionListener value="#{catalogo.getCatalogoDetalle(dtCatalogo.codigoCab)}" target="#{catalogo.catalogoDetList}" />
 																																							
 						</p:commandLink>							
@@ -55,7 +56,7 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 			<div align="center">				
 				<p:inputText id="descripcionDet" placeholder="Nueva(o) #{catalogo.descripcion}" value="#{catalogo.descripcionDet}" style="width: 50%" />
 				<p:spacer width="5px" />
-				<p:commandLink actionListener="#{catalogo.agregar}" update="dtDetalle">
+				<p:commandLink actionListener="#{catalogo.agregar}" update="dtDetalle growl">
 					<i class="fa fa-plus-circle" style="font-size: 15px" title="Agregar" />				
 				</p:commandLink>			
 			</div>			

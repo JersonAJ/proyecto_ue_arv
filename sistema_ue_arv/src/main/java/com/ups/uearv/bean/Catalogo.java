@@ -10,8 +10,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -109,8 +111,13 @@ public class Catalogo implements Serializable {
 	}
 		
 	public void agregar() {
-		CatalogoDet new_ob = new CatalogoDet();
+		if (descripcionDet.trim().equals("")) {
+			mensaje = "Debe ingresar un valor";
+			FacesContext.getCurrentInstance().addMessage("growl", new FacesMessage(FacesMessage.SEVERITY_ERROR, mensajeTitulo, mensaje));
+			return;
+		}		
 		
+		CatalogoDet new_ob = new CatalogoDet();		
 		CatalogoCab cab = DAO.buscarCatalogoCab("from CatalogoCab c where c.codigoCab = '" + codigoCab + "'");
 		new_ob.setCatalogoCab(cab);
 		new_ob.setCodigoDet(generaCodigo());

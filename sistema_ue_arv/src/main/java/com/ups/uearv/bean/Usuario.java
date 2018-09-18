@@ -111,17 +111,17 @@ public class Usuario implements Serializable {
 				return;
 			}
 		}				
-		if (itUsuario.equals("")) {
+		if (itUsuario.trim().equals("")) {
 			mensaje = "Debe ingresar el usuario";
 			FacesContext.getCurrentInstance().addMessage("growl", new FacesMessage(FacesMessage.SEVERITY_ERROR, mensajeTitulo, mensaje));
 			return;
 		}		
-		if (itNombres.equals("")) {
+		if (itNombres.trim().equals("")) {
 			mensaje = "Debe ingresar al menos un nombre";
 			FacesContext.getCurrentInstance().addMessage("growl", new FacesMessage(FacesMessage.SEVERITY_ERROR, mensajeTitulo, mensaje));
 			return;
 		}
-		if (itApellidos.equals("")) {
+		if (itApellidos.trim().equals("")) {
 			mensaje = "Debe ingresar al menos un apellido";
 			FacesContext.getCurrentInstance().addMessage("growl", new FacesMessage(FacesMessage.SEVERITY_ERROR, mensajeTitulo, mensaje));
 			return;
