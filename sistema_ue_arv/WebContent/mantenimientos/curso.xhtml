@@ -59,11 +59,11 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 			        <h:outputText value="#{curso.getNivel(dtcurso.nivel)}" />
 			    </p:column>
 						    
-			    <p:column headerText="Activo" width="20" style="text-align: center">
+			    <p:column headerText="Activo" width="20" style="text-align: center" exportable="false">
 			    	<h:selectBooleanCheckbox value="#{dtcurso.estado eq 'AC'? true:false}" disabled="true" />			        
 			    </p:column>
 			    
-			    <p:column headerText="Editar" width="20">
+			    <p:column headerText="Editar" width="20" exportable="false">
 			    	<p:outputPanel style="text-align: center">
 						<p:commandLink update=":form:pnl" oncomplete="PF('dgl').show()">	
 							<i class="fa fa-pencil" />
