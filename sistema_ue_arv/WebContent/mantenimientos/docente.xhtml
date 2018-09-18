@@ -13,12 +13,26 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 			    <f:viewAction action="#{general.validaSesion}" />
 			</f:metadata>
 				
-			<p:growl id="msgRegistro" for="msgRegistro" showDetail="true" closable="true" />
+			<p:growl id="growl" for="growl" showDetail="true" closable="true" />
 			
 			<p:outputPanel style="background-color: white; padding: 5px;">
 				<p:commandLink update=":form:pnl" oncomplete="PF('dgl').show();">
 					<i class="fa fa-plus-circle" />
-					<span>Agregar</span>					
+					<span>Agregar</span>				
+					
+					<f:setPropertyActionListener value="" target="#{docente.itCedula}" />
+					<f:setPropertyActionListener value="" target="#{docente.itNombres}" />	
+					<f:setPropertyActionListener value="" target="#{docente.itApellidos}" /> 
+					<f:setPropertyActionListener value="" target="#{docente.soEstadoCivil}" />
+					<f:setPropertyActionListener value="" target="#{docente.itTitulo}" />
+					<f:setPropertyActionListener value="" target="#{docente.itTelefono1}" />
+					<f:setPropertyActionListener value="" target="#{docente.itTelefono2}" />
+					<f:setPropertyActionListener value="" target="#{docente.itCorreo}" />
+					<f:setPropertyActionListener value="" target="#{docente.itDireccion}" />
+					<f:setPropertyActionListener value="M" target="#{docente.sorGenero}" />
+					<f:setPropertyActionListener value="" target="#{docente.cFechaNac}" />
+					<f:setPropertyActionListener value="true" target="#{docente.ckEstado}" />
+					<f:setPropertyActionListener value="0" target="#{docente.accion}" />	
 															
 				</p:commandLink>					
 			</p:outputPanel> 
@@ -29,14 +43,14 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 			</style>
 			<br/>		
 			<p:outputPanel>
-			   <p:inputText style="width: 500px" value="#{curso.itBuscar}" placeholder="Buscar por nivel o curso">
-				<p:ajax event="keyup" update="dt" listener="#{curso.buscar}"/>
+			   <p:inputText style="width: 500px" value="#{docente.itBuscar}" placeholder="Buscar por apellidos">
+				<p:ajax event="keyup" update="dt" listener="#{docente.buscar}"/>
 			     	</p:inputText>	
 				<p:spacer width="10px" />
 			
 				<div style="display: inline-flex">
-					<h:selectBooleanCheckbox value="#{curso.ckMostrarIC}">
-	    				<p:ajax update="dt" listener="#{curso.buscar}" />
+					<h:selectBooleanCheckbox value="#{docente.ckMostrarIC}">
+	    				<p:ajax update="dt" listener="#{docente.buscar}" />
 	 				</h:selectBooleanCheckbox> 
 		 			<h:outputLabel value="Mostrar inactivos" style="font-size: 12px; font-weight: normal; color: black; margin-top: 4px;" />			 				
 		 		</div>	 			     			         			     			      				      		      			
@@ -44,54 +58,124 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 			 				 	
 			<p:separator />
 			
-			<p:dataTable id="dt" var="dtcurso" value="#{curso.cursoList}" tableStyle="width: auto; min-width: 100%;" emptyMessage="No existen datos a mostrar" >
+			<p:dataTable id="dt" var="dtdocente" value="#{docente.docenteList}" tableStyle="width: auto; min-width: 100%;" emptyMessage="No existen datos a mostrar" >
 			 
-			    <p:column headerText="Descripción">
-			        <h:outputText value="#{dtcurso.descripcion}" />
+			    <p:column headerText="Cédula">
+			        <h:outputText value="#{dtdocente.idDocente}" />
 			    </p:column>
 						    
+				<p:column headerText="Nombre completo">
+			        <h:outputText value="#{dtdocente.apellidos} #{dtdocente.nombres}" />
+			    </p:column>
+			    
+			    <p:column headerText="Estado Civil">
+			        <h:outputText value="#{docente.getEstadoCivil(dtdocente.estadoCivil)}" />
+			    </p:column>
+			    
+			    <p:column headerText="Teléfonos">
+			        <h:outputText value="#{dtdocente.telefono1} - #{dtdocente.telefono2}" />
+			    </p:column>
+			    
+			    <p:column headerText="Correo">
+			        <h:outputText value="#{dtdocente.correo}" />
+			    </p:column>
+			    
+			    <p:column headerText="Dirección">
+			        <h:outputText value="#{dtdocente.direccion}" />
+			    </p:column>
+			    
 			    <p:column headerText="Activo" width="20" style="text-align: center">
-			    	<h:selectBooleanCheckbox value="#{dtcurso.estado eq 'AC'? true:false}" disabled="true" />			        
+			    	<h:selectBooleanCheckbox value="#{dtdocente.estado eq 'AC'? true:false}" disabled="true" />			        
 			    </p:column>
 			    
 			    <p:column headerText="Editar" width="20">
 			    	<p:outputPanel style="text-align: center">
 						<p:commandLink update=":form:pnl" oncomplete="PF('dgl').show()">	
 							<i class="fa fa-pencil" />
+							
+							<f:setPropertyActionListener value="#{dtdocente.idDocente}" target="#{docente.itCedula}" />
+							<f:setPropertyActionListener value="#{dtdocente.nombres}" target="#{docente.itNombres}" />	
+							<f:setPropertyActionListener value="#{dtdocente.apellidos}" target="#{docente.itApellidos}" />
+							<f:setPropertyActionListener value="#{dtdocente.estadoCivil}" target="#{docente.soEstadoCivil}" />
+							<f:setPropertyActionListener value="#{dtdocente.titulo}" target="#{docente.itTitulo}" />
+							<f:setPropertyActionListener value="#{dtdocente.telefono1}" target="#{docente.itTelefono1}" />
+							<f:setPropertyActionListener value="#{dtdocente.telefono2}" target="#{docente.itTelefono2}" />
+							<f:setPropertyActionListener value="#{dtdocente.correo}" target="#{docente.itCorreo}" />
+							<f:setPropertyActionListener value="#{dtdocente.direccion}" target="#{docente.itDireccion}" />
+							<f:setPropertyActionListener value="#{dtdocente.genero}" target="#{docente.sorGenero}" />
+							<f:setPropertyActionListener value="#{dtdocente.fechaNac}" target="#{docente.cFechaNac}" />							
+							<f:setPropertyActionListener value="#{general.getEstado(dtdocente.estado)}" target="#{docente.ckEstado}" />
+							<f:setPropertyActionListener value="1" target="#{docente.accion}" />
 																																						
 						</p:commandLink>							
 					</p:outputPanel>
 			    </p:column>			  
 			</p:dataTable>
 			
-			<!-- INGRESO | ACTUALIZACION -->
-			<p:dialog header="Datos Curso" widgetVar="dgl" modal="true" closable="true" maximizable="false" resizable="false" width="400px">
+			<br/>
+			<p:outputPanel style="background-color: white; padding: 5px; text-align: end">
+				<h:commandLink value="Exportar a excel" style="color: green">                
+	                <p:dataExporter type="xlsx" target="dt" fileName="docentes" />
+	            </h:commandLink>		   
+            </p:outputPanel>
 			
-			<p:ajax event="close" update="form" listener="#{curso.closeDialogo}" />
+			<!-- INGRESO | ACTUALIZACION -->
+			<p:dialog header="Datos docente" widgetVar="dgl" modal="true" closable="true" maximizable="false" resizable="false" width="400px">
+			
+			<p:ajax event="close" update="form" listener="#{docente.closeDialogo}" />
 			
 				<h:panelGrid id="pnl" columns="2" cellpadding="0" style="width: auto; min-width: 100%;" columnClasses="ui-grid-col-4,ui-grid-col-8">
 										
-					<p:outputPanel style="text-align: end; margin-right: 5px">Descripción:</p:outputPanel>
-					<p:inputText value="#{curso.itDescripcion}" style="width: 90%" />
+					<p:outputPanel style="text-align: end; padding: 5px">Cédula:</p:outputPanel>
+					<p:inputMask value="#{docente.itCedula}" style="width: 45%" disabled="#{docente.accion eq 1? true:false}" mask="9999999999" />
+					
+					<p:outputPanel style="text-align: end; padding: 5px">Nombres:</p:outputPanel>					
+					<p:inputText value="#{docente.itNombres}" style="width: 90%" />
+					
+					<p:outputPanel style="text-align: end; padding: 5px">Apellidos:</p:outputPanel>
+					<p:inputText value="#{docente.itApellidos}" style="width: 90%" />
 										
-					<p:outputPanel style="text-align: end; margin-right: 5px">Nivel:</p:outputPanel>
-					<p:selectOneMenu value="#{curso.soNivel}">
-						<f:selectItems value="#{curso.listNiveles}" />		
-					</p:selectOneMenu>					
-										
-					<p:outputPanel style="text-align: end; margin-right: 5px">Activo:</p:outputPanel>
-					<h:selectBooleanCheckbox value="#{curso.ckEstado}" />
+					<p:outputPanel style="text-align: end; padding: 5px">Estado civil:</p:outputPanel>
+					<p:selectOneMenu value="#{docente.soEstadoCivil}">
+						<f:selectItems value="#{docente.listEstadoCivil}" />		
+					</p:selectOneMenu>
+					
+					<p:outputPanel style="text-align: end; padding: 5px">Título:</p:outputPanel>
+					<p:inputText value="#{docente.itTitulo}" style="width: 90%" />					
+					
+					<p:outputPanel style="text-align: end; padding: 5px">Teléfono 1:</p:outputPanel>
+					<p:inputMask value="#{docente.itTelefono1}" style="width: 45%" mask="9999999999" />
+					
+					<p:outputPanel style="text-align: end; padding: 5px">Teléfono 2:</p:outputPanel>
+					<p:inputMask value="#{docente.itTelefono2}" style="width: 45%" mask="9999999999" />
+					
+					<p:outputPanel style="text-align: end; padding: 5px">Correo:</p:outputPanel>
+					<p:inputText value="#{docente.itCorreo}" style="width: 90%" />
+					
+					<p:outputPanel style="text-align: end; padding: 5px">Dirección:</p:outputPanel>
+					<p:inputTextarea value="#{docente.itDireccion}" rows="2" style="width: 90%" />
+					
+					<p:outputPanel style="text-align: end; padding: 5px">Genero:</p:outputPanel>
+					<h:selectOneRadio value="#{docente.sorGenero}">            
+			            <f:selectItem itemLabel="M" itemValue="M" />
+			            <f:selectItem itemLabel="F" itemValue="F" />
+			        </h:selectOneRadio>
+			        
+			        <p:outputPanel style="text-align: end; padding: 5px">Fecha Nac.:</p:outputPanel>
+			        <p:calendar value="#{docente.cFechaNac}" locale="es" navigator="true" pattern="dd/MM/yyyy" mask="true" inputStyle="width: 45%" />
+			        			     		        										
+					<p:outputPanel style="text-align: end; padding: 5px">Activo:</p:outputPanel>
+					<h:selectBooleanCheckbox value="#{docente.ckEstado}" style="margin-top: 6px" />
 					
 					<f:facet name = "footer"><br/>
 					    <h:panelGroup style = "display:block; text-align:center">
-					      	<p:commandButton id="btnGuardar" value="Guardar" icon="fa fa-save" actionListener="#{curso.guardar}" update="form" />	
+					      	<p:commandButton id="btnGuardar" value="Guardar" icon="fa fa-save" actionListener="#{docente.guardar}" update="dt growl" />	
 						</h:panelGroup>
 					</f:facet>						
 				</h:panelGrid>
-			</p:dialog>			
-			
+			</p:dialog>				
 						
-	   	</h:form>    	    
+	   	</h:form>
 	</ui:define>		
 	
 </ui:composition>

@@ -39,14 +39,14 @@ public class Perfil implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	String idPerfil = "";
+	static String idPerfil = "";
 	String itDescripcion = "";
 	boolean ckEstado = false;
 
 	String itBuscar = "";
 	boolean ckMostrarIC = false;
 
-	private List<SegPerfil> perfilList = new ArrayList<SegPerfil>();
+	private List<Object> perfilList = new ArrayList<Object>();
 
 	private List<PerfilMenu> menuSegList = new ArrayList<PerfilMenu>();
 	private List<PerfilMenu> menuManList = new ArrayList<PerfilMenu>();
@@ -72,16 +72,16 @@ public class Perfil implements Serializable {
 	// CONSULTA
 	public void llenarLista(String jpql) {
 		perfilList.clear();
-		List<SegPerfil> l = DAO.nqSegPerfil(jpql); 
-		for (SegPerfil in : l) 
+		List<Object> l = DAO.nqObject(new SegPerfil(), jpql); 
+		for (Object in : l) 
 			perfilList.add(in);		
 	}
 
 	public void buscar() {
 		if (ckMostrarIC) 
-			jpql = "SELECT * FROM Seg_Perfil WHERE descripcion LIKE '%" + itBuscar	+ "%' ORDER BY descripcion";
+			jpql = "SELECT * FROM seg_perfil WHERE descripcion LIKE '%" + itBuscar	+ "%' ORDER BY descripcion";
 		else 		
-			jpql = "SELECT * FROM Seg_Perfil WHERE descripcion LIKE '%" + itBuscar	+ "%' AND estado = 'AC' ORDER BY descripcion";
+			jpql = "SELECT * FROM seg_perfil WHERE descripcion LIKE '%" + itBuscar	+ "%' AND estado = 'AC' ORDER BY descripcion";
 
 		llenarLista(jpql);
 	}
@@ -98,7 +98,7 @@ public class Perfil implements Serializable {
 
 			SegPerfil ob = new SegPerfil();
 			if (accion == 1) {
-				ob = DAO.buscarSegPerfil("from SegPerfil c where c.idPerfil = " + idPerfil);
+				ob = (SegPerfil) DAO.buscarObject(new SegPerfil(), "from SegPerfil c where c.idPerfil = " + idPerfil);
 			}
 
 			ob.setDescripcion(itDescripcion);
@@ -129,13 +129,6 @@ public class Perfil implements Serializable {
 
 	public void closeDialogo() {
 		init();
-	}
-
-	public boolean getEstado(String estado) {
-		boolean ban = true;
-		if (estado.equals("IC"))
-			ban = false;
-		return ban;
 	}
 
 	public void habilitaMenu(int perfil, int menu, boolean seleccion) {
@@ -236,7 +229,7 @@ public class Perfil implements Serializable {
 		return idPerfil;
 	}
 	public void setIdPerfil(String idPerfil) {
-		this.idPerfil = idPerfil;
+		Perfil.idPerfil = idPerfil;
 	}
 	public String getItDescripcion() {
 		return itDescripcion;
@@ -265,10 +258,10 @@ public class Perfil implements Serializable {
 	public void setAccion(int accion) {
 		this.accion = accion;
 	}
-	public List<SegPerfil> getPerfilList() {
+	public List<Object> getPerfilList() {
 		return perfilList;
 	}
-	public void setPerfilList(List<SegPerfil> perfilList) {
+	public void setPerfilList(List<Object> perfilList) {
 		this.perfilList = perfilList;
 	}
 	public List<PerfilMenu> getMenuSegList() {

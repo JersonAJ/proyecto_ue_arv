@@ -11,6 +11,8 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.faces.model.SelectItem;
 import javax.persistence.Query;
@@ -95,7 +97,7 @@ public class Util {
 		try {
 			if (cedula.length() != 10) 
 				return "La c\u00e9dula debe contener 10 d\u00edgitos sin espacios";
-			
+
 			// Segundo try comprueba que todos los dígitos sean numéricos
 			try {
 				// Transformación de cada carácter a un byte
@@ -105,11 +107,11 @@ public class Util {
 				for (byte i = 0; i < 9; i++) {
 					digitos[i] = Byte.parseByte("" + cedula.charAt(i));
 				}
-				
+
 				// Verificar segundo dígito
 				if (primeros2 >= 1 & primeros2 <= 24) {
 					if (tercerD <= 6) {
-						
+
 						// Módulo 10 multiplicar digitos impares por 2
 						for (byte i = 0; i < 9; i = (byte) (i + 2)) {
 							multiplicar = (byte) (digitos[i] * 2);
@@ -118,24 +120,24 @@ public class Util {
 							}
 							suma = (byte) (suma + multiplicar);
 						}
-						
+
 						// Módulo 10 multiplicar digitos pares por 1
 						for (byte i = 1; i < 9; i = (byte) (i + 2)) {
 							multiplicar = (byte) (digitos[i] * 1);
 							suma = (byte) (suma + multiplicar);
 						}
-						
+
 						// Obtener la decena superior de la suma
 						aux = suma;
 						while (aux % 10 != 0) {
 							aux = (byte) (aux + 1);
 						}
 						suma = (byte) (aux - suma);
-						
+
 						// Comprobar la suma con dígito verificador (Último Dígito)
 						if (suma != Dverificador) 						
 							return "Revise nuevamente los d\u00edgitos de su c\u00e9dula";
-						
+
 						mensaje = "OK";						
 					}
 				}
@@ -145,11 +147,26 @@ public class Util {
 		} catch (Exception e) {
 			return e.getMessage();			
 		}
-		return mensaje;				
+		return mensaje;		
+	}
+
+	public static String validarCorreo(String correo) {
+		String msg = "OK";		
+		//Patrón para validar el email
+		Pattern pat = Pattern.compile("^[\\w-\\+]+(\\.[\\w]+)*@[\\w-]+(\\.[\\w]+)*(\\.[a-z]{2,})$");
+		// El email a validar
+		if (!correo.equals("")) {
+			Matcher mather = pat.matcher(correo);
+			if (mather.find() != true) 
+				msg = "El correo ingresado es inválido.";	
+		}		
+		return msg;
 	}
 
 	public static void main(String[] args) throws IOException, NoSuchAlgorithmException {
-		System.out.println(generaSHA256("jarmijos"));
-		System.out.println(generaSHA256("rsolano"));		
+		System.out.println(validarCorreo("jarmijos"));
+		System.out.println(validarCorreo("rsolano@gmail.com"));		
+		System.out.println(validarCorreo("rsolano@asda@sas.asasasa.sasas"));
+		System.out.println(validarCorreo(""));		
 	}
 }

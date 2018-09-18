@@ -44,7 +44,7 @@ public class Login implements Serializable {
 	
 	public String ingresar() {
 		try {
-			SegUsuario u = DAO.buscarSegUsuario("from SegUsuario c where c.idUsuario = '" + usuario + "'");
+			SegUsuario u = (SegUsuario) DAO.buscarObject(new SegUsuario(),"from SegUsuario c where c.idUsuario = '" + usuario + "'");
 
 			String pass = u.getClave();
 			String bloq = u.getSnBloqueado();
@@ -112,35 +112,28 @@ public class Login implements Serializable {
 		}	
 	}
 	
-	// GNS
+	// GETTERS AND SETTERS
 	public String getUsuario() {
 		return usuario;
 	}
-
 	public void setUsuario(String usuario) {
 		this.usuario = usuario;
 	}
-
 	public String getPassword() {
 		return password;
 	}
-
 	public void setPassword(String password) {
 		this.password = password;
 	}
-
 	public boolean isLoggedIn() {
 		return loggedIn;
 	}
-
 	public void setLoggedIn(boolean loggedIn) {
 		this.loggedIn = loggedIn;
 	}
-
 	public Navegacion getNavegacion() {
 		return navegacion;
 	}
-
 	public void setNavegacion(Navegacion navegacion) {
 		this.navegacion = navegacion;
 	}

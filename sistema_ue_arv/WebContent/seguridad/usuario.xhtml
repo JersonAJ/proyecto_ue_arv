@@ -88,7 +88,7 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 							<f:setPropertyActionListener value="#{dtUsuario.apellidos}" target="#{usuario.itApellidos}" />
 							<f:setPropertyActionListener value="#{dtUsuario.intentos}" target="#{usuario.inIntentos}" />
 							<f:setPropertyActionListener value="#{dtUsuario.clave}" target="#{usuario.olClave}" />
-							<f:setPropertyActionListener value="#{usuario.getEstado(dtUsuario.estado)}" target="#{usuario.ckEstado}" />
+							<f:setPropertyActionListener value="#{general.getEstado(dtUsuario.estado)}" target="#{usuario.ckEstado}" />
 							<f:setPropertyActionListener value="#{usuario.getBloqueado(dtUsuario.snBloqueado)}" target="#{usuario.ckBloqueado}" />
 							<f:setPropertyActionListener value="#{usuario.getNuevo(dtUsuario.snNuevo)}" target="#{usuario.ckNuevo}" />
 							<f:setPropertyActionListener value="1" target="#{usuario.accion}" />
@@ -108,6 +108,13 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 				</p:column>
 			</p:dataTable>
 			
+			<br/>
+			<p:outputPanel style="background-color: white; padding: 5px; text-align: end">
+				<h:commandLink value="Exportar a excel" style="color: green">                
+	                <p:dataExporter type="xlsx" target="dt" fileName="usuarios" />
+	            </h:commandLink>		   
+            </p:outputPanel>
+			
 			<!-- INGRESO | ACTUALIZACION -->
 			<p:dialog header="Datos usuario" id="dgl" widgetVar="dgl" modal="true" closable="true" maximizable="false" resizable="false" width="400px">
 			
@@ -121,31 +128,31 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 				<p:messages id="messages" for="messages" showDetail="true" closable="true" />
 							
 				<h:panelGrid id="pnl" columns="2" cellpadding="0" style="width: auto; min-width: 100%;" columnClasses="ui-grid-col-4,ui-grid-col-8">										
-					<p:outputPanel style="text-align: end; margin-right: 5px">Usuario:</p:outputPanel>
+					<p:outputPanel style="text-align: end; padding: 5px">Usuario:</p:outputPanel>
 					<p:inputText value="#{usuario.itUsuario}" style="width: 50%" disabled="#{usuario.accion eq 1? true:false}" />
 										
-					<p:outputPanel style="text-align: end; margin-right: 5px">Perfil:</p:outputPanel>
+					<p:outputPanel style="text-align: end; padding: 5px">Perfil:</p:outputPanel>
 					<p:selectOneMenu value="#{usuario.soPerfil}">
 						<f:selectItems value="#{usuario.listPerfiles}" />		
 					</p:selectOneMenu>
 					
-					<p:outputPanel style="text-align: end; margin-right: 5px">Nombres:</p:outputPanel>
+					<p:outputPanel style="text-align: end; padding: 5px">Nombres:</p:outputPanel>
 					<p:inputText value="#{usuario.itNombres}" style="width: 90%" />
 					
-					<p:outputPanel style="text-align: end; margin-right: 5px">Apellidos:</p:outputPanel>
+					<p:outputPanel style="text-align: end; padding: 5px">Apellidos:</p:outputPanel>
 					<p:inputText value="#{usuario.itApellidos}" style="width: 90%" />
 									
-					<p:outputPanel style="text-align: end; margin-right: 5px">Intentos:</p:outputPanel>
+					<p:outputPanel style="text-align: end; padding: 5px">Intentos:</p:outputPanel>
 					<p:inputNumber decimalPlaces="0" value="#{usuario.inIntentos}" inputStyle="width: 30px"/>
 					
-					<p:outputPanel style="text-align: end; margin-right: 5px">Bloqueado:</p:outputPanel>
+					<p:outputPanel style="text-align: end; padding: 5px">Bloqueado:</p:outputPanel>
 					<h:selectBooleanCheckbox value="#{usuario.ckBloqueado}" />
 					
-					<p:outputPanel style="text-align: end; margin-right: 5px">Cambio de clave:</p:outputPanel>
+					<p:outputPanel style="text-align: end; padding: 5px">Cambio de clave:</p:outputPanel>
 					<h:selectBooleanCheckbox value="#{usuario.ckNuevo}" />
 					
-					<p:outputPanel style="text-align: end; margin-right: 5px">Activo:</p:outputPanel>
-					<h:selectBooleanCheckbox value="#{usuario.ckEstado}" />
+					<p:outputPanel style="text-align: end; padding: 5px">Activo:</p:outputPanel>
+					<h:selectBooleanCheckbox value="#{usuario.ckEstado}" style="margin-top: 6px" />
 					
 					<f:facet name = "footer"><br/>
 					    <h:panelGroup style = "display:block; text-align:center">

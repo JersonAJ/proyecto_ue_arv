@@ -39,8 +39,8 @@ public class Catalogo implements Serializable {
 	String itBuscar = "";
 	boolean ckMostrarIC = false;
 
-	private List<CatalogoCab> catalogoCabList = new ArrayList<CatalogoCab>();
-	private List<CatalogoDet> catalogoDetList = new ArrayList<CatalogoDet>();
+	private List<Object> catalogoCabList = new ArrayList<Object>();
+	private List<Object> catalogoDetList = new ArrayList<Object>();
 
 	String descripcion = "";
 	
@@ -66,15 +66,15 @@ public class Catalogo implements Serializable {
 	// CONSULTA
 	public void llenarLista(String jpql) {
 		catalogoCabList.clear();
-		List<CatalogoCab> l = DAO.nqCatalogoCab(jpql); 
-		for (CatalogoCab in : l) 
+		List<Object> l = DAO.nqObject(new CatalogoCab(), jpql); 
+		for (Object in : l) 
 			catalogoCabList.add(in);		
 	}
 	
 	public void llenarListaDet(String jpql) {
 		catalogoDetList.clear();
-		List<CatalogoDet> l = DAO.nqCatalogoDet(jpql); 
-		for (CatalogoDet in : l) 
+		List<Object> l = DAO.nqObject(new CatalogoDet(), jpql); 
+		for (Object in : l) 
 			catalogoDetList.add(in);	
 	}
 
@@ -84,13 +84,13 @@ public class Catalogo implements Serializable {
 		llenarLista(jpql);
 	}
 
-	public List<CatalogoDet> getCatalogoDetalle(String cab) {
+	public List<Object> getCatalogoDetalle(String cab) {
 		catalogoDetList.clear();
 		
 		if (ckMostrarIC) 
-			jpql = "SELECT * FROM catalogo_det WHERE codigo_cab = '"+ cab + "' ORDER BY descripcion";
+			jpql = "SELECT * FROM catalogo_det WHERE codigo_cab = '"+ cab + "' ORDER BY codigo_det";
 		else 		
-			jpql = "SELECT * FROM catalogo_det WHERE codigo_cab = '"+ cab + "' and estado = 'AC' ORDER BY descripcion";
+			jpql = "SELECT * FROM catalogo_det WHERE codigo_cab = '"+ cab + "' and estado = 'AC' ORDER BY codigo_det";
 				
 		llenarListaDet(jpql);
 		return catalogoDetList;
@@ -98,9 +98,9 @@ public class Catalogo implements Serializable {
 	
 	public void buscarDet() {		
 		if (ckMostrarIC) 
-			jpql = "SELECT * FROM catalogo_det WHERE codigo_cab = '"+ codigoCab + "' ORDER BY descripcion";
+			jpql = "SELECT * FROM catalogo_det WHERE codigo_cab = '"+ codigoCab + "' ORDER BY codigo_det";
 		else 		
-			jpql = "SELECT * FROM catalogo_det WHERE codigo_cab = '"+ codigoCab + "' and estado = 'AC' ORDER BY descripcion";
+			jpql = "SELECT * FROM catalogo_det WHERE codigo_cab = '"+ codigoCab + "' and estado = 'AC' ORDER BY codigo_det";
 		
 		llenarListaDet(jpql);
 	}
@@ -118,7 +118,7 @@ public class Catalogo implements Serializable {
 		}		
 		
 		CatalogoDet new_ob = new CatalogoDet();		
-		CatalogoCab cab = DAO.buscarCatalogoCab("from CatalogoCab c where c.codigoCab = '" + codigoCab + "'");
+		CatalogoCab cab = (CatalogoCab) DAO.buscarObject(new CatalogoCab(), "from CatalogoCab c where c.codigoCab = '" + codigoCab + "'");
 		new_ob.setCatalogoCab(cab);
 		new_ob.setCodigoDet(generaCodigo());
 		new_ob.setDescripcion(descripcionDet);
@@ -135,10 +135,10 @@ public class Catalogo implements Serializable {
 		String codigo = "";
 
 		try {
-			List<CatalogoDet> l = DAO.nqCatalogoDet("SELECT * FROM catalogo_det WHERE codigo_cab = '"+ codigoCab +"' ORDER BY 1 DESC LIMIT 1 ");
-			for (CatalogoDet ca : l) 
-				codigo = ca.getCodigoDet();
-										
+			List<Object> l = DAO.nqObject(new CatalogoDet(), "SELECT * FROM catalogo_det WHERE codigo_cab = '"+ codigoCab +"' ORDER BY 1 DESC LIMIT 1 ");
+			for (Object ca : l) {
+				codigo = ((CatalogoDet) ca).getCodigoDet();
+			}						
 			num = Integer.parseInt(codigo.substring(2, 5)) + 1;
 			abv = codigo.substring(0, 2);
 		} catch (Exception e) {
@@ -204,10 +204,10 @@ public class Catalogo implements Serializable {
 	public void setAccion(int accion) {
 		this.accion = accion;
 	}
-	public List<CatalogoCab> getCatalogoCabList() {
+	public List<Object> getCatalogoCabList() {
 		return catalogoCabList;
 	}
-	public void setCatalogoCabList(List<CatalogoCab> catalogoCabList) {
+	public void setCatalogoCabList(List<Object> catalogoCabList) {
 		this.catalogoCabList = catalogoCabList;
 	}
 	public String getDescripcion() {
@@ -216,10 +216,10 @@ public class Catalogo implements Serializable {
 	public void setDescripcion(String descripcion) {
 		this.descripcion = descripcion;
 	}
-	public List<CatalogoDet> getCatalogoDetList() {
+	public List<Object> getCatalogoDetList() {
 		return catalogoDetList;
 	}
-	public void setCatalogoDetList(List<CatalogoDet> catalogoDetList) {
+	public void setCatalogoDetList(List<Object> catalogoDetList) {
 		this.catalogoDetList = catalogoDetList;
 	}
 	public String getDescripcionDet() {

@@ -65,7 +65,7 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 													
 							<f:setPropertyActionListener value="#{dtPerfil.idPerfil}" target="#{perfil.idPerfil}" />
 							<f:setPropertyActionListener value="#{dtPerfil.descripcion}" target="#{perfil.itDescripcion}" />	
-							<f:setPropertyActionListener value="#{perfil.getEstado(dtPerfil.estado)}" target="#{perfil.ckEstado}" />
+							<f:setPropertyActionListener value="#{general.getEstado(dtPerfil.estado)}" target="#{perfil.ckEstado}" />
 							<f:setPropertyActionListener value="1" target="#{perfil.accion}" />
 																					
 						</p:commandLink>							
@@ -97,11 +97,11 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 			
 				<h:panelGrid id="pnl" columns="2" cellpadding="0" style="width: auto; min-width: 100%;" columnClasses="ui-grid-col-4,ui-grid-col-8">
 										
-					<p:outputPanel style="text-align: end; margin-right: 5px">Descripción:</p:outputPanel>
+					<p:outputPanel style="text-align: end; padding: 5px">Descripción:</p:outputPanel>
 					<p:inputText value="#{perfil.itDescripcion}" style="width: 90%" />
 								
-					<p:outputPanel style="text-align: end; margin-right: 5px">Activo:</p:outputPanel>
-					<h:selectBooleanCheckbox value="#{perfil.ckEstado}" />
+					<p:outputPanel style="text-align: end; padding: 5px">Activo:</p:outputPanel>
+					<h:selectBooleanCheckbox value="#{perfil.ckEstado}" style="margin-top: 6px" />
 					
 					<f:facet name = "footer"><br/>
 					    <h:panelGroup style = "display:block; text-align:center">

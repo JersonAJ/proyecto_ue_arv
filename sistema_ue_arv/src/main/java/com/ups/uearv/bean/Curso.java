@@ -38,7 +38,7 @@ public class Curso implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	String idCurso = "";
+	static String idCurso = "";
 	String itDescripcion = "";
 	String soNivel = "";
 	boolean ckEstado = false;
@@ -46,7 +46,7 @@ public class Curso implements Serializable {
 	String itBuscar = "";
 	boolean ckMostrarIC = false;
 
-	private List<MatCurso> cursoList = new ArrayList<MatCurso>();
+	private List<Object> cursoList = new ArrayList<Object>();
 
 	ArrayList<SelectItem> listNiveles = new ArrayList<SelectItem>();
 
@@ -71,18 +71,19 @@ public class Curso implements Serializable {
 	// CONSULTA
 	public void llenarLista(String jpql) {
 		cursoList.clear();
-		List<MatCurso> l = DAO.nqMatCurso(jpql);
-		for (MatCurso in : l)
+		List<Object> l = DAO.nqObject(new MatCurso(), jpql);
+				
+		for (Object in : l)
 			cursoList.add(in);
 	}
 
 	public void buscar() {
 		if (ckMostrarIC) {
 			jpql = " SELECT c.* FROM mat_curso c INNER JOIN catalogo_det k ON k.codigo_det = c.nivel WHERE c.descripcion LIKE '%"
-					+ itBuscar + "%' ORDER BY k.descripcion ";
+					+ itBuscar + "%' ORDER BY k.codigo_det, c.id_curso ";
 		} else {
 			jpql = " SELECT c.* FROM mat_curso c INNER JOIN catalogo_det k ON k.codigo_det = c.nivel WHERE c.descripcion LIKE '%"
-					+ itBuscar + "%' AND c.estado = 'AC' ORDER BY k.descripcion ";
+					+ itBuscar + "%' AND c.estado = 'AC' ORDER BY k.codigo_det, c.id_curso ";
 		}
 		llenarLista(jpql);
 	}
@@ -106,7 +107,7 @@ public class Curso implements Serializable {
 			
 			MatCurso ob = new MatCurso();
 			if (accion == 1) {
-				ob = DAO.buscarMatCurso("from MatCurso c where c.idCurso = " + idCurso);
+				ob = (MatCurso) DAO.buscarObject(new MatCurso(), "from MatCurso c where c.idCurso = " + idCurso);
 			}
 			
 			String estado = "IC";
@@ -145,23 +146,16 @@ public class Curso implements Serializable {
 	public void closeDialogo() {
 		init();
 	}
-
-	public boolean getEstado(String estado) {
-		boolean ban = true;
-		if (estado.equals("IC"))
-			ban = false;
-		return ban;
-	}
 	
 	public List<SelectItem> llenaComboNiveles() {
 		return Util.llenaCombo(DAO.getDetCatalogo("CA004"), 2);
 	}
 	
-	public int getNivel(String cod) {
+	public String getNivel(String cod) {
 		CatalogoDet ob = new CatalogoDet();
-		ob = DAO.buscarCatalogoDet("from CatalogoDet c where c.codigoDet = '" + cod + "'");
+		ob = (CatalogoDet) DAO.buscarObject(new CatalogoDet(), "from CatalogoDet c where c.codigoDet = '" + cod + "'");
 
-		return Integer.parseInt(ob.getDescripcion().trim());
+		return ob.getDescripcion().trim();
 	}
 	
 	// GETTERS AND SETTERS
@@ -193,7 +187,7 @@ public class Curso implements Serializable {
 		return idCurso;
 	}
 	public void setIdCurso(String idCurso) {
-		this.idCurso = idCurso;
+		Curso.idCurso = idCurso;
 	}
 	public String getItDescripcion() {
 		return itDescripcion;
@@ -207,10 +201,10 @@ public class Curso implements Serializable {
 	public void setSoNivel(String soNivel) {
 		this.soNivel = soNivel;
 	}
-	public List<MatCurso> getCursoList() {
+	public List<Object> getCursoList() {
 		return cursoList;
 	}
-	public void setCursoList(List<MatCurso> cursoList) {
+	public void setCursoList(List<Object> cursoList) {
 		this.cursoList = cursoList;
 	}
 	public ArrayList<SelectItem> getListNiveles() {

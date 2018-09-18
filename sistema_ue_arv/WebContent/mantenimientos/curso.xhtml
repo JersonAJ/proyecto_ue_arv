@@ -55,7 +55,7 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 			        <h:outputText value="#{dtcurso.descripcion}" />
 			    </p:column>
 			    
-			     <p:column headerText="Nivel" width="60" style="text-align: center">
+			     <p:column headerText="Nivel">
 			        <h:outputText value="#{curso.getNivel(dtcurso.nivel)}" />
 			    </p:column>
 						    
@@ -71,13 +71,20 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 							<f:setPropertyActionListener value="#{dtcurso.idCurso}" target="#{curso.idCurso}" />
 							<f:setPropertyActionListener value="#{dtcurso.descripcion}" target="#{curso.itDescripcion}" />
 							<f:setPropertyActionListener value="#{dtcurso.nivel}" target="#{curso.soNivel}" />
-							<f:setPropertyActionListener value="#{curso.getEstado(dtcurso.estado)}" target="#{curso.ckEstado}" />
+							<f:setPropertyActionListener value="#{general.getEstado(dtcurso.estado)}" target="#{curso.ckEstado}" />
 							<f:setPropertyActionListener value="1" target="#{curso.accion}" />
 																																						
 						</p:commandLink>							
 					</p:outputPanel>
 			    </p:column>			  
 			</p:dataTable>
+			
+			<br/>
+			<p:outputPanel style="background-color: white; padding: 5px; text-align: end">
+				<h:commandLink value="Exportar a excel" style="color: green">                
+	                <p:dataExporter type="xlsx" target="dt" fileName="cursos" />
+	            </h:commandLink>		   
+            </p:outputPanel>
 			
 			<!-- INGRESO | ACTUALIZACION -->
 			<p:dialog header="Datos Curso" widgetVar="dgl" modal="true" closable="true" maximizable="false" resizable="false" width="400px">
@@ -86,16 +93,16 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 			
 				<h:panelGrid id="pnl" columns="2" cellpadding="0" style="width: auto; min-width: 100%;" columnClasses="ui-grid-col-4,ui-grid-col-8">
 										
-					<p:outputPanel style="text-align: end; margin-right: 5px">Curso:</p:outputPanel>
+					<p:outputPanel style="text-align: end; padding: 5px">Curso:</p:outputPanel>
 					<p:inputText value="#{curso.itDescripcion}" style="width: 90%" />
 										
-					<p:outputPanel style="text-align: end; margin-right: 5px">Nivel:</p:outputPanel>
+					<p:outputPanel style="text-align: end; padding: 5px">Nivel:</p:outputPanel>
 					<p:selectOneMenu value="#{curso.soNivel}">
 						<f:selectItems value="#{curso.listNiveles}" />		
 					</p:selectOneMenu>					
 										
-					<p:outputPanel style="text-align: end; margin-right: 5px">Activo:</p:outputPanel>
-					<h:selectBooleanCheckbox value="#{curso.ckEstado}" />
+					<p:outputPanel style="text-align: end; padding: 5px">Activo:</p:outputPanel>
+					<h:selectBooleanCheckbox value="#{curso.ckEstado}" style="margin-top: 6px" />
 					
 					<f:facet name = "footer"><br/>
 					    <h:panelGroup style = "display:block; text-align:center">

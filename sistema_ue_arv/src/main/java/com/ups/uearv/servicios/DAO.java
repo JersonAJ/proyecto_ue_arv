@@ -10,16 +10,13 @@ import javax.persistence.NoResultException;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 
-import com.ups.uearv.entidades.CatalogoCab;
-import com.ups.uearv.entidades.CatalogoDet;
-import com.ups.uearv.entidades.MatCurso;
-import com.ups.uearv.entidades.SegMenu;
 import com.ups.uearv.entidades.SegPerfil;
 import com.ups.uearv.entidades.SegPerfilMenu;
 import com.ups.uearv.entidades.SegUsuario;
 
 /**
  * @author Jerson Armijos - Raysa Solano
+ * @version 1.0
  */
 
 @SuppressWarnings("unchecked")
@@ -28,141 +25,32 @@ public class DAO {
 	public static EntityManagerFactory emf = Persistence.createEntityManagerFactory("sismacc");
 	public static EntityManager em = emf.createEntityManager();	
 
-	// NATIVE QUERY RETORNA LISTA
-	public static List<SegPerfil> nqSegPerfil(String njpql) {
-		List<SegPerfil> list = new ArrayList<SegPerfil>();
+	// BUSCA Y RETORNA LISTA DE OBJETO
+	public static <o> List<Object> nqObject(Object o, String njpql) {
+		List<o> list = new ArrayList<o>();
 		try {
-			list = (List<SegPerfil>) em.createNativeQuery(njpql, SegPerfil.class).getResultList();
+			list = (List<o>) em.createNativeQuery(njpql, o.getClass()).getResultList();
 
-			for (SegPerfil tb : list)
+			for (o tb : list)
 				em.refresh(tb);
 
 		} catch (Exception e) {
 		}
-		return list;
-	}
-
-	public static List<SegUsuario> nqSegUsuario(String njpql) {
-		List<SegUsuario> list = new ArrayList<SegUsuario>();
-		try {
-			list = (List<SegUsuario>) em.createNativeQuery(njpql, SegUsuario.class).getResultList();
-
-			for (SegUsuario tb : list)
-				em.refresh(tb);
-
-		} catch (Exception e) {
-		}
-		return list;
-	}
+		return (List<Object>) list;
+	}	
 	
-	public static List<SegMenu> nqSegMenu(String njpql) {
-		List<SegMenu> list = new ArrayList<SegMenu>();
-		try {
-			list = (List<SegMenu>) em.createNativeQuery(njpql, SegMenu.class).getResultList();
-
-			for (SegMenu tb : list)
-				em.refresh(tb);
-
-		} catch (Exception e) {
-		}
-		return list;
-	}
-	
-	public static List<CatalogoCab> nqCatalogoCab(String njpql) {
-		List<CatalogoCab> list = new ArrayList<CatalogoCab>();
-		try {
-			list = (List<CatalogoCab>) em.createNativeQuery(njpql, CatalogoCab.class).getResultList();
-
-			for (CatalogoCab tb : list)
-				em.refresh(tb);
-
-		} catch (Exception e) {
-		}
-		return list;
-	}
-	
-	public static List<CatalogoDet> nqCatalogoDet(String njpql) {
-		List<CatalogoDet> list = new ArrayList<CatalogoDet>();
-		try {
-			list = (List<CatalogoDet>) em.createNativeQuery(njpql, CatalogoDet.class).getResultList();
-
-			for (CatalogoDet tb : list)
-				em.refresh(tb);
-
-		} catch (Exception e) {
-		}
-		return list;
-	}
-	
-	public static List<MatCurso> nqMatCurso(String njpql) {
-		List<MatCurso> list = new ArrayList<MatCurso>();
-		try {
-			list = (List<MatCurso>) em.createNativeQuery(njpql, MatCurso.class).getResultList();
-
-			for (MatCurso tb : list)
-				em.refresh(tb);
-
-		} catch (Exception e) {
-		}
-		return list;
-	}
-
-	// BUSCAR OBJECTO
-	public static SegPerfil buscarSegPerfil(String jpql) {
+	// BUSCA Y RETORNA OBJECTO
+	public static <o> Object buscarObject(Object o, String jpql) {
 		try {
 			Query query = em.createQuery(jpql);
-			SegPerfil u = (SegPerfil) query.getSingleResult();
+			o u = (o) query.getSingleResult();
 			em.refresh(u);
 			return u;
 		} catch (NoResultException e) {
 			return null;
 		}
 	}
-
-	public static SegUsuario buscarSegUsuario(String jpql) {
-		try {
-			Query query = em.createQuery(jpql);
-			SegUsuario u = (SegUsuario) query.getSingleResult();
-			em.refresh(u);
-			return u;
-		} catch (NoResultException e) {
-			return null;
-		}
-	}
-	
-	public static CatalogoCab buscarCatalogoCab(String jpql) {
-		try {
-			Query query = em.createQuery(jpql);
-			CatalogoCab u = (CatalogoCab) query.getSingleResult();
-			em.refresh(u);
-			return u;
-		} catch (NoResultException e) {
-			return null;
-		}
-	}
-	
-	public static CatalogoDet buscarCatalogoDet(String jpql) {
-		try {
-			Query query = em.createQuery(jpql);
-			CatalogoDet u = (CatalogoDet) query.getSingleResult();
-			em.refresh(u);
-			return u;
-		} catch (NoResultException e) {
-			return null;
-		}
-	}
-	
-	public static MatCurso buscarMatCurso(String jpql) {
-		try {
-			Query query = em.createQuery(jpql);
-			MatCurso u = (MatCurso) query.getSingleResult();
-			em.refresh(u);
-			return u;
-		} catch (NoResultException e) {
-			return null;
-		}
-	}
-
+		
 	// INGRESAR - ACTUALIZAR
 	public static boolean saveOrUpdate(Object o, int op, EntityManager em) {
 		boolean ban = true;
@@ -204,7 +92,7 @@ public class DAO {
 		em.getTransaction().commit();
 	}
 
-	// SEGURIDAD
+	// FUNCIONES SEGURIDAD
 	public static List<Object> consultaMenu(String idPerfil, int idMenuPadre) {
 		Query query = em.createNativeQuery(" CALL consulta_menu_perfil (" + idPerfil + ", " + idMenuPadre + ") ");
 		return query.getResultList();
@@ -212,14 +100,13 @@ public class DAO {
 	
 	public static List<Object> obtenerMenu(String usuario) {	
 		try {
-			int idPerfil = DAO.buscarSegUsuario(" from SegUsuario u where u.idUsuario = '" + usuario + "'").getIdPerfil();
-			
+			SegUsuario u = (SegUsuario) DAO.buscarObject(new SegUsuario(), " from SegUsuario u where u.idUsuario = '" + usuario + "'");
+			int idPerfil = u.getIdPerfil();
 			Query query = em.createNativeQuery(" SELECT id_menu FROM seg_perfil_menu WHERE id_perfil = " + idPerfil);
 			return query.getResultList();
 		} catch (Exception e) {
 			return null;
-		}
-		
+		}		
 	}
 
 	public static String getPerfil(String usuario) {

@@ -60,7 +60,7 @@ public class General implements Serializable {
 	@SuppressWarnings("deprecation")
 	public void mostrarCambioClave() {		
 		if (Session.getUserName() != null) {
-			SegUsuario ob = DAO.buscarSegUsuario("from SegUsuario c where c.idUsuario = '" + Session.getUserName() + "'");
+			SegUsuario ob = (SegUsuario) DAO.buscarObject(new SegUsuario(), "from SegUsuario c where c.idUsuario = '" + Session.getUserName() + "'");
 			if (ob.getSnNuevo().equals("S")) {
 				RequestContext context = RequestContext.getCurrentInstance();
 				context.execute("PF('dglClave').show();");
@@ -74,6 +74,14 @@ public class General implements Serializable {
 	}
 	public void setDisplayMensajeClave(String displayMensajeClave) {
 		this.displayMensajeClave = displayMensajeClave;
+	}
+	
+	// OBTENER ESTADO
+	public boolean getEstado(String estado) {
+		boolean ban = true;
+		if (estado.equals("IC"))
+			ban = false;
+		return ban;
 	}
 
 	// CAMBIO DE CLAVE
@@ -89,7 +97,7 @@ public class General implements Serializable {
 				em.getTransaction().begin();
 				try {
 					SegUsuario ob = new SegUsuario();
-					ob = DAO.buscarSegUsuario("from SegUsuario c where c.idUsuario = '" + Session.getUserName() + "'");
+					ob = (SegUsuario) DAO.buscarObject(new SegUsuario(), "from SegUsuario c where c.idUsuario = '" + Session.getUserName() + "'");
 					ob.setSnNuevo("N");
 					ob.setClave(Util.generaSHA256(clave1));
 
@@ -290,215 +298,162 @@ public class General implements Serializable {
 	public String getDisplaySeguridad() {
 		return displaySeguridad;
 	}
-
 	public void setDisplaySeguridad(String displaySeguridad) {
 		this.displaySeguridad = displaySeguridad;
 	}
-
 	public String getDisplayPerfiles() {
 		return displayPerfiles;
 	}
-
 	public void setDisplayPerfiles(String displayPerfiles) {
 		this.displayPerfiles = displayPerfiles;
 	}
-
 	public String getDisplayUsuarios() {
 		return displayUsuarios;
 	}
-
 	public void setDisplayUsuarios(String displayUsuarios) {
 		this.displayUsuarios = displayUsuarios;
 	}
-
 	public String getDisplayMantenimientos() {
 		return displayMantenimientos;
 	}
-
 	public void setDisplayMantenimientos(String displayMantenimientos) {
 		this.displayMantenimientos = displayMantenimientos;
 	}
-
 	public String getDisplayCatalogo() {
 		return displayCatalogo;
 	}
-
 	public void setDisplayCatalogo(String displayCatalogo) {
 		this.displayCatalogo = displayCatalogo;
 	}
-
 	public String getDisplayCursos() {
 		return displayCursos;
 	}
-
 	public void setDisplayCursos(String displayCursos) {
 		this.displayCursos = displayCursos;
 	}
-
 	public String getDisplayDocentes() {
 		return displayDocentes;
 	}
-
 	public void setDisplayDocentes(String displayDocentes) {
 		this.displayDocentes = displayDocentes;
 	}
-
 	public String getDisplayAsignaturas() {
 		return displayAsignaturas;
 	}
-
 	public void setDisplayAsignaturas(String displayAsignaturas) {
 		this.displayAsignaturas = displayAsignaturas;
 	}
-
 	public String getDisplayRepartos() {
 		return displayRepartos;
 	}
-
 	public void setDisplayRepartos(String displayRepartos) {
 		this.displayRepartos = displayRepartos;
 	}
-
 	public String getDisplayEscalas() {
 		return displayEscalas;
 	}
-
 	public void setDisplayEscalas(String displayEscalas) {
 		this.displayEscalas = displayEscalas;
 	}
-
 	public String getDisplayComportamientos() {
 		return displayComportamientos;
 	}
-
 	public void setDisplayComportamientos(String displayComportamientos) {
 		this.displayComportamientos = displayComportamientos;
 	}
-
 	public String getDisplayParalelos() {
 		return displayParalelos;
 	}
-
 	public void setDisplayParalelos(String displayParalelos) {
 		this.displayParalelos = displayParalelos;
 	}
-
 	public String getDisplayMatriculacion() {
 		return displayMatriculacion;
 	}
-
 	public void setDisplayMatriculacion(String displayMatriculacion) {
 		this.displayMatriculacion = displayMatriculacion;
 	}
-
 	public String getDisplayPeriodos() {
 		return displayPeriodos;
 	}
-
 	public void setDisplayPeriodos(String displayPeriodos) {
 		this.displayPeriodos = displayPeriodos;
 	}
-
 	public String getDisplayOfertas() {
 		return displayOfertas;
 	}
-
 	public void setDisplayOfertas(String displayOfertas) {
 		this.displayOfertas = displayOfertas;
 	}
-
 	public String getDisplayRepresentantes() {
 		return displayRepresentantes;
 	}
-
 	public void setDisplayRepresentantes(String displayRepresentantes) {
 		this.displayRepresentantes = displayRepresentantes;
 	}
-
 	public String getDisplayEstudiantes() {
 		return displayEstudiantes;
 	}
-
 	public void setDisplayEstudiantes(String displayEstudiantes) {
 		this.displayEstudiantes = displayEstudiantes;
 	}
-
 	public String getDisplayMatriculas() {
 		return displayMatriculas;
 	}
-
 	public void setDisplayMatriculas(String displayMatriculas) {
 		this.displayMatriculas = displayMatriculas;
 	}
-
 	public String getDisplayMatReportes() {
 		return displayMatReportes;
 	}
-
 	public void setDisplayMatReportes(String displayMatReportes) {
 		this.displayMatReportes = displayMatReportes;
 	}
-
 	public String getDisplayGestion() {
 		return displayGestion;
 	}
-
 	public void setDisplayGestion(String displayGestion) {
 		this.displayGestion = displayGestion;
 	}
-
 	public String getDisplayDescuentos() {
 		return displayDescuentos;
 	}
-
 	public void setDisplayDescuentos(String displayDescuentos) {
 		this.displayDescuentos = displayDescuentos;
 	}
-
 	public String getDisplayPensiones() {
 		return displayPensiones;
 	}
-
 	public void setDisplayPensiones(String displayPensiones) {
 		this.displayPensiones = displayPensiones;
 	}
-
 	public String getDisplayGesReportes() {
 		return displayGesReportes;
 	}
-
 	public void setDisplayGesReportes(String displayGesReportes) {
 		this.displayGesReportes = displayGesReportes;
 	}
-
 	public String getDisplayCalificaciones() {
 		return displayCalificaciones;
 	}
-
 	public void setDisplayCalificaciones(String displayCalificaciones) {
 		this.displayCalificaciones = displayCalificaciones;
 	}
-
 	public String getDisplayControl() {
 		return displayControl;
 	}
-
 	public void setDisplayControl(String displayControl) {
 		this.displayControl = displayControl;
 	}
-
 	public String getDisplayAsistencias() {
 		return displayAsistencias;
 	}
-
 	public void setDisplayAsistencias(String displayAsistencias) {
 		this.displayAsistencias = displayAsistencias;
 	}
-
 	public String getDisplayCalReportes() {
 		return displayCalReportes;
 	}
-
 	public void setDisplayCalReportes(String displayCalReportes) {
 		this.displayCalReportes = displayCalReportes;
 	}	

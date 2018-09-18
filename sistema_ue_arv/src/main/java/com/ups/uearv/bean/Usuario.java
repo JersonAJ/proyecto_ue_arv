@@ -51,7 +51,7 @@ public class Usuario implements Serializable {
 	String itBuscar = "";
 	boolean ckMostrarIC = false;
 
-	private List<SegUsuario> usuarioList = new ArrayList<SegUsuario>();
+	private List<Object> usuarioList = new ArrayList<Object>();
 
 	ArrayList<SelectItem> listPerfiles = new ArrayList<SelectItem>();
 
@@ -76,8 +76,8 @@ public class Usuario implements Serializable {
 	// CONSULTA
 	public void llenarLista(String jpql) {
 		usuarioList.clear();
-		List<SegUsuario> l = DAO.nqSegUsuario(jpql);
-		for (SegUsuario in : l)
+		List<Object> l = DAO.nqObject(new SegUsuario(), jpql);
+		for (Object in : l)
 			usuarioList.add(in);
 	}
 
@@ -104,7 +104,7 @@ public class Usuario implements Serializable {
 		
 		// VALIDACIONES
 		if (accion == 0) {
-			SegUsuario ob =  DAO.buscarSegUsuario("from SegUsuario c where c.idUsuario = '" + itUsuario + "'");
+			SegUsuario ob =  (SegUsuario) DAO.buscarObject(new SegUsuario(), "from SegUsuario c where c.idUsuario = '" + itUsuario + "'");
 			if (ob != null) {
 				mensaje = "El usuario ya existe";
 				FacesContext.getCurrentInstance().addMessage("growl", new FacesMessage(FacesMessage.SEVERITY_ERROR, mensajeTitulo, mensaje));
@@ -133,7 +133,7 @@ public class Usuario implements Serializable {
 		try {			
 			SegUsuario ob = new SegUsuario();
 			if (accion == 1) {
-				ob = DAO.buscarSegUsuario("from SegUsuario c where c.idUsuario = '" + itUsuario + "'");
+				ob = (SegUsuario) DAO.buscarObject(new SegUsuario(), "from SegUsuario c where c.idUsuario = '" + itUsuario + "'");
 			} else {				
 				ob.setIdUsuario(itUsuario);
 				ob.setClave(Util.generaSHA256(olClave));
@@ -179,7 +179,7 @@ public class Usuario implements Serializable {
 		em.getTransaction().begin();
 		try {
 			accion = 1;
-			SegUsuario ob = DAO.buscarSegUsuario("from SegUsuario c where c.idUsuario = '" + usuario + "'");
+			SegUsuario ob = (SegUsuario) DAO.buscarObject(new SegUsuario(), "from SegUsuario c where c.idUsuario = '" + usuario + "'");
 			ob.setClave(Util.generaSHA256(nuevaClave()));
 			ob.setSnNuevo("S");
 			if (DAO.saveOrUpdate(ob, accion, em)) {
@@ -203,13 +203,6 @@ public class Usuario implements Serializable {
 		init();
 	}
 
-	public boolean getEstado(String estado) {
-		boolean ban = true;
-		if (estado.equals("IC"))
-			ban = false;
-		return ban;
-	}
-
 	public boolean getBloqueado(String bloqueado) {
 		boolean ban = true;
 		if (bloqueado.equals("N"))
@@ -230,7 +223,7 @@ public class Usuario implements Serializable {
 
 	public String getPerfil(String cod) {
 		SegPerfil perfil = new SegPerfil();
-		perfil = DAO.buscarSegPerfil("from SegPerfil c where c.idPerfil = " + cod);
+		perfil = (SegPerfil) DAO.buscarObject(new SegPerfil(), "from SegPerfil c where c.idPerfil = " + cod);
 
 		return perfil.getDescripcion();
 	}
@@ -302,10 +295,10 @@ public class Usuario implements Serializable {
 	public void setCkBloqueado(boolean ckBloqueado) {
 		this.ckBloqueado = ckBloqueado;
 	}
-	public List<SegUsuario> getUsuarioList() {
+	public List<Object> getUsuarioList() {
 		return usuarioList;
 	}
-	public void setUsuarioList(List<SegUsuario> usuarioList) {
+	public void setUsuarioList(List<Object> usuarioList) {
 		this.usuarioList = usuarioList;
 	}
 	public ArrayList<SelectItem> getListPerfiles() {
