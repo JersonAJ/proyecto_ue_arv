@@ -49,14 +49,17 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 			 				 	
 			<p:separator />
 			
-			<p:dataTable id="dt" var="dtcurso" value="#{curso.cursoList}" tableStyle="width: auto; min-width: 100%;" emptyMessage="No existen datos a mostrar" >
+			<p:dataTable id="dt" var="dtcurso" value="#{curso.cursoList}" tableStyle="width: auto; min-width: 100%;" 
+				paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+                currentPageReportTemplate="{currentPage} de {totalPages}"
+                paginator="true" rows="10" rowsPerPageTemplate="5,10" paginatorPosition="top" emptyMessage="No existen datos a mostrar" >
 			 
 			    <p:column headerText="Curso">
 			        <h:outputText value="#{dtcurso.descripcion}" />
 			    </p:column>
 			    
 			     <p:column headerText="Nivel">
-			        <h:outputText value="#{curso.getNivel(dtcurso.nivel)}" />
+			        <h:outputText value="#{general.getDesCatalogoDet(dtcurso.nivel)}" />
 			    </p:column>
 						    
 			    <p:column headerText="Activo" width="20" style="text-align: center" exportable="false">

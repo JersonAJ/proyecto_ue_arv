@@ -13,12 +13,19 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 			    <f:viewAction action="#{general.validaSesion}" />
 			</f:metadata>
 				
-			<p:growl id="msgRegistro" for="msgRegistro" showDetail="true" closable="true" />
+			<p:growl id="growl" for="growl" showDetail="true" closable="true" />
 			
 			<p:outputPanel style="background-color: white; padding: 5px;">
 				<p:commandLink update=":form:pnl" oncomplete="PF('dgl').show();">
 					<i class="fa fa-plus-circle" />
-					<span>Agregar</span>					
+					<span>Agregar</span>	
+					
+					<f:setPropertyActionListener value="" target="#{asignatura.itNombre}" />
+					<f:setPropertyActionListener value="" target="#{asignatura.itDescripcion}" />
+					<f:setPropertyActionListener value="" target="#{asignatura.soNivel}" />
+					<f:setPropertyActionListener value="" target="#{asignatura.soArea}" />
+					<f:setPropertyActionListener value="true" target="#{asignatura.ckEstado}" />
+					<f:setPropertyActionListener value="0" target="#{asignatura.accion}" />				
 															
 				</p:commandLink>					
 			</p:outputPanel> 
@@ -29,14 +36,14 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 			</style>
 			<br/>		
 			<p:outputPanel>
-			   <p:inputText style="width: 500px" value="#{curso.itBuscar}" placeholder="Buscar por nivel o curso">
-				<p:ajax event="keyup" update="dt" listener="#{curso.buscar}"/>
+			   <p:inputText style="width: 500px" value="#{asignatura.itBuscar}" placeholder="Buscar por asignatura">
+				<p:ajax event="keyup" update="dt" listener="#{asignatura.buscar}"/>
 			     	</p:inputText>	
 				<p:spacer width="10px" />
 			
 				<div style="display: inline-flex">
-					<h:selectBooleanCheckbox value="#{curso.ckMostrarIC}">
-	    				<p:ajax update="dt" listener="#{curso.buscar}" />
+					<h:selectBooleanCheckbox value="#{asignatura.ckMostrarIC}">
+	    				<p:ajax update="dt" listener="#{asignatura.buscar}" />
 	 				</h:selectBooleanCheckbox> 
 		 			<h:outputLabel value="Mostrar inactivos" style="font-size: 12px; font-weight: normal; color: black; margin-top: 4px;" />			 				
 		 		</div>	 			     			         			     			      				      		      			
@@ -44,47 +51,88 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 			 				 	
 			<p:separator />
 			
-			<p:dataTable id="dt" var="dtcurso" value="#{curso.cursoList}" tableStyle="width: auto; min-width: 100%;" emptyMessage="No existen datos a mostrar" >
+			<p:dataTable id="dt" var="dtasignatura" value="#{asignatura.asignaturaList}" tableStyle="width: auto; min-width: 100%;"
+				paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+                currentPageReportTemplate="{currentPage} de {totalPages}"
+                paginator="true" rows="10" rowsPerPageTemplate="5,10" paginatorPosition="top" emptyMessage="No existen datos a mostrar">
 			 
-			    <p:column headerText="Descripción">
-			        <h:outputText value="#{dtcurso.descripcion}" />
-			    </p:column>
-						    
-			    <p:column headerText="Activo" width="20" style="text-align: center">
-			    	<h:selectBooleanCheckbox value="#{dtcurso.estado eq 'AC'? true:false}" disabled="true" />			        
+			    <p:column headerText="Asignatura">
+			        <h:outputText value="#{dtasignatura.nombre}" />
 			    </p:column>
 			    
-			    <p:column headerText="Editar" width="20">
+			    <p:column headerText="Área de conocimiento">
+			        <h:outputText value="#{general.getDesCatalogoDet(dtasignatura.area)}" />
+			    </p:column>
+			    
+			    <p:column headerText="Nivel">
+			        <h:outputText value="#{general.getDesCatalogoDet(dtasignatura.nivel)}" />
+			    </p:column>
+			    
+			    <p:column headerText="Horas" width="20" style="text-align: center">
+			        <h:outputText value="#{dtasignatura.horas}" />
+			    </p:column>
+						    
+			    <p:column headerText="Activo" width="20" style="text-align: center" exportable="false">
+			    	<h:selectBooleanCheckbox value="#{dtasignatura.estado eq 'AC'? true:false}" disabled="true" />			        
+			    </p:column>		   
+			    
+			    <p:column headerText="Editar" width="20" exportable="false">
 			    	<p:outputPanel style="text-align: center">
 						<p:commandLink update=":form:pnl" oncomplete="PF('dgl').show()">	
 							<i class="fa fa-pencil" />
+							
+							<f:setPropertyActionListener value="#{dtasignatura.idAsignatura}" target="#{asignatura.idAsignatura}" />
+							<f:setPropertyActionListener value="#{dtasignatura.nombre}" target="#{asignatura.itNombre}" />
+							<f:setPropertyActionListener value="#{dtasignatura.descripcion}" target="#{asignatura.itDescripcion}" />
+							<f:setPropertyActionListener value="#{dtasignatura.nivel}" target="#{asignatura.soNivel}" />
+							<f:setPropertyActionListener value="#{dtasignatura.area}" target="#{asignatura.soArea}" />
+							<f:setPropertyActionListener value="#{general.getEstado(dtasignatura.estado)}" target="#{asignatura.ckEstado}" />
+							<f:setPropertyActionListener value="1" target="#{asignatura.accion}" />
 																																						
 						</p:commandLink>							
 					</p:outputPanel>
 			    </p:column>			  
 			</p:dataTable>
 			
-			<!-- INGRESO | ACTUALIZACION -->
-			<p:dialog header="Datos Curso" widgetVar="dgl" modal="true" closable="true" maximizable="false" resizable="false" width="400px">
+			<br/>
+			<p:outputPanel style="background-color: white; padding: 5px; text-align: end">
+				<h:commandLink value="Exportar a excel" style="color: green">                
+	                <p:dataExporter type="xlsx" target="dt" fileName="asignaturas" />
+	            </h:commandLink>		   
+            </p:outputPanel>
 			
-			<p:ajax event="close" update="form" listener="#{curso.closeDialogo}" />
+			<!-- INGRESO | ACTUALIZACION -->
+			<p:dialog header="Datos Asignatura" widgetVar="dgl" modal="true" closable="true" maximizable="false" resizable="false" width="400px">
+			
+			<p:ajax event="close" update="form" listener="#{asignatura.closeDialogo}" />
 			
 				<h:panelGrid id="pnl" columns="2" cellpadding="0" style="width: auto; min-width: 100%;" columnClasses="ui-grid-col-4,ui-grid-col-8">
 										
-					<p:outputPanel style="text-align: end; margin-right: 5px">Descripción:</p:outputPanel>
-					<p:inputText value="#{curso.itDescripcion}" style="width: 90%" />
+					<p:outputPanel style="text-align: end; padding: 5px">Asignatura:</p:outputPanel>
+					<p:inputText value="#{asignatura.itNombre}" style="width: 90%" />
+					
+					<p:outputPanel style="text-align: end; padding: 5px">Descripción:</p:outputPanel>
+					<p:inputTextarea value="#{asignatura.itDescripcion}" rows="5" style="width: 90%" />
 										
-					<p:outputPanel style="text-align: end; margin-right: 5px">Nivel:</p:outputPanel>
-					<p:selectOneMenu value="#{curso.soNivel}">
-						<f:selectItems value="#{curso.listNiveles}" />		
+					<p:outputPanel style="text-align: end; padding: 5px">Área:</p:outputPanel>
+					<p:selectOneMenu value="#{asignatura.soArea}">
+						<f:selectItems value="#{asignatura.listAreas}" />		
+					</p:selectOneMenu>
+															
+					<p:outputPanel style="text-align: end; padding: 5px">Nivel:</p:outputPanel>
+					<p:selectOneMenu value="#{asignatura.soNivel}">
+						<f:selectItems value="#{asignatura.listNiveles}" />		
 					</p:selectOneMenu>					
 										
-					<p:outputPanel style="text-align: end; margin-right: 5px">Activo:</p:outputPanel>
-					<h:selectBooleanCheckbox value="#{curso.ckEstado}" />
+					<p:outputPanel style="text-align: end; padding: 5px">Horas:</p:outputPanel>
+					<p:inputNumber value="#{asignatura.inHoras}" decimalPlaces="0" inputStyle="width: 20px" />
+					
+					<p:outputPanel style="text-align: end; padding: 5px">Activo:</p:outputPanel>
+					<h:selectBooleanCheckbox value="#{asignatura.ckEstado}" style="margin-top: 6px" />
 					
 					<f:facet name = "footer"><br/>
 					    <h:panelGroup style = "display:block; text-align:center">
-					      	<p:commandButton id="btnGuardar" value="Guardar" icon="fa fa-save" actionListener="#{curso.guardar}" update="form" />	
+					      	<p:commandButton id="btnGuardar" value="Guardar" icon="fa fa-save" actionListener="#{asignatura.guardar}" update="dt growl" />	
 						</h:panelGroup>
 					</f:facet>						
 				</h:panelGrid>

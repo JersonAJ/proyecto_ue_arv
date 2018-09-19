@@ -21,7 +21,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
-import com.ups.uearv.entidades.CatalogoDet;
 import com.ups.uearv.entidades.MatDocente;
 import com.ups.uearv.servicios.DAO;
 import com.ups.uearv.servicios.Session;
@@ -197,13 +196,6 @@ public class Docente implements Serializable {
 	
 	public List<SelectItem> llenaComboEstadoCivil() {
 		return Util.llenaCombo(DAO.getDetCatalogo("CA005"), 2);
-	}
-	
-	public String getEstadoCivil(String cod) {
-		CatalogoDet ob = new CatalogoDet();
-		ob = (CatalogoDet) DAO.buscarObject(new CatalogoDet(), "from CatalogoDet c where c.codigoDet = '" + cod + "'");
-
-		return ob.getDescripcion().trim();
 	}
 	
 	// GETTERS AND SETTERS

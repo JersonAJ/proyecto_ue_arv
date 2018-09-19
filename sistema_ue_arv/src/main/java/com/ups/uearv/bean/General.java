@@ -20,6 +20,7 @@ import javax.persistence.Persistence;
 
 import org.primefaces.context.RequestContext;
 
+import com.ups.uearv.entidades.CatalogoDet;
 import com.ups.uearv.entidades.SegUsuario;
 import com.ups.uearv.servicios.DAO;
 import com.ups.uearv.servicios.Session;
@@ -82,6 +83,14 @@ public class General implements Serializable {
 		if (estado.equals("IC"))
 			ban = false;
 		return ban;
+	}
+	
+	// OBTENER DESCRIPCION DEL CATALOGO DETALLE 
+	public String getDesCatalogoDet(String cod) {
+		CatalogoDet ob = new CatalogoDet();
+		ob = (CatalogoDet) DAO.buscarObject(new CatalogoDet(), "from CatalogoDet c where c.codigoDet = '" + cod + "'");
+
+		return ob.getDescripcion().trim();
 	}
 
 	// CAMBIO DE CLAVE

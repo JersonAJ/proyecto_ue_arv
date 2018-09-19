@@ -21,7 +21,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
-import com.ups.uearv.entidades.MatCurso;
+import com.ups.uearv.entidades.CalAsignatura;
 import com.ups.uearv.servicios.DAO;
 import com.ups.uearv.servicios.Session;
 import com.ups.uearv.servicios.Util;
@@ -31,22 +31,25 @@ import com.ups.uearv.servicios.Util;
  * @version 1.0
  */
 
-@ManagedBean(name = "curso")
+@ManagedBean(name = "asignatura")
 @ViewScoped
-public class Curso implements Serializable {
+public class Asignatura implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	static String idCurso = "";
+	static String idAsignatura = "";
+	String itNombre = "";
 	String itDescripcion = "";
+	String soArea = "";
 	String soNivel = "";
 	boolean ckEstado = false;
-
+	int inHoras = 0;
 	String itBuscar = "";
 	boolean ckMostrarIC = false;
 
-	private List<Object> cursoList = new ArrayList<Object>();
+	private List<Object> asignaturaList = new ArrayList<Object>();
 
+	ArrayList<SelectItem> listAreas = new ArrayList<SelectItem>();
 	ArrayList<SelectItem> listNiveles = new ArrayList<SelectItem>();
 
 	private static EntityManagerFactory emf = Persistence.createEntityManagerFactory("sismacc");
@@ -61,6 +64,9 @@ public class Curso implements Serializable {
 	@PostConstruct
 	public void init() {
 
+		listAreas = (ArrayList<SelectItem>) llenaComboAreas();
+		soArea = listAreas.get(0).getValue().toString();
+		
 		listNiveles = (ArrayList<SelectItem>) llenaComboNiveles();
 		soNivel = listNiveles.get(0).getValue().toString();
 
@@ -69,20 +75,20 @@ public class Curso implements Serializable {
 
 	// CONSULTA
 	public void llenarLista(String jpql) {
-		cursoList.clear();
-		List<Object> l = DAO.nqObject(new MatCurso(), jpql);
+		asignaturaList.clear();
+		List<Object> l = DAO.nqObject(new CalAsignatura(), jpql);
 				
 		for (Object in : l)
-			cursoList.add(in);
+			asignaturaList.add(in);
 	}
 
 	public void buscar() {
 		if (ckMostrarIC) {
-			jpql = " SELECT c.* FROM mat_curso c INNER JOIN catalogo_det k ON k.codigo_det = c.nivel WHERE c.descripcion LIKE '%"
-					+ itBuscar + "%' ORDER BY k.codigo_det, c.id_curso ";
+			jpql = " SELECT c.* FROM cal_asignatura c WHERE c.nombre LIKE '%"
+					+ itBuscar + "%' ORDER BY c.nivel, c.id_asignatura ";
 		} else {
-			jpql = " SELECT c.* FROM mat_curso c INNER JOIN catalogo_det k ON k.codigo_det = c.nivel WHERE c.descripcion LIKE '%"
-					+ itBuscar + "%' AND c.estado = 'AC' ORDER BY k.codigo_det, c.id_curso ";
+			jpql = " SELECT c.* FROM cal_asignatura c WHERE c.nombre LIKE '%"
+					+ itBuscar + "%' AND c.estado = 'AC' ORDER BY c.nivel, c.id_asignatura  ";
 		}
 		llenarLista(jpql);
 	}
@@ -91,8 +97,8 @@ public class Curso implements Serializable {
 	public void guardar() {
 		
 		// VALIDACIONES
-		if (itDescripcion.trim().equals("")) {
-			mensaje = "Debe ingresar la descripción";
+		if (itNombre.trim().equals("")) {
+			mensaje = "Debe ingresar el nombre";
 			FacesContext.getCurrentInstance().addMessage("growl", new FacesMessage(FacesMessage.SEVERITY_ERROR, mensajeTitulo, mensaje));
 			return;
 		}		
@@ -104,16 +110,19 @@ public class Curso implements Serializable {
 			Date date = new Date();
 			Timestamp fecha = new Timestamp(date.getTime());
 			
-			MatCurso ob = new MatCurso();
+			CalAsignatura ob = new CalAsignatura();
 			if (accion == 1) {
-				ob = (MatCurso) DAO.buscarObject(new MatCurso(), "from MatCurso c where c.idCurso = " + idCurso);
+				ob = (CalAsignatura) DAO.buscarObject(new CalAsignatura(), "from CalAsignatura c where c.idAsignatura = " + idAsignatura);
 			}
 			
 			String estado = "IC";
 			if (ckEstado) estado = "AC";
 
+			ob.setNombre(itNombre);
 			ob.setDescripcion(itDescripcion);
 			ob.setNivel(soNivel);
+			ob.setArea(soArea);
+			ob.setHoras(inHoras);
 			ob.setEstado(estado);
 			if (accion == 0) {
 				ob.setUsuarioIng(Session.getUserName());			
@@ -146,6 +155,10 @@ public class Curso implements Serializable {
 		init();
 	}
 	
+	public List<SelectItem> llenaComboAreas() {
+		return Util.llenaCombo(DAO.getDetCatalogo("CA002"), 2);
+	}
+	
 	public List<SelectItem> llenaComboNiveles() {
 		return Util.llenaCombo(DAO.getDetCatalogo("CA004"), 2);
 	}
@@ -175,11 +188,11 @@ public class Curso implements Serializable {
 	public void setAccion(int accion) {
 		this.accion = accion;
 	}
-	public String getIdCurso() {
-		return idCurso;
+	public String getIdAsignatura() {
+		return idAsignatura;
 	}
-	public void setIdCurso(String idCurso) {
-		Curso.idCurso = idCurso;
+	public void setIdAsignatura(String idAsignatura) {
+		Asignatura.idAsignatura = idAsignatura;
 	}
 	public String getItDescripcion() {
 		return itDescripcion;
@@ -193,16 +206,40 @@ public class Curso implements Serializable {
 	public void setSoNivel(String soNivel) {
 		this.soNivel = soNivel;
 	}
-	public List<Object> getCursoList() {
-		return cursoList;
+	public List<Object> getAsignaturaList() {
+		return asignaturaList;
 	}
-	public void setCursoList(List<Object> cursoList) {
-		this.cursoList = cursoList;
+	public void setAsignaturaList(List<Object> asignaturaList) {
+		this.asignaturaList = asignaturaList;
 	}
 	public ArrayList<SelectItem> getListNiveles() {
 		return listNiveles;
 	}
 	public void setListNiveles(ArrayList<SelectItem> listNiveles) {
 		this.listNiveles = listNiveles;
+	}
+	public String getItNombre() {
+		return itNombre;
+	}
+	public void setItNombre(String itNombre) {
+		this.itNombre = itNombre;
+	}
+	public String getSoArea() {
+		return soArea;
+	}
+	public void setSoArea(String soArea) {
+		this.soArea = soArea;
+	}
+	public int getInHoras() {
+		return inHoras;
+	}
+	public void setInHoras(int inHoras) {
+		this.inHoras = inHoras;
+	}
+	public ArrayList<SelectItem> getListAreas() {
+		return listAreas;
+	}
+	public void setListAreas(ArrayList<SelectItem> listAreas) {
+		this.listAreas = listAreas;
 	}
 }

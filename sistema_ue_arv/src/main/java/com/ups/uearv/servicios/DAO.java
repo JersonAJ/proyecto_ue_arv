@@ -150,5 +150,6 @@ public class DAO {
 	 * CA002	Área de Conocimiento  *
 	 * CA003	Jornada	Jornada       *
 	 * CA004	Nivel                 *
+	 * CA005	Estado Civil          *
 	 **********************************/
 }

@@ -55,7 +55,10 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 			 				 	
 			<p:separator />
 			
-			<p:dataTable id="dt" var="dtUsuario" value="#{usuario.usuarioList}" tableStyle="width: auto; min-width: 100%;" emptyMessage="No existen datos a mostrar" >
+			<p:dataTable id="dt" var="dtUsuario" value="#{usuario.usuarioList}" tableStyle="width: auto; min-width: 100%;" 
+				paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+                currentPageReportTemplate="{currentPage} de {totalPages}"
+                paginator="true" rows="10" rowsPerPageTemplate="5,10" paginatorPosition="top" emptyMessage="No existen datos a mostrar" >
 			 
 			    <p:column headerText="Usuario">
 			        <h:outputText value="#{dtUsuario.idUsuario}" />

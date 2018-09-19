@@ -3709,7 +3709,7 @@ body .ui-paginator a {
 body .ui-paginator .ui-paginator-first, body .ui-paginator .ui-paginator-last,
 	body .ui-paginator .ui-paginator-next, body .ui-paginator .ui-paginator-prev
 	{
-	height: 20px;
+	height: 15px;
 	border-top: 4px solid transparent;
 	-moz-transition: color 0.3s;
 	-o-transition: color 0.3s;
