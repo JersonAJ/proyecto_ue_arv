@@ -6255,3 +6255,8 @@ body .ui-log .ui-log-content {
 	.ui-widget-header .ui-state-highlight a {
 	color: #ffffff;
 }
+
+.ui-state-disabled, .ui-widget-content .ui-state-disabled, .ui-widget-header .ui-state-disabled {
+    opacity: .55;
+    filter: Alpha(Opacity=55);
+}

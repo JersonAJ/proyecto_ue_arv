@@ -6,6 +6,7 @@
 package com.ups.uearv.bean;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
@@ -21,7 +22,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
-import com.ups.uearv.entidades.MatCurso;
+import com.ups.uearv.entidades.CalEscala;
 import com.ups.uearv.servicios.DAO;
 import com.ups.uearv.servicios.Session;
 import com.ups.uearv.servicios.Util;
@@ -31,23 +32,23 @@ import com.ups.uearv.servicios.Util;
  * @version 1.0
  */
 
-@ManagedBean(name = "curso")
+@ManagedBean(name = "escala")
 @ViewScoped
-public class Curso implements Serializable {
+public class Escala implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	static String idCurso = "";
-	String itDescripcion = "";
-	String soNivel = "";
+	static String idEscala = "";
+	String itCualitativa = "";
+	String itDescripcion = "";	
 	boolean ckEstado = false;
+	BigDecimal inCuantitativaDsd = new BigDecimal(0);
+	BigDecimal inCuantitativaHst = new BigDecimal(0);
 
 	String itBuscar = "";
 	boolean ckMostrarIC = false;
 
-	private List<Object> cursoList = new ArrayList<Object>();
-
-	ArrayList<SelectItem> listNiveles = new ArrayList<SelectItem>();
+	private List<Object> escalaList = new ArrayList<Object>();
 
 	private static EntityManagerFactory emf = Persistence.createEntityManagerFactory("sismacc");
 
@@ -61,28 +62,25 @@ public class Curso implements Serializable {
 	@PostConstruct
 	public void init() {
 
-		listNiveles = (ArrayList<SelectItem>) llenaComboNiveles();
-		soNivel = listNiveles.get(0).getValue().toString();		
-		
 		buscar();
 	}
 
 	// CONSULTA
 	public void llenarLista(String jpql) {
-		cursoList.clear();
-		List<Object> l = DAO.nqObject(new MatCurso(), jpql);
+		escalaList.clear();
+		List<Object> l = DAO.nqObject(new CalEscala(), jpql);
 				
 		for (Object in : l)
-			cursoList.add(in);
+			escalaList.add(in);
 	}
 
 	public void buscar() {
 		if (ckMostrarIC) {
-			jpql = " SELECT c.* FROM mat_curso c INNER JOIN catalogo_det k ON k.codigo_det = c.nivel WHERE c.descripcion LIKE '%"
-					+ itBuscar + "%' ORDER BY k.codigo_det, c.id_curso ";
+			jpql = " SELECT c.* FROM cal_escala c WHERE c.descripcion LIKE '%"
+					+ itBuscar + "%' ORDER BY c.id_escala ";
 		} else {
-			jpql = " SELECT c.* FROM mat_curso c INNER JOIN catalogo_det k ON k.codigo_det = c.nivel WHERE c.descripcion LIKE '%"
-					+ itBuscar + "%' AND c.estado = 'AC' ORDER BY k.codigo_det, c.id_curso ";
+			jpql = " SELECT c.* FROM cal_escala c WHERE c.descripcion LIKE '%"
+					+ itBuscar + "%' AND c.estado = 'AC' ORDER BY c.id_escala ";
 		}
 		llenarLista(jpql);
 	}
@@ -104,16 +102,18 @@ public class Curso implements Serializable {
 			Date date = new Date();
 			Timestamp fecha = new Timestamp(date.getTime());
 			
-			MatCurso ob = new MatCurso();
+			CalEscala ob = new CalEscala();
 			if (accion == 1) {
-				ob = (MatCurso) DAO.buscarObject(new MatCurso(), "from MatCurso c where c.idCurso = " + idCurso);
+				ob = (CalEscala) DAO.buscarObject(new CalEscala(), "from CalEscala c where c.idEscala = " + idEscala);
 			}
 			
 			String estado = "IC";
 			if (ckEstado) estado = "AC";
 
 			ob.setDescripcion(itDescripcion);
-			ob.setNivel(soNivel);
+			ob.setCualitativa(itCualitativa);
+			ob.setCuantitativaDesde(inCuantitativaDsd);
+			ob.setCuantitativaHasta(inCuantitativaDsd);
 			ob.setEstado(estado);
 			if (accion == 0) {
 				ob.setUsuarioIng(Session.getUserName());			
@@ -146,11 +146,40 @@ public class Curso implements Serializable {
 		init();
 	}
 	
+	// GETTERS AND SETTERS
 	public List<SelectItem> llenaComboNiveles() {
 		return Util.llenaCombo(DAO.getDetCatalogo("CA004"), 2);
 	}
-	
-	// GETTERS AND SETTERS
+	public String getIdEscala() {
+		return idEscala;
+	}
+	public void setIdEscala(String idEscala) {
+		Escala.idEscala = idEscala;
+	}	
+		public String getItCualitativa() {
+		return itCualitativa;
+	}
+	public void setItCualitativa(String itCualitativa) {
+		this.itCualitativa = itCualitativa;
+	}
+	public BigDecimal getInCuantitativaDsd() {
+		return inCuantitativaDsd;
+	}
+	public void setInCuantitativaDsd(BigDecimal inCuantitativaDsd) {
+		this.inCuantitativaDsd = inCuantitativaDsd;
+	}
+	public BigDecimal getInCuantitativaHst() {
+		return inCuantitativaHst;
+	}
+	public void setInCuantitativaHst(BigDecimal inCuantitativaHst) {
+		this.inCuantitativaHst = inCuantitativaHst;
+	}
+	public String getItDescripcion() {
+		return itDescripcion;
+	}
+	public void setItDescripcion(String itDescripcion) {
+		this.itDescripcion = itDescripcion;
+	}
 	public boolean isCkEstado() {
 		return ckEstado;
 	}
@@ -163,6 +192,12 @@ public class Curso implements Serializable {
 	public void setItBuscar(String itBuscar) {
 		this.itBuscar = itBuscar;
 	}
+	public List<Object> getEscalaList() {
+		return escalaList;
+	}
+	public void setEscalaList(List<Object> escalaList) {
+		this.escalaList = escalaList;
+	}
 	public boolean isCkMostrarIC() {
 		return ckMostrarIC;
 	}
@@ -174,35 +209,5 @@ public class Curso implements Serializable {
 	}
 	public void setAccion(int accion) {
 		this.accion = accion;
-	}
-	public String getIdCurso() {
-		return idCurso;
-	}
-	public void setIdCurso(String idCurso) {
-		Curso.idCurso = idCurso;
-	}
-	public String getItDescripcion() {
-		return itDescripcion;
-	}
-	public void setItDescripcion(String itDescripcion) {
-		this.itDescripcion = itDescripcion;
-	}
-	public String getSoNivel() {
-		return soNivel;
-	}
-	public void setSoNivel(String soNivel) {
-		this.soNivel = soNivel;
-	}
-	public List<Object> getCursoList() {
-		return cursoList;
-	}
-	public void setCursoList(List<Object> cursoList) {
-		this.cursoList = cursoList;
-	}
-	public ArrayList<SelectItem> getListNiveles() {
-		return listNiveles;
-	}
-	public void setListNiveles(ArrayList<SelectItem> listNiveles) {
-		this.listNiveles = listNiveles;
-	}
+	}	
 }

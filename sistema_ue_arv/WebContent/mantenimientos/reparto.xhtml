@@ -5,7 +5,7 @@ xmlns:h="http://xmlns.jcp.org/jsf/html"
 xmlns:p="http://primefaces.org/ui"
 xmlns:f="http://xmlns.jcp.org/jsf/core">
 			
-	<ui:define name="titulo"><i class="fa fa-cog" /> Mantenimientos / Repartos</ui:define>
+	<ui:define name="titulo"><i class="fa fa-cog" /> Mantenimientos / Reparto</ui:define>
 	
 	<ui:define name="content">									
 		<h:form id="form" style="width: 100%">
@@ -13,12 +13,19 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 			    <f:viewAction action="#{general.validaSesion}" />
 			</f:metadata>
 				
-			<p:growl id="msgRegistro" for="msgRegistro" showDetail="true" closable="true" />
+			<p:growl id="growl" for="growl" showDetail="true" closable="true" />
 			
 			<p:outputPanel style="background-color: white; padding: 5px;">
 				<p:commandLink update=":form:pnl" oncomplete="PF('dgl').show();">
 					<i class="fa fa-plus-circle" />
-					<span>Agregar</span>					
+					<span>Agregar</span>	
+					
+					<f:setPropertyActionListener value="" target="#{reparto.soDocente}" />
+					<f:setPropertyActionListener value="" target="#{reparto.soNivel}" />
+					<f:setPropertyActionListener value="" target="#{reparto.soCurso}" />
+					<f:setPropertyActionListener value="" target="#{reparto.soAsignatura}" />
+					<f:setPropertyActionListener value="true" target="#{reparto.ckEstado}" />
+					<f:setPropertyActionListener value="0" target="#{reparto.accion}" />				
 															
 				</p:commandLink>					
 			</p:outputPanel> 
@@ -29,14 +36,14 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 			</style>
 			<br/>		
 			<p:outputPanel>
-			   <p:inputText style="width: 500px" value="#{curso.itBuscar}" placeholder="Buscar por nivel o curso">
-				<p:ajax event="keyup" update="dt" listener="#{curso.buscar}"/>
+			   <p:inputText style="width: 500px" value="#{reparto.itBuscar}" placeholder="Buscar por docente">
+				<p:ajax event="keyup" update="dt" listener="#{reparto.buscar}"/>
 			     	</p:inputText>	
 				<p:spacer width="10px" />
 			
 				<div style="display: inline-flex">
-					<h:selectBooleanCheckbox value="#{curso.ckMostrarIC}">
-	    				<p:ajax update="dt" listener="#{curso.buscar}" />
+					<h:selectBooleanCheckbox value="#{reparto.ckMostrarIC}">
+	    				<p:ajax update="dt" listener="#{reparto.buscar}" />
 	 				</h:selectBooleanCheckbox> 
 		 			<h:outputLabel value="Mostrar inactivos" style="font-size: 12px; font-weight: normal; color: black; margin-top: 4px;" />			 				
 		 		</div>	 			     			         			     			      				      		      			
@@ -44,53 +51,98 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 			 				 	
 			<p:separator />
 			
-			<p:dataTable id="dt" var="dtcurso" value="#{curso.cursoList}" tableStyle="width: auto; min-width: 100%;" emptyMessage="No existen datos a mostrar" >
+			<p:dataTable id="dt" var="dtreparto" value="#{reparto.repartoList}" tableStyle="width: auto; min-width: 100%;" 
+				paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+                currentPageReportTemplate="{currentPage} de {totalPages}"
+                paginator="true" rows="10" rowsPerPageTemplate="5,10" paginatorPosition="top" emptyMessage="No existen datos a mostrar" >
 			 
-			    <p:column headerText="Descripción">
-			        <h:outputText value="#{dtcurso.descripcion}" />
-			    </p:column>
-						    
-			    <p:column headerText="Activo" width="20" style="text-align: center">
-			    	<h:selectBooleanCheckbox value="#{dtcurso.estado eq 'AC'? true:false}" disabled="true" />			        
+			    <p:column headerText="Docente">
+			        <h:outputText value="#{dtreparto.matDocente.apellidos} #{dtreparto.matDocente.nombres}" />
 			    </p:column>
 			    
-			    <p:column headerText="Editar" width="20">
+			    <p:column headerText="Nivel">
+			        <h:outputText value="#{general.getDesCatalogoDet(dtreparto.nivel)}" />
+			    </p:column>
+			    
+			    <p:column headerText="Curso">
+			        <h:outputText value="#{dtreparto.matCurso.descripcion}" />
+			    </p:column>
+			    
+			    <p:column headerText="Asignatura">
+			        <h:outputText value="#{dtreparto.calAsignatura.nombre}" />
+			    </p:column>			    
+						    
+			    <p:column headerText="Activo" width="20" style="text-align: center" exportable="false">
+			    	<h:selectBooleanCheckbox value="#{dtreparto.estado eq 'AC'? true:false}" disabled="true" />			        
+			    </p:column>
+			    
+			    <p:column headerText="Editar" width="20" exportable="false">
 			    	<p:outputPanel style="text-align: center">
 						<p:commandLink update=":form:pnl" oncomplete="PF('dgl').show()">	
 							<i class="fa fa-pencil" />
+							
+							<f:setPropertyActionListener value="#{dtreparto.idReparto}" target="#{reparto.idReparto}" />							
+							<f:setPropertyActionListener value="#{dtreparto.matDocente.idDocente}" target="#{reparto.soDocente}" />
+							<f:setPropertyActionListener value="#{dtreparto.nivel}" target="#{reparto.soNivel}" />
+							
+							<f:setPropertyActionListener value="#{reparto.getCursos()}" target="#{reparto.listCursos}" />
+							<f:setPropertyActionListener value="#{dtreparto.matCurso.idCurso}" target="#{reparto.soCurso}" />
+							
+							<f:setPropertyActionListener value="#{reparto.getAsignaturas()}" target="#{reparto.listAsignaturas}" />
+							<f:setPropertyActionListener value="#{dtreparto.calAsignatura.idAsignatura}" target="#{reparto.soAsignatura}" />
+							<f:setPropertyActionListener value="#{general.getEstado(dtreparto.estado)}" target="#{reparto.ckEstado}" />
+							<f:setPropertyActionListener value="1" target="#{reparto.accion}" />
 																																						
 						</p:commandLink>							
 					</p:outputPanel>
 			    </p:column>			  
 			</p:dataTable>
 			
+			<br/>
+			<p:outputPanel style="background-color: white; padding: 5px; text-align: end">
+				<h:commandLink value="Exportar a excel" style="color: green">                
+	                <p:dataExporter type="xlsx" target="dt" fileName="repartos" />
+	            </h:commandLink>		   
+            </p:outputPanel>
+			
 			<!-- INGRESO | ACTUALIZACION -->
-			<p:dialog header="Datos Curso" widgetVar="dgl" modal="true" closable="true" maximizable="false" resizable="false" width="400px">
+			<p:dialog header="Datos Reparto" widgetVar="dgl" modal="true" closable="true" maximizable="false" resizable="false" width="400px">
 			
-			<p:ajax event="close" update="form" listener="#{curso.closeDialogo}" />
-			
+			<p:ajax event="close" update="form" listener="#{reparto.closeDialogo}" />
 				<h:panelGrid id="pnl" columns="2" cellpadding="0" style="width: auto; min-width: 100%;" columnClasses="ui-grid-col-4,ui-grid-col-8">
 										
-					<p:outputPanel style="text-align: end; padding: 5px">Descripción:</p:outputPanel>
-					<p:inputText value="#{curso.itDescripcion}" style="width: 90%" />
+					<p:outputPanel style="text-align: end; padding: 5px">Docente:</p:outputPanel>
+				    <p:selectOneMenu value="#{reparto.soDocente}" disabled="#{reparto.accion eq 1? true:false}">
+						<f:selectItems value="#{reparto.listDocentes}" />			            
+			        </p:selectOneMenu>
 										
 					<p:outputPanel style="text-align: end; padding: 5px">Nivel:</p:outputPanel>
-					<p:selectOneMenu value="#{curso.soNivel}">
-						<f:selectItems value="#{curso.listNiveles}" />		
-					</p:selectOneMenu>					
+					<p:selectOneMenu value="#{reparto.soNivel}">
+						<f:selectItems value="#{reparto.listNiveles}" />
+						<p:ajax listener="#{reparto.onChangeNivel}" update="soCurso soAsignatura"/>									
+					</p:selectOneMenu>
+					
+					<p:outputPanel style="text-align: end; padding: 5px">Curso:</p:outputPanel>
+					<p:selectOneMenu id="soCurso" value="#{reparto.soCurso}">
+						<f:selectItems value="#{reparto.listCursos}" />		
+					</p:selectOneMenu>
+					
+					<p:outputPanel style="text-align: end; padding: 5px">Asignatura:</p:outputPanel>
+					<p:selectOneMenu id="soAsignatura" value="#{reparto.soAsignatura}">						
+						<f:selectItems value="#{reparto.listAsignaturas}" />		
+					</p:selectOneMenu>												
 										
 					<p:outputPanel style="text-align: end; padding: 5px">Activo:</p:outputPanel>
-					<h:selectBooleanCheckbox value="#{curso.ckEstado}" />
+					<h:selectBooleanCheckbox value="#{reparto.ckEstado}" style="margin-top: 6px" />
 					
 					<f:facet name = "footer"><br/>
 					    <h:panelGroup style = "display:block; text-align:center">
-					      	<p:commandButton id="btnGuardar" value="Guardar" icon="fa fa-save" actionListener="#{curso.guardar}" update="form" />	
+					      	<p:commandButton id="btnGuardar" value="Guardar" icon="fa fa-save" actionListener="#{reparto.guardar}" update="dt growl" />	
 						</h:panelGroup>
 					</f:facet>						
 				</h:panelGrid>
 			</p:dialog>			
-			
-						
+									
 	   	</h:form>    	    
 	</ui:define>		
 	

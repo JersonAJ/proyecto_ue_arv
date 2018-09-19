@@ -103,7 +103,7 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 							<f:setPropertyActionListener value="#{dtdocente.titulo}" target="#{docente.itTitulo}" />
 							<f:setPropertyActionListener value="#{dtdocente.telefono1}" target="#{docente.itTelefono1}" />
 							<f:setPropertyActionListener value="#{dtdocente.telefono2}" target="#{docente.itTelefono2}" />
-							<f:setPropertyActionListener value="#{dtdocente.correo}" target="#{docente.itCorreo}" />
+							<f:setPropertyActionListener value="#{dtdocente.correo}" target="#{docente.itCorreo}" />							
 							<f:setPropertyActionListener value="#{dtdocente.direccion}" target="#{docente.itDireccion}" />
 							<f:setPropertyActionListener value="#{dtdocente.genero}" target="#{docente.sorGenero}" />
 							<f:setPropertyActionListener value="#{dtdocente.fechaNac}" target="#{docente.cFechaNac}" />							
@@ -123,7 +123,7 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
             </p:outputPanel>
 			
 			<!-- INGRESO | ACTUALIZACION -->
-			<p:dialog header="Datos docente" widgetVar="dgl" modal="true" closable="true" maximizable="false" resizable="false" width="400px">
+			<p:dialog header="Datos Docente" widgetVar="dgl" modal="true" closable="true" maximizable="false" resizable="false" width="400px">
 			
 			<p:ajax event="close" update="form" listener="#{docente.closeDialogo}" />
 			

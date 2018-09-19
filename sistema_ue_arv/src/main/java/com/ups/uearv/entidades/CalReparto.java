@@ -55,6 +55,8 @@ public class CalReparto implements Serializable {
 	@JoinColumn(name="id_asignatura")
 	private CalAsignatura calAsignatura;
 
+	private String nivel;
+	
 	public CalReparto() {
 	}
 
@@ -152,4 +154,11 @@ public class CalReparto implements Serializable {
 		this.calAsignatura = calAsignatura;
 	}
 
+	public String getNivel() {
+		return nivel;
+	}
+
+	public void setNivel(String nivel) {
+		this.nivel = nivel;
+	}
 }

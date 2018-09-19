@@ -136,10 +136,25 @@ public class DAO {
 
 		return nombre;
 	}	
-		
+	
+	public static Query getDocentes() {
+		Query query = em.createNativeQuery(
+				" SELECT id_docente, CONCAT(IFNULL(SUBSTRING_INDEX(nombres, ' ', 1), ''), ' ', IFNULL(SUBSTRING_INDEX(apellidos, ' ', 1), '')) nombre FROM mat_docente WHERE estado = 'AC' ");
+		return query;
+	}
+	
+	public static Query getCursos(String det) {
+		Query query = em.createNativeQuery(" SELECT id_curso, descripcion FROM mat_curso WHERE nivel = '" + det + "' AND estado = 'AC' ");
+		return query;
+	}
+	
+	public static Query getAsignaturas(String det) {
+		Query query = em.createNativeQuery(" SELECT id_asignatura, nombre FROM cal_asignatura WHERE nivel = '" + det + "' AND estado = 'AC' ");
+		return query;
+	}
+	
 	public static Query getDetCatalogo(String cab) {
-		Query query = em.createNativeQuery(" SELECT codigo_det, descripcion FROM catalogo_det WHERE codigo_cab = '"
-				+ cab + "' AND estado = 'AC' ");
+		Query query = em.createNativeQuery(" SELECT codigo_det, descripcion FROM catalogo_det WHERE codigo_cab = '"	+ cab + "' AND estado = 'AC' ");
 		return query;
 	}
 	

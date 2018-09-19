@@ -49,8 +49,18 @@ public class Util {
 	@SuppressWarnings("unchecked")
 	public static List<SelectItem> llenaCombo(Query query, int valores) {
 		List<Object> result = (List<Object>) query.getResultList();
+		
+		if (result.isEmpty()) {
+			List<SelectItem> items = new ArrayList<SelectItem>(1);
+			if (valores == 1) {	
+				items.add(new SelectItem("No existen datos"));
+			} else if (valores == 2) {				
+				items.add(new SelectItem("NA","No existen datos"));
+			}
+			return items;
+		}
+		
 		Iterator<Object> itr = result.iterator();
-
 		List<SelectItem> items = new ArrayList<SelectItem>(result.size());
 		for (int k = 0; k < result.size(); k++) {
 			if (valores == 1) {

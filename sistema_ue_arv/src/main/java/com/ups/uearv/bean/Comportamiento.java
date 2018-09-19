@@ -21,7 +21,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
-import com.ups.uearv.entidades.MatCurso;
+import com.ups.uearv.entidades.CalComportamiento;
 import com.ups.uearv.servicios.DAO;
 import com.ups.uearv.servicios.Session;
 import com.ups.uearv.servicios.Util;
@@ -31,23 +31,21 @@ import com.ups.uearv.servicios.Util;
  * @version 1.0
  */
 
-@ManagedBean(name = "curso")
+@ManagedBean(name = "comportamiento")
 @ViewScoped
-public class Curso implements Serializable {
+public class Comportamiento implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	static String idCurso = "";
-	String itDescripcion = "";
-	String soNivel = "";
+	static String idComportamiento = "";
+	String itAbreviatura = "";
+	String itDescripcion = "";	
 	boolean ckEstado = false;
 
 	String itBuscar = "";
 	boolean ckMostrarIC = false;
 
-	private List<Object> cursoList = new ArrayList<Object>();
-
-	ArrayList<SelectItem> listNiveles = new ArrayList<SelectItem>();
+	private List<Object> comportamientoList = new ArrayList<Object>();
 
 	private static EntityManagerFactory emf = Persistence.createEntityManagerFactory("sismacc");
 
@@ -61,28 +59,25 @@ public class Curso implements Serializable {
 	@PostConstruct
 	public void init() {
 
-		listNiveles = (ArrayList<SelectItem>) llenaComboNiveles();
-		soNivel = listNiveles.get(0).getValue().toString();		
-		
 		buscar();
 	}
 
 	// CONSULTA
 	public void llenarLista(String jpql) {
-		cursoList.clear();
-		List<Object> l = DAO.nqObject(new MatCurso(), jpql);
+		comportamientoList.clear();
+		List<Object> l = DAO.nqObject(new CalComportamiento(), jpql);
 				
 		for (Object in : l)
-			cursoList.add(in);
+			comportamientoList.add(in);
 	}
 
 	public void buscar() {
 		if (ckMostrarIC) {
-			jpql = " SELECT c.* FROM mat_curso c INNER JOIN catalogo_det k ON k.codigo_det = c.nivel WHERE c.descripcion LIKE '%"
-					+ itBuscar + "%' ORDER BY k.codigo_det, c.id_curso ";
+			jpql = " SELECT c.* FROM cal_comportamiento c WHERE c.descripcion LIKE '%"
+					+ itBuscar + "%' ORDER BY c.id_comportamiento ";
 		} else {
-			jpql = " SELECT c.* FROM mat_curso c INNER JOIN catalogo_det k ON k.codigo_det = c.nivel WHERE c.descripcion LIKE '%"
-					+ itBuscar + "%' AND c.estado = 'AC' ORDER BY k.codigo_det, c.id_curso ";
+			jpql = " SELECT c.* FROM cal_comportamiento c WHERE c.descripcion LIKE '%"
+					+ itBuscar + "%' AND c.estado = 'AC' ORDER BY c.id_comportamiento ";
 		}
 		llenarLista(jpql);
 	}
@@ -104,16 +99,16 @@ public class Curso implements Serializable {
 			Date date = new Date();
 			Timestamp fecha = new Timestamp(date.getTime());
 			
-			MatCurso ob = new MatCurso();
+			CalComportamiento ob = new CalComportamiento();
 			if (accion == 1) {
-				ob = (MatCurso) DAO.buscarObject(new MatCurso(), "from MatCurso c where c.idCurso = " + idCurso);
+				ob = (CalComportamiento) DAO.buscarObject(new CalComportamiento(), "from CalComportamiento c where c.idComportamiento = " + idComportamiento);
 			}
 			
 			String estado = "IC";
 			if (ckEstado) estado = "AC";
 
 			ob.setDescripcion(itDescripcion);
-			ob.setNivel(soNivel);
+			ob.setAbreviatura(itAbreviatura);;
 			ob.setEstado(estado);
 			if (accion == 0) {
 				ob.setUsuarioIng(Session.getUserName());			
@@ -146,11 +141,28 @@ public class Curso implements Serializable {
 		init();
 	}
 	
+	// GETTERS AND SETTERS
 	public List<SelectItem> llenaComboNiveles() {
 		return Util.llenaCombo(DAO.getDetCatalogo("CA004"), 2);
 	}
-	
-	// GETTERS AND SETTERS
+	public String getIdComportamiento() {
+		return idComportamiento;
+	}
+	public void setIdComportamiento(String idComportamiento) {
+		Comportamiento.idComportamiento = idComportamiento;
+	}	
+	public String getItAbreviatura() {
+		return itAbreviatura;
+	}
+	public void setItAbreviatura(String itAbreviatura) {
+		this.itAbreviatura = itAbreviatura;
+	}
+	public String getItDescripcion() {
+		return itDescripcion;
+	}
+	public void setItDescripcion(String itDescripcion) {
+		this.itDescripcion = itDescripcion;
+	}
 	public boolean isCkEstado() {
 		return ckEstado;
 	}
@@ -163,6 +175,12 @@ public class Curso implements Serializable {
 	public void setItBuscar(String itBuscar) {
 		this.itBuscar = itBuscar;
 	}
+	public List<Object> getComportamientoList() {
+		return comportamientoList;
+	}
+	public void setComportamientoList(List<Object> comportamientoList) {
+		this.comportamientoList = comportamientoList;
+	}
 	public boolean isCkMostrarIC() {
 		return ckMostrarIC;
 	}
@@ -174,35 +192,5 @@ public class Curso implements Serializable {
 	}
 	public void setAccion(int accion) {
 		this.accion = accion;
-	}
-	public String getIdCurso() {
-		return idCurso;
-	}
-	public void setIdCurso(String idCurso) {
-		Curso.idCurso = idCurso;
-	}
-	public String getItDescripcion() {
-		return itDescripcion;
-	}
-	public void setItDescripcion(String itDescripcion) {
-		this.itDescripcion = itDescripcion;
-	}
-	public String getSoNivel() {
-		return soNivel;
-	}
-	public void setSoNivel(String soNivel) {
-		this.soNivel = soNivel;
-	}
-	public List<Object> getCursoList() {
-		return cursoList;
-	}
-	public void setCursoList(List<Object> cursoList) {
-		this.cursoList = cursoList;
-	}
-	public ArrayList<SelectItem> getListNiveles() {
-		return listNiveles;
-	}
-	public void setListNiveles(ArrayList<SelectItem> listNiveles) {
-		this.listNiveles = listNiveles;
-	}
+	}	
 }

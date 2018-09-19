@@ -20,9 +20,13 @@ public class CalEscala implements Serializable {
 	@Column(name="id_escala")
 	private int idEscala;
 
-	private BigDecimal cualitativa;
+	private String cualitativa;
 
-	private BigDecimal cuantitativa;
+	@Column(name="cuantitativa_desde")
+	private BigDecimal cuantitativaDesde;
+	
+	@Column(name="cuantitativa_hasta")
+	private BigDecimal cuantitativaHasta;
 
 	private String descripcion;
 
@@ -52,21 +56,29 @@ public class CalEscala implements Serializable {
 	public void setIdEscala(int idEscala) {
 		this.idEscala = idEscala;
 	}
-
-	public BigDecimal getCualitativa() {
-		return this.cualitativa;
+	
+	public String getCualitativa() {
+		return cualitativa;
 	}
 
-	public void setCualitativa(BigDecimal cualitativa) {
+	public void setCualitativa(String cualitativa) {
 		this.cualitativa = cualitativa;
 	}
 
-	public BigDecimal getCuantitativa() {
-		return this.cuantitativa;
+	public BigDecimal getCuantitativaDesde() {
+		return cuantitativaDesde;
 	}
 
-	public void setCuantitativa(BigDecimal cuantitativa) {
-		this.cuantitativa = cuantitativa;
+	public void setCuantitativaDesde(BigDecimal cuantitativaDesde) {
+		this.cuantitativaDesde = cuantitativaDesde;
+	}
+
+	public BigDecimal getCuantitativaHasta() {
+		return cuantitativaHasta;
+	}
+
+	public void setCuantitativaHasta(BigDecimal cuantitativaHasta) {
+		this.cuantitativaHasta = cuantitativaHasta;
 	}
 
 	public String getDescripcion() {
