@@ -143,6 +143,12 @@ public class DAO {
 		return query;
 	}
 	
+	public static Query getRepresentantes() {
+		Query query = em.createNativeQuery(
+				" SELECT id_representante, CONCAT(IFNULL(SUBSTRING_INDEX(nombres, ' ', 1), ''), ' ', IFNULL(SUBSTRING_INDEX(apellidos, ' ', 1), '')) nombre FROM mat_representante WHERE estado = 'AC' ");
+		return query;
+	}
+	
 	public static Query getCursos(String det) {
 		Query query = em.createNativeQuery(" SELECT id_curso, descripcion FROM mat_curso WHERE nivel = '" + det + "' AND estado = 'AC' ");
 		return query;

@@ -1,0 +1,182 @@
+<ui:composition template="/layout/layout.xhtml"
+xmlns="http://www.w3.org/1999/xhtml"
+xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+xmlns:h="http://xmlns.jcp.org/jsf/html"
+xmlns:p="http://primefaces.org/ui"
+xmlns:f="http://xmlns.jcp.org/jsf/core">
+			
+	<ui:define name="titulo"><i class="fa fa-address-card" /> Matriculación / Estudiantes</ui:define>
+	
+	<ui:define name="content">									
+		<h:form id="form" style="width: 100%">
+			<f:metadata>		    
+			    <f:viewAction action="#{general.validaSesion}" />
+			</f:metadata>
+				
+			<p:growl id="growl" for="growl" showDetail="true" closable="true" />
+			
+			<p:outputPanel style="background-color: white; padding: 5px;">
+				<p:commandLink update=":form:pnl" oncomplete="PF('dgl').show();">
+					<i class="fa fa-plus-circle" />
+					<span>Agregar</span>				
+					
+					<f:setPropertyActionListener value="" target="#{estudiante.itCedula}" />
+					<f:setPropertyActionListener value="" target="#{estudiante.itNombres}" />	
+					<f:setPropertyActionListener value="" target="#{estudiante.itApellidos}" /> 					
+					<f:setPropertyActionListener value="" target="#{estudiante.itTelefono}" />
+					<f:setPropertyActionListener value="" target="#{estudiante.itAlergias}" />
+					<f:setPropertyActionListener value="" target="#{estudiante.itInstitucionAnt}" />
+					<f:setPropertyActionListener value="" target="#{estudiante.itDireccion}" />					
+					<f:setPropertyActionListener value="" target="#{estudiante.cFechaNac}" />
+					<f:setPropertyActionListener value="M" target="#{estudiante.sorGenero}" />
+					<f:setPropertyActionListener value="" target="#{estudiante.soRepresentante}" />
+					<f:setPropertyActionListener value="" target="#{estudiante.soTipoSangre}" />
+					<f:setPropertyActionListener value="true" target="#{estudiante.ckEstado}" />
+					<f:setPropertyActionListener value="0" target="#{estudiante.accion}" />	
+															
+				</p:commandLink>					
+			</p:outputPanel> 
+			
+			<!-- CONSULTA -->	
+			<style>				
+				.ui-datatable thead th, .ui-datatable tbody td, .ui-datatable tfoot td, .ui-datatable tfoot th { padding: 2px 10px; }
+			</style>
+			<br/>		
+			<p:outputPanel>
+			   <p:inputText style="width: 500px" value="#{estudiante.itBuscar}" placeholder="Buscar por apellidos">
+				<p:ajax event="keyup" update="dt" listener="#{estudiante.buscar}"/>
+			     	</p:inputText>	
+				<p:spacer width="10px" />
+			
+				<div style="display: inline-flex">
+					<h:selectBooleanCheckbox value="#{estudiante.ckMostrarIC}">
+	    				<p:ajax update="dt" listener="#{estudiante.buscar}" />
+	 				</h:selectBooleanCheckbox> 
+		 			<h:outputLabel value="Mostrar inactivos" style="font-size: 12px; font-weight: normal; color: black; margin-top: 4px;" />			 				
+		 		</div>	 			     			         			     			      				      		      			
+			</p:outputPanel>
+			 				 	
+			<p:separator />
+			
+			<p:dataTable id="dt" var="dtestudiante" value="#{estudiante.estudianteList}" tableStyle="width: auto; min-width: 100%;" 
+				paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+                currentPageReportTemplate="{currentPage} de {totalPages}"
+                paginator="true" rows="10" rowsPerPageTemplate="5,10" paginatorPosition="top" emptyMessage="No existen datos a mostrar" >
+			 
+			    <p:column headerText="Cédula" style="text-align: center">
+			        <h:outputText value="#{dtestudiante.idestudiante}" />
+			    </p:column>
+						    
+				<p:column headerText="Nombre completo">
+			        <h:outputText value="#{dtestudiante.apellidos} #{dtestudiante.nombres}" />
+			    </p:column>
+			    			    			    
+			    <p:column headerText="Teléfonos">
+			        <h:outputText value="#{dtestudiante.telefono}" />
+			    </p:column>
+			    
+			    <p:column headerText="Correo">
+			        <h:outputText value="#{dtestudiante.correo}" />
+			    </p:column>
+			    
+			    <p:column headerText="Dirección">
+			        <h:outputText value="#{dtestudiante.direccion}" />
+			    </p:column>
+			    
+			    <p:column headerText="Activo" width="20" style="text-align: center" exportable="false">
+			    	<h:selectBooleanCheckbox value="#{dtestudiante.estado eq 'AC'? true:false}" disabled="true" />			        
+			    </p:column>
+			    
+			    <p:column headerText="Editar" width="20" exportable="false">
+			    	<p:outputPanel style="text-align: center">
+						<p:commandLink update=":form:pnl" oncomplete="PF('dgl').show()">	
+							<i class="fa fa-pencil" />
+							
+							<f:setPropertyActionListener value="#{dtestudiante.idestudiante}" target="#{estudiante.itCedula}" />
+							<f:setPropertyActionListener value="#{dtestudiante.nombres}" target="#{estudiante.itNombres}" />	
+							<f:setPropertyActionListener value="#{dtestudiante.apellidos}" target="#{estudiante.itApellidos}" />							
+							<f:setPropertyActionListener value="#{dtestudiante.telefono}" target="#{estudiante.itTelefono}" />						
+							<f:setPropertyActionListener value="#{dtestudiante.alergias}" target="#{estudiante.itAlergias}" />							
+							<f:setPropertyActionListener value="#{dtestudiante.institucionAnt}" target="#{estudiante.itInstitucionAnt}" />
+							<f:setPropertyActionListener value="#{dtestudiante.direccion}" target="#{estudiante.itDireccion}" />
+							<f:setPropertyActionListener value="#{dtestudiante.fechaNac}" target="#{estudiante.cFechaNac}" />	
+							<f:setPropertyActionListener value="#{dtestudiante.genero}" target="#{estudiante.sorGenero}" />
+							<f:setPropertyActionListener value="#{dtestudiante.matRepresentante.idRepresentante}" target="#{estudiante.soRepresentante}" />
+							<f:setPropertyActionListener value="#{dtestudiante.tipoSangre}" target="#{estudiante.soTipoSangre}" />						
+							<f:setPropertyActionListener value="#{general.getEstado(dtestudiante.estado)}" target="#{estudiante.ckEstado}" />
+							<f:setPropertyActionListener value="1" target="#{estudiante.accion}" />
+																																						
+						</p:commandLink>							
+					</p:outputPanel>
+			    </p:column>			  
+			</p:dataTable>
+			
+			<br/>
+			<p:outputPanel style="background-color: white; padding: 5px; text-align: end">
+				<h:commandLink value="Exportar a excel" style="color: green">                
+	                <p:dataExporter type="xlsx" target="dt" fileName="estudiantes" />
+	            </h:commandLink>		   
+            </p:outputPanel>
+			
+			<!-- INGRESO | ACTUALIZACION -->
+			<p:dialog header="Datos estudiante" widgetVar="dgl" modal="true" closable="true" maximizable="false" resizable="false" width="400px">
+			
+			<p:ajax event="close" update="form" listener="#{estudiante.closeDialogo}" />
+			
+				<h:panelGrid id="pnl" columns="2" cellpadding="0" style="width: auto; min-width: 100%;" columnClasses="ui-grid-col-4,ui-grid-col-8">
+										
+					<p:outputPanel style="text-align: end; padding: 5px">Cédula:</p:outputPanel>
+					<p:inputMask value="#{estudiante.itCedula}" style="width: 45%" disabled="#{estudiante.accion eq 1? true:false}" mask="9999999999" />
+					
+					<p:outputPanel style="text-align: end; padding: 5px">Nombres:</p:outputPanel>					
+					<p:inputText value="#{estudiante.itNombres}" style="width: 90%" />
+					
+					<p:outputPanel style="text-align: end; padding: 5px">Apellidos:</p:outputPanel>
+					<p:inputText value="#{estudiante.itApellidos}" style="width: 90%" />
+					
+					<p:outputPanel style="text-align: end; padding: 5px">Representante:</p:outputPanel>
+				    <p:selectOneMenu value="#{estudiante.soRepresentante}" disabled="#{reparto.accion eq 1? true:false}">
+						<f:selectItems value="#{estudiante.listRepresentante}" />			            
+			        </p:selectOneMenu>
+					
+					<p:outputPanel style="text-align: end; padding: 5px">Genero:</p:outputPanel>
+					<h:selectOneRadio value="#{estudiante.sorGenero}">            
+			            <f:selectItem itemLabel="M" itemValue="M" />
+			            <f:selectItem itemLabel="F" itemValue="F" />
+			        </h:selectOneRadio>
+			        
+			        <p:outputPanel style="text-align: end; padding: 5px">Tipo de sangre:</p:outputPanel>
+					<p:selectOneMenu value="#{estudiante.soTipoSangre}">
+						<f:selectItems value="#{estudiante.listTipoSangre}" />		
+					</p:selectOneMenu>			
+																			
+					<p:outputPanel style="text-align: end; padding: 5px">Teléfono:</p:outputPanel>
+					<p:inputMask value="#{estudiante.itTelefono}" style="width: 45%" mask="9999999999" />
+														
+					<p:outputPanel style="text-align: end; padding: 5px">Dirección:</p:outputPanel>
+					<p:inputTextarea value="#{estudiante.itDireccion}" rows="2" style="width: 90%" />
+								        
+			        <p:outputPanel style="text-align: end; padding: 5px">Fecha Nac.:</p:outputPanel>
+			        <p:calendar value="#{estudiante.cFechaNac}" locale="es" navigator="true" pattern="dd/MM/yyyy" mask="true" inputStyle="width: 45%" />
+			        
+			        <p:outputPanel style="text-align: end; padding: 5px">Alergias:</p:outputPanel>
+					<p:inputTextarea value="#{estudiante.itAlergias}" rows="2" style="width: 90%" />
+			        			     		        									
+			       	<p:outputPanel style="text-align: end; padding: 5px">Institucióon anterior:</p:outputPanel>
+					<p:inputTextarea value="#{estudiante.itInstitucionAnt}" rows="2" style="width: 90%" />					
+						
+					<p:outputPanel style="text-align: end; padding: 5px">Activo:</p:outputPanel>
+					<h:selectBooleanCheckbox value="#{estudiante.ckEstado}" style="margin-top: 6px" />
+					
+					<f:facet name = "footer"><br/>
+					    <h:panelGroup style = "display:block; text-align:center">
+					      	<p:commandButton id="btnGuardar" value="Guardar" icon="fa fa-save" actionListener="#{estudiante.guardar}" update="dt growl" />	
+						</h:panelGroup>
+					</f:facet>						
+				</h:panelGrid>
+			</p:dialog>				
+						
+	   	</h:form>
+	</ui:define>		
+	
+</ui:composition>

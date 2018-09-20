@@ -154,9 +154,8 @@ public class Reparto implements Serializable {
 			
 			String estado = "IC";
 			if (ckEstado) estado = "AC";
-
 			
-			MatDocente docente = (MatDocente) DAO.buscarObject(new MatDocente(), "from MatDocente c where c.idDocente = " + soDocente);
+			MatDocente docente = (MatDocente) DAO.buscarObject(new MatDocente(), "from MatDocente c where c.idDocente = '" + soDocente + "'");
 			CalAsignatura asignatura = (CalAsignatura) DAO.buscarObject(new CalAsignatura(), "from CalAsignatura c where c.idAsignatura = " + soAsignatura);
 			MatCurso curso = (MatCurso) DAO.buscarObject(new MatCurso(), "from MatCurso c where c.idCurso = " + soCurso);
 			
