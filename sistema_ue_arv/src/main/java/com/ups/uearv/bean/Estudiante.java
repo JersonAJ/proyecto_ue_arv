@@ -115,7 +115,7 @@ public class Estudiante implements Serializable {
 			return;
 		}		
 		if (accion == 0) {
-			MatEstudiante ob =  (MatEstudiante) DAO.buscarObject(new MatEstudiante(), "from Matestudiante c where c.idestudiante = '" + itCedula + "'");
+			MatEstudiante ob =  (MatEstudiante) DAO.buscarObject(new MatEstudiante(), "from MatEstudiante c where c.idEstudiante = '" + itCedula + "'");
 			if (ob != null) {
 				mensaje = "El estudiante ya existe";
 				FacesContext.getCurrentInstance().addMessage("growl", new FacesMessage(FacesMessage.SEVERITY_ERROR, mensajeTitulo, mensaje));
@@ -142,7 +142,7 @@ public class Estudiante implements Serializable {
 			
 			MatEstudiante ob = new MatEstudiante();
 			if (accion == 1) {
-				ob = (MatEstudiante) DAO.buscarObject(new MatEstudiante(), "from Matestudiante c where c.idestudiante = '" + itCedula + "'");
+				ob = (MatEstudiante) DAO.buscarObject(new MatEstudiante(), "from MatEstudiante c where c.idEstudiante = '" + itCedula + "'");
 			} else {
 				ob.setIdEstudiante(itCedula);
 			}
@@ -150,7 +150,7 @@ public class Estudiante implements Serializable {
 			String estado = "IC";
 			if (ckEstado) estado = "AC";
 			
-			MatRepresentante representante = (MatRepresentante) DAO.buscarObject(new MatRepresentante(), "from MatRepresentante c where c.idDocente = '" + soRepresentante + "'");
+			MatRepresentante representante = (MatRepresentante) DAO.buscarObject(new MatRepresentante(), "from MatRepresentante c where c.idRepresentante = '" + soRepresentante + "'");
 			
 			ob.setMatRepresentante(representante);
 			ob.setApellidos(itApellidos);

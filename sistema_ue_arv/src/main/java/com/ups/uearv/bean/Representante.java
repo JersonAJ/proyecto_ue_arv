@@ -41,8 +41,8 @@ public class Representante implements Serializable {
 	String itNombres = "";
 	String itApellidos = "";
 	String itTelefono = "";
-	String itOcupacion = "";	
-	String itCorreo = "";	
+	String itOcupacion = "";
+	String itCorreo = "";
 	String itDireccion = "";	
 	Date cFechaNac = new Date();
 	
@@ -102,7 +102,7 @@ public class Representante implements Serializable {
 			return;
 		}		
 		if (accion == 0) {
-			MatRepresentante ob =  (MatRepresentante) DAO.buscarObject(new MatRepresentante(), "from Matrepresentante c where c.idrepresentante = '" + itCedula + "'");
+			MatRepresentante ob =  (MatRepresentante) DAO.buscarObject(new MatRepresentante(), "from MatRepresentante c where c.idRepresentante = '" + itCedula + "'");
 			if (ob != null) {
 				mensaje = "El representante ya existe";
 				FacesContext.getCurrentInstance().addMessage("growl", new FacesMessage(FacesMessage.SEVERITY_ERROR, mensajeTitulo, mensaje));

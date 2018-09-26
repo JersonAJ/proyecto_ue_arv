@@ -149,8 +149,9 @@ public class Util {
 							return "Revise nuevamente los d\u00edgitos de su c\u00e9dula";
 
 						mensaje = "OK";						
-					}
-				}
+					} 
+				} else
+					return "Revise nuevamente los d\u00edgitos de su c\u00e9dula";
 			} catch (NumberFormatException e) {				
 				return "La c\u00e9dula debe contener solo d\u00edgitos num\u00e9ricos";
 			}
