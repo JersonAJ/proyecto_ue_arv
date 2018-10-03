@@ -64,7 +64,7 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
                 paginator="true" rows="10" rowsPerPageTemplate="5,10" paginatorPosition="top" emptyMessage="No existen datos a mostrar" >
 			 
 			    <p:column headerText="Cédula" style="text-align: center">
-			        <h:outputText value="#{dtestudiante.idestudiante}" />
+			        <h:outputText value="#{dtestudiante.idEstudiante}" />
 			    </p:column>
 						    
 				<p:column headerText="Nombre completo">
@@ -74,11 +74,7 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 			    <p:column headerText="Teléfonos">
 			        <h:outputText value="#{dtestudiante.telefono}" />
 			    </p:column>
-			    
-			    <p:column headerText="Correo">
-			        <h:outputText value="#{dtestudiante.correo}" />
-			    </p:column>
-			    
+			   
 			    <p:column headerText="Dirección">
 			        <h:outputText value="#{dtestudiante.direccion}" />
 			    </p:column>
@@ -92,7 +88,7 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 						<p:commandLink update=":form:pnl" oncomplete="PF('dgl').show()">	
 							<i class="fa fa-pencil" />
 							
-							<f:setPropertyActionListener value="#{dtestudiante.idestudiante}" target="#{estudiante.itCedula}" />
+							<f:setPropertyActionListener value="#{dtestudiante.idEstudiante}" target="#{estudiante.itCedula}" />
 							<f:setPropertyActionListener value="#{dtestudiante.nombres}" target="#{estudiante.itNombres}" />	
 							<f:setPropertyActionListener value="#{dtestudiante.apellidos}" target="#{estudiante.itApellidos}" />							
 							<f:setPropertyActionListener value="#{dtestudiante.telefono}" target="#{estudiante.itTelefono}" />						
@@ -122,7 +118,12 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 			<p:dialog header="Datos estudiante" widgetVar="dgl" modal="true" closable="true" maximizable="false" resizable="false" width="400px">
 			
 			<p:ajax event="close" update="form" listener="#{estudiante.closeDialogo}" />
-			
+				<style>
+					.uiselectonemenupanel .uiselectonemenufilter {
+					    width: 280px;
+					    paddingright: 15px;
+					}
+				</style>		
 				<h:panelGrid id="pnl" columns="2" cellpadding="0" style="width: auto; min-width: 100%;" columnClasses="ui-grid-col-4,ui-grid-col-8">
 										
 					<p:outputPanel style="text-align: end; padding: 5px">Cédula:</p:outputPanel>
@@ -134,11 +135,15 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 					<p:outputPanel style="text-align: end; padding: 5px">Apellidos:</p:outputPanel>
 					<p:inputText value="#{estudiante.itApellidos}" style="width: 90%" />
 					
+												
 					<p:outputPanel style="text-align: end; padding: 5px">Representante:</p:outputPanel>
-				    <p:selectOneMenu value="#{estudiante.soRepresentante}" disabled="#{reparto.accion eq 1? true:false}">
-						<f:selectItems value="#{estudiante.listRepresentante}" />			            
-			        </p:selectOneMenu>
-					
+				    <p:selectOneMenu value="#{estudiante.soRepresentante}" effect="fade" var="t" filter="true" filterMatchMode="startsWith">
+						<f:selectItems value="#{estudiante.listRepresentante}" />	
+					    <p:column>
+			                <h:outputText value="#{t}" />
+			            </p:column>			 
+			        </p:selectOneMenu>			        
+			       					
 					<p:outputPanel style="text-align: end; padding: 5px">Genero:</p:outputPanel>
 					<h:selectOneRadio value="#{estudiante.sorGenero}">            
 			            <f:selectItem itemLabel="M" itemValue="M" />
