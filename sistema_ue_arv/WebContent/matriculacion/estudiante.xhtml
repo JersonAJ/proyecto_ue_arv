@@ -137,7 +137,7 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 					
 												
 					<p:outputPanel style="text-align: end; padding: 5px">Representante:</p:outputPanel>
-				    <p:selectOneMenu value="#{estudiante.soRepresentante}" effect="fade" var="t" filter="true" filterMatchMode="startsWith">
+				    <p:selectOneMenu value="#{estudiante.soRepresentante}" effect="fade" widgetVar="t" filter="true" filterMatchMode="startsWith">
 						<f:selectItems value="#{estudiante.listRepresentante}" />	
 					    <p:column>
 			                <h:outputText value="#{t}" />

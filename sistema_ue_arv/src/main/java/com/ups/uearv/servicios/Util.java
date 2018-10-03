@@ -65,15 +65,15 @@ public class Util {
 		for (int k = 0; k < result.size(); k++) {
 			if (valores == 1) {
 				Object obj = (Object) itr.next();
-				items.add(new SelectItem(obj));
+				items.add(new SelectItem(obj.toString()));
 			} else if (valores == 2) {
 				Object[] obj = (Object[]) itr.next();
-				items.add(new SelectItem(String.valueOf(obj[0]), String.valueOf(obj[1])));
+				items.add(new SelectItem(obj[0].toString(), obj[1].toString()));
 			}
 		}
 		return items;
 	}
-
+	
 	public static String generaSHA256(String password) throws NoSuchAlgorithmException {
 		MessageDigest md;
 		md = MessageDigest.getInstance("SHA-256");

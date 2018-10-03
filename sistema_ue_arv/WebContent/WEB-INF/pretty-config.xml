@@ -14,7 +14,7 @@
 		<view-id value="/inicio.xhtml" />
 	</url-mapping>
 	
-	<!-- ERRORES -->
+	<!-- SEGURIDAD -->
 	<url-mapping id="usuario">
 		<pattern value="/seg/usuario" />
 		<view-id value="/seguridad/usuario.xhtml" />
@@ -65,6 +65,18 @@
 		<pattern value="/man/paralelo" />
 		<view-id value="/mantenimientos/paralelo.xhtml" />
 	</url-mapping>
+	
+	<!-- MATRICULACION -->
+	<url-mapping id="representante">
+		<pattern value="/mat/representante" />
+		<view-id value="/matriculacion/representante.xhtml" />
+	</url-mapping>
+	
+	<url-mapping id="estudiante">
+		<pattern value="/mat/estudiante" />
+		<view-id value="/matriculacion/estudiante.xhtml" />
+	</url-mapping>
+	
 	
 	<!-- ERRORES -->	
 	<url-mapping id="error">
