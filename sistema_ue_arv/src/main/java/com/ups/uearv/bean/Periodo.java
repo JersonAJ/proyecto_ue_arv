@@ -53,6 +53,8 @@ public class Periodo implements Serializable {
 	boolean ckMostrarIC = false;
 
 	private List<Object> periodoList = new ArrayList<Object>();
+	
+	ArrayList<SelectItem> listJornada = new ArrayList<SelectItem>();
 
 	private static EntityManagerFactory emf = Persistence.createEntityManagerFactory("sismacc");
 
@@ -65,6 +67,9 @@ public class Periodo implements Serializable {
 
 	@PostConstruct
 	public void init() {
+		
+		listJornada = (ArrayList<SelectItem>) llenaComboJornada();
+		soJornada = listJornada.get(0).getValue().toString();
 
 		buscar();
 	}
@@ -80,9 +85,9 @@ public class Periodo implements Serializable {
 
 	public void buscar() {
 		if (ckMostrarIC) {
-			jpql = " SELECT c.* FROM mat_periodo c WHERE c.apellidos LIKE '%"	+ itBuscar + "%' ORDER BY c.apellidos ";
+			jpql = " SELECT c.* FROM mat_periodo c WHERE c.descripcion LIKE '%"	+ itBuscar + "%' ORDER BY c.descripcion ";
 		} else {
-			jpql = " SELECT c.* FROM mat_periodo c WHERE c.apellidos LIKE '%"	+ itBuscar + "%' AND c.estado = 'AC' ORDER BY c.apellidos ";
+			jpql = " SELECT c.* FROM mat_periodo c WHERE c.descripcion LIKE '%"	+ itBuscar + "%' AND c.estado = 'AC' ORDER BY c.descripcion ";
 		}
 		llenarLista(jpql);
 	}
@@ -102,7 +107,7 @@ public class Periodo implements Serializable {
 			
 			MatPeriodo ob = new MatPeriodo();
 			if (accion == 1) {
-				ob = (MatPeriodo) DAO.buscarObject(new MatPeriodo(), "from MatPeriodo c where c.idperiodo = '" + idPeriodo + "'");
+				ob = (MatPeriodo) DAO.buscarObject(new MatPeriodo(), "from MatPeriodo c where c.idPeriodo = '" + idPeriodo + "'");
 			}
 			
 			String estado = "IC";
@@ -141,8 +146,8 @@ public class Periodo implements Serializable {
 		init();
 	}
 	
-	public List<SelectItem> llenaComboEstadoCivil() {
-		return Util.llenaCombo(DAO.getDetCatalogo("CA005"), 2);
+	public List<SelectItem> llenaComboJornada() {
+		return Util.llenaCombo(DAO.getDetCatalogo("CA003"), 2);
 	}
 	
 	// GETTERS AND SETTERS
@@ -223,5 +228,11 @@ public class Periodo implements Serializable {
 	}
 	public void setPeriodoList(List<Object> periodoList) {
 		this.periodoList = periodoList;
+	}
+	public ArrayList<SelectItem> getListJornada() {
+		return listJornada;
+	}
+	public void setListJornada(ArrayList<SelectItem> listJornada) {
+		this.listJornada = listJornada;
 	}	
 }

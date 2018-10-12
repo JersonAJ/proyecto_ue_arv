@@ -76,7 +76,42 @@
 		<pattern value="/mat/estudiante" />
 		<view-id value="/matriculacion/estudiante.xhtml" />
 	</url-mapping>
+
+	<url-mapping id="periodo">
+		<pattern value="/mat/periodo" />
+		<view-id value="/matriculacion/periodo.xhtml" />
+	</url-mapping>
 	
+	<url-mapping id="oferta">
+		<pattern value="/mat/oferta" />
+		<view-id value="/matriculacion/oferta.xhtml" />
+	</url-mapping>
+	
+	<url-mapping id="matricula">
+		<pattern value="/mat/matricula" />
+		<view-id value="/matriculacion/matricula.xhtml" />
+	</url-mapping>
+	
+	<url-mapping id="reporte">
+		<pattern value="/mat/reporte" />
+		<view-id value="/matriculacion/reporte.xhtml" />
+	</url-mapping>
+	
+	<!-- GESTION DE COBROS -->
+	<url-mapping id="descuento">
+		<pattern value="/ges/descuento" />
+		<view-id value="/gestioncobro/descuento.xhtml" />
+	</url-mapping>
+	
+	<url-mapping id="pension">
+		<pattern value="/ges/pension" />
+		<view-id value="/gestioncobro/pension.xhtml" />
+	</url-mapping>
+	
+	<url-mapping id="reporte">
+		<pattern value="/ges/reporte" />
+		<view-id value="/gestioncobro/reporte.xhtml" />
+	</url-mapping>
 	
 	<!-- ERRORES -->	
 	<url-mapping id="error">
