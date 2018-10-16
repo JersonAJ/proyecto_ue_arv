@@ -20,6 +20,14 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 					<i class="fa fa-plus-circle" />
 					<span>Agregar</span>				
 					
+					<f:setPropertyActionListener value="" target="#{periodo.itDescripcion}" />
+					<f:setPropertyActionListener value="" target="#{periodo.soJornada}" />
+					<f:setPropertyActionListener value="" target="#{periodo.cFechaIni}" />
+					<f:setPropertyActionListener value="" target="#{periodo.cFechaFin}" />
+					<f:setPropertyActionListener value="0" target="#{periodo.inCantPension}" />
+					<f:setPropertyActionListener value="0" target="#{periodo.inValorMatricula}" />
+					<f:setPropertyActionListener value="0" target="#{periodo.inValorPension}" />					
+					
 					<f:setPropertyActionListener value="true" target="#{periodo.ckEstado}" />
 					<f:setPropertyActionListener value="0" target="#{periodo.accion}" />	
 															

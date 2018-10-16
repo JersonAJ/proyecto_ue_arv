@@ -110,9 +110,16 @@ public class Periodo implements Serializable {
 				ob = (MatPeriodo) DAO.buscarObject(new MatPeriodo(), "from MatPeriodo c where c.idPeriodo = '" + idPeriodo + "'");
 			}
 			
-			String estado = "IC";
-			if (ckEstado) estado = "AC";
+			ob.setDescripcion(itDescripcion);
+			ob.setCantPensiones(inCantPension);
+			ob.setPrecioMatricula(inValorMatricula);
+			ob.setPrecioPension(inValorPension);
+			ob.setFechaIni(cFechaIni);
+			ob.setFechaFin(cFechaFin);
+			ob.setJornada(soJornada);
 			
+			String estado = "IC";
+			if (ckEstado) estado = "AC";	
 			
 			ob.setEstado(estado);
 			if (accion == 0) {
