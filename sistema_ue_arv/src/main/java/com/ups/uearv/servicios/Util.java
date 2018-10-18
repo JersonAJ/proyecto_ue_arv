@@ -7,7 +7,9 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
@@ -39,6 +41,20 @@ public class Util {
 		return (int) dias;
 	}
 
+	public static int diferenciaEnMeses(Date fechaInicio, Date fechaFin) throws ParseException {
+		try {
+			Calendar inicio = new GregorianCalendar();
+			Calendar fin = new GregorianCalendar();
+			inicio.setTime(fechaInicio);
+			fin.setTime(fechaFin);
+			int difA = fin.get(Calendar.YEAR) - inicio.get(Calendar.YEAR);
+			int difM = difA * 12 + fin.get(Calendar.MONTH) - inicio.get(Calendar.MONTH);		
+			return difM;	
+		} catch (Exception e) {
+			return 0;
+		}			
+	}
+
 	public static String stringToDate(String fecha) throws ParseException {
 		DateFormat format = new SimpleDateFormat("yyyy/MM/dd", Locale.ENGLISH);
 		Date date = format.parse(fecha);
@@ -49,7 +65,7 @@ public class Util {
 	@SuppressWarnings("unchecked")
 	public static List<SelectItem> llenaCombo(Query query, int valores) {
 		List<Object> result = (List<Object>) query.getResultList();
-		
+
 		if (result.isEmpty()) {
 			List<SelectItem> items = new ArrayList<SelectItem>(1);
 			if (valores == 1) {	
@@ -59,7 +75,7 @@ public class Util {
 			}
 			return items;
 		}
-		
+
 		Iterator<Object> itr = result.iterator();
 		List<SelectItem> items = new ArrayList<SelectItem>(result.size());
 		for (int k = 0; k < result.size(); k++) {
@@ -73,7 +89,7 @@ public class Util {
 		}
 		return items;
 	}
-	
+
 	public static String generaSHA256(String password) throws NoSuchAlgorithmException {
 		MessageDigest md;
 		md = MessageDigest.getInstance("SHA-256");
@@ -174,10 +190,9 @@ public class Util {
 		return msg;
 	}
 
-	public static void main(String[] args) throws IOException, NoSuchAlgorithmException {
-		System.out.println(validarCorreo("jarmijos"));
-		System.out.println(validarCorreo("rsolano@gmail.com"));		
-		System.out.println(validarCorreo("rsolano@asda@sas.asasasa.sasas"));
-		System.out.println(validarCorreo(""));		
+	public static void main(String[] args) throws IOException, NoSuchAlgorithmException, ParseException {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+		
+		System.out.println(diferenciaEnMeses(sdf.parse("20180401"), sdf.parse("20190131")));
 	}
 }

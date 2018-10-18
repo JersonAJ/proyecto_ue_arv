@@ -40,7 +40,7 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 			</style>
 			<br/>		
 			<p:outputPanel>
-			   <p:inputText style="width: 500px" value="#{periodo.itBuscar}" placeholder="Buscar por apellidos">
+			   <p:inputText style="width: 500px" value="#{periodo.itBuscar}" placeholder="Buscar por período">
 				<p:ajax event="keyup" update="dt" listener="#{periodo.buscar}"/>
 			     	</p:inputText>	
 				<p:spacer width="10px" />
@@ -60,12 +60,51 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
                 currentPageReportTemplate="{currentPage} de {totalPages}"
                 paginator="true" rows="10" rowsPerPageTemplate="5,10" paginatorPosition="top" emptyMessage="No existen datos a mostrar" >
 			
-						    
-				<p:column headerText="Decripción">
+				<p:columnGroup type="header">
+		            <p:row>
+		                <p:column rowspan="2" headerText="Período" />
+		                <p:column colspan="2" headerText="Fecha" />
+		                <p:column colspan="2" headerText="Valor" />	
+		                <p:column rowspan="2" headerText="Cant. Pensiones" width="50" />	                
+		                <p:column rowspan="2" headerText="Activo" width="80" />
+		                <p:column rowspan="2" headerText="Editar" width="80" />
+		                
+		            </p:row>		         
+		            <p:row>
+		                <p:column headerText="Inicio" width="100" />
+		                <p:column headerText="Fin" width="100" />		
+		                <p:column headerText="Matrícula" width="100" />
+		                <p:column headerText="Pensión" width="100" />		                
+		            </p:row>
+		        </p:columnGroup>			 	
+		        
+				<p:column headerText="Período">
 			        <h:outputText value="#{dtperiodo.descripcion}" />
 			    </p:column>
-			    			    			    
+			    
+			    <p:column headerText="Inicio" style="text-align: center">
+			        <h:outputText value="#{dtperiodo.fechaIni}">
+			         	<f:convertDateTime pattern = "dd/MM/yyyy" />
+			        </h:outputText>
+			    </p:column>			    			
+			    
+			    <p:column headerText="Fin" style="text-align: center">
+			        <h:outputText value="#{dtperiodo.fechaFin}">
+			        	<f:convertDateTime pattern = "dd/MM/yyyy" />
+			        </h:outputText>
+			    </p:column>
+			    
+			    <p:column headerText="Matrícula" style="text-align: end">
+			        <h:outputText value="$ #{dtperiodo.precioMatricula}" />
+			    </p:column>			    			
+			    
+			    <p:column headerText="Pensión" style="text-align: end">
+			        <h:outputText value="$ #{dtperiodo.precioPension}" />
+			    </p:column>			    					    						    			    			    
 			  
+			  	<p:column headerText="Cant. Pensiones" style="text-align: center">
+			        <h:outputText value="#{dtperiodo.cantPensiones}" />
+			    </p:column>
 			    
 			    <p:column headerText="Activo" width="20" style="text-align: center" exportable="false">
 			    	<h:selectBooleanCheckbox value="#{dtperiodo.estado eq 'AC'? true:false}" disabled="true" />			        
@@ -76,7 +115,14 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 						<p:commandLink update=":form:pnl" oncomplete="PF('dgl').show()">	
 							<i class="fa fa-pencil" />
 							
-							<f:setPropertyActionListener value="#{dtperiodo.idperiodo}" target="#{periodo.idPeriodo}" />
+							<f:setPropertyActionListener value="#{dtperiodo.idPeriodo}" target="#{periodo.idPeriodo}" />							
+							<f:setPropertyActionListener value="#{dtperiodo.descripcion}" target="#{periodo.itDescripcion}" />
+							<f:setPropertyActionListener value="#{dtperiodo.jornada}" target="#{periodo.soJornada}" />
+							<f:setPropertyActionListener value="#{dtperiodo.fechaIni}" target="#{periodo.cFechaIni}" />
+							<f:setPropertyActionListener value="#{dtperiodo.fechaFin}" target="#{periodo.cFechaFin}" />
+							<f:setPropertyActionListener value="#{dtperiodo.cantPensiones}" target="#{periodo.inCantPension}" />
+							<f:setPropertyActionListener value="#{dtperiodo.precioMatricula}" target="#{periodo.inValorMatricula}" />
+							<f:setPropertyActionListener value="#{dtperiodo.precioPension}" target="#{periodo.inValorPension}" />		
 							
 							<f:setPropertyActionListener value="#{general.getEstado(dtperiodo.estado)}" target="#{periodo.ckEstado}" />
 							<f:setPropertyActionListener value="1" target="#{periodo.accion}" />
@@ -85,8 +131,7 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 					</p:outputPanel>
 			    </p:column>			  
 			</p:dataTable>
-			
-			
+					
 			
 			<br/>
 			<p:outputPanel style="background-color: white; padding: 5px; text-align: end">
@@ -111,13 +156,17 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 					</p:selectOneMenu>		
 														        
 			        <p:outputPanel style="text-align: end; padding: 5px">Fecha inicio:</p:outputPanel>
-			        <p:calendar value="#{periodo.cFechaIni}" locale="es" navigator="true" pattern="dd/MM/yyyy" mask="true" inputStyle="width: 45%" />
+			        <p:calendar value="#{periodo.cFechaIni}" locale="es" navigator="true" pattern="dd/MM/yyyy" mask="true" inputStyle="width: 45%" readonlyInput="true">
+						<p:ajax event="dateSelect" listener="#{periodo.onDateSelect}" update="inCantPension" />
+			        </p:calendar>
 			        
 			        <p:outputPanel style="text-align: end; padding: 5px">Fecha fin:</p:outputPanel>
-			        <p:calendar value="#{periodo.cFechaFin}" locale="es" navigator="true" pattern="dd/MM/yyyy" mask="true" inputStyle="width: 45%" />
+			        <p:calendar value="#{periodo.cFechaFin}" locale="es" navigator="true" pattern="dd/MM/yyyy" mask="true" inputStyle="width: 45%" readonlyInput="true">
+			        	<p:ajax event="dateSelect" listener="#{periodo.onDateSelect}" update="inCantPension" />
+			        </p:calendar>
 			        
 			        <p:outputPanel style="text-align: end; padding: 5px">Cant. Pensiones:</p:outputPanel>					
-					<p:inputNumber value="#{periodo.inCantPension}" decimalPlaces="0" inputStyle="width: 20px; text-align: center" />
+					<p:inputNumber id="inCantPension" value="#{periodo.inCantPension}" decimalPlaces="0" inputStyle="width: 20px; text-align: center" />
 					
 					<p:outputPanel style="text-align: end; padding: 5px">Precio Matrícula:</p:outputPanel>					
 			        <p:outputPanel class="ui-inputgroup">          

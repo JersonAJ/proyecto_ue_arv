@@ -8,6 +8,7 @@ package com.ups.uearv.bean;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -46,14 +47,14 @@ public class Periodo implements Serializable {
 	int inCantPension = 0;	
 	BigDecimal inValorMatricula = new BigDecimal(0);
 	BigDecimal inValorPension = new BigDecimal(0);
-	
+
 	boolean ckEstado = false;
 
 	String itBuscar = "";
 	boolean ckMostrarIC = false;
 
 	private List<Object> periodoList = new ArrayList<Object>();
-	
+
 	ArrayList<SelectItem> listJornada = new ArrayList<SelectItem>();
 
 	private static EntityManagerFactory emf = Persistence.createEntityManagerFactory("sismacc");
@@ -67,7 +68,7 @@ public class Periodo implements Serializable {
 
 	@PostConstruct
 	public void init() {
-		
+
 		listJornada = (ArrayList<SelectItem>) llenaComboJornada();
 		soJornada = listJornada.get(0).getValue().toString();
 
@@ -78,7 +79,7 @@ public class Periodo implements Serializable {
 	public void llenarLista(String jpql) {
 		periodoList.clear();
 		List<Object> l = DAO.nqObject(new MatPeriodo(), jpql);
-				
+
 		for (Object in : l)
 			periodoList.add(in);
 	}
@@ -94,22 +95,51 @@ public class Periodo implements Serializable {
 
 	// INGRESO - ACTUALIZACION
 	public void guardar() {
-		
+
 		// VALIDACIONES
+		if (itDescripcion.trim().equals("")) {
+			mensaje = "Debe ingresar la descripción";
+			FacesContext.getCurrentInstance().addMessage("growl", new FacesMessage(FacesMessage.SEVERITY_ERROR, mensajeTitulo, mensaje));
+			return;
+		}
+		if (cFechaIni == null) {
+			mensaje = "Debe seleccionar la fecha inicio";
+			FacesContext.getCurrentInstance().addMessage("growl", new FacesMessage(FacesMessage.SEVERITY_ERROR, mensajeTitulo, mensaje));
+			return;
+		}		
+		if (cFechaFin == null) {
+			mensaje = "Debe seleccionar la fecha fin";
+			FacesContext.getCurrentInstance().addMessage("growl", new FacesMessage(FacesMessage.SEVERITY_ERROR, mensajeTitulo, mensaje));
+			return;
+		}		
+		if (inCantPension == 0) {
+			mensaje = "Debe ingresar la cantidad de pensiones";
+			FacesContext.getCurrentInstance().addMessage("growl", new FacesMessage(FacesMessage.SEVERITY_ERROR, mensajeTitulo, mensaje));
+			return;
+		}				
+		if (inValorMatricula == BigDecimal.ZERO) {
+			mensaje = "Debe ingresar el valor de la matrícula";
+			FacesContext.getCurrentInstance().addMessage("growl", new FacesMessage(FacesMessage.SEVERITY_ERROR, mensajeTitulo, mensaje));
+			return;
+		}			
+		if (inValorPension == BigDecimal.ZERO) {
+			mensaje = "Debe ingresar el valor de las pensiones";
+			FacesContext.getCurrentInstance().addMessage("growl", new FacesMessage(FacesMessage.SEVERITY_ERROR, mensajeTitulo, mensaje));
+			return;
+		}		
 		
-			
 		// PROCESO		
 		EntityManager em = emf.createEntityManager();
 		em.getTransaction().begin();
 		try {		
 			Date date = new Date();
 			Timestamp fecha = new Timestamp(date.getTime());
-			
+
 			MatPeriodo ob = new MatPeriodo();
 			if (accion == 1) {
 				ob = (MatPeriodo) DAO.buscarObject(new MatPeriodo(), "from MatPeriodo c where c.idPeriodo = '" + idPeriodo + "'");
 			}
-			
+
 			ob.setDescripcion(itDescripcion);
 			ob.setCantPensiones(inCantPension);
 			ob.setPrecioMatricula(inValorMatricula);
@@ -117,10 +147,10 @@ public class Periodo implements Serializable {
 			ob.setFechaIni(cFechaIni);
 			ob.setFechaFin(cFechaFin);
 			ob.setJornada(soJornada);
-			
+
 			String estado = "IC";
 			if (ckEstado) estado = "AC";	
-			
+
 			ob.setEstado(estado);
 			if (accion == 0) {
 				ob.setUsuarioIng(Session.getUserName());			
@@ -130,7 +160,7 @@ public class Periodo implements Serializable {
 				ob.setUsuarioAct(Session.getUserName());			
 				ob.setFechaAct(fecha);			
 			}			
-			
+
 			if (DAO.saveOrUpdate(ob, accion, em)) {
 				em.getTransaction().commit();
 				mensaje = "Guardado exitoso";
@@ -141,7 +171,7 @@ public class Periodo implements Serializable {
 				mensaje = "Error al guardar";
 				FacesContext.getCurrentInstance().addMessage("growl", new FacesMessage(FacesMessage.SEVERITY_ERROR, mensajeTitulo, mensaje));
 			}
-			
+
 		} catch (Exception e) {
 			em.getTransaction().rollback();
 			e.printStackTrace();
@@ -152,11 +182,20 @@ public class Periodo implements Serializable {
 	public void closeDialogo() {
 		init();
 	}
-	
+
 	public List<SelectItem> llenaComboJornada() {
 		return Util.llenaCombo(DAO.getDetCatalogo("CA003"), 2);
 	}
-	
+
+	public void onDateSelect() {		
+		try {
+			int no = Util.diferenciaEnMeses(cFechaIni, cFechaFin);
+			inCantPension = no + 1;
+		} catch (ParseException e) {
+			inCantPension = 0;			
+		}		
+	}
+
 	// GETTERS AND SETTERS
 	public boolean isCkEstado() {
 		return ckEstado;
@@ -181,11 +220,11 @@ public class Periodo implements Serializable {
 	}
 	public void setAccion(int accion) {
 		this.accion = accion;
-	}
-	public static String getIdPeriodo() {
+	}	
+	public String getIdPeriodo() {
 		return idPeriodo;
 	}
-	public static void setIdPeriodo(String idPeriodo) {
+	public void setIdPeriodo(String idPeriodo) {
 		Periodo.idPeriodo = idPeriodo;
 	}
 	public String getItDescripcion() {
