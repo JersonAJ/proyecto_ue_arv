@@ -154,6 +154,21 @@ public class DAO {
 		return query;
 	}
 	
+	public static Query getPeriodos() {
+		Query query = em.createNativeQuery(" SELECT id_periodo, descripcion FROM mat_periodo WHERE estado = 'AC' ");
+		return query;
+	}		
+	
+	public static Query getCursos() {
+		Query query = em.createNativeQuery(" SELECT id_curso, descripcion FROM mat_curso WHERE estado = 'AC' ");
+		return query;
+	}
+	
+	public static Query getParalelos() {
+		Query query = em.createNativeQuery(" SELECT id_paralelo, descripcion FROM mat_paralelo WHERE estado = 'AC' ");
+		return query;
+	}
+	
 	public static Query getAsignaturas(String det) {
 		Query query = em.createNativeQuery(" SELECT id_asignatura, nombre FROM cal_asignatura WHERE nivel = '" + det + "' AND estado = 'AC' ");
 		return query;

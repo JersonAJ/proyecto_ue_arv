@@ -86,8 +86,13 @@ public class Comportamiento implements Serializable {
 	public void guardar() {
 		
 		// VALIDACIONES
+		if (itAbreviatura.trim().equals("")) {
+			mensaje = "Debe ingresar la abreviatura";
+			FacesContext.getCurrentInstance().addMessage("growl", new FacesMessage(FacesMessage.SEVERITY_ERROR, mensajeTitulo, mensaje));
+			return;
+		}		
 		if (itDescripcion.trim().equals("")) {
-			mensaje = "Debe ingresar la descripción";
+			mensaje = "Debe ingresar el comportamiento";
 			FacesContext.getCurrentInstance().addMessage("growl", new FacesMessage(FacesMessage.SEVERITY_ERROR, mensajeTitulo, mensaje));
 			return;
 		}		

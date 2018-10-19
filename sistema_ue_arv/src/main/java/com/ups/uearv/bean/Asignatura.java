@@ -98,7 +98,7 @@ public class Asignatura implements Serializable {
 		
 		// VALIDACIONES
 		if (itNombre.trim().equals("")) {
-			mensaje = "Debe ingresar el nombre";
+			mensaje = "Debe ingresar la asignatura";
 			FacesContext.getCurrentInstance().addMessage("growl", new FacesMessage(FacesMessage.SEVERITY_ERROR, mensajeTitulo, mensaje));
 			return;
 		}		

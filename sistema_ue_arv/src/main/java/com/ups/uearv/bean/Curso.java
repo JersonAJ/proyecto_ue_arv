@@ -92,7 +92,7 @@ public class Curso implements Serializable {
 		
 		// VALIDACIONES
 		if (itDescripcion.trim().equals("")) {
-			mensaje = "Debe ingresar la descripción";
+			mensaje = "Debe ingresar el curso";
 			FacesContext.getCurrentInstance().addMessage("growl", new FacesMessage(FacesMessage.SEVERITY_ERROR, mensajeTitulo, mensaje));
 			return;
 		}		

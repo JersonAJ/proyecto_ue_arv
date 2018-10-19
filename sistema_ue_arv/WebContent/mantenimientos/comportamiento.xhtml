@@ -54,6 +54,10 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
                 currentPageReportTemplate="{currentPage} de {totalPages}"
                 paginator="true" rows="10" rowsPerPageTemplate="5,10" paginatorPosition="top" emptyMessage="No existen datos a mostrar" >
 			 
+			    <p:column headerText="Abreviatura" width="150" style="text-align: center">
+			        <h:outputText value="#{dtcomportamiento.abreviatura}" />
+			    </p:column>
+			    
 			    <p:column headerText="Comportamiento">
 			        <h:outputText value="#{dtcomportamiento.descripcion}" />
 			    </p:column>

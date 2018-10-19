@@ -20,8 +20,11 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 					<i class="fa fa-plus-circle" />
 					<span>Agregar</span>				
 					
-					<f:setPropertyActionListener value="true" target="#{periodo.ckEstado}" />
-					<f:setPropertyActionListener value="0" target="#{periodo.accion}" />	
+					<f:setPropertyActionListener value="" target="#{oferta.soPeriodo}" />
+					<f:setPropertyActionListener value="" target="#{oferta.soCurso}" />
+					<f:setPropertyActionListener value="" target="#{oferta.soParalelo}" />		
+					<f:setPropertyActionListener value="true" target="#{oferta.ckEstado}" />
+					<f:setPropertyActionListener value="0" target="#{oferta.accion}" />	
 															
 				</p:commandLink>					
 			</p:outputPanel> 
@@ -32,14 +35,14 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 			</style>
 			<br/>		
 			<p:outputPanel>
-			   <p:inputText style="width: 500px" value="#{periodo.itBuscar}" placeholder="Buscar por apellidos">
-				<p:ajax event="keyup" update="dt" listener="#{periodo.buscar}"/>
+			   <p:inputText style="width: 500px" value="#{oferta.itBuscar}" placeholder="Buscar por oferta">
+				<p:ajax event="keyup" update="dt" listener="#{oferta.buscar}"/>
 			     	</p:inputText>	
 				<p:spacer width="10px" />
 			
 				<div style="display: inline-flex">
-					<h:selectBooleanCheckbox value="#{periodo.ckMostrarIC}">
-	    				<p:ajax update="dt" listener="#{periodo.buscar}" />
+					<h:selectBooleanCheckbox value="#{oferta.ckMostrarIC}">
+	    				<p:ajax update="dt" listener="#{oferta.buscar}" />
 	 				</h:selectBooleanCheckbox> 
 		 			<h:outputLabel value="Mostrar inactivos" style="font-size: 12px; font-weight: normal; color: black; margin-top: 4px;" />			 				
 		 		</div>	 			     			         			     			      				      		      			
@@ -47,20 +50,29 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 			 				 	
 			<p:separator />
 			
-			<p:dataTable id="dt" var="dtperiodo" value="#{periodo.periodoList}" tableStyle="width: auto; min-width: 100%;" 
+			<p:dataTable id="dt" var="dtoferta" value="#{oferta.ofertaList}" tableStyle="width: auto; min-width: 100%;" 
 				paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
                 currentPageReportTemplate="{currentPage} de {totalPages}"
-                paginator="true" rows="10" rowsPerPageTemplate="5,10" paginatorPosition="top" emptyMessage="No existen datos a mostrar" >
-			
-						    
-				<p:column headerText="Decripción">
-			        <h:outputText value="#{dtperiodo.descripcion}" />
+                paginator="true" rows="10" rowsPerPageTemplate="5,10" paginatorPosition="top" emptyMessage="No existen datos a oferta" >
+						   
+				<p:column headerText="Oferta">
+			        <h:outputText value="#{dtoferta.descripcion}" />
+			    </p:column>
+			    			 
+				<p:column headerText="Período" width="200" style="text-align: center">
+			        <h:outputText value="#{dtoferta.matPeriodo.descripcion}" />
 			    </p:column>
 			    			    			    
-			  
+			 	<p:column headerText="Curso" width="200">
+			        <h:outputText value="#{dtoferta.matCurso.descripcion}" />
+			    </p:column>
 			    
+			    <p:column headerText="Paralelo" width="150" style="text-align: center">
+			        <h:outputText value="#{dtoferta.matParalelo.descripcion}" />
+			    </p:column>		    
+		    
 			    <p:column headerText="Activo" width="20" style="text-align: center" exportable="false">
-			    	<h:selectBooleanCheckbox value="#{dtperiodo.estado eq 'AC'? true:false}" disabled="true" />			        
+			    	<h:selectBooleanCheckbox value="#{dtoferta.estado eq 'AC'? true:false}" disabled="true" />			        
 			    </p:column>
 			    
 			    <p:column headerText="Editar" width="20" exportable="false">
@@ -68,10 +80,12 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 						<p:commandLink update=":form:pnl" oncomplete="PF('dgl').show()">	
 							<i class="fa fa-pencil" />
 							
-							<f:setPropertyActionListener value="#{dtperiodo.idperiodo}" target="#{periodo.idPeriodo}" />
-							
-							<f:setPropertyActionListener value="#{general.getEstado(dtperiodo.estado)}" target="#{periodo.ckEstado}" />
-							<f:setPropertyActionListener value="1" target="#{periodo.accion}" />
+							<f:setPropertyActionListener value="#{dtoferta.idOferta}" target="#{oferta.idOferta}" />							
+							<f:setPropertyActionListener value="#{dtoferta.matPeriodo.idPeriodo}" target="#{oferta.soPeriodo}" />
+							<f:setPropertyActionListener value="#{dtoferta.matCurso.idCurso}" target="#{oferta.soCurso}" />
+							<f:setPropertyActionListener value="#{dtoferta.matParalelo.idParalelo}" target="#{oferta.soParalelo}" />							
+							<f:setPropertyActionListener value="#{general.getEstado(dtoferta.estado)}" target="#{oferta.ckEstado}" />
+							<f:setPropertyActionListener value="1" target="#{oferta.accion}" />
 																																						
 						</p:commandLink>							
 					</p:outputPanel>
@@ -83,52 +97,41 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 			<br/>
 			<p:outputPanel style="background-color: white; padding: 5px; text-align: end">
 				<h:commandLink value="Exportar a excel" style="color: green">                
-	                <p:dataExporter type="xlsx" target="dt" fileName="periodos" />
+	                <p:dataExporter type="xlsx" target="dt" fileName="ofertas" />
 	            </h:commandLink>		   
             </p:outputPanel>
 			
 			<!-- INGRESO | ACTUALIZACION -->
-			<p:dialog header="Datos Período" widgetVar="dgl" modal="true" closable="true" maximizable="false" resizable="false" width="400px">
+			<p:dialog header="Datos Oferta" widgetVar="dgl" modal="true" closable="true" maximizable="false" resizable="false" width="400px">
 			
-			<p:ajax event="close" update="form" listener="#{periodo.closeDialogo}" />
+			<p:ajax event="close" update="form" listener="#{oferta.closeDialogo}" />
 			
 				<h:panelGrid id="pnl" columns="2" cellpadding="0" style="width: auto; min-width: 100%;" columnClasses="ui-grid-col-4,ui-grid-col-8">
-										
-					<p:outputPanel style="text-align: end; padding: 5px">Descripción:</p:outputPanel>					
-					<p:inputText value="#{periodo.itDescripcion}" style="width: 90%" />
+																			
+					<p:outputPanel style="text-align: end; padding: 5px">Oferta:</p:outputPanel>					
+					<p:inputTextarea rows="1" value="#{oferta.itDescripcion}" style="width: 90%" />
 					
-					<p:outputPanel style="text-align: end; padding: 5px">Jornada:</p:outputPanel>
-					<p:selectOneMenu value="#{periodo.soJornada}">
-						<f:selectItems value="#{periodo.listJornada}" />		
-					</p:selectOneMenu>		
-														        
-			        <p:outputPanel style="text-align: end; padding: 5px">Fecha inicio:</p:outputPanel>
-			        <p:calendar value="#{periodo.cFechaIni}" locale="es" navigator="true" pattern="dd/MM/yyyy" mask="true" inputStyle="width: 45%" />
-			        
-			        <p:outputPanel style="text-align: end; padding: 5px">Fecha fin:</p:outputPanel>
-			        <p:calendar value="#{periodo.cFechaFin}" locale="es" navigator="true" pattern="dd/MM/yyyy" mask="true" inputStyle="width: 45%" />
-			        
-			        <p:outputPanel style="text-align: end; padding: 5px">Cant. Pensiones:</p:outputPanel>					
-					<p:inputNumber value="#{periodo.inCantPension}" decimalPlaces="0" inputStyle="width: 20px; text-align: center" />
-					
-					<p:outputPanel style="text-align: end; padding: 5px">Precio Matrícula:</p:outputPanel>					
-			        <p:outputPanel class="ui-inputgroup">          
-			            <span class="ui-inputgroup-addon">$</span>
-			            <p:inputNumber value="#{periodo.inValorMatricula}" decimalPlaces="2" inputStyle="width: 40px; text-align: end" />			           
-			        </p:outputPanel>
-			        
-			        <p:outputPanel style="text-align: end; padding: 5px">Precio Pensión:</p:outputPanel>					
-			        <p:outputPanel class="ui-inputgroup">          
-			            <span class="ui-inputgroup-addon">$</span>
-			            <p:inputNumber value="#{periodo.inValorPension}" decimalPlaces="2" inputStyle="width: 40px; text-align: end" />			            
-			        </p:outputPanel>
+					<p:outputPanel style="text-align: end; padding: 5px">Período:</p:outputPanel>
+					<p:selectOneMenu id="soPeriodo" value="#{oferta.soPeriodo}">
+						<f:selectItems value="#{oferta.listPeriodo}" />		
+					</p:selectOneMenu>
+									
+					<p:outputPanel style="text-align: end; padding: 5px">Curso:</p:outputPanel>
+					<p:selectOneMenu id="soCurso" value="#{oferta.soCurso}">
+						<f:selectItems value="#{oferta.listCurso}" />		
+					</p:selectOneMenu>
+										        
+			        <p:outputPanel style="text-align: end; padding: 5px">Paralelo:</p:outputPanel>
+					<p:selectOneMenu id="soParalelo" value="#{oferta.soParalelo}">
+						<f:selectItems value="#{oferta.listParalelo}" />		
+					</p:selectOneMenu>				
 				   			        			     		        										
 					<p:outputPanel style="text-align: end; padding: 5px">Activo:</p:outputPanel>
-					<h:selectBooleanCheckbox value="#{periodo.ckEstado}" style="margin-top: 6px" />
+					<h:selectBooleanCheckbox value="#{oferta.ckEstado}" style="margin-top: 6px" />
 										
 					<f:facet name = "footer"><br/>
 					    <h:panelGroup style = "display:block; text-align:center">
-					      	<p:commandButton id="btnGuardar" value="Guardar" icon="fa fa-save" actionListener="#{periodo.guardar}" update="dt growl" />	
+					      	<p:commandButton id="btnGuardar" value="Guardar" icon="fa fa-save" actionListener="#{oferta.guardar}" update="dt growl" />	
 						</h:panelGroup>
 					</f:facet>						
 				</h:panelGrid>

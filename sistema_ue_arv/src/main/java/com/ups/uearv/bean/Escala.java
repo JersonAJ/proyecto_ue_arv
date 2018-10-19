@@ -89,11 +89,16 @@ public class Escala implements Serializable {
 	public void guardar() {
 		
 		// VALIDACIONES
-		if (itDescripcion.trim().equals("")) {
-			mensaje = "Debe ingresar la descripción";
+		if (itCualitativa.trim().equals("")) {
+			mensaje = "Debe ingresar el valor cualitativo";
 			FacesContext.getCurrentInstance().addMessage("growl", new FacesMessage(FacesMessage.SEVERITY_ERROR, mensajeTitulo, mensaje));
 			return;
-		}		
+		}					
+		if (itDescripcion.trim().equals("")) {
+			mensaje = "Debe ingresar el nombre de la escala";
+			FacesContext.getCurrentInstance().addMessage("growl", new FacesMessage(FacesMessage.SEVERITY_ERROR, mensajeTitulo, mensaje));
+			return;
+		}			
 			
 		// PROCESO		
 		EntityManager em = emf.createEntityManager();
@@ -112,8 +117,8 @@ public class Escala implements Serializable {
 
 			ob.setDescripcion(itDescripcion);
 			ob.setCualitativa(itCualitativa);
-			ob.setCuantitativaDesde(inCuantitativaDsd);
-			ob.setCuantitativaHasta(inCuantitativaDsd);
+			ob.setCuantitativaDesde((inCuantitativaDsd == null ? BigDecimal.ZERO : inCuantitativaDsd));
+			ob.setCuantitativaHasta((inCuantitativaHst == null ? BigDecimal.ZERO : inCuantitativaHst));
 			ob.setEstado(estado);
 			if (accion == 0) {
 				ob.setUsuarioIng(Session.getUserName());			

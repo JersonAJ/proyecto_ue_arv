@@ -6,9 +6,7 @@
 package com.ups.uearv.bean;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.sql.Timestamp;
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -23,6 +21,9 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
+import com.ups.uearv.entidades.MatCurso;
+import com.ups.uearv.entidades.MatOferta;
+import com.ups.uearv.entidades.MatParalelo;
 import com.ups.uearv.entidades.MatPeriodo;
 import com.ups.uearv.servicios.DAO;
 import com.ups.uearv.servicios.Session;
@@ -33,29 +34,27 @@ import com.ups.uearv.servicios.Util;
  * @version 1.0
  */
 
-@ManagedBean(name = "periodo")
+@ManagedBean(name = "oferta")
 @ViewScoped
-public class Periodo implements Serializable {
+public class Oferta implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	static String idPeriodo = "";
-	String itDescripcion = "";	
-	String soJornada = "";
-	Date cFechaIni = new Date();
-	Date cFechaFin = new Date();	
-	int inCantPension = 0;	
-	BigDecimal inValorMatricula = new BigDecimal(0);
-	BigDecimal inValorPension = new BigDecimal(0);
-
+	static String idOferta = "";
+	String soPeriodo = "";
+	String soCurso = "";
+	String soParalelo = "";
+	String itDescripcion = "";
 	boolean ckEstado = false;
 
 	String itBuscar = "";
 	boolean ckMostrarIC = false;
 
-	private List<Object> periodoList = new ArrayList<Object>();
+	private List<Object> ofertaList = new ArrayList<Object>();
 
-	ArrayList<SelectItem> listJornada = new ArrayList<SelectItem>();
+	ArrayList<SelectItem> listPeriodo = new ArrayList<SelectItem>();
+	ArrayList<SelectItem> listCurso = new ArrayList<SelectItem>();
+	ArrayList<SelectItem> listParalelo = new ArrayList<SelectItem>();
 
 	private static EntityManagerFactory emf = Persistence.createEntityManagerFactory("sismacc");
 
@@ -69,26 +68,32 @@ public class Periodo implements Serializable {
 	@PostConstruct
 	public void init() {
 
-		listJornada = (ArrayList<SelectItem>) llenaComboJornada();
-		soJornada = listJornada.get(0).getValue().toString();
+		listPeriodo = (ArrayList<SelectItem>) llenaComboPeriodo();
+		soPeriodo = listPeriodo.get(0).getValue().toString();
+
+		listCurso = (ArrayList<SelectItem>) llenaComboCursos();
+		soPeriodo = listCurso.get(0).getValue().toString();
+				
+		listParalelo = (ArrayList<SelectItem>) llenaComboParalelos();
+		soParalelo = listParalelo.get(0).getValue().toString();
 
 		buscar();
 	}
 
 	// CONSULTA
 	public void llenarLista(String jpql) {
-		periodoList.clear();
-		List<Object> l = DAO.nqObject(new MatPeriodo(), jpql);
+		ofertaList.clear();
+		List<Object> l = DAO.nqObject(new MatOferta(), jpql);
 
 		for (Object in : l)
-			periodoList.add(in);
+			ofertaList.add(in);
 	}
 
 	public void buscar() {
 		if (ckMostrarIC) {
-			jpql = " SELECT c.* FROM mat_periodo c WHERE c.descripcion LIKE '%"	+ itBuscar + "%' ORDER BY c.descripcion ";
+			jpql = " SELECT c.* FROM mat_oferta c WHERE c.descripcion LIKE '%"	+ itBuscar + "%' ORDER BY c.descripcion ";
 		} else {
-			jpql = " SELECT c.* FROM mat_periodo c WHERE c.descripcion LIKE '%"	+ itBuscar + "%' AND c.estado = 'AC' ORDER BY c.descripcion ";
+			jpql = " SELECT c.* FROM mat_oferta c WHERE c.descripcion LIKE '%"	+ itBuscar + "%' AND c.estado = 'AC' ORDER BY c.descripcion ";
 		}
 		llenarLista(jpql);
 	}
@@ -98,36 +103,26 @@ public class Periodo implements Serializable {
 
 		// VALIDACIONES
 		if (itDescripcion.trim().equals("")) {
-			mensaje = "Debe ingresar el período";
+			mensaje = "Debe ingresar la oferta";
 			FacesContext.getCurrentInstance().addMessage("growl", new FacesMessage(FacesMessage.SEVERITY_ERROR, mensajeTitulo, mensaje));
 			return;
 		}
-		if (cFechaIni == null) {
-			mensaje = "Debe seleccionar la fecha inicio";
-			FacesContext.getCurrentInstance().addMessage("growl", new FacesMessage(FacesMessage.SEVERITY_ERROR, mensajeTitulo, mensaje));
-			return;
-		}		
-		if (cFechaFin == null) {
-			mensaje = "Debe seleccionar la fecha fin";
-			FacesContext.getCurrentInstance().addMessage("growl", new FacesMessage(FacesMessage.SEVERITY_ERROR, mensajeTitulo, mensaje));
-			return;
-		}		
-		if (inCantPension == 0) {
-			mensaje = "Debe ingresar la cantidad de pensiones";
-			FacesContext.getCurrentInstance().addMessage("growl", new FacesMessage(FacesMessage.SEVERITY_ERROR, mensajeTitulo, mensaje));
-			return;
-		}				
-		if (inValorMatricula == BigDecimal.ZERO) {
-			mensaje = "Debe ingresar el valor de la matrícula";
+		if (soPeriodo.equals("NA")) {
+			mensaje = "Debe seleccionar un período";
 			FacesContext.getCurrentInstance().addMessage("growl", new FacesMessage(FacesMessage.SEVERITY_ERROR, mensajeTitulo, mensaje));
 			return;
 		}			
-		if (inValorPension == BigDecimal.ZERO) {
-			mensaje = "Debe ingresar el valor de las pensiones";
+		if (soCurso.equals("NA")) {
+			mensaje = "Debe seleccionar un curso";
 			FacesContext.getCurrentInstance().addMessage("growl", new FacesMessage(FacesMessage.SEVERITY_ERROR, mensajeTitulo, mensaje));
 			return;
-		}		
-		
+		}	
+		if (soParalelo.equals("NA")) {
+			mensaje = "Debe seleccionar un paralelo";
+			FacesContext.getCurrentInstance().addMessage("growl", new FacesMessage(FacesMessage.SEVERITY_ERROR, mensajeTitulo, mensaje));
+			return;
+		}	
+			
 		// PROCESO		
 		EntityManager em = emf.createEntityManager();
 		em.getTransaction().begin();
@@ -135,19 +130,20 @@ public class Periodo implements Serializable {
 			Date date = new Date();
 			Timestamp fecha = new Timestamp(date.getTime());
 
-			MatPeriodo ob = new MatPeriodo();
+			MatOferta ob = new MatOferta();
 			if (accion == 1) {
-				ob = (MatPeriodo) DAO.buscarObject(new MatPeriodo(), "from MatPeriodo c where c.idPeriodo = '" + idPeriodo + "'");
+				ob = (MatOferta) DAO.buscarObject(new MatOferta(), "from MatOferta c where c.idOferta = '" + idOferta + "'");
 			}
-
+			
+			MatPeriodo periodo = (MatPeriodo) DAO.buscarObject(new MatPeriodo(), "from MatPeriodo c where c.idPeriodo = " + soPeriodo );
+			MatCurso curso = (MatCurso) DAO.buscarObject(new MatCurso(), "from MatCurso c where c.idCurso = " + soCurso);
+			MatParalelo praraleo = (MatParalelo) DAO.buscarObject(new MatParalelo(), "from MatParalelo c where c.idParalelo = " + soParalelo);
+			
 			ob.setDescripcion(itDescripcion);
-			ob.setCantPensiones(inCantPension);
-			ob.setPrecioMatricula(inValorMatricula);
-			ob.setPrecioPension(inValorPension);
-			ob.setFechaIni(cFechaIni);
-			ob.setFechaFin(cFechaFin);
-			ob.setJornada(soJornada);
-
+			ob.setMatPeriodo(periodo);
+			ob.setMatCurso(curso);
+			ob.setMatParalelo(praraleo);
+					
 			String estado = "IC";
 			if (ckEstado) estado = "AC";	
 
@@ -183,19 +179,18 @@ public class Periodo implements Serializable {
 		init();
 	}
 
-	public List<SelectItem> llenaComboJornada() {
-		return Util.llenaCombo(DAO.getDetCatalogo("CA003"), 2);
+	public List<SelectItem> llenaComboPeriodo() {
+		return Util.llenaCombo(DAO.getPeriodos(), 2);
 	}
 
-	public void onDateSelect() {		
-		try {
-			int no = Util.diferenciaEnMeses(cFechaIni, cFechaFin);
-			inCantPension = no + 1;
-		} catch (ParseException e) {
-			inCantPension = 0;			
-		}		
+	public List<SelectItem> llenaComboCursos() {
+		return Util.llenaCombo(DAO.getCursos(), 2);
 	}
-
+	
+	public List<SelectItem> llenaComboParalelos() {
+		return Util.llenaCombo(DAO.getParalelos(), 2);
+	}
+	
 	// GETTERS AND SETTERS
 	public boolean isCkEstado() {
 		return ckEstado;
@@ -221,11 +216,11 @@ public class Periodo implements Serializable {
 	public void setAccion(int accion) {
 		this.accion = accion;
 	}	
-	public String getIdPeriodo() {
-		return idPeriodo;
+	public String getidOferta() {
+		return idOferta;
 	}
-	public void setIdPeriodo(String idPeriodo) {
-		Periodo.idPeriodo = idPeriodo;
+	public void setidOferta(String idOferta) {
+		Oferta.idOferta = idOferta;
 	}
 	public String getItDescripcion() {
 		return itDescripcion;
@@ -233,52 +228,46 @@ public class Periodo implements Serializable {
 	public void setItDescripcion(String itDescripcion) {
 		this.itDescripcion = itDescripcion;
 	}
-	public String getSoJornada() {
-		return soJornada;
+	public String getSoPeriodo() {
+		return soPeriodo;
 	}
-	public void setSoJornada(String soJornada) {
-		this.soJornada = soJornada;
+	public void setSoPeriodo(String soPeriodo) {
+		this.soPeriodo = soPeriodo;
 	}
-	public Date getcFechaIni() {
-		return cFechaIni;
+	public String getSoCurso() {
+		return soCurso;
 	}
-	public void setcFechaIni(Date cFechaIni) {
-		this.cFechaIni = cFechaIni;
+	public void setSoCurso(String soCurso) {
+		this.soCurso = soCurso;
 	}
-	public Date getcFechaFin() {
-		return cFechaFin;
+	public List<Object> getOfertaList() {
+		return ofertaList;
 	}
-	public void setcFechaFin(Date cFechaFin) {
-		this.cFechaFin = cFechaFin;
+	public void setOfertaList(List<Object> ofertaList) {
+		this.ofertaList = ofertaList;
 	}
-	public int getInCantPension() {
-		return inCantPension;
+	public ArrayList<SelectItem> getListPeriodo() {
+		return listPeriodo;
 	}
-	public void setInCantPension(int inCantPension) {
-		this.inCantPension = inCantPension;
+	public void setListPeriodo(ArrayList<SelectItem> listPeriodo) {
+		this.listPeriodo = listPeriodo;
 	}
-	public BigDecimal getInValorMatricula() {
-		return inValorMatricula;
+	public ArrayList<SelectItem> getListCurso() {
+		return listCurso;
 	}
-	public void setInValorMatricula(BigDecimal inValorMatricula) {
-		this.inValorMatricula = inValorMatricula;
+	public void setListCurso(ArrayList<SelectItem> listCurso) {
+		this.listCurso = listCurso;
 	}
-	public BigDecimal getInValorPension() {
-		return inValorPension;
+	public ArrayList<SelectItem> getListParalelo() {
+		return listParalelo;
 	}
-	public void setInValorPension(BigDecimal inValorPension) {
-		this.inValorPension = inValorPension;
+	public void setListParalelo(ArrayList<SelectItem> listParalelo) {
+		this.listParalelo = listParalelo;
 	}
-	public List<Object> getPeriodoList() {
-		return periodoList;
+	public String getSoParalelo() {
+		return soParalelo;
 	}
-	public void setPeriodoList(List<Object> periodoList) {
-		this.periodoList = periodoList;
+	public void setSoParalelo(String soParalelo) {
+		this.soParalelo = soParalelo;
 	}
-	public ArrayList<SelectItem> getListJornada() {
-		return listJornada;
-	}
-	public void setListJornada(ArrayList<SelectItem> listJornada) {
-		this.listJornada = listJornada;
-	}	
 }
