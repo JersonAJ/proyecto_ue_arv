@@ -47,7 +47,7 @@ public class Matricula implements Serializable {
 	private List<Object> matriculaEstList = new ArrayList<Object>();
 	
 	ArrayList<SelectItem> listPeriodos = new ArrayList<SelectItem>();
-	List<SelectItem> listOfertas = new ArrayList<SelectItem>();		
+	ArrayList<SelectItem> listOfertas = new ArrayList<SelectItem>();		
 
 	private static EntityManagerFactory emf = Persistence.createEntityManagerFactory("sismacc");
 	private static EntityManager em = emf.createEntityManager();	
@@ -93,10 +93,12 @@ public class Matricula implements Serializable {
 	@SuppressWarnings("unchecked")
 	public void generarListadoEst() {		
 		try {			
+			matriculaEstList.clear();
+			
 			jpql = "SELECT IFNULL(m.id_matricula, '--'), \n" + 
 				   "       e.id_estudiante, \n" + 
 				   "       CONCAT(e.apellidos, ' ', e.nombres), \n" + 
-				   "       IFNULL(o.id_oferta, '--'), \n" + 
+				   "       IFNULL(o.id_oferta, 'Seleccione Oferta'), \n" + 
 				   "       IFNULL(o.descripcion, '--'), \n" + 
 				   "       'N', \n" + 
 				   "       'IC', \n" + 
@@ -139,6 +141,16 @@ public class Matricula implements Serializable {
 	public List<SelectItem> llenaComboOfertas() {
 		return Util.llenaCombo(DAO.getOfertas(soPeriodo), 2);
 	}
+	
+	public List<String> llenaComboOfertas2() {
+		ArrayList<String> singleAddress = new ArrayList<String>();
+		singleAddress.add("17 Fake Street");
+		singleAddress.add("Phoney town");
+		singleAddress.add("Makebelieveland");	
+		
+		return singleAddress;
+	}
+	
 	
 	public void onChangePeriodo() {
 		listOfertas = (ArrayList<SelectItem>) llenaComboOfertas();
@@ -244,7 +256,7 @@ public class Matricula implements Serializable {
 	public List<SelectItem> getListOfertas() {
 		return listOfertas;
 	}
-	public void setListOfertas(List<SelectItem> listOfertas) {
+	public void setListOfertas(ArrayList<SelectItem> listOfertas) {
 		this.listOfertas = listOfertas;
 	}
 	public String getSoPeriodo() {

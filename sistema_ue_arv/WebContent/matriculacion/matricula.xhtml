@@ -59,6 +59,7 @@ xmlns:pe="http://primefaces.org/ui/extensions">
 			  
 			<style>
 			.handsontable .htDimmed { color: #2b2b2b; }
+			.handsontable.listbox .ht_master table { border: 1px solid #000; border-collapse: separate; }
 			</style>
 			<pe:sheet id="sheet" widgetVar="sheetWidget" value="#{matricula.matriculaEstList}" var="row"   
 			    height="400" rowKey="#{row.codEstudiante}" showRowHeaders="false" resizableCols="true" resizableRows="true" 
@@ -79,12 +80,16 @@ xmlns:pe="http://primefaces.org/ui/extensions">
 			   	<pe:sheetcolumn headerText="Estudiante" readonly="true" value="#{row.nomEstudiante}" 
 			    				sortBy="#{row.nomEstudiante}" />
 			    
-			    <pe:sheetcolumn headerText="Oferta" value="#{row.codOferta}" 
-			    				sortBy="#{row.codOferta}" colWidth="150" colType="dropdown" selectItems="#{matricula.listOfertas}" />
+			    <pe:sheetcolumn headerText="Oferta" value="#{row.codOferta}"   
+			    				sortBy="#{row.codOferta}" colWidth="150" 			    				
+			    				colType="dropdown"
+			    				selectItems="#{matricula.llenaComboOfertas2()}" />
 			       
-			    <pe:sheetcolumn headerText="Aprobada" value="#{row.snAprobada}" colWidth="60" colType="checkbox" styleClass="htCenter" />  
+			    <pe:sheetcolumn headerText="Aprobada" value="#{row.snAprobada}" colWidth="50" colType="checkbox" styleClass="htCenter" />
 			    
-			    <pe:sheetcolumn headerText="Activo" value="#{row.estado}" colWidth="60" colType="checkbox" styleClass="htCenter" />
+			    <pe:sheetcolumn headerText="Obsevación" value="#{row.observacion}" />  
+			    
+			    <pe:sheetcolumn headerText="Activo" value="#{row.estado}" colWidth="50" colType="checkbox" styleClass="htCenter" />
 			    
 			    <f:facet name="footer">  
 			        <h:outputText id="footer" value="#{matricula.matriculaEstList.size()} Registros" />  

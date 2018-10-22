@@ -191,10 +191,17 @@ public class Util {
 	}
 	
 	
+	public enum AssetType {
+		DESKTOP,
+		SERVER,
+		LAPTOP,
+		PRINTER,
+		OTHER
+	}
 	
-	private static <T extends Enum<?>> List<SelectItem> createComboList(T[] values) {
-		List<SelectItem> result = llenaComboOfertas();
-		result.add(new SelectItem("", "All"));
+	private static <T extends Enum<?>> List<SelectItem> createEnumList(T[] values) {
+		List<SelectItem> result = new ArrayList<SelectItem>();
+		result.add(new SelectItem("NA", "Seleccione Oferta"));
 		for (T value : values)
 			result.add(new SelectItem(value, value.name()));
 		return result;
@@ -206,7 +213,8 @@ public class Util {
 
 	public static void main(String[] args) throws IOException, NoSuchAlgorithmException, ParseException {
 		
-		createComboList(null);
-		
+		List<SelectItem> platformTypes = createEnumList(AssetType.values());
+		System.out.println(platformTypes);
+		System.out.println(llenaComboOfertas());
 	}
 }
