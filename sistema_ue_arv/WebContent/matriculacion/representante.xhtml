@@ -102,7 +102,11 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 																																						
 						</p:commandLink>							
 					</p:outputPanel>
-			    </p:column>			  
+			    </p:column>		
+			    
+			    <f:facet name="footer">  
+			        <h:outputText id="footer" value="#{representante.representanteList.size()} Registros" />  
+			    </f:facet>  	  
 			</p:dataTable>
 			
 			

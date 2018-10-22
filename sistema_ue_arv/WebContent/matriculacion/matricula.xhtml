@@ -3,7 +3,8 @@ xmlns="http://www.w3.org/1999/xhtml"
 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
 xmlns:h="http://xmlns.jcp.org/jsf/html"
 xmlns:p="http://primefaces.org/ui"
-xmlns:f="http://xmlns.jcp.org/jsf/core">
+xmlns:f="http://xmlns.jcp.org/jsf/core"
+xmlns:pe="http://primefaces.org/ui/extensions">
 			
 	<ui:define name="titulo"><i class="fa fa-address-card" /> Matriculación / Matrículas</ui:define>
 	
@@ -46,36 +47,41 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 			</p:outputPanel>
 			 				 	
 			<p:separator />
-			
-			<p:dataTable id="dt" var="dtmatricula" value="#{matricula.matriculaList}" tableStyle="width: auto; min-width: 100%;" 
-				paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
-                currentPageReportTemplate="{currentPage} de {totalPages}"
-                paginator="true" rows="10" rowsPerPageTemplate="5,10" paginatorPosition="top" emptyMessage="No existen datos a mostrar" >
-									    
-				<p:column headerText="Estudiante">
-			        <h:outputText value="#{dtmatricula.matEstudiante.apellido} #{dtmatricula.matEstudiante.nombre}" />
-			    </p:column>			    			   			  
+			  
+			<pe:sheet id="sheet" widgetVar="sheetWidget" value="#{matricula.matriculaList}" var="row"   
+			    height="400" rowKey="#{row.idMatricula}" fixedCols="2" fixedRows="3" showRowHeaders="true"  
+			    resizableCols="true" resizableRows="true" filteredValue="#{matricula.filtroMatricula}"  
+			    sortBy="#{row.idMatricula}" sortOrder="ascending" readOnly="false">  
+			  
+			    <p:ajax event="change" listener="#{sheetController.cellChangeEvent}" />  
+			  
+			    <f:facet name="header">  
+			        <h:outputText value="Matrículas" />  
+			    </f:facet>  
+			  
+			    <f:facet name="footer">  
+			        <h:outputText id="footer" value="#{matricula.matriculaList.size()} Registros" />  
+			    </f:facet>  
+			  
+			    <pe:sheetcolumn headerText="Id (read-only)" readonly="true" value="#{row.idMatricula}" 
+			    				sortBy="#{row.idMatricula}" colWidth="150" filterBy="#{row.idMatricula}" />  
 			    
-			    <p:column headerText="Activo" width="20" style="text-align: center" exportable="false">
-			    	<h:selectBooleanCheckbox value="#{dtmatricula.estado eq 'AC'? true:false}" disabled="true" />			        
-			    </p:column>
+			    <pe:sheetcolumn headerText="Arch" value="#{row.platformArch}" readonly="true"   
+			                    colWidth="100" sortBy="#{row.platformArch}"   
+			                    filterBy="#{row.platformArch}" />
+			                    
+			    <pe:sheetcolumn headerText="Type" value="#{row.matOferta.descripcion}" colWidth="200"   
+			                    sortBy="#{row.matOferta.descripcion}" filterBy="#{row.matOferta.descripcion}"   
+			                    filterOptions="#{row.matOferta.descripcion}"  
+			                    colType="dropdown"   
+			                    selectItems="#{AssetType.ALL_VALUES}" /> 
+			                    
 			    
-			    <p:column headerText="Editar" width="20" exportable="false">
-			    	<p:outputPanel style="text-align: center">
-						<p:commandLink update=":form:pnl" oncomplete="PF('dgl').show()">	
-							<i class="fa fa-pencil" />
-							
-							<f:setPropertyActionListener value="#{dtmatricula.idmatricula}" target="#{matricula.idmatricula}" />
-							
-							<f:setPropertyActionListener value="#{general.getEstado(dtmatricula.estado)}" target="#{matricula.ckEstado}" />
-							<f:setPropertyActionListener value="1" target="#{matricula.accion}" />
-																																						
-						</p:commandLink>							
-					</p:outputPanel>
-			    </p:column>			  
-			</p:dataTable>
-			
-			
+			    <pe:sheetcolumn headerText="Aprobada" value="#{row.snAprobado eq 'S'? true:false}" colWidth="60" colType="checkbox"/>  
+			    
+			    <pe:sheetcolumn headerText="Activo" value="#{row.estado eq 'AC'? true:false}" colWidth="60" colType="checkbox"/>  
+			    
+			</pe:sheet>  
 			
 			<br/>
 			<p:outputPanel style="background-color: white; padding: 5px; text-align: end">
@@ -83,25 +89,6 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 	                <p:dataExporter type="xlsx" target="dt" fileName="matriculas" />
 	            </h:commandLink>		   
             </p:outputPanel>
-			
-			<!-- INGRESO | ACTUALIZACION -->
-			<p:dialog header="Datos Matrícula" widgetVar="dgl" modal="true" closable="true" maximizable="false" resizable="false" width="400px">
-			
-			<p:ajax event="close" update="form" listener="#{matricula.closeDialogo}" />
-			
-				<h:panelGrid id="pnl" columns="2" cellpadding="0" style="width: auto; min-width: 100%;" columnClasses="ui-grid-col-4,ui-grid-col-8">
-										
-				
-				   	<p:outputPanel style="text-align: end; padding: 5px">Activo:</p:outputPanel>
-					<h:selectBooleanCheckbox value="#{matricula.ckEstado}" style="margin-top: 6px" />
-										
-					<f:facet name = "footer"><br/>
-					    <h:panelGroup style = "display:block; text-align:center">
-					      	<p:commandButton id="btnGuardar" value="Guardar" icon="fa fa-save" actionListener="#{matricula.guardar}" update="dt growl" />	
-						</h:panelGroup>
-					</f:facet>						
-				</h:panelGrid>
-			</p:dialog>				
 						
 	   	</h:form>
 	</ui:define>		

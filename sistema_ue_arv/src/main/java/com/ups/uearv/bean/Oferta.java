@@ -77,6 +77,8 @@ public class Oferta implements Serializable {
 		listParalelo = (ArrayList<SelectItem>) llenaComboParalelos();
 		soParalelo = listParalelo.get(0).getValue().toString();
 
+		onChangeCombos();
+		
 		buscar();
 	}
 
@@ -91,9 +93,18 @@ public class Oferta implements Serializable {
 
 	public void buscar() {
 		if (ckMostrarIC) {
-			jpql = " SELECT c.* FROM mat_oferta c WHERE c.descripcion LIKE '%"	+ itBuscar + "%' ORDER BY c.descripcion ";
+			jpql = "SELECT o.* " +
+				   "FROM mat_oferta o " +
+				   "	INNER JOIN mat_curso c ON c.id_curso = o.id_curso " +
+				   "	INNER JOIN catalogo_det k ON k.codigo_det = c.nivel " +
+				   "WHERE o.descripcion LIKE '%" + itBuscar + "%' ORDER BY k.codigo_det, c.id_curso ";
+			
 		} else {
-			jpql = " SELECT c.* FROM mat_oferta c WHERE c.descripcion LIKE '%"	+ itBuscar + "%' AND c.estado = 'AC' ORDER BY c.descripcion ";
+			jpql = "SELECT o.* " +
+				   "FROM mat_oferta o " +
+				   "	INNER JOIN mat_curso c ON c.id_curso = o.id_curso " +
+				   "	INNER JOIN catalogo_det k ON k.codigo_det = c.nivel " +
+				   "WHERE o.descripcion LIKE '%" + itBuscar + "%' AND c.estado = 'AC' ORDER BY k.codigo_det, c.id_curso ";
 		}
 		llenarLista(jpql);
 	}
@@ -122,6 +133,17 @@ public class Oferta implements Serializable {
 			FacesContext.getCurrentInstance().addMessage("growl", new FacesMessage(FacesMessage.SEVERITY_ERROR, mensajeTitulo, mensaje));
 			return;
 		}	
+		
+		if (accion == 0) {
+			MatOferta ob = (MatOferta) DAO.buscarObject(new MatOferta(),
+					"from MatOferta c where c.matPeriodo.idPeriodo = " + soPeriodo + " and c.matCurso.idCurso = "
+							+ soCurso + " and c.matParalelo.idParalelo = " + soParalelo + " and c.estado = 'AC'");
+			if (ob != null) {
+				mensaje = "Ya existe una oferta con los datos seleccionados";
+				FacesContext.getCurrentInstance().addMessage("growl", new FacesMessage(FacesMessage.SEVERITY_ERROR, mensajeTitulo, mensaje));
+				return;
+			}
+		}		
 			
 		// PROCESO		
 		EntityManager em = emf.createEntityManager();
@@ -137,12 +159,12 @@ public class Oferta implements Serializable {
 			
 			MatPeriodo periodo = (MatPeriodo) DAO.buscarObject(new MatPeriodo(), "from MatPeriodo c where c.idPeriodo = " + soPeriodo );
 			MatCurso curso = (MatCurso) DAO.buscarObject(new MatCurso(), "from MatCurso c where c.idCurso = " + soCurso);
-			MatParalelo praraleo = (MatParalelo) DAO.buscarObject(new MatParalelo(), "from MatParalelo c where c.idParalelo = " + soParalelo);
+			MatParalelo paraleo = (MatParalelo) DAO.buscarObject(new MatParalelo(), "from MatParalelo c where c.idParalelo = " + soParalelo);
 			
 			ob.setDescripcion(itDescripcion);
 			ob.setMatPeriodo(periodo);
 			ob.setMatCurso(curso);
-			ob.setMatParalelo(praraleo);
+			ob.setMatParalelo(paraleo);
 					
 			String estado = "IC";
 			if (ckEstado) estado = "AC";	
@@ -178,7 +200,23 @@ public class Oferta implements Serializable {
 	public void closeDialogo() {
 		init();
 	}
-
+			
+	public void onChangeCombos() {
+		itDescripcion = descripcionOferta();
+	}
+	
+	public String descripcionOferta() {
+		try {
+			String periodo = ((MatPeriodo) DAO.buscarObject(new MatPeriodo(), "from MatPeriodo c where c.idPeriodo = " + soPeriodo )).getDescripcion();
+			String curso = ((MatCurso) DAO.buscarObject(new MatCurso(), "from MatCurso c where c.idCurso = " + soCurso)).getDescripcion();
+			String paraleo = ((MatParalelo) DAO.buscarObject(new MatParalelo(), "from MatParalelo c where c.idParalelo = " + soParalelo)).getDescripcion();
+			
+			return "[" + periodo + "] [" + curso + "] [" + paraleo + "]";
+		} catch (Exception e) {
+			return "";
+		}
+	}
+	
 	public List<SelectItem> llenaComboPeriodo() {
 		return Util.llenaCombo(DAO.getPeriodos(), 2);
 	}

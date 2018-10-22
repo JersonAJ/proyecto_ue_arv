@@ -149,10 +149,21 @@ public class DAO {
 		return query;
 	}
 	
+	public static Query getEstudiantes() {
+		Query query = em.createNativeQuery(
+				" SELECT id_representante, CONCAT(IFNULL(SUBSTRING_INDEX(nombres, ' ', 1), ''), ' ', IFNULL(SUBSTRING_INDEX(apellidos, ' ', 1), '')) nombre FROM mat_estudiante WHERE estado = 'AC' ");
+		return query;
+	}
+	
 	public static Query getCursos(String det) {
 		Query query = em.createNativeQuery(" SELECT id_curso, descripcion FROM mat_curso WHERE nivel = '" + det + "' AND estado = 'AC' ");
 		return query;
 	}
+	
+	public static Query getOfertas() {
+		Query query = em.createNativeQuery(" SELECT id_oferta, descripcion FROM mat_oferta WHERE estado = 'AC' ");
+		return query;
+	}		
 	
 	public static Query getPeriodos() {
 		Query query = em.createNativeQuery(" SELECT id_periodo, descripcion FROM mat_periodo WHERE estado = 'AC' ");

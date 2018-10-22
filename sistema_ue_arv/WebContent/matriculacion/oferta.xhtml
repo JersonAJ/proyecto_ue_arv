@@ -19,10 +19,11 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 				<p:commandLink update=":form:pnl" oncomplete="PF('dgl').show();">
 					<i class="fa fa-plus-circle" />
 					<span>Agregar</span>				
-					
-					<f:setPropertyActionListener value="" target="#{oferta.soPeriodo}" />
-					<f:setPropertyActionListener value="" target="#{oferta.soCurso}" />
-					<f:setPropertyActionListener value="" target="#{oferta.soParalelo}" />		
+										
+					<f:setPropertyActionListener value="#{oferta.descripcionOferta()}" target="#{oferta.itDescripcion}" />
+					<f:setPropertyActionListener value="#{oferta.soPeriodo}" target="#{oferta.soPeriodo}" />
+					<f:setPropertyActionListener value="#{oferta.soCurso}" target="#{oferta.soCurso}" />
+					<f:setPropertyActionListener value="#{oferta.soParalelo}" target="#{oferta.soParalelo}" />		
 					<f:setPropertyActionListener value="true" target="#{oferta.ckEstado}" />
 					<f:setPropertyActionListener value="0" target="#{oferta.accion}" />	
 															
@@ -80,6 +81,7 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 						<p:commandLink update=":form:pnl" oncomplete="PF('dgl').show()">	
 							<i class="fa fa-pencil" />
 							
+							<f:setPropertyActionListener value="#{dtoferta.descripcion}" target="#{oferta.itDescripcion}" />
 							<f:setPropertyActionListener value="#{dtoferta.idOferta}" target="#{oferta.idOferta}" />							
 							<f:setPropertyActionListener value="#{dtoferta.matPeriodo.idPeriodo}" target="#{oferta.soPeriodo}" />
 							<f:setPropertyActionListener value="#{dtoferta.matCurso.idCurso}" target="#{oferta.soCurso}" />
@@ -109,21 +111,24 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 				<h:panelGrid id="pnl" columns="2" cellpadding="0" style="width: auto; min-width: 100%;" columnClasses="ui-grid-col-4,ui-grid-col-8">
 																			
 					<p:outputPanel style="text-align: end; padding: 5px">Oferta:</p:outputPanel>					
-					<p:inputTextarea rows="1" value="#{oferta.itDescripcion}" style="width: 90%" />
+					<p:inputTextarea id="itDescripcion" rows="1" value="#{oferta.itDescripcion}" style="width: 90%" />
 					
 					<p:outputPanel style="text-align: end; padding: 5px">Período:</p:outputPanel>
 					<p:selectOneMenu id="soPeriodo" value="#{oferta.soPeriodo}">
 						<f:selectItems value="#{oferta.listPeriodo}" />		
+						<p:ajax listener="#{oferta.onChangeCombos()}" update="itDescripcion"/>
 					</p:selectOneMenu>
 									
 					<p:outputPanel style="text-align: end; padding: 5px">Curso:</p:outputPanel>
 					<p:selectOneMenu id="soCurso" value="#{oferta.soCurso}">
 						<f:selectItems value="#{oferta.listCurso}" />		
+						<p:ajax listener="#{oferta.onChangeCombos()}" update="itDescripcion"/>
 					</p:selectOneMenu>
 										        
 			        <p:outputPanel style="text-align: end; padding: 5px">Paralelo:</p:outputPanel>
 					<p:selectOneMenu id="soParalelo" value="#{oferta.soParalelo}">
 						<f:selectItems value="#{oferta.listParalelo}" />		
+						<p:ajax listener="#{oferta.onChangeCombos()}" update="itDescripcion"/>
 					</p:selectOneMenu>				
 				   			        			     		        										
 					<p:outputPanel style="text-align: end; padding: 5px">Activo:</p:outputPanel>

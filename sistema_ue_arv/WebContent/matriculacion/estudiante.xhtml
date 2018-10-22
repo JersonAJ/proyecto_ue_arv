@@ -70,7 +70,11 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 				<p:column headerText="Nombre completo">
 			        <h:outputText value="#{dtestudiante.apellidos} #{dtestudiante.nombres}" />
 			    </p:column>
-			    			    			    
+			    			
+			    <p:column headerText="Género" width="100" style="text-align: center" >
+			        <h:outputText value="#{dtestudiante.genero eq 'M'? 'Masculino':'Femenino'}" />
+			    </p:column>
+			    
 			    <p:column headerText="Teléfonos">
 			        <h:outputText value="#{dtestudiante.telefono}" />
 			    </p:column>
@@ -104,7 +108,12 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 																																						
 						</p:commandLink>							
 					</p:outputPanel>
-			    </p:column>			  
+			    </p:column>		
+			    
+			    <f:facet name="footer">  
+			        <h:outputText id="footer" value="#{estudiante.estudianteList.size()} Registros" />  
+			    </f:facet>  
+			    	  
 			</p:dataTable>
 			
 			<br/>
@@ -139,10 +148,10 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 			            </p:column>			 
 			        </p:selectOneMenu>			        
 			       					
-					<p:outputPanel style="text-align: end; padding: 5px">Genero:</p:outputPanel>
+					<p:outputPanel style="text-align: end; padding: 5px">Género:</p:outputPanel>
 					<h:selectOneRadio value="#{estudiante.sorGenero}">            
-			            <f:selectItem itemLabel="M" itemValue="M" />
-			            <f:selectItem itemLabel="F" itemValue="F" />
+			            <f:selectItem itemLabel="Masculino" itemValue="M" />
+			            <f:selectItem itemLabel="Femenino" itemValue="F" />
 			        </h:selectOneRadio>
 			        
 			        <p:outputPanel style="text-align: end; padding: 5px">Tipo de sangre:</p:outputPanel>

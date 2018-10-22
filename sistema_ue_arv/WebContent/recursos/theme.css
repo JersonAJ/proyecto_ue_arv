@@ -3834,10 +3834,10 @@ body .ui-paginator.ui-paginator-bottom .ui-paginator-page.ui-state-active
 
 body .ui-datatable .ui-datatable-footer, body .ui-datatable .ui-datatable-header
 	{
-	padding: 8px 16px;
 	text-align: left;
 	font-weight: 700;
-	font-size: 16px;
+	font-size: 12px;
+	color: #212121;
 }
 
 body .ui-datatable .ui-datatable-header+.ui-paginator-top {
