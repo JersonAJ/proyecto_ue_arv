@@ -85,6 +85,13 @@ public class General implements Serializable {
 		return ban;
 	}
 	
+	public boolean getAprobado(String estado) {
+		boolean ban = true;
+		if (estado.equals("N"))
+			ban = false;
+		return ban;
+	}
+	
 	// OBTENER DESCRIPCION DEL CATALOGO DETALLE 
 	public String getDesCatalogoDet(String cod) {
 		CatalogoDet ob = new CatalogoDet();

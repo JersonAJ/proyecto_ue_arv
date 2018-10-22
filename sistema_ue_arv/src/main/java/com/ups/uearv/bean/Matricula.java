@@ -6,10 +6,9 @@
 package com.ups.uearv.bean;
 
 import java.io.Serializable;
-import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -28,7 +27,6 @@ import org.primefaces.extensions.model.sheet.SheetUpdate;
 
 import com.ups.uearv.entidades.MatMatricula;
 import com.ups.uearv.servicios.DAO;
-import com.ups.uearv.servicios.Session;
 import com.ups.uearv.servicios.Util;
 
 /**
@@ -42,22 +40,17 @@ public class Matricula implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	static String idMatricula = "";
-	String soMatricula = "";
-	String soEstudiante = "";	
-	String itObservacion = "";
-	boolean ckEstado = false;
-
+	String soPeriodo = "";
 	String itBuscar = "";
 	boolean ckMostrarIC = false;
 
-	private List<Object> matriculaList = new ArrayList<Object>();
-	private List<Object> filtroMatricula = new ArrayList<>();
-
-	ArrayList<SelectItem> listEstudiante = new ArrayList<SelectItem>();
-	ArrayList<SelectItem> listOferta = new ArrayList<SelectItem>();
+	private List<Object> matriculaEstList = new ArrayList<Object>();
+	
+	ArrayList<SelectItem> listPeriodos = new ArrayList<SelectItem>();
+	List<SelectItem> listOfertas = new ArrayList<SelectItem>();		
 
 	private static EntityManagerFactory emf = Persistence.createEntityManagerFactory("sismacc");
+	private static EntityManager em = emf.createEntityManager();	
 
 	int accion = 0; // 0 = ingresar; 1 = modificar
 
@@ -68,8 +61,13 @@ public class Matricula implements Serializable {
 
 	@PostConstruct
 	public void init() {
-
-		buscar();
+		
+		listPeriodos = (ArrayList<SelectItem>) llenaComboPeriodo();
+		soPeriodo = listPeriodos.get(0).getValue().toString();
+		
+		listOfertas = (ArrayList<SelectItem>) llenaComboOfertas();
+		
+		generarListadoEst();
 	}
 
 
@@ -84,100 +82,135 @@ public class Matricula implements Serializable {
 			if (processed.contains(asset)) {  
 				continue;  
 			}  
-			System.out.println("Asset " + ((MatMatricula) asset).getIdMatricula() + " updated.");  
+			System.out.println("Asset " + ((MatriculaEst) asset).getCodMatricula() + " updated.");  
 			rowUpdates++;  
 		}  
 		sheet.commitUpdates();  
 		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Update Success", Integer.toString(rowUpdates) + " rows updated"));  
 	}  
 
-
-	// CONSULTA
-	public void llenarLista(String jpql) {
-		matriculaList.clear();
-		List<Object> l = DAO.nqObject(new MatMatricula(), jpql);
-
-		for (Object in : l)
-			matriculaList.add(in);
-	}
-
-	public void buscar() {
-		if (ckMostrarIC) {
-			jpql = " SELECT c.* FROM mat_matricula c WHERE c.descripcion LIKE '%"	+ itBuscar + "%' ORDER BY c.descripcion ";
-		} else {
-			jpql = " SELECT c.* FROM mat_matricula c WHERE c.descripcion LIKE '%"	+ itBuscar + "%' AND c.estado = 'AC' ORDER BY c.descripcion ";
-		}
-		llenarLista(jpql);
-	}
-
-	// INGRESO - ACTUALIZACION
-	public void guardar() {
-
-		// VALIDACIONES
-
-		// PROCESO		
-		EntityManager em = emf.createEntityManager();
-		em.getTransaction().begin();
-		try {		
-			Date date = new Date();
-			Timestamp fecha = new Timestamp(date.getTime());
-
-			MatMatricula ob = new MatMatricula();
-			if (accion == 1) {
-				ob = (MatMatricula) DAO.buscarObject(new MatMatricula(), "from MatMatricula c where c.idMatricula = '" + idMatricula + "'");
+	// CONSULTA	
+	@SuppressWarnings("unchecked")
+	public void generarListadoEst() {		
+		try {			
+			jpql = "SELECT IFNULL(m.id_matricula, '--'), \n" + 
+				   "       e.id_estudiante, \n" + 
+				   "       CONCAT(e.apellidos, ' ', e.nombres), \n" + 
+				   "       IFNULL(o.id_oferta, '--'), \n" + 
+				   "       IFNULL(o.descripcion, '--'), \n" + 
+				   "       'N', \n" + 
+				   "       'IC', \n" + 
+				   "       IFNULL(m.observaciones, 'Ninguna') \n" +
+				   "FROM mat_estudiante e \n" + 
+				   "	LEFT JOIN mat_matricula m ON e.id_estudiante = m.id_estudiante AND e.estado = 'AC' \n" + 
+				   "	LEFT JOIN mat_oferta o ON o.id_oferta = m.id_oferta AND o.estado = 'AC' " + 
+				   "ORDER BY 3 ";
+						
+			List<Object> result = em.createNativeQuery(jpql).getResultList();
+			Iterator<Object> itr = result.iterator();
+			for (int k = 0; k < result.size(); k++) {
+				Object[] obj = (Object[]) itr.next();
+							
+				MatriculaEst e = new MatriculaEst();				
+				e.setCodMatricula(obj[0].toString());
+				e.setCodEstudiante(obj[1].toString());
+				e.setNomEstudiante(obj[2].toString());
+				e.setCodOferta(obj[3].toString());
+				e.setNomOferta(obj[4].toString());
+				e.setSnAprobada((obj[5].toString().equals("S") ? true : false));
+				e.setEstado((obj[6].toString().equals("AC") ? true : false));
+				e.setObservacion(obj[7].toString());
+							
+				matriculaEstList.add(e);
 			}
-
-
-			String estado = "IC";
-			if (ckEstado) estado = "AC";	
-
-			ob.setEstado(estado);
-			if (accion == 0) {
-				ob.setUsuarioIng(Session.getUserName());			
-				ob.setFechaIng(fecha);				
-			}			
-			if (accion == 1) {
-				ob.setUsuarioAct(Session.getUserName());			
-				ob.setFechaAct(fecha);			
-			}			
-
-			if (DAO.saveOrUpdate(ob, accion, em)) {
-				em.getTransaction().commit();
-				mensaje = "Guardado exitoso";
-				FacesContext.getCurrentInstance().addMessage("growl",	new FacesMessage(FacesMessage.SEVERITY_INFO, mensajeTitulo, mensaje));
-				buscar();
-			} else {
-				em.getTransaction().rollback();
-				mensaje = "Error al guardar";
-				FacesContext.getCurrentInstance().addMessage("growl", new FacesMessage(FacesMessage.SEVERITY_ERROR, mensajeTitulo, mensaje));
-			}
-
-		} catch (Exception e) {
-			em.getTransaction().rollback();
-			e.printStackTrace();
-		}
-		em.close();		
+			
+		} catch (Exception e) {		
+		}				
 	}
-
+	
 	public void closeDialogo() {
 		init();
 	}
 
-	public List<SelectItem> llenaComboEstudiantes() {
+	public List<SelectItem> llenaComboPeriodo() {
 		return Util.llenaCombo(DAO.getPeriodos(), 2);
 	}
+	
+	public List<SelectItem> llenaComboOfertas() {
+		return Util.llenaCombo(DAO.getOfertas(soPeriodo), 2);
+	}
+	
+	public void onChangePeriodo() {
+		listOfertas = (ArrayList<SelectItem>) llenaComboOfertas();
+		
+		generarListadoEst();
+	}
+		
+	// CLASES
+	public class MatriculaEst  implements Serializable {
 
-	public List<SelectItem> llenaComboCursos() {
-		return Util.llenaCombo(DAO.getCursos(), 2);
+		private static final long serialVersionUID = 1L;
+		
+		public String codMatricula = "";
+		public String codEstudiante = ""; 
+		public String nomEstudiante = "";
+		public String codOferta = "";
+		public String nomOferta = "";
+		public String observacion = "";
+		public boolean snAprobada = true;		
+		public boolean estado = true;
+		
+		public String getCodMatricula() {
+			return codMatricula;
+		}
+		public void setCodMatricula(String codMatricula) {
+			this.codMatricula = codMatricula;
+		}
+		public String getCodEstudiante() {
+			return codEstudiante;
+		}
+		public void setCodEstudiante(String codEstudiante) {
+			this.codEstudiante = codEstudiante;
+		}
+		public String getNomEstudiante() {
+			return nomEstudiante;
+		}
+		public void setNomEstudiante(String nomEstudiante) {
+			this.nomEstudiante = nomEstudiante;
+		}
+		public String getCodOferta() {
+			return codOferta;
+		}
+		public void setCodOferta(String codOferta) {
+			this.codOferta = codOferta;
+		}
+		public String getNomOferta() {
+			return nomOferta;
+		}
+		public void setNomOferta(String nomOferta) {
+			this.nomOferta = nomOferta;
+		}
+		public boolean isSnAprobada() {
+			return snAprobada;
+		}
+		public void setSnAprobada(boolean snAprobada) {
+			this.snAprobada = snAprobada;
+		}
+		public boolean isEstado() {
+			return estado;
+		}
+		public void setEstado(boolean estado) {
+			this.estado = estado;
+		}
+		public String getObservacion() {
+			return observacion;
+		}
+		public void setObservacion(String observacion) {
+			this.observacion = observacion;
+		}		
 	}
 
 	// GETTERS AND SETTERS
-	public boolean isCkEstado() {
-		return ckEstado;
-	}
-	public void setCkEstado(boolean ckEstado) {
-		this.ckEstado = ckEstado;
-	}
 	public String getItBuscar() {
 		return itBuscar;
 	}
@@ -196,52 +229,28 @@ public class Matricula implements Serializable {
 	public void setAccion(int accion) {
 		this.accion = accion;
 	}	
-	public String getidMatricula() {
-		return idMatricula;
+	public List<Object> getMatriculaEstList() {
+		return matriculaEstList;
 	}
-	public void setidMatricula(String idMatricula) {
-		Matricula.idMatricula = idMatricula;
+	public void setMatriculaEstList(List<Object> matriculaEstList) {
+		this.matriculaEstList = matriculaEstList;
 	}
-	public List<Object> getMatriculaList() {
-		return matriculaList;
+	public ArrayList<SelectItem> getListPeriodos() {
+		return listPeriodos;
 	}
-	public void setMatriculaList(List<Object> matriculaList) {
-		this.matriculaList = matriculaList;
+	public void setListPeriodos(ArrayList<SelectItem> listPeriodos) {
+		this.listPeriodos = listPeriodos;
 	}
-	public String getSoMatricula() {
-		return soMatricula;
+	public List<SelectItem> getListOfertas() {
+		return listOfertas;
 	}
-	public void setSoMatricula(String soMatricula) {
-		this.soMatricula = soMatricula;
+	public void setListOfertas(List<SelectItem> listOfertas) {
+		this.listOfertas = listOfertas;
 	}
-	public String getSoEstudiante() {
-		return soEstudiante;
+	public String getSoPeriodo() {
+		return soPeriodo;
 	}
-	public void setSoEstudiante(String soEstudiante) {
-		this.soEstudiante = soEstudiante;
-	}
-	public String getItObservacion() {
-		return itObservacion;
-	}
-	public void setItObservacion(String itObservacion) {
-		this.itObservacion = itObservacion;
-	}
-	public List<Object> getFiltroMatricula() {
-		return filtroMatricula;
-	}
-	public void setFiltroMatricula(List<Object> filtroMatricula) {
-		this.filtroMatricula = filtroMatricula;
-	}
-	public ArrayList<SelectItem> getListEstudiante() {
-		return listEstudiante;
-	}
-	public void setListEstudiante(ArrayList<SelectItem> listEstudiante) {
-		this.listEstudiante = listEstudiante;
-	}
-	public ArrayList<SelectItem> getListOferta() {
-		return listOferta;
-	}
-	public void setListOferta(ArrayList<SelectItem> listOferta) {
-		this.listOferta = listOferta;
+	public void setSoPeriodo(String soPeriodo) {
+		this.soPeriodo = soPeriodo;
 	}
 }

@@ -20,7 +20,7 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 					<i class="fa fa-plus-circle" />
 					<span>Agregar</span>				
 										
-					<f:setPropertyActionListener value="#{oferta.descripcionOferta()}" target="#{oferta.itDescripcion}" />
+					<f:setPropertyActionListener value="#{oferta.itDescripcion}" target="#{oferta.itDescripcion}" />
 					<f:setPropertyActionListener value="#{oferta.soPeriodo}" target="#{oferta.soPeriodo}" />
 					<f:setPropertyActionListener value="#{oferta.soCurso}" target="#{oferta.soCurso}" />
 					<f:setPropertyActionListener value="#{oferta.soParalelo}" target="#{oferta.soParalelo}" />		
@@ -54,7 +54,7 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 			<p:dataTable id="dt" var="dtoferta" value="#{oferta.ofertaList}" tableStyle="width: auto; min-width: 100%;" 
 				paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
                 currentPageReportTemplate="{currentPage} de {totalPages}"
-                paginator="true" rows="10" rowsPerPageTemplate="5,10" paginatorPosition="top" emptyMessage="No existen datos a oferta" >
+                paginator="true" rows="10" rowsPerPageTemplate="5,10" paginatorPosition="top" emptyMessage="No existen datos a mostrar">
 						   
 				<p:column headerText="Oferta">
 			        <h:outputText value="#{dtoferta.descripcion}" />

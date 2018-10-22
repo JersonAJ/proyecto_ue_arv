@@ -189,10 +189,24 @@ public class Util {
 		}		
 		return msg;
 	}
+	
+	
+	
+	private static <T extends Enum<?>> List<SelectItem> createComboList(T[] values) {
+		List<SelectItem> result = llenaComboOfertas();
+		result.add(new SelectItem("", "All"));
+		for (T value : values)
+			result.add(new SelectItem(value, value.name()));
+		return result;
+	}
+	
+	public static List<SelectItem> llenaComboOfertas() {
+		return Util.llenaCombo(DAO.getOfertas("1"), 2);
+	}
 
 	public static void main(String[] args) throws IOException, NoSuchAlgorithmException, ParseException {
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
 		
-		System.out.println(diferenciaEnMeses(sdf.parse("20180401"), sdf.parse("20190131")));
+		createComboList(null);
+		
 	}
 }

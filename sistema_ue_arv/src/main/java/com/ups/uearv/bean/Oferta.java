@@ -72,7 +72,7 @@ public class Oferta implements Serializable {
 		soPeriodo = listPeriodo.get(0).getValue().toString();
 
 		listCurso = (ArrayList<SelectItem>) llenaComboCursos();
-		soPeriodo = listCurso.get(0).getValue().toString();
+		soCurso = listCurso.get(0).getValue().toString();
 				
 		listParalelo = (ArrayList<SelectItem>) llenaComboParalelos();
 		soParalelo = listParalelo.get(0).getValue().toString();
@@ -213,6 +213,7 @@ public class Oferta implements Serializable {
 			
 			return "[" + periodo + "] [" + curso + "] [" + paraleo + "]";
 		} catch (Exception e) {
+			e.printStackTrace();
 			return "";
 		}
 	}

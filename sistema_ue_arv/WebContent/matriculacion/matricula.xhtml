@@ -10,37 +10,46 @@ xmlns:pe="http://primefaces.org/ui/extensions">
 	
 	<ui:define name="content">
 		<h:form id="form" style="width: 100%">
-			<f:metadata>		    
+			<f:metadata>
 			    <f:viewAction action="#{general.validaSesion}" />
 			</f:metadata>
 				
 			<p:growl id="growl" for="growl" showDetail="true" closable="true" />
 			
 			<p:outputPanel style="background-color: white; padding: 5px;">
-				<p:commandLink update=":form:pnl" oncomplete="PF('dgl').show();">
-					<i class="fa fa-plus-circle" />
-					<span>Agregar</span>				
-					
-					<f:setPropertyActionListener value="true" target="#{matricula.ckEstado}" />
-					<f:setPropertyActionListener value="0" target="#{matricula.accion}" />	
-															
+				<p:commandLink>
+					<i class="fa fa-check" />
+					<span>Aprobar matrículas</span>											
+					<p:confirm header="Generar listado" message="¿Está seguro(a) que desea aprobar el listado de matrículas?" icon="fa fa-warning" />																						
 				</p:commandLink>					
 			</p:outputPanel> 
+			
+			<p:confirmDialog id="confirmListado" global="true" showEffect="fade" hideEffect="fade">
+				<p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" icon="fa fa-check" />
+				<p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="fa fa-close" />
+			</p:confirmDialog>				
 			
 			<!-- CONSULTA -->	
 			<style>				
 				.ui-datatable thead th, .ui-datatable tbody td, .ui-datatable tfoot td, .ui-datatable tfoot th { padding: 2px 10px; }
 			</style>
 			<br/>		
-			<p:outputPanel>
-			   <p:inputText style="width: 500px" value="#{matricula.itBuscar}" placeholder="Buscar por apellidos">
-				<p:ajax event="keyup" update="dt" listener="#{matricula.buscar}"/>
+			<p:outputPanel>		   		
+		   		<p:selectOneMenu id="soPeriodo" value="#{matricula.soPeriodo}">
+					<f:selectItem itemLabel="Seleccione Período" itemValue="null" />
+					<f:selectItems value="#{matricula.listPeriodos}" />		
+					<p:ajax listener="#{matricula.onChangePeriodo()}" update="sheet"/>								
+				</p:selectOneMenu>
+				<p:spacer width="10px" />
+			   	
+			   	<p:inputText style="width: 500px" value="#{matricula.itBuscar}" placeholder="Buscar por apellidos">
+				<p:ajax event="keyup" update="sheet" listener="#{matricula.buscar}"/>
 			     	</p:inputText>	
 				<p:spacer width="10px" />
 			
 				<div style="display: inline-flex">
 					<h:selectBooleanCheckbox value="#{matricula.ckMostrarIC}">
-	    				<p:ajax update="dt" listener="#{matricula.buscar}" />
+	    				<p:ajax update="sheet" listener="#{matricula.buscar}" />
 	 				</h:selectBooleanCheckbox> 
 		 			<h:outputLabel value="Mostrar inactivos" style="font-size: 12px; font-weight: normal; color: black; margin-top: 4px;" />			 				
 		 		</div>	 			     			         			     			      				      		      			
@@ -48,48 +57,42 @@ xmlns:pe="http://primefaces.org/ui/extensions">
 			 				 	
 			<p:separator />
 			  
-			<pe:sheet id="sheet" widgetVar="sheetWidget" value="#{matricula.matriculaList}" var="row"   
-			    height="400" rowKey="#{row.idMatricula}" fixedCols="2" fixedRows="3" showRowHeaders="true"  
-			    resizableCols="true" resizableRows="true" filteredValue="#{matricula.filtroMatricula}"  
-			    sortBy="#{row.idMatricula}" sortOrder="ascending" readOnly="false">  
+			<style>
+			.handsontable .htDimmed { color: #2b2b2b; }
+			</style>
+			<pe:sheet id="sheet" widgetVar="sheetWidget" value="#{matricula.matriculaEstList}" var="row"   
+			    height="400" rowKey="#{row.codEstudiante}" showRowHeaders="false" resizableCols="true" resizableRows="true" 
+			    sortBy="#{row.codMatricula}" sortOrder="ascending" readOnly="false" emptyMessage="No existen datos a mostrar">  
 			  
-			    <p:ajax event="change" listener="#{sheetController.cellChangeEvent}" />  
+			    <p:ajax event="change" listener="#{matricula.cellChangeEvent}" />  
 			  
 			    <f:facet name="header">  
 			        <h:outputText value="Matrículas" />  
 			    </f:facet>  
 			  
+			    <pe:sheetcolumn headerText="Cod. Matrícula" readonly="true" value="#{row.codMatricula}" 
+			    				sortBy="#{row.codMatricula}" colWidth="60" styleClass="htCenter" />   
+			    				
+			    <pe:sheetcolumn headerText="Cédula" readonly="true" value="#{row.codEstudiante}" 
+			    				sortBy="#{row.codEstudiante}" colWidth="60" styleClass="htCenter" />			    
+			    				
+			   	<pe:sheetcolumn headerText="Estudiante" readonly="true" value="#{row.nomEstudiante}" 
+			    				sortBy="#{row.nomEstudiante}" />
+			    
+			    <pe:sheetcolumn headerText="Oferta" value="#{row.codOferta}" 
+			    				sortBy="#{row.codOferta}" colWidth="150" colType="dropdown" selectItems="#{matricula.listOfertas}" />
+			       
+			    <pe:sheetcolumn headerText="Aprobada" value="#{row.snAprobada}" colWidth="60" colType="checkbox" styleClass="htCenter" />  
+			    
+			    <pe:sheetcolumn headerText="Activo" value="#{row.estado}" colWidth="60" colType="checkbox" styleClass="htCenter" />
+			    
 			    <f:facet name="footer">  
-			        <h:outputText id="footer" value="#{matricula.matriculaList.size()} Registros" />  
+			        <h:outputText id="footer" value="#{matricula.matriculaEstList.size()} Registros" />  
 			    </f:facet>  
-			  
-			    <pe:sheetcolumn headerText="Id (read-only)" readonly="true" value="#{row.idMatricula}" 
-			    				sortBy="#{row.idMatricula}" colWidth="150" filterBy="#{row.idMatricula}" />  
-			    
-			    <pe:sheetcolumn headerText="Arch" value="#{row.platformArch}" readonly="true"   
-			                    colWidth="100" sortBy="#{row.platformArch}"   
-			                    filterBy="#{row.platformArch}" />
-			                    
-			    <pe:sheetcolumn headerText="Type" value="#{row.matOferta.descripcion}" colWidth="200"   
-			                    sortBy="#{row.matOferta.descripcion}" filterBy="#{row.matOferta.descripcion}"   
-			                    filterOptions="#{row.matOferta.descripcion}"  
-			                    colType="dropdown"   
-			                    selectItems="#{AssetType.ALL_VALUES}" /> 
-			                    
-			    
-			    <pe:sheetcolumn headerText="Aprobada" value="#{row.snAprobado eq 'S'? true:false}" colWidth="60" colType="checkbox"/>  
-			    
-			    <pe:sheetcolumn headerText="Activo" value="#{row.estado eq 'AC'? true:false}" colWidth="60" colType="checkbox"/>  
-			    
 			</pe:sheet>  
 			
 			<br/>
-			<p:outputPanel style="background-color: white; padding: 5px; text-align: end">
-				<h:commandLink value="Exportar a excel" style="color: green">                
-	                <p:dataExporter type="xlsx" target="dt" fileName="matriculas" />
-	            </h:commandLink>		   
-            </p:outputPanel>
-						
+									
 	   	</h:form>
 	</ui:define>		
 	
