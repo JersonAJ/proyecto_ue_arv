@@ -78,7 +78,7 @@ public class Matricula implements Serializable {
 			}
 
 			System.out.println(((MatriculaEst) asset).getCodMatricula() + " updated.");  
-			System.out.println(((MatriculaEst) asset).getCodOferta() + " updated.");
+			System.out.println(((MatriculaEst) asset).getNomOferta() + " updated.");
 			System.out.println(((MatriculaEst) asset).getCodEstudiante() + " updated.");
 
 			rowUpdates++;  
@@ -93,8 +93,8 @@ public class Matricula implements Serializable {
 		try {	
 			matriculaEstList.clear();
 			if(!soPeriodo.equals("NA")) {
-				jpql = "SELECT IFNULL(m.id_matricula, '--'), e.id_estudiante, CONCAT(e.apellidos, ' ', e.nombres), IFNULL(o.id_oferta, 'Seleccione Oferta'), " + 
-						"    IFNULL(o.descripcion, '--'), 'N', 'AC', IFNULL(m.observaciones, 'Ninguna') " +
+				jpql = "SELECT IFNULL(m.id_matricula, '--'), e.id_estudiante, CONCAT(e.apellidos, ' ', e.nombres), " + 
+						"    IFNULL(o.descripcion, 'Seleccione Oferta'), 'N', 'AC', IFNULL(m.observaciones, 'Ninguna') " +
 						"FROM mat_estudiante e " + 
 						"	LEFT JOIN mat_matricula m ON e.id_estudiante = m.id_estudiante AND e.estado = 'AC' " + 
 						"	LEFT JOIN mat_oferta o ON o.id_oferta = m.id_oferta AND o.estado = 'AC' " + 
@@ -108,12 +108,11 @@ public class Matricula implements Serializable {
 					MatriculaEst e = new MatriculaEst();				
 					e.setCodMatricula(obj[0].toString());
 					e.setCodEstudiante(obj[1].toString());
-					e.setNomEstudiante(obj[2].toString());
-					e.setCodOferta(obj[3].toString());
-					e.setNomOferta(obj[4].toString());
-					e.setSnAprobada((obj[5].toString().equals("S") ? true : false));
-					e.setEstado((obj[6].toString().equals("AC") ? true : false));
-					e.setObservacion(obj[7].toString());
+					e.setNomEstudiante(obj[2].toString());					
+					e.setNomOferta(obj[3].toString());
+					e.setSnAprobada((obj[4].toString().equals("S") ? true : false));
+					e.setEstado((obj[5].toString().equals("AC") ? true : false));
+					e.setObservacion(obj[6].toString());
 
 					matriculaEstList.add(e);
 				}
@@ -123,16 +122,16 @@ public class Matricula implements Serializable {
 	}
 	
 	public void guardarListado() {
-		for (Object matEst : matriculaEstList) {
-			
-			
+		for (Object matEst : matriculaEstList) {			
 			System.out.println(((MatriculaEst) matEst).getCodMatricula());
 			if (((MatriculaEst) matEst).getCodMatricula().equals("--")) {
+				accion = 0;
 				System.out.println("NUEVO");
 			} else {
 				System.out.println("MODIFICA");
 				MatMatricula matricula = (MatMatricula) DAO.buscarObject(new MatMatricula(), "from MatMatricula c where c.idMatricula = '" + ((MatriculaEst) matEst).getCodMatricula() + "'");
 				System.out.println(matricula == null ? null : matricula.getIdMatricula());
+				accion = 1;
 			}
 			
 			MatOferta oferta = (MatOferta) DAO.buscarObject(new MatOferta(), "from MatOferta c where c.descripcion = '" + ((MatriculaEst) matEst).getNomOferta() + "'");
@@ -191,7 +190,6 @@ public class Matricula implements Serializable {
 		public String codMatricula = "";
 		public String codEstudiante = ""; 
 		public String nomEstudiante = "";
-		public String codOferta = "";
 		public String nomOferta = "";
 		public String observacion = "";
 		public boolean snAprobada = true;		
@@ -214,13 +212,7 @@ public class Matricula implements Serializable {
 		}
 		public void setNomEstudiante(String nomEstudiante) {
 			this.nomEstudiante = nomEstudiante;
-		}
-		public String getCodOferta() {
-			return codOferta;
-		}
-		public void setCodOferta(String codOferta) {
-			this.codOferta = codOferta;
-		}
+		}	
 		public String getNomOferta() {
 			return nomOferta;
 		}
