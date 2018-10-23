@@ -26,6 +26,7 @@ import org.primefaces.extensions.event.SheetEvent;
 import org.primefaces.extensions.model.sheet.SheetUpdate;
 
 import com.ups.uearv.entidades.MatMatricula;
+import com.ups.uearv.entidades.MatOferta;
 import com.ups.uearv.servicios.DAO;
 import com.ups.uearv.servicios.Util;
 
@@ -41,11 +42,9 @@ public class Matricula implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	String soPeriodo = "";
-	String itBuscar = "";
-	boolean ckMostrarIC = false;
 
 	private List<Object> matriculaEstList = new ArrayList<Object>();
-	
+
 	ArrayList<SelectItem> listPeriodos = new ArrayList<SelectItem>();
 	ArrayList<SelectItem> listOfertas = new ArrayList<SelectItem>();		
 
@@ -61,28 +60,27 @@ public class Matricula implements Serializable {
 
 	@PostConstruct
 	public void init() {
-		
+
 		listPeriodos = (ArrayList<SelectItem>) llenaComboPeriodo();
-		soPeriodo = listPeriodos.get(0).getValue().toString();
-		
-		listOfertas = (ArrayList<SelectItem>) llenaComboOfertas();
-		
-		generarListadoEst();
 	}
 
 
 	public void cellChangeEvent(final SheetEvent event) {  
 		final Sheet sheet = event.getSheet();  
-		final List<SheetUpdate> updates = sheet.getUpdates();  
-		// A SheetUpdate exists for each column updated, the same row may appear more than once. For this reason we will track those we already persisted  
+		final List<SheetUpdate> updates = sheet.getUpdates();    
 		final HashSet<MatMatricula> processed = new HashSet<MatMatricula>();  
 		int rowUpdates = 0;  
+
 		for (final SheetUpdate update : updates) {  
 			final Object asset = (Object) update.getRowData();  
 			if (processed.contains(asset)) {  
 				continue;  
-			}  
-			System.out.println("Asset " + ((MatriculaEst) asset).getCodMatricula() + " updated.");  
+			}
+
+			System.out.println(((MatriculaEst) asset).getCodMatricula() + " updated.");  
+			System.out.println(((MatriculaEst) asset).getCodOferta() + " updated.");
+			System.out.println(((MatriculaEst) asset).getCodEstudiante() + " updated.");
+
 			rowUpdates++;  
 		}  
 		sheet.commitUpdates();  
@@ -92,44 +90,61 @@ public class Matricula implements Serializable {
 	// CONSULTA	
 	@SuppressWarnings("unchecked")
 	public void generarListadoEst() {		
-		try {			
+		try {	
 			matriculaEstList.clear();
-			
-			jpql = "SELECT IFNULL(m.id_matricula, '--'), \n" + 
-				   "       e.id_estudiante, \n" + 
-				   "       CONCAT(e.apellidos, ' ', e.nombres), \n" + 
-				   "       IFNULL(o.id_oferta, 'Seleccione Oferta'), \n" + 
-				   "       IFNULL(o.descripcion, '--'), \n" + 
-				   "       'N', \n" + 
-				   "       'IC', \n" + 
-				   "       IFNULL(m.observaciones, 'Ninguna') \n" +
-				   "FROM mat_estudiante e \n" + 
-				   "	LEFT JOIN mat_matricula m ON e.id_estudiante = m.id_estudiante AND e.estado = 'AC' \n" + 
-				   "	LEFT JOIN mat_oferta o ON o.id_oferta = m.id_oferta AND o.estado = 'AC' " + 
-				   "ORDER BY 3 ";
-						
-			List<Object> result = em.createNativeQuery(jpql).getResultList();
-			Iterator<Object> itr = result.iterator();
-			for (int k = 0; k < result.size(); k++) {
-				Object[] obj = (Object[]) itr.next();
-							
-				MatriculaEst e = new MatriculaEst();				
-				e.setCodMatricula(obj[0].toString());
-				e.setCodEstudiante(obj[1].toString());
-				e.setNomEstudiante(obj[2].toString());
-				e.setCodOferta(obj[3].toString());
-				e.setNomOferta(obj[4].toString());
-				e.setSnAprobada((obj[5].toString().equals("S") ? true : false));
-				e.setEstado((obj[6].toString().equals("AC") ? true : false));
-				e.setObservacion(obj[7].toString());
-							
-				matriculaEstList.add(e);
-			}
-			
+			if(!soPeriodo.equals("NA")) {
+				jpql = "SELECT IFNULL(m.id_matricula, '--'), e.id_estudiante, CONCAT(e.apellidos, ' ', e.nombres), IFNULL(o.id_oferta, 'Seleccione Oferta'), " + 
+						"    IFNULL(o.descripcion, '--'), 'N', 'AC', IFNULL(m.observaciones, 'Ninguna') " +
+						"FROM mat_estudiante e " + 
+						"	LEFT JOIN mat_matricula m ON e.id_estudiante = m.id_estudiante AND e.estado = 'AC' " + 
+						"	LEFT JOIN mat_oferta o ON o.id_oferta = m.id_oferta AND o.estado = 'AC' " + 
+						"ORDER BY 3 ";
+
+				List<Object> result = em.createNativeQuery(jpql).getResultList();
+				Iterator<Object> itr = result.iterator();
+				for (int k = 0; k < result.size(); k++) {
+					Object[] obj = (Object[]) itr.next();
+
+					MatriculaEst e = new MatriculaEst();				
+					e.setCodMatricula(obj[0].toString());
+					e.setCodEstudiante(obj[1].toString());
+					e.setNomEstudiante(obj[2].toString());
+					e.setCodOferta(obj[3].toString());
+					e.setNomOferta(obj[4].toString());
+					e.setSnAprobada((obj[5].toString().equals("S") ? true : false));
+					e.setEstado((obj[6].toString().equals("AC") ? true : false));
+					e.setObservacion(obj[7].toString());
+
+					matriculaEstList.add(e);
+				}
+			}			
 		} catch (Exception e) {		
 		}				
 	}
 	
+	public void guardarListado() {
+		for (Object matEst : matriculaEstList) {
+			
+			
+			System.out.println(((MatriculaEst) matEst).getCodMatricula());
+			if (((MatriculaEst) matEst).getCodMatricula().equals("--")) {
+				System.out.println("NUEVO");
+			} else {
+				System.out.println("MODIFICA");
+				MatMatricula matricula = (MatMatricula) DAO.buscarObject(new MatMatricula(), "from MatMatricula c where c.idMatricula = '" + ((MatriculaEst) matEst).getCodMatricula() + "'");
+				System.out.println(matricula == null ? null : matricula.getIdMatricula());
+			}
+			
+			MatOferta oferta = (MatOferta) DAO.buscarObject(new MatOferta(), "from MatOferta c where c.descripcion = '" + ((MatriculaEst) matEst).getNomOferta() + "'");
+			System.out.println(((MatriculaEst) matEst).getCodEstudiante());			
+			System.out.println(oferta == null ? null : oferta.getIdOferta());
+			System.out.println(soPeriodo);
+			System.out.println(((MatriculaEst) matEst).getObservacion());
+			System.out.println(((MatriculaEst) matEst).isSnAprobada());
+			System.out.println(((MatriculaEst) matEst).isEstado());			
+		}
+	}
+
 	public void closeDialogo() {
 		init();
 	}
@@ -137,32 +152,42 @@ public class Matricula implements Serializable {
 	public List<SelectItem> llenaComboPeriodo() {
 		return Util.llenaCombo(DAO.getPeriodos(), 2);
 	}
-	
+
 	public List<SelectItem> llenaComboOfertas() {
 		return Util.llenaCombo(DAO.getOfertas(soPeriodo), 2);
 	}
-	
+
+	@SuppressWarnings("unchecked")
 	public List<String> llenaComboOfertas2() {
-		ArrayList<String> singleAddress = new ArrayList<String>();
-		singleAddress.add("17 Fake Street");
-		singleAddress.add("Phoney town");
-		singleAddress.add("Makebelieveland");	
-		
-		return singleAddress;
+		jpql = "SELECT o.id_oferta, o.descripcion " + 
+				"FROM mat_oferta o " + 
+				"  	INNER JOIN mat_curso c ON c.id_curso = o.id_curso " + 
+				"	INNER JOIN catalogo_det k ON k.codigo_det = c.nivel " + 
+				"WHERE o.id_periodo = '" + soPeriodo + "'  ORDER BY k.codigo_det, c.id_curso ";
+
+		ArrayList<String> listaOfertas = new ArrayList<String>();
+		listaOfertas.add("Seleccione Oferta");
+
+		List<Object> result = em.createNativeQuery(jpql).getResultList();
+		Iterator<Object> itr = result.iterator();
+		for (int k = 0; k < result.size(); k++) {
+			Object[] obj = (Object[]) itr.next();
+			listaOfertas.add(obj[1].toString());
+		}		
+		return listaOfertas;
 	}
-	
-	
+
 	public void onChangePeriodo() {
 		listOfertas = (ArrayList<SelectItem>) llenaComboOfertas();
-		
+
 		generarListadoEst();
 	}
-		
+
 	// CLASES
 	public class MatriculaEst  implements Serializable {
 
 		private static final long serialVersionUID = 1L;
-		
+
 		public String codMatricula = "";
 		public String codEstudiante = ""; 
 		public String nomEstudiante = "";
@@ -171,7 +196,7 @@ public class Matricula implements Serializable {
 		public String observacion = "";
 		public boolean snAprobada = true;		
 		public boolean estado = true;
-		
+
 		public String getCodMatricula() {
 			return codMatricula;
 		}
@@ -223,18 +248,6 @@ public class Matricula implements Serializable {
 	}
 
 	// GETTERS AND SETTERS
-	public String getItBuscar() {
-		return itBuscar;
-	}
-	public void setItBuscar(String itBuscar) {
-		this.itBuscar = itBuscar;
-	}
-	public boolean isCkMostrarIC() {
-		return ckMostrarIC;
-	}
-	public void setCkMostrarIC(boolean ckMostrarIC) {
-		this.ckMostrarIC = ckMostrarIC;
-	}
 	public int getAccion() {
 		return accion;
 	}

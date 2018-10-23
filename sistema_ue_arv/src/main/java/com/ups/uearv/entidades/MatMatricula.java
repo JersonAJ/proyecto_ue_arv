@@ -61,15 +61,20 @@ public class MatMatricula implements Serializable {
 	@OneToMany(mappedBy="matMatricula")
 	private List<GesPension> gesPensions;
 
+	//bi-directional many-to-one association to MatEstudiante
+	@ManyToOne
+	@JoinColumn(name="id_estudiante")
+	private MatEstudiante matEstudiante;
+
 	//bi-directional many-to-one association to MatOferta
 	@ManyToOne
 	@JoinColumn(name="id_oferta")
 	private MatOferta matOferta;
 
-	//bi-directional many-to-one association to MatEstudiante
+	//bi-directional many-to-one association to MatPeriodo
 	@ManyToOne
-	@JoinColumn(name="id_estudiante")
-	private MatEstudiante matEstudiante;
+	@JoinColumn(name="id_periodo")
+	private MatPeriodo matPeriodo;
 
 	public MatMatricula() {
 	}
@@ -248,6 +253,14 @@ public class MatMatricula implements Serializable {
 		return gesPension;
 	}
 
+	public MatEstudiante getMatEstudiante() {
+		return this.matEstudiante;
+	}
+
+	public void setMatEstudiante(MatEstudiante matEstudiante) {
+		this.matEstudiante = matEstudiante;
+	}
+
 	public MatOferta getMatOferta() {
 		return this.matOferta;
 	}
@@ -256,12 +269,12 @@ public class MatMatricula implements Serializable {
 		this.matOferta = matOferta;
 	}
 
-	public MatEstudiante getMatEstudiante() {
-		return this.matEstudiante;
+	public MatPeriodo getMatPeriodo() {
+		return this.matPeriodo;
 	}
 
-	public void setMatEstudiante(MatEstudiante matEstudiante) {
-		this.matEstudiante = matEstudiante;
+	public void setMatPeriodo(MatPeriodo matPeriodo) {
+		this.matPeriodo = matPeriodo;
 	}
 
 }

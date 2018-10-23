@@ -21,9 +21,9 @@
 		<class>com.ups.uearv.entidades.MatCurso</class>
 		<class>com.ups.uearv.entidades.MatDocente</class>
 		<class>com.ups.uearv.entidades.MatEstudiante</class>
-		<class>com.ups.uearv.entidades.MatMatricula</class>
 		<class>com.ups.uearv.entidades.MatOferta</class>
 		<class>com.ups.uearv.entidades.MatParalelo</class>
+		<class>com.ups.uearv.entidades.MatMatricula</class>		
 		<class>com.ups.uearv.entidades.MatPeriodo</class>
 		<class>com.ups.uearv.entidades.MatRepresentante</class>
 		<class>com.ups.uearv.entidades.SegMenu</class>
