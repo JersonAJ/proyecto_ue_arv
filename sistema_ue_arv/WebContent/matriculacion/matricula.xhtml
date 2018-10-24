@@ -17,24 +17,56 @@ xmlns:pe="http://primefaces.org/ui/extensions">
 			<p:growl id="growl" for="growl" showDetail="true" closable="true" />
 			
 			<p:outputPanel style="background-color: white; padding: 5px;">
-				<p:commandLink actionListener="#{matricula.guardarListado}">
-					<i class="fa fa-save" />
-					<span>Guardar listado</span>											
-					<p:confirm header="Confirmación" message="¿Está seguro(a) que desea guardar el listado de matrículas?" icon="fa fa-warning" />
+				<p:commandLink title="Generar listado de estudiantes" oncomplete="PF('dglEst').show();">
+					<i class="fa fa-list-ul" />
+					<span>Generar listado</span>					
 					<p:spacer width="10px" />																						
 				</p:commandLink>		
 			
-				<p:commandLink>
-					<i class="fa fa-check" />
-					<span>Procesar matrículas aprobadas</span>											
-					<p:confirm header="Confirmación" message="¿Está seguro(a) que desea procesar el listado de matrículas aprobadas?" icon="fa fa-warning" />																						
-				</p:commandLink>					
-			</p:outputPanel> 
+				<p:commandLink title="Procesar matrículas aprobadas">
+					<i class="fa fa-check"></i>
+					<span>Procesar matrículas</span>											
+					<p:spacer width="10px" />																						
+				</p:commandLink>
+				
+				<p:commandLink style="float: right" title="Anular matrícula">
+					<i class="fa fa-ban"></i>
+					<span>Anular matrícula</span>
+					<p:spacer width="10px" />																										
+				</p:commandLink>									
+			</p:outputPanel>	
 			
-			<p:confirmDialog id="confirmListado" global="true" showEffect="fade" hideEffect="fade">
-				<p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" icon="fa fa-check" />
-				<p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="fa fa-close" />
-			</p:confirmDialog>				
+			<p:dialog header="Generar listado" widgetVar="dglEst" modal="true" closable="true" maximizable="false" resizable="false" width="450px" height="400px">
+				
+				<p:outputPanel style="text-align: center">		   		
+			   		<p:selectOneMenu id="soPeriodoEst" value="#{matricula.soPeriodoEst}">
+						<f:selectItem itemLabel="Seleccione Período" itemValue="NA" />
+						<f:selectItems value="#{matricula.listPeriodos}" />		
+						<p:ajax listener="#{matricula.onChangePeriodoEst()}" update="dtestudiante btnGenerar"/>								
+					</p:selectOneMenu>			    			      				      		      			
+				</p:outputPanel>
+				<br/>				
+				<p:dataTable id="dtestudiante" var="dtestudiante" value="#{matricula.estudianteList}" tableStyle="width: auto; min-width: 100%;" 
+					paginator="true" rows="10" rowsPerPageTemplate="5,10" paginatorPosition="top" emptyMessage="No existen datos a mostrar" >
+				 
+				    <p:column headerText="Cédula" style="text-align: center">
+				        <h:outputText value="#{dtestudiante.idEstudiante}" />
+				    </p:column>
+							    
+					<p:column headerText="Estudiante">
+				        <h:outputText value="#{dtestudiante.apellidos} #{dtestudiante.nombres}" />
+				    </p:column>
+				    
+				    <f:facet name="footer">  
+			        	<h:outputText id="footer" value="#{matricula.estudianteList.size()} Registros" />  
+			    	</f:facet>  
+				</p:dataTable>
+				<br/>	
+				<h:panelGroup style = "display:block; text-align:center">
+					<p:commandButton id="btnGenerar" value="Generar listado" icon="fa fa-list-ul" disabled="#{matricula.estudianteList.size()== 0?true:false}" />	
+				</h:panelGroup>
+				
+			</p:dialog>					
 			
 			<!-- CONSULTA -->	
 			<style>				
@@ -59,7 +91,7 @@ xmlns:pe="http://primefaces.org/ui/extensions">
 			</style>
 			<pe:sheet id="sheet" widgetVar="sheetWidget" value="#{matricula.matriculaEstList}" var="row"   
 			    height="350" rowKey="#{row.codEstudiante}" showRowHeaders="false" resizableCols="true" resizableRows="true" 
-			    sortBy="#{row.codMatricula}" sortOrder="ascending" readOnly="false" emptyMessage="No existen datos a mostrar">  
+			    readOnly="false" emptyMessage="No existen datos a mostrar">  
 			  
 			    <p:ajax event="change" listener="#{matricula.cellChangeEvent}" />  
 			  			   			  

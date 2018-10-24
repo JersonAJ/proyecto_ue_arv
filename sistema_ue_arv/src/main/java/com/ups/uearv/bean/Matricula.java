@@ -25,6 +25,7 @@ import org.primefaces.extensions.component.sheet.Sheet;
 import org.primefaces.extensions.event.SheetEvent;
 import org.primefaces.extensions.model.sheet.SheetUpdate;
 
+import com.ups.uearv.entidades.MatEstudiante;
 import com.ups.uearv.entidades.MatMatricula;
 import com.ups.uearv.entidades.MatOferta;
 import com.ups.uearv.servicios.DAO;
@@ -41,10 +42,12 @@ public class Matricula implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
+	String soPeriodoEst = "";
 	String soPeriodo = "";
 
+	private List<Object> estudianteList = new ArrayList<Object>();
 	private List<Object> matriculaEstList = new ArrayList<Object>();
-
+	
 	ArrayList<SelectItem> listPeriodos = new ArrayList<SelectItem>();
 	ArrayList<SelectItem> listOfertas = new ArrayList<SelectItem>();		
 
@@ -63,7 +66,6 @@ public class Matricula implements Serializable {
 
 		listPeriodos = (ArrayList<SelectItem>) llenaComboPeriodo();
 	}
-
 
 	public void cellChangeEvent(final SheetEvent event) {  
 		final Sheet sheet = event.getSheet();  
@@ -88,17 +90,29 @@ public class Matricula implements Serializable {
 	}  
 
 	// CONSULTA	
+	public void llenarListEstudiantes() {		
+		estudianteList.clear();
+		if(!soPeriodoEst.equals("NA")) {
+			jpql = "SELECT c.* FROM mat_estudiante c " + 
+					   "WHERE c.estado = 'AC' " + 
+					   "AND c.id_estudiante NOT IN (SELECT m.id_estudiante FROM mat_matricula m WHERE m.id_periodo = '" + soPeriodoEst + "' AND m.estado = 'AC') ";
+				List<Object> l = DAO.nqObject(new MatEstudiante(), jpql);
+						
+				for (Object in : l)
+					estudianteList.add(in);	
+		}		
+	}
+	
 	@SuppressWarnings("unchecked")
-	public void generarListadoEst() {		
-		try {	
-			matriculaEstList.clear();
+	public void llenarLista() {
+		try {			
 			if(!soPeriodo.equals("NA")) {
-				jpql = "SELECT IFNULL(m.id_matricula, '--'), e.id_estudiante, CONCAT(e.apellidos, ' ', e.nombres), " + 
-						"    IFNULL(o.descripcion, 'Seleccione Oferta'), 'N', 'AC', IFNULL(m.observaciones, 'Ninguna') " +
-						"FROM mat_estudiante e " + 
-						"	LEFT JOIN mat_matricula m ON e.id_estudiante = m.id_estudiante AND e.estado = 'AC' " + 
-						"	LEFT JOIN mat_oferta o ON o.id_oferta = m.id_oferta AND o.estado = 'AC' " + 
-						"ORDER BY 3 ";
+				jpql = "SELECT IFNULL(m.id_matricula, '--'), e.id_estudiante, CONCAT(e.apellidos, ' ', e.nombres), " +
+					   "	IFNULL(o.descripcion, 'Seleccione Oferta'), 'N', 'AC', IFNULL(m.observaciones, 'Ninguna') " +
+					   "FROM mat_estudiante e " + 
+					   "	LEFT JOIN mat_matricula m ON e.id_estudiante = m.id_estudiante AND e.estado = 'AC' " + 
+					   "	LEFT JOIN mat_oferta o ON o.id_oferta = m.id_oferta AND o.estado = 'AC' " + 
+					   "ORDER BY 3 ";
 
 				List<Object> result = em.createNativeQuery(jpql).getResultList();
 				Iterator<Object> itr = result.iterator();
@@ -112,14 +126,13 @@ public class Matricula implements Serializable {
 					e.setNomOferta(obj[3].toString());
 					e.setSnAprobada((obj[4].toString().equals("S") ? true : false));
 					e.setEstado((obj[5].toString().equals("AC") ? true : false));
-					e.setObservacion(obj[6].toString());
-
-					matriculaEstList.add(e);
+					e.setObservacion(obj[6].toString());					
 				}
 			}			
 		} catch (Exception e) {		
 		}				
 	}
+	
 	
 	public void guardarListado() {
 		for (Object matEst : matriculaEstList) {			
@@ -177,9 +190,11 @@ public class Matricula implements Serializable {
 	}
 
 	public void onChangePeriodo() {
-		listOfertas = (ArrayList<SelectItem>) llenaComboOfertas();
-
-		generarListadoEst();
+		listOfertas = (ArrayList<SelectItem>) llenaComboOfertas();	
+	}
+	
+	public void onChangePeriodoEst() {
+		llenarListEstudiantes();
 	}
 
 	// CLASES
@@ -270,4 +285,16 @@ public class Matricula implements Serializable {
 	public void setSoPeriodo(String soPeriodo) {
 		this.soPeriodo = soPeriodo;
 	}
+	public List<Object> getEstudianteList() {
+		return estudianteList;
+	}
+	public void setEstudianteList(List<Object> estudianteList) {
+		this.estudianteList = estudianteList;
+	}
+	public String getSoPeriodoEst() {
+		return soPeriodoEst;
+	}
+	public void setSoPeriodoEst(String soPeriodoEst) {
+		this.soPeriodoEst = soPeriodoEst;
+	}	
 }
