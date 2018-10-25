@@ -17,10 +17,12 @@ xmlns:pe="http://primefaces.org/ui/extensions">
 			<p:growl id="growl" for="growl" showDetail="true" closable="true" />
 			
 			<p:outputPanel style="background-color: white; padding: 5px;">
-				<p:commandLink title="Generar listado de estudiantes" oncomplete="PF('dglEst').show();">
+				<p:commandLink title="Generar listado de estudiantes" oncomplete="PF('dglEst').show();" update="panelEst">
 					<i class="fa fa-list-ul" />
 					<span>Generar listado</span>					
-					<p:spacer width="10px" />																						
+					<p:spacer width="10px" />							
+					
+					<f:setPropertyActionListener value="NA" target="#{matricula.soPeriodoEst}" />					
 				</p:commandLink>		
 			
 				<p:commandLink title="Procesar matrículas aprobadas">
@@ -36,36 +38,45 @@ xmlns:pe="http://primefaces.org/ui/extensions">
 				</p:commandLink>									
 			</p:outputPanel>	
 			
-			<p:dialog header="Generar listado" widgetVar="dglEst" modal="true" closable="true" maximizable="false" resizable="false" width="450px" height="400px">
-				
-				<p:outputPanel style="text-align: center">		   		
-			   		<p:selectOneMenu id="soPeriodoEst" value="#{matricula.soPeriodoEst}">
-						<f:selectItem itemLabel="Seleccione Período" itemValue="NA" />
-						<f:selectItems value="#{matricula.listPeriodos}" />		
-						<p:ajax listener="#{matricula.onChangePeriodoEst()}" update="dtestudiante btnGenerar"/>								
-					</p:selectOneMenu>			    			      				      		      			
-				</p:outputPanel>
-				<br/>				
-				<p:dataTable id="dtestudiante" var="dtestudiante" value="#{matricula.estudianteList}" tableStyle="width: auto; min-width: 100%;" 
-					paginator="true" rows="10" rowsPerPageTemplate="5,10" paginatorPosition="top" emptyMessage="No existen datos a mostrar" >
-				 
-				    <p:column headerText="Cédula" style="text-align: center">
-				        <h:outputText value="#{dtestudiante.idEstudiante}" />
-				    </p:column>
-							    
-					<p:column headerText="Estudiante">
-				        <h:outputText value="#{dtestudiante.apellidos} #{dtestudiante.nombres}" />
-				    </p:column>
-				    
-				    <f:facet name="footer">  
-			        	<h:outputText id="footer" value="#{matricula.estudianteList.size()} Registros" />  
-			    	</f:facet>  
-				</p:dataTable>
-				<br/>	
-				<h:panelGroup style = "display:block; text-align:center">
-					<p:commandButton id="btnGenerar" value="Generar listado" icon="fa fa-list-ul" disabled="#{matricula.estudianteList.size()== 0?true:false}" />	
-				</h:panelGroup>
-				
+			<p:dialog header="Generar listado" widgetVar="dglEst" modal="true" closable="true" maximizable="false" resizable="false" width="500px" height="400px">
+				<p:ajax event="close" update="form" listener="#{matricula.closeDialogo}" />
+				<p:outputPanel id="panelEst">		   		
+			   		<p:outputPanel style="text-align: center">	
+				   		<p:selectOneMenu id="soPeriodoEst" value="#{matricula.soPeriodoEst}">
+							<f:selectItem itemLabel="Seleccione Período" itemValue="NA" />
+							<f:selectItems value="#{matricula.listPeriodos}" />		
+							<p:ajax listener="#{matricula.onChangePeriodoEst()}" update="dtestudiante btnGenerar"/>								
+						</p:selectOneMenu>					    			
+					</p:outputPanel>
+					<br/>
+					<p:dataTable id="dtestudiante" var="dtestudiante" value="#{matricula.estudianteList}" tableStyle="width: auto; min-width: 100%;" 
+						paginator="true" rows="10" rowsPerPageTemplate="5,10" paginatorPosition="top" emptyMessage="No existen datos a mostrar" >
+					 
+					    <p:column headerText="Cédula" style="text-align: center" width="80">
+					        <h:outputText value="#{dtestudiante.idEstudiante}" />
+					    </p:column>
+								    
+						<p:column headerText="Estudiante">
+					        <h:outputText value="#{dtestudiante.apellidos} #{dtestudiante.nombres}" />
+					    </p:column>
+					    
+					    <f:facet name="footer">  
+				        	<h:outputText id="footer" value="#{matricula.estudianteList.size()} Registros" />  
+				    	</f:facet>  
+					</p:dataTable>
+					<br/>	
+					<h:panelGroup style = "display:block; text-align:center">
+						<p:commandButton id="btnGenerar" value="Generar listado" icon="fa fa-list-ul"  actionListener="#{matricula.generaListadoEst}"
+							disabled="#{matricula.estudianteList.size()== 0?true:false}" update="dtestudiante">
+							<p:confirm header="Confirmación" icon="fa fa-warning"
+								message="¿Está seguro(a) que generar el listado de matrículas para #{matricula.estudianteList.size()} estudiantes?" />
+						</p:commandButton>	
+					</h:panelGroup>				
+				</p:outputPanel>	
+				<p:confirmDialog id="confirm" global="true" showEffect="fade" hideEffect="fade">
+					<p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" icon="fa fa-check" />
+					<p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="fa fa-close" />
+				</p:confirmDialog>				
 			</p:dialog>					
 			
 			<!-- CONSULTA -->	
@@ -78,13 +89,17 @@ xmlns:pe="http://primefaces.org/ui/extensions">
 					<f:selectItem itemLabel="Seleccione Período" itemValue="NA" />
 					<f:selectItems value="#{matricula.listPeriodos}" />		
 					<p:ajax listener="#{matricula.onChangePeriodo()}" update="sheet"/>								
-				</p:selectOneMenu>			    			      				      		      			
+				</p:selectOneMenu>	
+				<p:spacer width="10px" />
+				<p:inputText style="width: 500px" value="#{matricula.itBuscar}" placeholder="Buscar por estudiante">
+					<p:ajax event="keyup" update="sheet" listener="#{matricula.llenarLista}"/>
+				</p:inputText>			   		  		    			      				      		      			
 			</p:outputPanel>
 			 				 	
 			<p:separator />
 			  
 			<style>
-				.handsontable .htDimmed { color: #2b2b2b; }
+				.handsontable .htDimmed { color: #595c5d; }
 				.handsontable.listbox .ht_master table { border: 1px solid #000; border-collapse: separate; }
 				.ui-handsontable .ui-datatable-header, .ui-handsontable .ui-datatable-footer { text-align: left; font-weight: 700; font-size: 12px; color: #212121; }
 				.handsontable .htAutocompleteArrow { float: right; font-size: 12px; color: #474a4b; cursor: default; width: 16px; text-align: center; }
@@ -101,14 +116,12 @@ xmlns:pe="http://primefaces.org/ui/extensions">
 			    				
 			   	<pe:sheetcolumn headerText="Estudiante" readonly="true" value="#{row.nomEstudiante}" />
 			    
-			    <pe:sheetcolumn headerText="Oferta" value="#{row.nomOferta}" colWidth="200" colType="dropdown" selectItems="#{matricula.llenaComboOfertas2()}" />
+			    <pe:sheetcolumn headerText="Oferta" value="#{row.nomOferta}" colWidth="200" colType="dropdown" selectItems="#{matricula.llenaComboOfertas()}" />
 			       
 			    <pe:sheetcolumn headerText="Aprobada" value="#{row.snAprobada}" colWidth="50" colType="checkbox" styleClass="htCenter" />
 			    
 			    <pe:sheetcolumn headerText="Obsevación" value="#{row.observacion}" colWidth="150"/>  
-			    
-			    <pe:sheetcolumn headerText="Activo" value="#{row.estado}" colWidth="50" colType="checkbox" styleClass="htCenter" />
-			    
+			    		    
 			    <f:facet name="footer">  
 			        <h:outputText id="footer" value="#{matricula.matriculaEstList.size()} Registros" />  
 			    </f:facet>  
