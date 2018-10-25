@@ -6,8 +6,10 @@
 package com.ups.uearv.bean;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -146,7 +148,7 @@ public class Matricula implements Serializable {
 			jpql = "SELECT c.* FROM mat_estudiante c " + 
 					   "WHERE c.estado = 'AC' " + 
 					   "AND c.id_estudiante NOT IN (SELECT m.id_estudiante FROM mat_matricula m WHERE m.id_periodo = '" + soPeriodoEst + "' " +
-					   " AND m.estado = 'AC') ORDER BY c.apellidos ";
+					   "AND m.estado = 'AC') ORDER BY c.apellidos ";
 				List<Object> l = DAO.nqObject(new MatEstudiante(), jpql);
 						
 				for (Object in : l)
@@ -161,6 +163,7 @@ public class Matricula implements Serializable {
 					"FROM mat_matricula m " + 
 					"	INNER JOIN mat_estudiante e ON e.id_estudiante = m.id_estudiante AND e.estado = 'AC' " + 
 					"WHERE m.id_periodo = '" + soPeriodoMat + "' AND m.id_oferta IS NOT NULL AND m.sn_aprobado = 'S' AND m.estado = 'AC' " + 
+					"AND m.id_matricula NOT IN (SELECT DISTINCT id_matricula FROM ges_pension WHERE estado = 'AC') " +
 					"ORDER BY e.apellidos ";
 				List<Object> l = DAO.nqObject(new MatMatricula(), jpql);
 						
@@ -245,7 +248,10 @@ public class Matricula implements Serializable {
 					em.getTransaction().rollback();			
 			}
 			em.getTransaction().commit();
+			mensaje = "Se generó el listado de matrícula(s) para " + generaEstudianteList.size() + " estudiante(s) correctamente";
+			FacesContext.getCurrentInstance().addMessage("growl", new FacesMessage(FacesMessage.SEVERITY_INFO, mensajeTitulo, mensaje));
 			llenarListGeneraEstudiantes();
+			llenarListMatriculas();
 		} catch (Exception e) {
 			em.getTransaction().rollback();
 			e.printStackTrace();
@@ -260,13 +266,40 @@ public class Matricula implements Serializable {
 		EntityManager em = emf.createEntityManager();
 		em.getTransaction().begin();
 		try {
-			for (Object object : procesaMatriculaList) {
+			for (Object ob : procesaMatriculaList) {
 				
+				int cantPensiones = ((MatMatricula) ob).getMatPeriodo().getCantPensiones();
+				BigDecimal precioMatricula = ((MatMatricula) ob).getMatPeriodo().getPrecioMatricula();
+				BigDecimal precioPension = ((MatMatricula) ob).getMatPeriodo().getPrecioPension();
+				Date fechaInicio = ((MatMatricula) ob).getMatPeriodo().getFechaIni();
 				
+				Calendar cal = Calendar.getInstance(); 
+				cal.setTime(fechaInicio);
 				
-				GesPension pen = new GesPension(); 
+				// SEC 0 : MATRICULA 
+				// SEC 1 a n : PENSIONES				
+				for (int sec = 0; sec <= cantPensiones; sec++) {	
+					if (sec >= 2) 
+						cal.add(Calendar.MONTH, 1);
 				
-			}			
+					GesPension pen = new GesPension();
+					pen.setMatMatricula((MatMatricula) ob);
+					pen.setSecuencia(sec);
+					pen.setPrecio((sec == 0 ? precioMatricula : precioPension));
+					pen.setFechaVence(cal.getTime());
+					pen.setUsuarioIng(Session.getUserName());			
+					pen.setFechaIng(fecha);	
+					pen.setEstado("AC");
+					
+					if (!DAO.saveOrUpdate(pen, 0, em)) 
+						em.getTransaction().rollback();		
+				}
+			}
+			em.getTransaction().commit();			
+			mensaje = "Se procesó " + procesaMatriculaList.size() + " matrícula(s) correctamente";
+			FacesContext.getCurrentInstance().addMessage("growl", new FacesMessage(FacesMessage.SEVERITY_INFO, mensajeTitulo, mensaje));
+			llenarListProcesaMatriculas();
+			llenarListMatriculas();
 		} catch (Exception e) {
 			em.getTransaction().rollback();
 			e.printStackTrace();

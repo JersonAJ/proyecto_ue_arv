@@ -22,6 +22,8 @@ public class GesDescuento implements Serializable {
 	private int idDescuento;
 
 	private String descripcion;
+	
+	private String nombre;
 
 	private String estado;
 
@@ -74,6 +76,14 @@ public class GesDescuento implements Serializable {
 
 	public Date getFechaAct() {
 		return this.fechaAct;
+	}
+
+	public String getNombre() {
+		return nombre;
+	}
+
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
 	}
 
 	public void setFechaAct(Date fechaAct) {

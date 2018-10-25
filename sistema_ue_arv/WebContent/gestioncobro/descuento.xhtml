@@ -20,8 +20,12 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 					<i class="fa fa-plus-circle" />
 					<span>Agregar</span>				
 					
-					<f:setPropertyActionListener value="true" target="#{periodo.ckEstado}" />
-					<f:setPropertyActionListener value="0" target="#{periodo.accion}" />	
+					<f:setPropertyActionListener value="" target="#{descuento.itNombre}" />
+					<f:setPropertyActionListener value="" target="#{descuento.itDescripcion}" />
+					<f:setPropertyActionListener value="0" target="#{descuento.inPorcentaje}" />									
+					
+					<f:setPropertyActionListener value="true" target="#{descuento.ckEstado}" />
+					<f:setPropertyActionListener value="0" target="#{descuento.accion}" />	
 															
 				</p:commandLink>					
 			</p:outputPanel> 
@@ -32,14 +36,14 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 			</style>
 			<br/>		
 			<p:outputPanel>
-			   <p:inputText style="width: 500px" value="#{periodo.itBuscar}" placeholder="Buscar por apellidos">
-				<p:ajax event="keyup" update="dt" listener="#{periodo.buscar}"/>
+			   <p:inputText style="width: 500px" value="#{descuento.itBuscar}" placeholder="Buscar por descuento">
+				<p:ajax event="keyup" update="dt" listener="#{descuento.buscar}"/>
 			     	</p:inputText>	
 				<p:spacer width="10px" />
 			
 				<div style="display: inline-flex">
-					<h:selectBooleanCheckbox value="#{periodo.ckMostrarIC}">
-	    				<p:ajax update="dt" listener="#{periodo.buscar}" />
+					<h:selectBooleanCheckbox value="#{descuento.ckMostrarIC}">
+	    				<p:ajax update="dt" listener="#{descuento.buscar}" />
 	 				</h:selectBooleanCheckbox> 
 		 			<h:outputLabel value="Mostrar inactivos" style="font-size: 12px; font-weight: normal; color: black; margin-top: 4px;" />			 				
 		 		</div>	 			     			         			     			      				      		      			
@@ -47,20 +51,26 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 			 				 	
 			<p:separator />
 			
-			<p:dataTable id="dt" var="dtperiodo" value="#{periodo.periodoList}" tableStyle="width: auto; min-width: 100%;" 
+			<p:dataTable id="dt" var="dtdescuento" value="#{descuento.descuentoList}" tableStyle="width: auto; min-width: 100%;" 
 				paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
                 currentPageReportTemplate="{currentPage} de {totalPages}"
                 paginator="true" rows="10" rowsPerPageTemplate="5,10" paginatorPosition="top" emptyMessage="No existen datos a mostrar" >
 			
-						    
-				<p:column headerText="Decripción">
-			        <h:outputText value="#{dtperiodo.descripcion}" />
+						        
+				<p:column headerText="Descuento">
+			        <h:outputText value="#{dtdescuento.nombre}" />
 			    </p:column>
-			    			    			    
-			  
+			    
+				<p:column headerText="Descripción">
+			        <h:outputText value="#{dtdescuento.descripcion}" />
+			    </p:column>
+			    
+			    <p:column headerText="Porcentaje" style="text-align: center">
+			        <h:outputText value="#{dtdescuento.porcentaje}%" />
+			    </p:column>
 			    
 			    <p:column headerText="Activo" width="20" style="text-align: center" exportable="false">
-			    	<h:selectBooleanCheckbox value="#{dtperiodo.estado eq 'AC'? true:false}" disabled="true" />			        
+			    	<h:selectBooleanCheckbox value="#{dtdescuento.estado eq 'AC'? true:false}" disabled="true" />			        
 			    </p:column>
 			    
 			    <p:column headerText="Editar" width="20" exportable="false">
@@ -68,67 +78,52 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 						<p:commandLink update=":form:pnl" oncomplete="PF('dgl').show()">	
 							<i class="fa fa-pencil" />
 							
-							<f:setPropertyActionListener value="#{dtperiodo.idperiodo}" target="#{periodo.idPeriodo}" />
-							
-							<f:setPropertyActionListener value="#{general.getEstado(dtperiodo.estado)}" target="#{periodo.ckEstado}" />
-							<f:setPropertyActionListener value="1" target="#{periodo.accion}" />
+							<f:setPropertyActionListener value="#{dtdescuento.idDescuento}" target="#{descuento.idDescuento}" />							
+							<f:setPropertyActionListener value="#{dtdescuento.nombre}" target="#{descuento.itNombre}" />
+							<f:setPropertyActionListener value="#{dtdescuento.descripcion}" target="#{descuento.itDescripcion}" />
+							<f:setPropertyActionListener value="#{dtdescuento.porcentaje}" target="#{descuento.inPorcentaje}" />
+														
+							<f:setPropertyActionListener value="#{general.getEstado(dtdescuento.estado)}" target="#{descuento.ckEstado}" />
+							<f:setPropertyActionListener value="1" target="#{descuento.accion}" />
 																																						
 						</p:commandLink>							
 					</p:outputPanel>
 			    </p:column>			  
 			</p:dataTable>
-			
-			
+					
 			
 			<br/>
 			<p:outputPanel style="background-color: white; padding: 5px; text-align: end">
 				<h:commandLink value="Exportar a excel" style="color: green">                
-	                <p:dataExporter type="xlsx" target="dt" fileName="periodos" />
+	                <p:dataExporter type="xlsx" target="dt" fileName="descuentos" />
 	            </h:commandLink>		   
             </p:outputPanel>
 			
 			<!-- INGRESO | ACTUALIZACION -->
 			<p:dialog header="Datos Período" widgetVar="dgl" modal="true" closable="true" maximizable="false" resizable="false" width="400px">
 			
-			<p:ajax event="close" update="form" listener="#{periodo.closeDialogo}" />
+			<p:ajax event="close" update="form" listener="#{descuento.closeDialogo}" />
 			
 				<h:panelGrid id="pnl" columns="2" cellpadding="0" style="width: auto; min-width: 100%;" columnClasses="ui-grid-col-4,ui-grid-col-8">
 										
+					<p:outputPanel style="text-align: end; padding: 5px">Descuento:</p:outputPanel>					
+					<p:inputMask value="#{descuento.itNombre}" style="width: 25%" mask="aaa-999" maxlength="7" />
+					
 					<p:outputPanel style="text-align: end; padding: 5px">Descripción:</p:outputPanel>					
-					<p:inputText value="#{periodo.itDescripcion}" style="width: 90%" />
-					
-					<p:outputPanel style="text-align: end; padding: 5px">Jornada:</p:outputPanel>
-					<p:selectOneMenu value="#{periodo.soJornada}">
-						<f:selectItems value="#{periodo.listJornada}" />		
-					</p:selectOneMenu>		
-														        
-			        <p:outputPanel style="text-align: end; padding: 5px">Fecha inicio:</p:outputPanel>
-			        <p:calendar value="#{periodo.cFechaIni}" locale="es" navigator="true" pattern="dd/MM/yyyy" mask="true" inputStyle="width: 45%" />
-			        
-			        <p:outputPanel style="text-align: end; padding: 5px">Fecha fin:</p:outputPanel>
-			        <p:calendar value="#{periodo.cFechaFin}" locale="es" navigator="true" pattern="dd/MM/yyyy" mask="true" inputStyle="width: 45%" />
-			        
-			        <p:outputPanel style="text-align: end; padding: 5px">Cant. Pensiones:</p:outputPanel>					
-					<p:inputNumber value="#{periodo.inCantPension}" decimalPlaces="0" inputStyle="width: 20px; text-align: center" />
-					
-					<p:outputPanel style="text-align: end; padding: 5px">Precio Matrícula:</p:outputPanel>					
+					<p:inputTextarea rows="2" value="#{descuento.itDescripcion}" style="width: 90%" />							
+			        					
+					<p:outputPanel style="text-align: end; padding: 5px">Porcentaje:</p:outputPanel>					
 			        <p:outputPanel class="ui-inputgroup">          
-			            <span class="ui-inputgroup-addon">$</span>
-			            <p:inputNumber value="#{periodo.inValorMatricula}" decimalPlaces="2" inputStyle="width: 40px; text-align: end" />			           
+			            <span class="ui-inputgroup-addon">%</span>
+			            <p:inputNumber value="#{descuento.inPorcentaje}" maxValue="100" maxlength="3" decimalPlaces="0" inputStyle="width: 35px; text-align: end" />			           
 			        </p:outputPanel>
-			        
-			        <p:outputPanel style="text-align: end; padding: 5px">Precio Pensión:</p:outputPanel>					
-			        <p:outputPanel class="ui-inputgroup">          
-			            <span class="ui-inputgroup-addon">$</span>
-			            <p:inputNumber value="#{periodo.inValorPension}" decimalPlaces="2" inputStyle="width: 40px; text-align: end" />			            
-			        </p:outputPanel>
-				   			        			     		        										
+     		        										
 					<p:outputPanel style="text-align: end; padding: 5px">Activo:</p:outputPanel>
-					<h:selectBooleanCheckbox value="#{periodo.ckEstado}" style="margin-top: 6px" />
+					<h:selectBooleanCheckbox value="#{descuento.ckEstado}" style="margin-top: 6px" />
 										
 					<f:facet name = "footer"><br/>
 					    <h:panelGroup style = "display:block; text-align:center">
-					      	<p:commandButton id="btnGuardar" value="Guardar" icon="fa fa-save" actionListener="#{periodo.guardar}" update="dt growl" />	
+					      	<p:commandButton id="btnGuardar" value="Guardar" icon="fa fa-save" actionListener="#{descuento.guardar}" update="dt growl" />	
 						</h:panelGroup>
 					</f:facet>						
 				</h:panelGrid>
