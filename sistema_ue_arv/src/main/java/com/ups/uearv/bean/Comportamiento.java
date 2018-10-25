@@ -16,7 +16,6 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
-import javax.faces.model.SelectItem;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -24,7 +23,6 @@ import javax.persistence.Persistence;
 import com.ups.uearv.entidades.CalComportamiento;
 import com.ups.uearv.servicios.DAO;
 import com.ups.uearv.servicios.Session;
-import com.ups.uearv.servicios.Util;
 
 /**
  * @author Jerson Armijos Jaén - Raysa Solano
@@ -147,9 +145,6 @@ public class Comportamiento implements Serializable {
 	}
 	
 	// GETTERS AND SETTERS
-	public List<SelectItem> llenaComboNiveles() {
-		return Util.llenaCombo(DAO.getDetCatalogo("CA004"), 2);
-	}
 	public String getIdComportamiento() {
 		return idComportamiento;
 	}

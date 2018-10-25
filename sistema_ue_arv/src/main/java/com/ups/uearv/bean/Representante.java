@@ -183,7 +183,7 @@ public class Representante implements Serializable {
 	}
 	
 	public List<SelectItem> llenaComboEstadoCivil() {
-		return Util.llenaCombo(DAO.getDetCatalogo("CA005"), 2);
+		return Util.llenaCombo(DAO.getDetCatalogo("EC000"), 2);
 	}
 	
 	// GETTERS AND SETTERS

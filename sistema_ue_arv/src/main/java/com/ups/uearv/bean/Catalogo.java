@@ -133,18 +133,15 @@ public class Catalogo implements Serializable {
 		int num = 1;
 		String abv = "";
 		String codigo = "";
-
 		try {
 			List<Object> l = DAO.nqObject(new CatalogoDet(), "SELECT * FROM catalogo_det WHERE codigo_cab = '"+ codigoCab +"' ORDER BY 1 DESC LIMIT 1 ");
-			for (Object ca : l) {
-				codigo = ((CatalogoDet) ca).getCodigoDet();
-			}						
-			num = Integer.parseInt(codigo.substring(2, 5)) + 1;
-			abv = codigo.substring(0, 2);
+			for (Object ca : l) 
+				codigo = ((CatalogoDet) ca).getCodigoDet();									
+			num = Integer.parseInt(codigo.substring(2, 5)) + 1;			
 		} catch (Exception e) {
 			num = 1;
-		}	
-		
+		}			
+		abv = codigoCab.substring(0, 2);		
 		String c = abv + String.format("%03d", num);		
 		return c;
 	}

@@ -195,7 +195,7 @@ public class Estudiante implements Serializable {
 	}
 	
 	public List<SelectItem> llenaComboTipoSangre() {
-		return Util.llenaCombo(DAO.getDetCatalogo("CA001"), 2);
+		return Util.llenaCombo(DAO.getDetCatalogo("TS000"), 2);
 	}
 	
 	public List<SelectItem> llenaComboRepresentante() {

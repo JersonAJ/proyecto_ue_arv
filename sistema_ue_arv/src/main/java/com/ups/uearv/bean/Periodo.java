@@ -184,7 +184,7 @@ public class Periodo implements Serializable {
 	}
 
 	public List<SelectItem> llenaComboJornada() {
-		return Util.llenaCombo(DAO.getDetCatalogo("CA003"), 2);
+		return Util.llenaCombo(DAO.getDetCatalogo("JO000"), 2);
 	}
 
 	public void onDateSelect() {		

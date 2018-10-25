@@ -147,7 +147,7 @@ public class Curso implements Serializable {
 	}
 	
 	public List<SelectItem> llenaComboNiveles() {
-		return Util.llenaCombo(DAO.getDetCatalogo("CA004"), 2);
+		return Util.llenaCombo(DAO.getDetCatalogo("NI000"), 2);
 	}
 	
 	// GETTERS AND SETTERS

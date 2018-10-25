@@ -27,6 +27,7 @@ import org.primefaces.extensions.component.sheet.Sheet;
 import org.primefaces.extensions.event.SheetEvent;
 import org.primefaces.extensions.model.sheet.SheetUpdate;
 
+import com.ups.uearv.entidades.GesPension;
 import com.ups.uearv.entidades.MatEstudiante;
 import com.ups.uearv.entidades.MatMatricula;
 import com.ups.uearv.entidades.MatOferta;
@@ -46,13 +47,15 @@ public class Matricula implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	String soPeriodoEst = "";
 	String soPeriodo = "";
-	
+	String soPeriodoEst = "";
+	String soPeriodoMat = "";
+		
 	String itBuscar = "";
 
-	private List<Object> estudianteList = new ArrayList<Object>();
-	private List<Object> matriculaEstList = new ArrayList<Object>();
+	private List<Object> generaEstudianteList = new ArrayList<Object>();
+	private List<Object> matriculaList = new ArrayList<Object>();
+	private List<Object> procesaMatriculaList = new ArrayList<Object>();
 	
 	ArrayList<SelectItem> listPeriodos = new ArrayList<SelectItem>();
 	ArrayList<SelectItem> listOfertas = new ArrayList<SelectItem>();		
@@ -72,6 +75,7 @@ public class Matricula implements Serializable {
 		listPeriodos = (ArrayList<SelectItem>) llenaComboPeriodo();		
 	}
 
+	// EVENTOS
 	public void cellChangeEvent(final SheetEvent event) {  
 		final Sheet sheet = event.getSheet();  
 		final List<SheetUpdate> updates = sheet.getUpdates();    
@@ -107,19 +111,37 @@ public class Matricula implements Serializable {
 				em.getTransaction().rollback();
 				e.printStackTrace();
 			}
-			em.close();		
-			
-			System.out.println(((MatriculaEst) asset).getCodMatricula() + " updated.");
+			em.close();
 			
 			rowUpdates++;  
 		}  
 		sheet.commitUpdates();  
 		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Update Success", Integer.toString(rowUpdates) + " rows updated"));  
 	}  
+	
+	public void closeDialogo() {
+		init();
+		
+		generaEstudianteList.clear();
+		procesaMatriculaList.clear();
+	}
+	
+	public void onChangePeriodo() {
+		llenarListMatriculas();
+		llenaComboOfertas();	
+	}
+	
+	public void onChangePeriodoEst() {
+		llenarListGeneraEstudiantes();
+	}
+	
+	public void onChangePeriodoMat() {
+		llenarListProcesaMatriculas();
+	}
 
 	// CONSULTA	
-	public void llenarListEstudiantes() {		
-		estudianteList.clear();
+	public void llenarListGeneraEstudiantes() {		
+		generaEstudianteList.clear();
 		if(!soPeriodoEst.equals("NA")) {
 			jpql = "SELECT c.* FROM mat_estudiante c " + 
 					   "WHERE c.estado = 'AC' " + 
@@ -128,78 +150,56 @@ public class Matricula implements Serializable {
 				List<Object> l = DAO.nqObject(new MatEstudiante(), jpql);
 						
 				for (Object in : l)
-					estudianteList.add(in);	
+					generaEstudianteList.add(in);	
 		}		
 	}
 	
-	@SuppressWarnings("unchecked")
-	public void llenarLista() {
-		try {		
-			matriculaEstList.clear();
-			if(!soPeriodo.equals("NA")) {
-				jpql = "SELECT IFNULL(LPAD(m.id_matricula,5,'0'), '--'), e.id_estudiante, CONCAT(e.apellidos, ' ', e.nombres), " +
-					   "	IFNULL(o.descripcion, 'Seleccione Oferta'), IFNULL(m.sn_aprobado, 'N'), IFNULL(m.estado, 'IC'), IFNULL(m.observaciones, 'Ninguna') " +
-					   "FROM mat_matricula m " + 
-					   "	INNER JOIN mat_estudiante e ON e.id_estudiante = m.id_estudiante AND e.apellidos LIKE '%" + itBuscar + "%' AND e.estado = 'AC' " + 
-					   "	LEFT JOIN mat_oferta o ON o.id_oferta = m.id_oferta AND o.estado = 'AC' " + 
-					   "WHERE m.id_periodo = '" + soPeriodo + "' AND m.estado = 'AC' " +
-					   "ORDER BY 3 ";
-
-				List<Object> result = em.createNativeQuery(jpql).getResultList();
-				Iterator<Object> itr = result.iterator();
-				for (int k = 0; k < result.size(); k++) {
-					Object[] obj = (Object[]) itr.next();
-
-					MatriculaEst e = new MatriculaEst();				
-					e.setCodMatricula(obj[0].toString());
-					e.setCodEstudiante(obj[1].toString());
-					e.setNomEstudiante(obj[2].toString());					
-					e.setNomOferta(obj[3].toString());
-					e.setSnAprobada((obj[4].toString().equals("S") ? true : false));
-					e.setEstado((obj[5].toString().equals("AC") ? true : false));
-					e.setObservacion(obj[6].toString());	
-					
-					matriculaEstList.add(e);
-				}
-			}			
-		} catch (Exception e) {		
-		}				
+	public void llenarListProcesaMatriculas() {		
+		procesaMatriculaList.clear();
+		if(!soPeriodoMat.equals("NA")) {
+			jpql = "SELECT m.* " + 
+					"FROM mat_matricula m " + 
+					"	INNER JOIN mat_estudiante e ON e.id_estudiante = m.id_estudiante AND e.estado = 'AC' " + 
+					"WHERE m.id_periodo = '" + soPeriodoMat + "' AND m.id_oferta IS NOT NULL AND m.sn_aprobado = 'S' AND m.estado = 'AC' " + 
+					"ORDER BY e.apellidos ";
+				List<Object> l = DAO.nqObject(new MatMatricula(), jpql);
+						
+				for (Object in : l)
+					procesaMatriculaList.add(in);	
+		}		
 	}
 	
-	public void generaListadoEst() {
-		Date date = new Date();
-		Timestamp fecha = new Timestamp(date.getTime());
+	public void llenarListMatriculas() {
+		matriculaList.clear();
+		if(!soPeriodo.equals("NA")) {
+			jpql = "SELECT IFNULL(LPAD(m.id_matricula,5,'0'), '--'), e.id_estudiante, CONCAT(e.apellidos, ' ', e.nombres), " +
+					"	IFNULL(o.descripcion, 'Seleccione Oferta'), IFNULL(m.sn_aprobado, 'N'), IFNULL(m.estado, 'IC'), IFNULL(m.observaciones, 'Ninguna') " +
+					"FROM mat_matricula m " + 
+					"	INNER JOIN mat_estudiante e ON e.id_estudiante = m.id_estudiante AND e.apellidos LIKE '%" + itBuscar + "%' AND e.estado = 'AC' " + 
+					"	LEFT JOIN mat_oferta o ON o.id_oferta = m.id_oferta AND o.estado = 'AC' " + 
+					"WHERE m.id_periodo = '" + soPeriodo + "' AND m.estado = 'AC' " +
+					"ORDER BY 3 ";
 
-		EntityManager em = emf.createEntityManager();
-		em.getTransaction().begin();
-		try {
-			for (Object object : estudianteList) {
-				MatPeriodo periodo = (MatPeriodo) DAO.buscarObject(new MatPeriodo(), "from MatPeriodo c where c.idPeriodo = '" + soPeriodoEst +"'");
+			@SuppressWarnings("unchecked")
+			List<Object> result = em.createNativeQuery(jpql).getResultList();
+			Iterator<Object> itr = result.iterator();
+			for (int k = 0; k < result.size(); k++) {
+				Object[] obj = (Object[]) itr.next();
 
-				MatMatricula mat = new MatMatricula();
-				mat.setMatPeriodo(periodo);
-				mat.setMatEstudiante((MatEstudiante) object);
-				mat.setUsuarioIng(Session.getUserName());			
-				mat.setFechaIng(fecha);			
-				mat.setEstado("AC");
-				if (!DAO.saveOrUpdate(mat, 0, em)) 
-					em.getTransaction().rollback();			
+				MatriculaEst e = new MatriculaEst();				
+				e.setCodMatricula(obj[0].toString());
+				e.setCodEstudiante(obj[1].toString());
+				e.setNomEstudiante(obj[2].toString());					
+				e.setNomOferta(obj[3].toString());
+				e.setSnAprobada((obj[4].toString().equals("S") ? true : false));
+				e.setEstado((obj[5].toString().equals("AC") ? true : false));
+				e.setObservacion(obj[6].toString());	
+
+				matriculaList.add(e);
 			}
-			em.getTransaction().commit();
-			llenarListEstudiantes();
-		} catch (Exception e) {
-			em.getTransaction().rollback();
-			e.printStackTrace();
-		}
-		em.close();		
+		}			
 	}
-
-	public void closeDialogo() {
-		init();
-		
-		estudianteList.clear();
-	}
-
+	
 	public List<SelectItem> llenaComboPeriodo() {
 		return Util.llenaCombo(DAO.getPeriodos(), 2);
 	}
@@ -224,15 +224,56 @@ public class Matricula implements Serializable {
 		return listaOfertas;
 	}
 
-	public void onChangePeriodo() {
-		llenarLista();
-		llenaComboOfertas();	
+	// ACCIONES
+	public void generaListadoEst() {
+		Date date = new Date();
+		Timestamp fecha = new Timestamp(date.getTime());
+
+		EntityManager em = emf.createEntityManager();
+		em.getTransaction().begin();
+		try {
+			for (Object object : generaEstudianteList) {
+				MatPeriodo periodo = (MatPeriodo) DAO.buscarObject(new MatPeriodo(), "from MatPeriodo c where c.idPeriodo = '" + soPeriodoEst +"'");
+
+				MatMatricula mat = new MatMatricula();
+				mat.setMatPeriodo(periodo);
+				mat.setMatEstudiante((MatEstudiante) object);
+				mat.setUsuarioIng(Session.getUserName());			
+				mat.setFechaIng(fecha);			
+				mat.setEstado("AC");
+				if (!DAO.saveOrUpdate(mat, 0, em)) 
+					em.getTransaction().rollback();			
+			}
+			em.getTransaction().commit();
+			llenarListGeneraEstudiantes();
+		} catch (Exception e) {
+			em.getTransaction().rollback();
+			e.printStackTrace();
+		}
+		em.close();		
 	}
 	
-	public void onChangePeriodoEst() {
-		llenarListEstudiantes();
+	public void procesaMatriculas() {
+		Date date = new Date();
+		Timestamp fecha = new Timestamp(date.getTime());
+		
+		EntityManager em = emf.createEntityManager();
+		em.getTransaction().begin();
+		try {
+			for (Object object : procesaMatriculaList) {
+				
+				
+				
+				GesPension pen = new GesPension(); 
+				
+			}			
+		} catch (Exception e) {
+			em.getTransaction().rollback();
+			e.printStackTrace();
+		}
+		em.close();		
 	}
-
+	
 	// CLASES
 	public class MatriculaEst  implements Serializable {
 
@@ -303,11 +344,17 @@ public class Matricula implements Serializable {
 	public void setItBuscar(String itBuscar) {
 		this.itBuscar = itBuscar;
 	}
-	public List<Object> getMatriculaEstList() {
-		return matriculaEstList;
+	public List<Object> getMatriculaList() {
+		return matriculaList;
 	}
-	public void setMatriculaEstList(List<Object> matriculaEstList) {
-		this.matriculaEstList = matriculaEstList;
+	public void setMatriculaList(List<Object> matriculaList) {
+		this.matriculaList = matriculaList;
+	}
+	public List<Object> getProcesaMatriculaList() {
+		return procesaMatriculaList;
+	}
+	public void setProcesaMatriculaList(List<Object> procesaMatriculaList) {
+		this.procesaMatriculaList = procesaMatriculaList;
 	}
 	public ArrayList<SelectItem> getListPeriodos() {
 		return listPeriodos;
@@ -327,16 +374,23 @@ public class Matricula implements Serializable {
 	public void setSoPeriodo(String soPeriodo) {
 		this.soPeriodo = soPeriodo;
 	}
-	public List<Object> getEstudianteList() {
-		return estudianteList;
+	public List<Object> getGeneraEstudianteList() {
+		return generaEstudianteList;
 	}
-	public void setEstudianteList(List<Object> estudianteList) {
-		this.estudianteList = estudianteList;
+	public void setGeneraEstudianteList(List<Object> generaEstudianteList) {
+		this.generaEstudianteList = generaEstudianteList;
 	}
 	public String getSoPeriodoEst() {
 		return soPeriodoEst;
 	}
 	public void setSoPeriodoEst(String soPeriodoEst) {
 		this.soPeriodoEst = soPeriodoEst;
+	}
+
+	public String getSoPeriodoMat() {
+		return soPeriodoMat;
+	}
+	public void setSoPeriodoMat(String soPeriodoMat) {
+		this.soPeriodoMat = soPeriodoMat;
 	}	
 }
