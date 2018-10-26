@@ -82,8 +82,7 @@ public class Matricula implements Serializable {
 		final Sheet sheet = event.getSheet();  
 		final List<SheetUpdate> updates = sheet.getUpdates();    
 		final HashSet<MatMatricula> processed = new HashSet<MatMatricula>();  
-		int rowUpdates = 0;  
-
+		
 		for (final SheetUpdate update : updates) {  
 			final Object asset = (Object) update.getRowData();  
 			if (processed.contains(asset)) {  
@@ -113,9 +112,7 @@ public class Matricula implements Serializable {
 				em.getTransaction().rollback();
 				e.printStackTrace();
 			}
-			em.close();
-			
-			rowUpdates++;  
+			em.close();  
 		}  
 		sheet.commitUpdates();  
 	}  
