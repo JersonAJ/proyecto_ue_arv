@@ -118,7 +118,6 @@ public class Matricula implements Serializable {
 			rowUpdates++;  
 		}  
 		sheet.commitUpdates();  
-		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Update Success", Integer.toString(rowUpdates) + " rows updated"));  
 	}  
 	
 	public void closeDialogo() {

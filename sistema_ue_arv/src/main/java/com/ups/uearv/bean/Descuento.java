@@ -74,9 +74,9 @@ public class Descuento implements Serializable {
 
 	public void buscar() {
 		if (ckMostrarIC) {
-			jpql = " SELECT c.* FROM ges_descuento c WHERE c.descripcion LIKE '%"	+ itBuscar + "%' ORDER BY c.descripcion ";
+			jpql = " SELECT c.* FROM ges_descuento c WHERE c.nombre LIKE '%"	+ itBuscar + "%' ORDER BY c.nombre ";
 		} else {
-			jpql = " SELECT c.* FROM ges_descuento c WHERE c.descripcion LIKE '%"	+ itBuscar + "%' AND c.estado = 'AC' ORDER BY c.descripcion ";
+			jpql = " SELECT c.* FROM ges_descuento c WHERE c.nombre LIKE '%"	+ itBuscar + "%' AND c.estado = 'AC' ORDER BY c.nombre ";
 		}
 		llenarLista(jpql);
 	}
