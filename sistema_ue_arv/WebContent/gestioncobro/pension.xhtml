@@ -28,12 +28,25 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 		   		<p:selectOneMenu id="soPeriodo" value="#{pension.soPeriodo}">
 					<f:selectItem itemLabel="Seleccione Período" itemValue="NA" />
 					<f:selectItems value="#{pension.listPeriodos}" />
-					<p:ajax listener="#{pension.onChangePeriodo()}" update="sheet"/>						
+					<p:ajax listener="#{pension.onChangePeriodo()}" update="soOferta soEstudiante dt"/>						
 				</p:selectOneMenu>	
 				<p:spacer width="10px" />
-				<p:inputText style="width: 500px" value="#{pension.itBuscar}" placeholder="Buscar por estudiante">
-					<p:ajax event="keyup" update="sheet" listener="#{pension.llenarListMatriculas}"/>
-				</p:inputText>			   		  		    			      				      		      			
+				<p:selectOneMenu id="soOferta" value="#{pension.soOferta}">
+					<f:selectItem itemLabel="Seleccione Oferta" itemValue="NA" />
+					<f:selectItems value="#{pension.listOfertas}" />
+					<p:ajax listener="#{pension.onChangeOferta()}" update="soEstudiante dt"/>
+				</p:selectOneMenu>	
+				<p:spacer width="10px" />				
+				<p:selectOneMenu id="soEstudiante" value="#{pension.soEstudiante}" effect="fade" widgetVar="t" filter="true" filterMatchMode="contains">
+					<f:selectItem itemLabel="Seleccione Estudiante" itemValue="NA" />
+					<f:selectItems value="#{pension.listEstudiantes}" />	
+				    <p:column>
+		                <h:outputText value="#{t}" />
+		            </p:column>			 
+		            <p:ajax listener="#{pension.onChangeEstudiante()}" update="dt"/>
+		        </p:selectOneMenu>			       
+				
+							   		  		    			      				      		      			
 			</p:outputPanel>
 			 				 	
 			<p:separator />
@@ -43,31 +56,16 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
                 currentPageReportTemplate="{currentPage} de {totalPages}"
                 paginator="true" rows="10" rowsPerPageTemplate="5,10" paginatorPosition="top" emptyMessage="No existen datos a mostrar" >
 									    
-				<p:column headerText="Decripción">
-			        <h:outputText value="#{dtpension.descripcion}" />
+				<p:column headerText="Matricula">
+			        <h:outputText value="#{dtpension.matMatricula.idMatricula}" />
 			    </p:column>			    			    			 
 			    
-			    <p:column headerText="Activo" width="20" style="text-align: center" exportable="false">
-			    	<h:selectBooleanCheckbox value="#{dtpension.estado eq 'AC'? true:false}" disabled="true" />			        
-			    </p:column>
-			    
-			    <p:column headerText="Editar" width="20" exportable="false">
-			    	<p:outputPanel style="text-align: center">
-						<p:commandLink update=":form:pnl" oncomplete="PF('dgl').show()">	
-							<i class="fa fa-pencil" />
-							
-							<f:setPropertyActionListener value="#{dtpension.idpension}" target="#{pension.idPeriodo}" />
-							
-							<f:setPropertyActionListener value="#{general.getEstado(dtpension.estado)}" target="#{pension.ckEstado}" />
-							<f:setPropertyActionListener value="1" target="#{pension.accion}" />
-																																						
-						</p:commandLink>							
-					</p:outputPanel>
-			    </p:column>			  
+				 <f:facet name="footer">  
+			        <h:outputText id="footer" value="#{pension.pensionList.size()} Registros" />  
+			    </f:facet>  	  
 			</p:dataTable>
 			
-			
-			
+						
 			<br/>
 			<p:outputPanel style="background-color: white; padding: 5px; text-align: end">
 				<h:commandLink value="Exportar a excel" style="color: green">                

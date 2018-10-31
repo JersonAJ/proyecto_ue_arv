@@ -151,7 +151,7 @@ public class DAO {
 
 	public static Query getEstudiantes() {
 		Query query = em.createNativeQuery(
-				" SELECT id_representante, CONCAT(IFNULL(SUBSTRING_INDEX(nombres, ' ', 1), ''), ' ', IFNULL(SUBSTRING_INDEX(apellidos, ' ', 1), '')) nombre FROM mat_estudiante WHERE estado = 'AC' ORDER BY 2 ");
+				" SELECT id_estudiante, CONCAT(IFNULL(SUBSTRING_INDEX(nombres, ' ', 1), ''), ' ', IFNULL(SUBSTRING_INDEX(apellidos, ' ', 1), '')) nombre FROM mat_estudiante WHERE estado = 'AC' ORDER BY 2 ");
 		return query;
 	}
 	
