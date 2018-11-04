@@ -36,6 +36,7 @@ public class Pension implements Serializable {
 	String soPeriodo = "";
 	String soOferta = "";	
 	String soEstudiante = "";
+	String soTipo = "";
 		
 	String itBuscar = "";
 
@@ -62,6 +63,11 @@ public class Pension implements Serializable {
 		listPeriodos = (ArrayList<SelectItem>) llenaComboPeriodo();				
 		listOfertas = (ArrayList<SelectItem>) llenaComboOferta();
 		listEstudiantes = (ArrayList<SelectItem>) llenaComboEstudiante();
+		
+		soPeriodo = "NA";
+		soOferta = "NA";
+		soEstudiante = "NA";		
+		soTipo = "NA";
 	}
 
 	// EVENTOS		
@@ -85,6 +91,10 @@ public class Pension implements Serializable {
 		buscar();	
 	}
 	
+	public void onChangeTipo() {
+		buscar();	
+	}
+	
 	// CONSULTA		
 	public void buscar() {
 		jpql = 
@@ -92,10 +102,12 @@ public class Pension implements Serializable {
 		"FROM ges_pension p \r\n" + 
 		"	INNER JOIN mat_matricula m ON m.id_matricula = p.id_matricula \r\n" +
 		"WHERE m.id_periodo = '" + soPeriodo + "' \r\n";
-		if(!soOferta.equals("NA")) 
-			jpql = jpql + "AND m.id_oferta = '" + soOferta + "' \r\n";
-		if(!soEstudiante.equals("NA")) 
-			jpql = jpql + "AND m.id_estudiante = '" + soEstudiante + "' \r\n";
+		if(!soOferta.equals("NA")) { jpql = jpql + "AND m.id_oferta = '" + soOferta + "' \r\n"; }
+		if(!soEstudiante.equals("NA")) { jpql = jpql + "AND m.id_estudiante = '" + soEstudiante + "' \r\n"; }
+		if(!soTipo.equals("NA")) { 
+			if(soTipo.equals("M")) { jpql = jpql + "AND p.secuencia = 0 \r\n"; }
+			if(soTipo.equals("P")) { jpql = jpql + "AND p.secuencia <> 0 \r\n"; }
+		}
 		jpql = jpql + "AND p.estado = 'AC' \r\n" + 
 		"ORDER BY p.secuencia \r\n";
 
@@ -130,8 +142,7 @@ public class Pension implements Serializable {
 		"FROM mat_estudiante e \r\n" + 
 		"	INNER JOIN mat_matricula m ON m.id_estudiante = e.id_estudiante \r\n" + 
 		"WHERE m.id_periodo = '" + soPeriodo + "' \r\n";		
-		if(!soOferta.equals("NA")) 
-			jpql = jpql + "AND m.id_oferta = '" + soOferta + "' \r\n";		
+		if(!soOferta.equals("NA")) { jpql = jpql + "AND m.id_oferta = '" + soOferta + "' \r\n"; }	
 		jpql = jpql + "AND e.estado = 'AC' AND m.sn_aprobado = 'S' \r\n" + 
 		"ORDER BY 2";
 		
@@ -197,5 +208,11 @@ public class Pension implements Serializable {
 	}
 	public void setListEstudiantes(ArrayList<SelectItem> listEstudiantes) {
 		this.listEstudiantes = listEstudiantes;
+	}
+	public String getSoTipo() {
+		return soTipo;
+	}
+	public void setSoTipo(String soTipo) {
+		this.soTipo = soTipo;
 	}
 }
