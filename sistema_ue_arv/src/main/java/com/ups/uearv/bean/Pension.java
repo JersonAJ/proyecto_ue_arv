@@ -36,17 +36,16 @@ public class Pension implements Serializable {
 	String soPeriodo = "";
 	String soOferta = "";	
 	String soEstudiante = "";
-	String soTipo = "";
-		
-	String itBuscar = "";
+	String soTipo = "";		
+	String soSecuencia = "";
 
-	
+
 	private List<Object> pensionList = new ArrayList<Object>();
-		
+
 	ArrayList<SelectItem> listPeriodos = new ArrayList<SelectItem>();
 	ArrayList<SelectItem> listOfertas = new ArrayList<SelectItem>();
 	ArrayList<SelectItem> listEstudiantes = new ArrayList<SelectItem>();
-	
+
 	private static EntityManagerFactory emf = Persistence.createEntityManagerFactory("sismacc");
 	private static EntityManager em = emf.createEntityManager();	
 
@@ -59,61 +58,68 @@ public class Pension implements Serializable {
 
 	@PostConstruct
 	public void init() {
-		
 		listPeriodos = (ArrayList<SelectItem>) llenaComboPeriodo();				
 		listOfertas = (ArrayList<SelectItem>) llenaComboOferta();
 		listEstudiantes = (ArrayList<SelectItem>) llenaComboEstudiante();
-		
+
 		soPeriodo = "NA";
 		soOferta = "NA";
 		soEstudiante = "NA";		
 		soTipo = "NA";
+		soSecuencia = "NA";	
 	}
 
 	// EVENTOS		
 	public void closeDialogo() {
 		init();
 	}
-	
+
 	public void onChangePeriodo() {		
 		listOfertas = (ArrayList<SelectItem>) llenaComboOferta();
 		soOferta = "NA";
 		onChangeOferta();
 	}
-	
+
 	public void onChangeOferta() {
 		listEstudiantes = (ArrayList<SelectItem>) llenaComboEstudiante();
 		soEstudiante = "NA";
 		onChangeEstudiante();	
 	}
-	
+
 	public void onChangeEstudiante() {
 		buscar();	
 	}
-	
+
 	public void onChangeTipo() {
 		buscar();	
 	}
-	
+
+	public void onChangeSec() {
+		buscar();	
+	}
+
 	// CONSULTA		
 	public void buscar() {
 		jpql = 
-		"SELECT p.* \r\n" + 
-		"FROM ges_pension p \r\n" + 
-		"	INNER JOIN mat_matricula m ON m.id_matricula = p.id_matricula \r\n" +
-		"WHERE m.id_periodo = '" + soPeriodo + "' \r\n";
-		if(!soOferta.equals("NA")) { jpql = jpql + "AND m.id_oferta = '" + soOferta + "' \r\n"; }
-		if(!soEstudiante.equals("NA")) { jpql = jpql + "AND m.id_estudiante = '" + soEstudiante + "' \r\n"; }
-		if(!soTipo.equals("NA")) { 
-			if(soTipo.equals("M")) { jpql = jpql + "AND p.secuencia = 0 \r\n"; }
-			if(soTipo.equals("P")) { jpql = jpql + "AND p.secuencia <> 0 \r\n"; }
+				"SELECT p.* \r\n" + 
+						"FROM ges_pension p \r\n" + 
+						"	INNER JOIN mat_matricula m ON m.id_matricula = p.id_matricula \r\n" +
+						"WHERE m.id_periodo = '" + soPeriodo + "' \r\n";
+		if (!soOferta.equals("NA")) { jpql = jpql + "AND m.id_oferta = '" + soOferta + "' \r\n"; }
+		if (!soEstudiante.equals("NA")) { jpql = jpql + "AND m.id_estudiante = '" + soEstudiante + "' \r\n"; }
+		if (!soTipo.equals("NA")) { 
+			if (soTipo.equals("M")) { jpql = jpql + "AND p.secuencia = 0 \r\n"; }
+			if (soTipo.equals("P")) { 				
+				if (soSecuencia.equals("NA")) { jpql = jpql + "AND p.secuencia <> 0 \r\n"; } 
+				if (!soSecuencia.equals("NA")) { jpql = jpql + "AND p.secuencia = '" + soSecuencia + "' \r\n"; }
+			}
 		}
 		jpql = jpql + "AND p.estado = 'AC' \r\n" + 
-		"ORDER BY p.secuencia \r\n";
+				"ORDER BY p.secuencia \r\n";
 
 		llenarListPensiones();
 	}
-	
+
 	public void llenarListPensiones() {
 		pensionList.clear();
 		if(!soPeriodo.equals("NA")) {			
@@ -123,35 +129,35 @@ public class Pension implements Serializable {
 				pensionList.add(in);
 		}
 	}
-		
+
 	public List<SelectItem> llenaComboPeriodo() {
 		return Util.llenaCombo(DAO.getPeriodos(), 2);
 	}
-	
+
 	public List<SelectItem> llenaComboOferta() {
 		return Util.llenaCombo(DAO.getOfertas(soPeriodo), 2);
 	}
-	
+
 	public List<SelectItem> llenaComboEstudiante() {
 		return Util.llenaCombo(getEstudiantesOferta(), 2);
 	}
-	
+
 	public Query getEstudiantesOferta() {		
 		jpql = 
-		"SELECT e.id_estudiante, CONCAT(IFNULL(SUBSTRING_INDEX(e.nombres, ' ', 1), ''), ' ', IFNULL(SUBSTRING_INDEX(e.apellidos, ' ', 1), '')) nombre \r\n" + 
-		"FROM mat_estudiante e \r\n" + 
-		"	INNER JOIN mat_matricula m ON m.id_estudiante = e.id_estudiante \r\n" + 
-		"WHERE m.id_periodo = '" + soPeriodo + "' \r\n";		
-		if(!soOferta.equals("NA")) { jpql = jpql + "AND m.id_oferta = '" + soOferta + "' \r\n"; }	
+				"SELECT e.id_estudiante, CONCAT(IFNULL(SUBSTRING_INDEX(e.nombres, ' ', 1), ''), ' ', IFNULL(SUBSTRING_INDEX(e.apellidos, ' ', 1), '')) nombre \r\n" + 
+						"FROM mat_estudiante e \r\n" + 
+						"	INNER JOIN mat_matricula m ON m.id_estudiante = e.id_estudiante \r\n" + 
+						"WHERE m.id_periodo = '" + soPeriodo + "' \r\n";		
+		if (!soOferta.equals("NA")) { jpql = jpql + "AND m.id_oferta = '" + soOferta + "' \r\n"; }	
 		jpql = jpql + "AND e.estado = 'AC' AND m.sn_aprobado = 'S' \r\n" + 
-		"ORDER BY 2";
-		
+				"ORDER BY 2";
+
 		Query query = em.createNativeQuery(jpql);
 		return query;
 	}
-		
+
 	// ACCIONES
-	
+
 	// CLASES	
 
 	// GETTERS AND SETTERS
@@ -161,11 +167,11 @@ public class Pension implements Serializable {
 	public void setAccion(int accion) {
 		this.accion = accion;
 	}	
-	public String getItBuscar() {
-		return itBuscar;
+	public String getSoSecuencia() {
+		return soSecuencia;
 	}
-	public void setItBuscar(String itBuscar) {
-		this.itBuscar = itBuscar;
+	public void setSoSecuencia(String soSecuencia) {
+		this.soSecuencia = soSecuencia;
 	}
 	public ArrayList<SelectItem> getListPeriodos() {
 		return listPeriodos;

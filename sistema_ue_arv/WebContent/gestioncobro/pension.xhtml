@@ -57,45 +57,116 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 		            <f:selectItem itemLabel="Seleccione Pago" itemValue="NA" />
 		            <f:selectItem itemLabel="Matrícula" itemValue="M" />
 		            <f:selectItem itemLabel="Pensión" itemValue="P" />
-		            <p:ajax listener="#{pension.onChangeTipo()}" update="dt"/>
+		            <p:ajax listener="#{pension.onChangeTipo()}" update="dt soSecuencia"/>
 			    </p:selectOneMenu>  
+			    <p:spacer width="10px" />
+			    <p:selectOneMenu id="soSecuencia" value="#{pension.soSecuencia}" style="display: #{pension.soTipo eq 'P'?'':'none'}">            
+		            <f:selectItem itemLabel="No." itemValue="NA" />
+		            <f:selectItem itemLabel="01" itemValue="1" />
+		            <f:selectItem itemLabel="02" itemValue="2" />
+		            <f:selectItem itemLabel="03" itemValue="3" />
+		            <f:selectItem itemLabel="04" itemValue="4" />
+		            <f:selectItem itemLabel="05" itemValue="5" />
+		            <f:selectItem itemLabel="06" itemValue="6" />
+		            <f:selectItem itemLabel="07" itemValue="7" />
+		            <f:selectItem itemLabel="08" itemValue="8" />
+		            <f:selectItem itemLabel="09" itemValue="9" />
+		            <f:selectItem itemLabel="10" itemValue="10" />
+		            <f:selectItem itemLabel="11" itemValue="11" />
+		            <f:selectItem itemLabel="12" itemValue="12" />
+		            <p:ajax listener="#{pension.onChangeSec()}" update="dt"/>
+			    </p:selectOneMenu>  
+			   
 			</p:outputPanel>
 			 				 	
 			<p:separator />
 			
-			<p:dataTable id="dt" var="dtpension" value="#{pension.pensionList}" tableStyle="width: auto; min-width: 100%;" 
-				paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
-                currentPageReportTemplate="{currentPage} de {totalPages}"
-                paginator="true" rows="10" rowsPerPageTemplate="5,10" paginatorPosition="top" emptyMessage="No existen datos a mostrar">
+			<p:dataTable id="dt" var="dtpension" value="#{pension.pensionList}" tableStyle="width: auto; min-width: 100%;" scrollable="true" scrollHeight="350"
+                 emptyMessage="No existen datos a mostrar">
 									    
-				<p:column headerText="Matricula" width="50">
+				<p:column headerText="Matrícula" width="50" style="text-align: center">
 			        <h:outputText value="#{dtpension.matMatricula.idMatricula}">
 			        	<f:convertNumber pattern="00000" />
 			        </h:outputText>
 			    </p:column>		
 			    
-			    <p:column headerText="No." width="20">
-			        <h:outputText value="#{dtpension.secuencia}" />
+			    <p:column headerText="No." width="20" style="text-align: center">
+			        <h:outputText value="#{dtpension.secuencia}">
+			        	<f:convertNumber pattern="00" />
+			        </h:outputText>
 			    </p:column>			    
 			    
 			    <p:column headerText="Estudiante">
 			        <h:outputText value="#{dtpension.matMatricula.matEstudiante.apellidos} #{dtpension.matMatricula.matEstudiante.nombres}" />
 			    </p:column>	
 			    
-			    <p:column headerText="Fecha Vence" width="80">
+			    <p:column headerText="Fecha V." width="70" style="text-align: center">
 			        <h:outputText value="#{dtpension.fechaVence}">
 			        	<f:convertDateTime pattern = "dd/MM/yyyy" />
 			        </h:outputText>
 			    </p:column>						    			 
 			    
-			    <p:column headerText="Fecha Pago" width="80">
+			    <p:column headerText="Fecha P." width="70" style="text-align: center">
 			        <h:outputText value="#{dtpension.fechaPago}">
 			        	<f:convertDateTime pattern = "dd/MM/yyyy" />
 			        </h:outputText>
 			    </p:column>
 			    
-			    <p:column headerText="Saldo">
-			        <h:outputText value="#{dtpension.saldo}" />
+			    <p:column headerText="Valor" visible="false">			        
+			        <h:outputText value="$ #{dtpension.precio}" /> 
+			    </p:column>
+			    <p:column headerText="Valor" width="50" exportable="false">			        
+			        <div style="text-align: end"><h:outputText value="$ #{dtpension.precio}" /></div> 
+			    </p:column>			    
+			    
+			    <p:column headerText="Desc." width="40" style="text-align: center">			        
+		        	<h:outputText value="#{dtpension.gesDescuento.porcentaje}" title="#{dtpension.gesDescuento.descripcion}">
+			        	<f:convertNumber pattern="#0" />			        
+			        </h:outputText>
+			        <h:outputText value="#{dtpension.gesDescuento.porcentaje eq null ? '--':'%'}" title="#{dtpension.gesDescuento.descripcion}" /> 
+			    </p:column>
+			    
+			    <p:column headerText="Total" visible="false">			        
+			        <h:outputText value="$ #{dtpension.totalPagar}" /> 
+			    </p:column>
+			    <p:column headerText="Total" width="50" exportable="false">			        
+			        <div style="text-align: end"><h:outputText value="$ #{dtpension.totalPagar}" /></div> 
+			    </p:column>
+			    
+			    <p:column headerText="Abono" visible="false">			        
+			        <h:outputText value="$ #{dtpension.abono}" /> 
+			    </p:column>
+			    <p:column headerText="Abono" width="50" exportable="false">			        
+			        <div style="text-align: end"><h:outputText value="$ #{dtpension.abono}" /></div> 
+			    </p:column>
+			    			    
+			    <p:column headerText="Saldo" visible="false">			        
+			        <h:outputText value="$ #{dtpension.saldo}" /> 
+			    </p:column>
+			    <p:column headerText="Saldo" width="50" exportable="false">			        
+			        <div style="text-align: end"><h:outputText value="$ #{dtpension.saldo}" /></div> 
+			    </p:column>
+			    
+			    <p:column headerText="Estado" visible="false">
+			    	<h:outputText value="#{dtpension.saldo eq '0.00'?'REALIZADO':dtpension.abono eq '0.00'?'PENDIENTE':'PARCIAL'}" />
+			    </p:column>			    
+			    <p:column headerText="Estado" style="text-align: center" width="80" exportable="false" 
+			    	sortBy="#{dtpension.saldo eq '0.00'?'REALIZADO':dtpension.abono eq '0.00'?'PENDIENTE':'PARCIAL'}">
+			        <div style="padding: 2px; font-size: 11px; font-weight: bold; background-color: #{dtpension.saldo eq '0.00'?'#aaecaa':dtpension.abono eq '0.00'?'#fff497':'#f3c581'}">
+			        	<h:outputText value="#{dtpension.saldo eq '0.00'?'REALIZADO':dtpension.abono eq '0.00'?'PENDIENTE':'PARCIAL'}" />			        	
+			        </div>			        			        
+			    </p:column>
+			    
+			    <p:column headerText="Acciones" width="200" style="text-align: center" exportable="false">
+			        <p:commandLink title="Pagar" disabled="#{dtpension.saldo eq '0.00'?true:false}">	
+							<i class="fa fa-dollar" /> Pagar
+					</p:commandLink> | 					
+					<p:commandLink title="Enviar notificación de pago" disabled="#{dtpension.saldo eq '0.00'?true:false}">	
+							<i class="fa fa-send" /> Notificar
+					</p:commandLink> | 
+					<p:commandLink title="Imprimir comprobante de pago" disabled="#{dtpension.saldo eq '0.00'?false:true}">	
+							<i class="fa fa-file-text-o" /> Imprimir
+					</p:commandLink>
 			    </p:column>
 			    
 				 <f:facet name="footer">  

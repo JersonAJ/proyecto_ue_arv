@@ -3861,12 +3861,13 @@ body .ui-datatable .ui-paginator.ui-paginator-bottom .ui-paginator-pages
 	padding: 4px 0 0 0;
 }
 
-body .ui-datatable thead th {
-	background-color: #ffffff;
-	padding: 5px 10px;
-	border-color: #d6d7d9;
-	color: #212121;
-	font-size: 12px;
+body .ui-datatable thead th {	
+    background-color: #ffffff;
+    padding: 5px 10px;
+    border-color: #d6d7d9;
+    color: #212121 !important;
+    font-size: 12px;
+    font-weight: bold !important;
 }
 
 body .ui-datatable thead th.ui-state-hover {
@@ -6259,4 +6260,8 @@ body .ui-log .ui-log-content {
 .ui-state-disabled, .ui-widget-content .ui-state-disabled, .ui-widget-header .ui-state-disabled {
     opacity: .55;
     filter: Alpha(Opacity=55);
+}
+
+.ui-widget-content a {
+    color: #3F51B5;
 }

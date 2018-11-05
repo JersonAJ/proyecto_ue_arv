@@ -24,6 +24,7 @@ import javax.faces.model.SelectItem;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.persistence.Query;
 
 import org.primefaces.extensions.component.sheet.Sheet;
 import org.primefaces.extensions.event.SheetEvent;
@@ -52,6 +53,9 @@ public class Matricula implements Serializable {
 	String soPeriodo = "";
 	String soPeriodoEst = "";
 	String soPeriodoMat = "";
+	String soPeriodoAnu = "";
+	
+	String soMatricula = "";
 		
 	String itBuscar = "";
 
@@ -61,7 +65,8 @@ public class Matricula implements Serializable {
 	
 	ArrayList<SelectItem> listPeriodos = new ArrayList<SelectItem>();
 	ArrayList<SelectItem> listOfertas = new ArrayList<SelectItem>();		
-
+	ArrayList<SelectItem> listMatriculas = new ArrayList<SelectItem>();
+	
 	private static EntityManagerFactory emf = Persistence.createEntityManagerFactory("sismacc");
 	private static EntityManager em = emf.createEntityManager();	
 
@@ -135,6 +140,11 @@ public class Matricula implements Serializable {
 	
 	public void onChangePeriodoMat() {
 		llenarListProcesaMatriculas();
+	}
+	
+	public void onChangePeriodoAnu() {
+		listMatriculas = (ArrayList<SelectItem>) llenaComboEstudiante();
+		soMatricula = "NA";
 	}
 
 	// CONSULTA	
@@ -222,6 +232,23 @@ public class Matricula implements Serializable {
 		}		
 		return listaOfertas;
 	}
+	
+	public List<SelectItem> llenaComboEstudiante() {
+		return Util.llenaCombo(getMatriculas(), 1);
+	}
+
+	public Query getMatriculas() {		
+		jpql = 
+		"SELECT IFNULL(LPAD(m.id_matricula,5,'0'), '--') \r\n" + 
+				"FROM mat_estudiante e \r\n" + 
+				"	INNER JOIN mat_matricula m ON m.id_estudiante = e.id_estudiante \r\n" + 
+				"WHERE m.id_periodo = '" + soPeriodoAnu + "' \r\n";
+		jpql = jpql + "AND e.estado = 'AC' AND m.sn_aprobado = 'S' \r\n" + 
+		"ORDER BY 1";
+
+		Query query = em.createNativeQuery(jpql);
+		return query;
+	}
 
 	// ACCIONES
 	public void generaListadoEst() {
@@ -282,6 +309,9 @@ public class Matricula implements Serializable {
 					pen.setMatMatricula((MatMatricula) ob);
 					pen.setSecuencia(sec);
 					pen.setPrecio((sec == 0 ? precioMatricula : precioPension));
+					pen.setAbono(BigDecimal.ZERO);
+					pen.setTotalPagar((sec == 0 ? precioMatricula : precioPension));
+					pen.setSaldo((sec == 0 ? precioMatricula : precioPension));					
 					pen.setFechaVence(cal.getTime());
 					pen.setUsuarioIng(Session.getUserName());			
 					pen.setFechaIng(fecha);	
@@ -421,5 +451,24 @@ public class Matricula implements Serializable {
 	}
 	public void setSoPeriodoMat(String soPeriodoMat) {
 		this.soPeriodoMat = soPeriodoMat;
+	}
+
+	public String getSoPeriodoAnu() {
+		return soPeriodoAnu;
+	}
+	public void setSoPeriodoAnu(String soPeriodoAnu) {
+		this.soPeriodoAnu = soPeriodoAnu;
+	}
+	public String getSoMatricula() {
+		return soMatricula;
+	}
+	public void setSoMatricula(String soMatricula) {
+		this.soMatricula = soMatricula;
+	}
+	public ArrayList<SelectItem> getListMatriculas() {
+		return listMatriculas;
+	}
+	public void setListMatriculas(ArrayList<SelectItem> listMatriculas) {
+		this.listMatriculas = listMatriculas;
 	}	
 }
