@@ -7,11 +7,14 @@ package com.ups.uearv.bean;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -38,8 +41,12 @@ public class Pension implements Serializable {
 	String soEstudiante = "";
 	String soTipo = "";		
 	String soSecuencia = "";
+	
+	String olDiaActual = "--";
 
-
+	String soPeriodoDia = "";
+	String soDia = "";
+	
 	private List<Object> pensionList = new ArrayList<Object>();
 
 	ArrayList<SelectItem> listPeriodos = new ArrayList<SelectItem>();
@@ -66,7 +73,12 @@ public class Pension implements Serializable {
 		soOferta = "NA";
 		soEstudiante = "NA";		
 		soTipo = "NA";
-		soSecuencia = "NA";	
+		soSecuencia = "NA";
+		
+		soPeriodoDia = "NA";
+		soDia = "NA";
+		
+		olDiaActual = "--";
 	}
 
 	// EVENTOS		
@@ -97,14 +109,18 @@ public class Pension implements Serializable {
 	public void onChangeSec() {
 		buscar();	
 	}
-
+	
+	public void onChangePeriodoDia() {
+		olDiaActual = getDiaVenceActual();	
+	}
+	
 	// CONSULTA		
 	public void buscar() {
 		jpql = 
-				"SELECT p.* \r\n" + 
-						"FROM ges_pension p \r\n" + 
-						"	INNER JOIN mat_matricula m ON m.id_matricula = p.id_matricula \r\n" +
-						"WHERE m.id_periodo = '" + soPeriodo + "' \r\n";
+		"SELECT p.* \r\n" + 
+		"FROM ges_pension p \r\n" + 
+		"	INNER JOIN mat_matricula m ON m.id_matricula = p.id_matricula \r\n" +
+		"WHERE m.id_periodo = '" + soPeriodo + "' \r\n";
 		if (!soOferta.equals("NA")) { jpql = jpql + "AND m.id_oferta = '" + soOferta + "' \r\n"; }
 		if (!soEstudiante.equals("NA")) { jpql = jpql + "AND m.id_estudiante = '" + soEstudiante + "' \r\n"; }
 		if (!soTipo.equals("NA")) { 
@@ -115,7 +131,7 @@ public class Pension implements Serializable {
 			}
 		}
 		jpql = jpql + "AND p.estado = 'AC' \r\n" + 
-				"ORDER BY p.secuencia \r\n";
+		"ORDER BY p.secuencia \r\n";
 
 		llenarListPensiones();
 	}
@@ -144,21 +160,61 @@ public class Pension implements Serializable {
 
 	public Query getEstudiantesOferta() {		
 		jpql = 
-				"SELECT e.id_estudiante, CONCAT(IFNULL(SUBSTRING_INDEX(e.nombres, ' ', 1), ''), ' ', IFNULL(SUBSTRING_INDEX(e.apellidos, ' ', 1), '')) nombre \r\n" + 
-						"FROM mat_estudiante e \r\n" + 
-						"	INNER JOIN mat_matricula m ON m.id_estudiante = e.id_estudiante \r\n" + 
-						"WHERE m.id_periodo = '" + soPeriodo + "' \r\n";		
+		"SELECT e.id_estudiante, CONCAT(IFNULL(SUBSTRING_INDEX(e.nombres, ' ', 1), ''), ' ', IFNULL(SUBSTRING_INDEX(e.apellidos, ' ', 1), '')) nombre \r\n" + 
+		"FROM mat_estudiante e \r\n" + 
+		"	INNER JOIN mat_matricula m ON m.id_estudiante = e.id_estudiante \r\n" + 
+		"WHERE m.id_periodo = '" + soPeriodo + "' \r\n";		
 		if (!soOferta.equals("NA")) { jpql = jpql + "AND m.id_oferta = '" + soOferta + "' \r\n"; }	
-		jpql = jpql + "AND e.estado = 'AC' AND m.sn_aprobado = 'S' \r\n" + 
-				"ORDER BY 2";
+		jpql = jpql + "AND m.estado = 'AC' AND e.estado = 'AC' AND m.sn_aprobado = 'S' \r\n" + 
+		"ORDER BY 2";
 
 		Query query = em.createNativeQuery(jpql);
 		return query;
 	}
 
 	// ACCIONES
-
-	// CLASES	
+	public void cambiarDiaVence() {
+		// VALIDACIONES
+		if (soDia.trim().equals("NA")) {
+			mensaje = "Debe seleccionar un día";
+			FacesContext.getCurrentInstance().addMessage("growl", new FacesMessage(FacesMessage.SEVERITY_ERROR, mensajeTitulo, mensaje));
+			return;
+		}
+		if (soPeriodoDia.trim().equals("NA")) {
+			mensaje = "Debe seleccionar el período";
+			FacesContext.getCurrentInstance().addMessage("growl", new FacesMessage(FacesMessage.SEVERITY_ERROR, mensajeTitulo, mensaje));
+			return;
+		}
+		if (soDia.trim().equals(olDiaActual)) {
+			mensaje = "Debe seleccionar un día diferente al actual";
+			FacesContext.getCurrentInstance().addMessage("growl", new FacesMessage(FacesMessage.SEVERITY_ERROR, mensajeTitulo, mensaje));
+			return;
+		}
+				
+		// PROCESO
+		DAO.spActualizaDiaVence(Integer.parseInt(soDia), Integer.parseInt(soPeriodoDia));
+		
+		mensaje = "Se cambió el día de vencimiento correctamente";
+		FacesContext.getCurrentInstance().addMessage("growl", new FacesMessage(FacesMessage.SEVERITY_INFO, mensajeTitulo, mensaje));
+		
+		olDiaActual = getDiaVenceActual();
+		
+		buscar();
+	}
+	
+	public String getDiaVenceActual() {
+		try {
+			jpql = "SELECT DAY(p.fecha_vence) FROM ges_pension p INNER JOIN mat_matricula m ON m.id_matricula = p.id_matricula WHERE m.id_periodo = '" + soPeriodoDia + "' LIMIT 1";
+			@SuppressWarnings("unchecked")		
+			List<Object> result = em.createNativeQuery(jpql).getResultList();		
+			Iterator<Object> itr = result.iterator();
+			Object obj = (Object) itr.next();
+			String dia = String.valueOf(obj);
+			return dia;	
+		} catch (Exception e) {
+			return "--";
+		}		
+	}	
 
 	// GETTERS AND SETTERS
 	public int getAccion() {
@@ -220,5 +276,23 @@ public class Pension implements Serializable {
 	}
 	public void setSoTipo(String soTipo) {
 		this.soTipo = soTipo;
+	}
+	public String getSoPeriodoDia() {
+		return soPeriodoDia;
+	}
+	public void setSoPeriodoDia(String soPeriodoDia) {
+		this.soPeriodoDia = soPeriodoDia;
+	}
+	public String getSoDia() {
+		return soDia;
+	}
+	public void setSoDia(String soDia) {
+		this.soDia = soDia;
+	}
+	public String getOlDiaActual() {
+		return olDiaActual;
+	}
+	public void setOlDiaActual(String olDiaActual) {
+		this.olDiaActual = olDiaActual;
 	}
 }

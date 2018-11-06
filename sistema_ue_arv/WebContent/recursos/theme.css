@@ -6260,8 +6260,17 @@ body .ui-log .ui-log-content {
 .ui-state-disabled, .ui-widget-content .ui-state-disabled, .ui-widget-header .ui-state-disabled {
     opacity: .55;
     filter: Alpha(Opacity=55);
+    color: black;
 }
 
 .ui-widget-content a {
+    color: #3F51B5;
+}
+
+.ui-widget-content a:hover {
+    color: #8f3b4f !important;
+}
+
+.ui-state-highlight a, .ui-widget-content .ui-state-highlight a, .ui-widget-header .ui-state-highlight a {
     color: #3F51B5;
 }

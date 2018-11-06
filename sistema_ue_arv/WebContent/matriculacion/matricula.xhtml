@@ -147,32 +147,37 @@ xmlns:pe="http://primefaces.org/ui/extensions">
 							<f:selectItems value="#{matricula.listPeriodos}" />		
 							<p:ajax listener="#{matricula.onChangePeriodoAnu()}" update="soMatricula"/>								
 						</p:selectOneMenu>					    			
-						<p:spacer width="10px" />					
-				   		<p:selectOneMenu id="soMatricula" value="#{matricula.soMatricula}" effect="fade" var="k" filter="true" filterMatchMode="contains">
+						<p:spacer width="10px" />		
+						<style>
+							.uiselectonemenupanel .uiselectonemenufilter { width: 135px; paddingright: 15px; }
+						</style>						
+				   		<p:selectOneMenu id="soMatricula" value="#{matricula.soMatricula}" effect="fade" var="k" filter="true" filterMatchMode="contains" panelStyle="width: 135px" style="width: 135px">
 							<f:selectItem itemLabel="Seleccione Matrícula" itemValue="NA" />
 							<f:selectItems value="#{matricula.listMatriculas}" />		
 						    <p:column>
 				                <h:outputText value="#{k}" />
 				            </p:column>			            
+				            <p:ajax listener="#{matricula.onChangeMatricula()}" update="itEstudiante btnAnular"/>
 			        	</p:selectOneMenu>
 					</p:outputPanel>  
 					<br />
 					<p:outputPanel style="text-align: center">
 						<span style="font-weight: bold">Estudiante</span>
 						<br />
-						<p:inputText style="width: 70%" readonly="true"/>
+						<p:inputText id="itEstudiante" value="#{matricula.itEstudiante}" style="width: 70%; text-align: center; background-color: #ffe8e7;" readonly="true"/>
 					</p:outputPanel>
 					<br />
 					<p:outputPanel style="text-align: center">
-						<span style="font-weight: bold">Observación</span>
+						<span style="font-weight: bold">Observación(motivo de anulación)</span>
 						<br />
-						<p:inputTextarea rows="3" style="width: 90%"/>
+						<p:inputTextarea id="itaObservacion" value="#{matricula.itaObservacion}" rows="3" style="width: 90%"/>
 					</p:outputPanel>
 					<br />
-			   		<h:panelGroup style="display:block; text-align:center">
-						<p:commandButton id="btnAnular" value="Anular matrícula" icon="fa fa-ban" actionListener="#{matricula.anularMatricula}"	update="sheet growl">
+			   		<h:panelGroup style="display: block; text-align: center">
+						<p:commandButton id="btnAnular" value="Anular matrícula" disabled="#{matricula.soMatricula eq 'NA'?true:false}" 
+							icon="fa fa-ban" actionListener="#{matricula.anularMatricula}"	update="sheet panelAnu growl">
 							<p:confirm header="Confirmación" icon="fa fa-warning"
-								message="¿Está seguro(a) que desea anular la matrícula X del estudiante X?" />
+								message="¿Está seguro(a) que desea anular la matrícula #{matricula.soMatricula} del estudiante #{matricula.itEstudiante}?" />
 						</p:commandButton>	
 					</h:panelGroup>				
 				</p:outputPanel>	
@@ -223,8 +228,6 @@ xmlns:pe="http://primefaces.org/ui/extensions">
 			    <pe:sheetcolumn headerText="Oferta" value="#{row.nomOferta}" colWidth="200" colType="dropdown" selectItems="#{matricula.llenaComboOfertas()}" sortBy="#{row.nomOferta}" />
 			       
 			    <pe:sheetcolumn headerText="Aprobada" value="#{row.snAprobada}" colWidth="60" colType="checkbox" styleClass="htCenter" sortBy="#{row.snAprobada}" />
-			    
-			    <pe:sheetcolumn headerText="Obsevación" value="#{row.observacion}" colWidth="150" visible="false"/>
 			    		    
 			    <f:facet name="footer">  
 			        <h:outputText id="footer" value="#{matricula.matriculaList.size()} Registros" />  

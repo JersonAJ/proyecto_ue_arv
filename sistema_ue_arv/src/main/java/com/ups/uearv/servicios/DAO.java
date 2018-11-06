@@ -7,8 +7,10 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.NoResultException;
+import javax.persistence.ParameterMode;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
+import javax.persistence.StoredProcedureQuery;
 
 import com.ups.uearv.entidades.SegPerfil;
 import com.ups.uearv.entidades.SegPerfilMenu;
@@ -120,6 +122,16 @@ public class DAO {
 		return perfil;
 	}
 	
+	public static Query spActualizaDiaVence(int dia, int idPeriodo) {
+		StoredProcedureQuery storedProcedure = em.createStoredProcedureQuery("actualiza_dia_vence");
+		storedProcedure.registerStoredProcedureParameter("dia", Integer.class, ParameterMode.IN);
+		storedProcedure.registerStoredProcedureParameter("idPeriodo", Integer.class, ParameterMode.IN);
+		storedProcedure.setParameter("dia", dia);
+		storedProcedure.setParameter("idPeriodo", idPeriodo);
+		storedProcedure.execute();
+		return storedProcedure;
+	}
+	
 	// FUNCIONES GENERALES
 	public static Query getPerfiles() {
 		Query query = em.createNativeQuery(" SELECT id_perfil, descripcion FROM seg_perfil WHERE estado = 'AC' ORDER BY descripcion");
@@ -200,6 +212,24 @@ public class DAO {
 				" SELECT codigo_det, descripcion FROM catalogo_det WHERE codigo_cab = '" + cab + "' AND estado = 'AC' ORDER BY descripcion ");
 		return query;
 	}
+	
+	public static String getEstMatricula(String matricula) {
+		
+		String jpql = 
+		"SELECT CONCAT(IFNULL(apellidos, ''), ' ', IFNULL(nombres, '')) nombre \r\n" + 
+		"FROM mat_estudiante e \r\n" + 
+		"	INNER JOIN mat_matricula m ON m.id_estudiante = e.id_estudiante \r\n" + 
+		"WHERE m.id_matricula = '" + matricula + "' \r\n" +
+		"AND e.estado = 'AC' AND m.sn_aprobado = 'S'";
+		
+		Query query = em.createNativeQuery(jpql);
+		List<Object> result = query.getResultList();
+		Iterator<Object> itr = result.iterator();
+		Object obj = (Object) itr.next();
+		String nombre = String.valueOf(obj);
+
+		return nombre;
+	}	
 	
 	/**********************************
 	 * CATALOGO						  *

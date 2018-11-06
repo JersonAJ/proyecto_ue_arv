@@ -58,6 +58,9 @@ public class Matricula implements Serializable {
 	String soMatricula = "";
 		
 	String itBuscar = "";
+	
+	String itEstudiante = "";
+	String itaObservacion = "";
 
 	private List<Object> generaEstudianteList = new ArrayList<Object>();
 	private List<Object> matriculaList = new ArrayList<Object>();
@@ -79,7 +82,17 @@ public class Matricula implements Serializable {
 
 	@PostConstruct
 	public void init() {
-		listPeriodos = (ArrayList<SelectItem>) llenaComboPeriodo();		
+		
+		listPeriodos = (ArrayList<SelectItem>) llenaComboPeriodo();
+		
+		soPeriodoEst = "NA";
+		soPeriodoMat = "NA";
+		soPeriodoAnu = "NA";
+		
+		itEstudiante = "";
+		itaObservacion = "";
+		
+		onChangePeriodoAnu();
 	}
 
 	// EVENTOS
@@ -146,48 +159,59 @@ public class Matricula implements Serializable {
 		listMatriculas = (ArrayList<SelectItem>) llenaComboEstudiante();
 		soMatricula = "NA";
 	}
+	
+	public void onChangeMatricula() {
+		itEstudiante = "";
+		if(!soMatricula.equals("NA")) 
+			itEstudiante = DAO.getEstMatricula(soMatricula);
+	}
 
 	// CONSULTA	
 	public void llenarListGeneraEstudiantes() {		
 		generaEstudianteList.clear();
 		if(!soPeriodoEst.equals("NA")) {
-			jpql = "SELECT c.* FROM mat_estudiante c " + 
-					   "WHERE c.estado = 'AC' " + 
-					   "AND c.id_estudiante NOT IN (SELECT m.id_estudiante FROM mat_matricula m WHERE m.id_periodo = '" + soPeriodoEst + "' " +
-					   "AND m.estado = 'AC') ORDER BY c.apellidos ";
-				List<Object> l = DAO.nqObject(new MatEstudiante(), jpql);
-						
-				for (Object in : l)
-					generaEstudianteList.add(in);	
+			jpql = 
+			"SELECT c.* FROM mat_estudiante c \r\n" + 
+			"WHERE c.estado = 'AC' \r\n" + 
+			"AND c.id_estudiante NOT IN (SELECT m.id_estudiante FROM mat_matricula m WHERE m.id_periodo = '" + soPeriodoEst + "' \r\n" +
+			"AND m.estado = 'AC') ORDER BY c.apellidos ";
+		
+			List<Object> l = DAO.nqObject(new MatEstudiante(), jpql);
+					
+			for (Object in : l)
+				generaEstudianteList.add(in);	
 		}		
 	}
 	
 	public void llenarListProcesaMatriculas() {		
 		procesaMatriculaList.clear();
 		if(!soPeriodoMat.equals("NA")) {
-			jpql = "SELECT m.* " + 
-					"FROM mat_matricula m " + 
-					"	INNER JOIN mat_estudiante e ON e.id_estudiante = m.id_estudiante AND e.estado = 'AC' " + 
-					"WHERE m.id_periodo = '" + soPeriodoMat + "' AND m.id_oferta IS NOT NULL AND m.sn_aprobado = 'S' AND m.estado = 'AC' " + 
-					"AND m.id_matricula NOT IN (SELECT DISTINCT id_matricula FROM ges_pension WHERE estado = 'AC') " +
-					"ORDER BY e.apellidos ";
-				List<Object> l = DAO.nqObject(new MatMatricula(), jpql);
-						
-				for (Object in : l)
-					procesaMatriculaList.add(in);	
+			jpql = 
+			"SELECT m.* \r\n" + 
+			"FROM mat_matricula m \r\n" + 
+			"	INNER JOIN mat_estudiante e ON e.id_estudiante = m.id_estudiante AND e.estado = 'AC' \r\n" + 
+			"WHERE m.id_periodo = '" + soPeriodoMat + "' AND m.id_oferta IS NOT NULL AND m.sn_aprobado = 'S' AND m.estado = 'AC' \r\n" + 
+			"AND m.id_matricula NOT IN (SELECT DISTINCT id_matricula FROM ges_pension WHERE estado = 'AC') \r\n" +
+			"ORDER BY e.apellidos ";
+			
+			List<Object> l = DAO.nqObject(new MatMatricula(), jpql);
+					
+			for (Object in : l)
+				procesaMatriculaList.add(in);	
 		}		
 	}
 	
 	public void llenarListMatriculas() {
 		matriculaList.clear();
 		if(!soPeriodo.equals("NA")) {
-			jpql = "SELECT IFNULL(LPAD(m.id_matricula,5,'0'), '--'), e.id_estudiante, CONCAT(e.apellidos, ' ', e.nombres), " +
-					"	IFNULL(o.descripcion, 'Seleccione Oferta'), IFNULL(m.sn_aprobado, 'N'), IFNULL(m.estado, 'IC'), IFNULL(m.observaciones, 'Ninguna') " +
-					"FROM mat_matricula m " + 
-					"	INNER JOIN mat_estudiante e ON e.id_estudiante = m.id_estudiante AND e.apellidos LIKE '%" + itBuscar + "%' AND e.estado = 'AC' " + 
-					"	LEFT JOIN mat_oferta o ON o.id_oferta = m.id_oferta AND o.estado = 'AC' " + 
-					"WHERE m.id_periodo = '" + soPeriodo + "' AND m.estado = 'AC' " +
-					"ORDER BY 3 ";
+			jpql = 
+			"SELECT IFNULL(LPAD(m.id_matricula,5,'0'), '--'), e.id_estudiante, CONCAT(e.apellidos, ' ', e.nombres), \r\n" + 
+			"	IFNULL(o.descripcion, 'Seleccione Oferta'), IFNULL(m.sn_aprobado, 'N'), IFNULL(m.estado, 'IC'), IFNULL(m.observaciones, 'Ninguna') \r\n" + 
+			"FROM mat_matricula m \r\n" + 
+			"	INNER JOIN mat_estudiante e ON e.id_estudiante = m.id_estudiante AND e.apellidos LIKE '%" + itBuscar + "%' AND e.estado = 'AC' \r\n" + 
+			"	LEFT JOIN mat_oferta o ON o.id_oferta = m.id_oferta AND o.estado = 'AC' \r\n" + 
+			"WHERE m.id_periodo = '" + soPeriodo + "' AND m.estado = 'AC' \r\n" +
+			"ORDER BY 3 ";
 
 			@SuppressWarnings("unchecked")
 			List<Object> result = em.createNativeQuery(jpql).getResultList();
@@ -215,11 +239,12 @@ public class Matricula implements Serializable {
 	
 	@SuppressWarnings("unchecked")
 	public List<String> llenaComboOfertas() {
-		jpql = "SELECT o.id_oferta, o.descripcion " + 
-			   "FROM mat_oferta o " + 
-			   "  	INNER JOIN mat_curso c ON c.id_curso = o.id_curso " + 
-			   "	INNER JOIN catalogo_det k ON k.codigo_det = c.nivel " + 
-			   "WHERE o.id_periodo = '" + soPeriodo + "'  ORDER BY k.codigo_det, c.id_curso ";
+		jpql = 
+		"SELECT o.id_oferta, o.descripcion \r\n" + 
+		"FROM mat_oferta o \r\n" + 
+		"  	INNER JOIN mat_curso c ON c.id_curso = o.id_curso \r\n" + 
+		"	INNER JOIN catalogo_det k ON k.codigo_det = c.nivel \r\n" + 
+		"WHERE o.id_periodo = '" + soPeriodo + "'  ORDER BY k.codigo_det, c.id_curso ";
 
 		ArrayList<String> listaOfertas = new ArrayList<String>();
 		listaOfertas.add("Seleccione Oferta");
@@ -240,10 +265,10 @@ public class Matricula implements Serializable {
 	public Query getMatriculas() {		
 		jpql = 
 		"SELECT IFNULL(LPAD(m.id_matricula,5,'0'), '--') \r\n" + 
-				"FROM mat_estudiante e \r\n" + 
-				"	INNER JOIN mat_matricula m ON m.id_estudiante = e.id_estudiante \r\n" + 
-				"WHERE m.id_periodo = '" + soPeriodoAnu + "' \r\n";
-		jpql = jpql + "AND e.estado = 'AC' AND m.sn_aprobado = 'S' \r\n" + 
+		"FROM mat_estudiante e \r\n" + 
+		"	INNER JOIN mat_matricula m ON m.id_estudiante = e.id_estudiante \r\n" + 
+		"WHERE m.id_periodo = '" + soPeriodoAnu + "' \r\n" +
+		"AND m.estado = 'AC' AND e.estado = 'AC' AND m.sn_aprobado = 'S' \r\n" + 
 		"ORDER BY 1";
 
 		Query query = em.createNativeQuery(jpql);
@@ -331,6 +356,66 @@ public class Matricula implements Serializable {
 			e.printStackTrace();
 		}
 		em.close();		
+	}
+	
+	public void anularMatricula() {		
+		// VALIDACIONES
+		if (soMatricula.trim().equals("NA")) {
+			mensaje = "Debe seleccionar la matrícula";
+			FacesContext.getCurrentInstance().addMessage("growl", new FacesMessage(FacesMessage.SEVERITY_ERROR, mensajeTitulo, mensaje));
+			return;
+		}		
+		if (itaObservacion.trim().equals("")) {
+			mensaje = "Debe ingresar la observación(motivo de anulación)";
+			FacesContext.getCurrentInstance().addMessage("growl", new FacesMessage(FacesMessage.SEVERITY_ERROR, mensajeTitulo, mensaje));
+			return;
+		}		
+		
+		// PROCESO
+		Date date = new Date();
+		Timestamp fecha = new Timestamp(date.getTime());
+		
+		EntityManager em = emf.createEntityManager();
+		em.getTransaction().begin();
+		try {			
+			jpql = "SELECT m.* FROM mat_matricula m WHERE m.id_matricula = '" + soMatricula + "' ";
+			List<Object> listMat = DAO.nqObject(new MatMatricula(), jpql);						
+			for (Object mat : listMat) {	
+				((MatMatricula) mat).setUsuarioAct(Session.getUserName());
+				((MatMatricula) mat).setFechaAct(fecha);	
+				((MatMatricula) mat).setEstado("IC");				
+				if (!DAO.saveOrUpdate(mat, 1, em)) {
+					em.getTransaction().rollback();
+					return;
+				}			
+			}
+			
+			jpql = "SELECT p.* FROM ges_pension p WHERE p.id_matricula = '" + soMatricula + "' ";
+			List<Object> listPen = DAO.nqObject(new GesPension(), jpql);						
+			for (Object pen : listPen) {
+				((GesPension) pen).setUsuarioAct(Session.getUserName());
+				((GesPension) pen).setFechaAct(fecha);	
+				((GesPension) pen).setEstado("IC");
+				if (!DAO.saveOrUpdate(pen, 1, em)) {
+					em.getTransaction().rollback();
+					return;
+				}		
+			}			
+			
+			em.getTransaction().commit();
+			mensaje = "Anulación exitosa";
+			FacesContext.getCurrentInstance().addMessage("growl",	new FacesMessage(FacesMessage.SEVERITY_INFO, mensajeTitulo, mensaje));
+			
+			onChangePeriodoAnu();
+			llenarListMatriculas();
+			
+			itEstudiante = "";
+			itaObservacion = "";
+			
+		} catch (Exception e) {
+			em.getTransaction().rollback();
+			e.printStackTrace();
+		}				
 	}
 	
 	// CLASES
@@ -470,5 +555,17 @@ public class Matricula implements Serializable {
 	}
 	public void setListMatriculas(ArrayList<SelectItem> listMatriculas) {
 		this.listMatriculas = listMatriculas;
+	}
+	public String getItEstudiante() {
+		return itEstudiante;
+	}
+	public void setItEstudiante(String itEstudiante) {
+		this.itEstudiante = itEstudiante;
+	}
+	public String getItaObservacion() {
+		return itaObservacion;
+	}
+	public void setItaObservacion(String itaObservacion) {
+		this.itaObservacion = itaObservacion;
 	}	
 }

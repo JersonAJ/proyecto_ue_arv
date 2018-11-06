@@ -189,32 +189,13 @@ public class Util {
 		}		
 		return msg;
 	}
-	
-	
-	public enum AssetType {
-		DESKTOP,
-		SERVER,
-		LAPTOP,
-		PRINTER,
-		OTHER
-	}
-	
-	private static <T extends Enum<?>> List<SelectItem> createEnumList(T[] values) {
-		List<SelectItem> result = new ArrayList<SelectItem>();
-		result.add(new SelectItem("NA", "Seleccione Oferta"));
-		for (T value : values)
-			result.add(new SelectItem(value, value.name()));
-		return result;
-	}
-	
+		
+		
 	public static List<SelectItem> llenaComboOfertas() {
 		return Util.llenaCombo(DAO.getOfertas("1"), 2);
 	}
 
 	public static void main(String[] args) throws IOException, NoSuchAlgorithmException, ParseException {
-		
-		List<SelectItem> platformTypes = createEnumList(AssetType.values());
-		System.out.println(platformTypes);
-		System.out.println(llenaComboOfertas());
+		DAO.spActualizaDiaVence(13, 1);					
 	}
 }
