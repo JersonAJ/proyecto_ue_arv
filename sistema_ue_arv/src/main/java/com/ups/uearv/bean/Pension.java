@@ -75,15 +75,15 @@ public class Pension implements Serializable {
 		soTipo = "NA";
 		soSecuencia = "NA";
 		
-		soPeriodoDia = "NA";
-		soDia = "NA";
-		
-		olDiaActual = "--";
+		closeDialogo();
 	}
 
 	// EVENTOS		
 	public void closeDialogo() {
-		init();
+		soPeriodoDia = "NA";
+		soDia = "NA";
+		
+		olDiaActual = "--";
 	}
 
 	public void onChangePeriodo() {		

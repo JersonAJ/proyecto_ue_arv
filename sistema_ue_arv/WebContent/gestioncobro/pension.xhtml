@@ -73,7 +73,7 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 					<br />					
 			   		<h:panelGroup style="display: block; text-align: center">
 						<p:commandButton id="btnDia" value="Cambiar día de vencimiento" disabled="#{pension.soDia eq 'NA'?true:false}" 
-							icon="fa fa-calendar" actionListener="#{pension.cambiarDiaVence}" update="panelDia growl">
+							icon="fa fa-calendar" actionListener="#{pension.cambiarDiaVence}" update="panelDia dt growl">
 							<p:confirm header="Confirmación" icon="fa fa-warning"
 								message="¿Está seguro(a) que desea cambiar la fecha de vencimiento de pago, a los días #{pension.soDia} de cada mes?" />
 						</p:commandButton>	
