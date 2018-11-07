@@ -65,6 +65,9 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 			</div>			
 			<br/>	
 			
+			<style>
+				.ui-datatable th.ui-state-default, .ui-datatable tfoot td.ui-state-default { background: #ebedf0 !important; }
+			</style>
 			<p:dataTable id="dtDetalle" var="dtDetalle" value="#{catalogo.catalogoDetList}" tableStyle="width: auto; min-width: 100%;" 
 				emptyMessage="No existen datos a mostrar" editable="true">
 				
@@ -80,22 +83,22 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 				<p:ajax event="rowEdit" listener="#{catalogo.onRowEdit}" />
        			<p:ajax event="rowEditCancel" listener="#{catalogo.onRowCancel}" />
 				
-			    <p:column headerText="Descripción">
+			    <p:column headerText="Descripción" style="background-color: white; border-radius: 2px; padding: 2px;">
 				    <p:cellEditor>
 						<f:facet name="output"><h:outputText value="#{dtDetalle.descripcion}" /></f:facet>
 						<f:facet name="input"><p:inputText id="itDescripcionDet" value="#{dtDetalle.descripcion}" style="width:100%"/></f:facet>
 					</p:cellEditor>	   
 			    </p:column>
 			    
-			    <p:column headerText="Activo" style="text-align: center" width="50">
+			    <p:column headerText="Activo" style="text-align: center; background-color: white; border-radius: 2px; padding: 2px;" width="50">
 				    <p:cellEditor>
 		               <f:facet name="output"><h:selectBooleanCheckbox value="#{catalogo.getEstadoDet(dtDetalle.estado)}" disabled="true" /></f:facet>
 		               <f:facet name="input"><h:selectBooleanCheckbox value="#{catalogo.ckEstadoDet}" disabled="false"/></f:facet>
 		          	</p:cellEditor>			       
 			    </p:column>
 			    
-			    <p:column headerText="Editar" style="text-align: center" width="50">
-		        	<p:rowEditor />
+			    <p:column headerText="Editar" style="text-align: center; background-color: white; border-radius: 2px; padding: 2px;" width="50">		        	
+		        	<p:rowEditor />		        	
 		       	</p:column>		     
 			</p:dataTable>
 			

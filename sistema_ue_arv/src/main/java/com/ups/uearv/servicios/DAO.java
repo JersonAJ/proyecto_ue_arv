@@ -187,6 +187,12 @@ public class DAO {
 		Query query = em.createNativeQuery(
 				" SELECT id_periodo, descripcion FROM mat_periodo WHERE estado = 'AC' ORDER BY descripcion ");
 		return query;
+	}
+	
+	public static Query getDescuentos() {
+		Query query = em.createNativeQuery(
+				" SELECT id_descuento, nombre FROM ges_descuento WHERE estado = 'AC' ORDER BY nombre ");
+		return query;
 	}		
 	
 	public static Query getCursos() {

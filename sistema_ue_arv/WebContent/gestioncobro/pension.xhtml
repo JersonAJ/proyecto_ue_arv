@@ -79,7 +79,7 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 						</p:commandButton>	
 					</h:panelGroup>				
 				</p:outputPanel>	
-				<p:confirmDialog id="confirmAnuMat" global="false" showEffect="fade" hideEffect="fade">
+				<p:confirmDialog id="confirmDiaVen" global="false" showEffect="fade" hideEffect="fade">
 					<p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" icon="fa fa-check" />
 					<p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="fa fa-close" />
 				</p:confirmDialog>				
@@ -155,7 +155,8 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 			    </p:column>			    
 			    
 			    <p:column headerText="Estudiante">
-			        <h:outputText value="#{dtpension.matMatricula.matEstudiante.apellidos} #{dtpension.matMatricula.matEstudiante.nombres}" />
+			        <h:outputText value="#{dtpension.matMatricula.matEstudiante.apellidos} #{dtpension.matMatricula.matEstudiante.nombres}" 
+			        	title="#{dtpension.matMatricula.matOferta.descripcion}" />
 			    </p:column>	
 			    
 			    <p:column headerText="Fecha V." width="70" style="text-align: center">
@@ -210,24 +211,40 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 			    </p:column>			    
 			    <p:column headerText="Estado" style="text-align: center" width="80" exportable="false" 
 			    	sortBy="#{dtpension.saldo eq '0.00'?'REALIZADO':dtpension.abono eq '0.00'?'PENDIENTE':'PARCIAL'}">
-			        <div style="border-radius: 2px; padding: 2px; background-color: #{dtpension.saldo eq '0.00'?'#aaecaa':dtpension.abono eq '0.00'?'#fff497':'#f3c581'}">
+			        <div style="border-radius: 2px; padding: 2px; background-color: 
+			        	#{	dtpension.saldo eq '0.00' ? '#aaecaa' : 
+			        		dtpension.abono eq '0.00' ? dtpension.fechaVence lt currentDate ? '#ffc3be' :  
+			        		'#fff497' :  
+			        	  	dtpension.fechaVence lt currentDate ? '#ffc3be' :
+			        	  	'#f3c581'	}"> <!-- VERDE - ROJO - AMARILLO - ROJO - NARANJA -->			        	
 			        	<h:outputText style="color: #222222; font-size: 11px; font-weight: bold;"
 			        	 	value="#{dtpension.saldo eq '0.00'?'REALIZADO':dtpension.abono eq '0.00'?'PENDIENTE':'PARCIAL'}" />			        	
-			        </div>			        			        
+			        </div>
 			    </p:column>
 			    
 			    <p:column headerText="Acciones" width="200" style="text-align: center" exportable="false">
 			        <div style="background-color: white; border-radius: 2px; padding: 2px;">
-				        <p:commandLink title="Pagar" disabled="#{dtpension.saldo eq '0.00'?true:false}">	
-								<i class="fa fa-dollar" /> Pagar
+				        <p:commandLink title="Pagar" disabled="#{dtpension.saldo eq '0.00'?true:false}" oncomplete="PF('dglPag').show();" update=":form:panelPago">	
+							<i class="fa fa-dollar" /> Pagar
+							
+							<f:setPropertyActionListener value="#{dtpension.idPension}" target="#{pension.idPension}" />
+							<f:setPropertyActionListener value="#{dtpension.matMatricula.idMatricula}" target="#{pension.olMatricula}" />
+							<f:setPropertyActionListener value="#{dtpension.secuencia}" target="#{pension.olSecuencia}" />
+							<f:setPropertyActionListener value="#{dtpension.matMatricula.matEstudiante.apellidos} #{dtpension.matMatricula.matEstudiante.nombres}" target="#{pension.olEstudiante}" />
+							<f:setPropertyActionListener value="#{dtpension.precio}" target="#{pension.inValor}" />							
+							<f:setPropertyActionListener value="#{dtpension.totalPagar}" target="#{pension.inTotalPagar}" />
+							<f:setPropertyActionListener value="#{dtpension.saldo}" target="#{pension.inSaldo}" />							
+							<f:setPropertyActionListener value="false" target="#{pension.ckDescuento}" />
+							<f:setPropertyActionListener value="false" target="#{pension.ckAbono}" />
+								
 						</p:commandLink>
 						<h:outputLabel value=" | " style="color: #222" /> 
 						<p:commandLink title="Enviar notificación de pago" disabled="#{dtpension.saldo eq '0.00'?true:false}">	
-								<i class="fa fa-send" /> Notificar
+							<i class="fa fa-send" /> Notificar
 						</p:commandLink>
 						<h:outputLabel value=" | " style="color: #222" />
 						<p:commandLink title="Imprimir comprobante de pago" disabled="#{dtpension.saldo eq '0.00'?false:true}">	
-								<i class="fa fa-file-text-o" /> Imprimir
+							<i class="fa fa-file-text-o" /> Imprimir
 						</p:commandLink>
 					</div>
 			    </p:column>
@@ -258,6 +275,100 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 			        </p:outputPanel>		        
 			    </f:facet>      
 			</p:dataTable>
+			
+			<p:dialog header="Pagar" widgetVar="dglPag" modal="true" closable="true" maximizable="false" resizable="false" width="600px" height="350px">
+				<p:ajax event="close" update="form" listener="#{pension.closeDialogo}" />
+				
+				<h:panelGrid id="panelPago" columns="2" cellpadding="0" style="width: auto; min-width: 100%;" columnClasses="ui-grid-col-3,ui-grid-col-9">				
+					<p:outputPanel style="text-align: end; padding: 5px; font-weight: bold">Matrícula:</p:outputPanel>
+					<p:inputText style="width: 50px; text-align: center; background: #f0f0f0; font-weight: bold;" value="#{pension.olMatricula}" readonly="true">
+						<f:convertNumber pattern="00000" />
+			        </p:inputText>
+										
+					<p:outputPanel style="text-align: end; padding: 5px; font-weight: bold">Pago de:</p:outputPanel>
+					<p:outputPanel style="display: inline-flex;">
+						<p:inputText style="width: 70px; text-align: center; background: #f0f0f0; font-weight: bold;" readonly="true" 
+							value="#{pension.olSecuencia eq 0 ? 'Matrícula' : 'Pensión'}">						
+				        </p:inputText>
+				        <p:outputPanel style="text-align: end; padding: 5px; font-weight: bold; display: #{pension.olSecuencia eq 0 ? 'none' : ''}" >No.</p:outputPanel>
+				        <p:inputText style="width: 20px; text-align: center; background: #f0f0f0; font-weight: bold; display: #{pension.olSecuencia eq 0 ? 'none' : ''}" 
+				        	readonly="true"	value="#{pension.olSecuencia}">					
+							<f:convertNumber pattern="00" />	
+				        </p:inputText>
+			        </p:outputPanel>
+					
+					<p:outputPanel style="text-align: end; padding: 5px; font-weight: bold">Estudiante:</p:outputPanel>
+					<p:inputText style="width: 90%; background: #f0f0f0; font-weight: bold;" readonly="true" value="#{pension.olEstudiante}" />	
+								
+					<p:outputPanel style="text-align: end; padding: 5px">Forma de pago:</p:outputPanel>
+					<p:selectOneMenu id="soFormaPago" value="#{pension.soFormaPago}">
+						<f:selectItems value="#{pension.listFormaPago}" />		
+					</p:selectOneMenu>
+										
+				   	<p:outputPanel style="text-align: end; padding: 5px">Valor:</p:outputPanel>					
+			        <p:outputPanel class="ui-inputgroup">          
+			            <span class="ui-inputgroup-addon">$</span>
+			            <p:inputNumber value="#{pension.inValor}" decimalPlaces="2" inputStyle="width: 60px; text-align: end; background: #f0f0f0; font-weight: bold;" readonly="true" />			           
+			        </p:outputPanel>
+			        
+			        <p:outputPanel style="text-align: end; padding: 5px">Descuento:</p:outputPanel>
+					<p:outputPanel style="display: inline-flex;">
+						<h:selectBooleanCheckbox value="#{pension.ckDescuento}" style="margin-top: 6px"> 
+							<p:ajax update="soDescuento opPorcentaje inTotalPagar inSaldo" />
+						</h:selectBooleanCheckbox>
+						<p:selectOneMenu id="soDescuento" value="#{pension.soDescuento}" style="display: #{pension.ckDescuento eq false ? 'none' : ''}">
+							<f:selectItems value="#{pension.listDescuentos}" />
+							<p:ajax listener="#{pension.onChangeDescuento()}" update="opPorcentaje inTotalPagar inSaldo"/>		
+						</p:selectOneMenu>
+						<p:spacer width="10px" />
+						<p:outputPanel id="opPorcentaje" class="ui-inputgroup" style="display: #{pension.ckDescuento eq false ? 'none' : ''}">
+				            <span class="ui-inputgroup-addon">%</span>
+				            <p:inputNumber decimalPlaces="0" inputStyle="width: 35px; text-align: end; background: #f0f0f0" readonly="true" 
+				            	value="#{pension.ckDescuento eq false ? 0 : pension.inPorcentaje}" />				            			           
+				        </p:outputPanel>
+					</p:outputPanel>
+					
+					<p:outputPanel style="text-align: end; padding: 5px">Total a pagar:</p:outputPanel>
+					<p:outputPanel class="ui-inputgroup">          
+			            <span class="ui-inputgroup-addon">$</span>
+			            <p:inputNumber id="inTotalPagar" decimalPlaces="2" inputStyle="width: 60px; text-align: end; background: #f0f0f0; font-weight: bold;" readonly="true"  
+			            	value="#{pension.inTotalPagar}" />			           
+			        </p:outputPanel>     	
+			        					
+					<p:outputPanel style="text-align: end; padding: 5px">Abono:</p:outputPanel>
+					<h:selectBooleanCheckbox value="#{pension.ckAbono}" style="margin-top: 6px">
+						<p:ajax update="inAbono" />
+					</h:selectBooleanCheckbox> 
+			        
+			        <p:outputPanel style="text-align: end; padding: 5px">Valor de abono:</p:outputPanel>
+					<p:outputPanel class="ui-inputgroup">          
+			            <span class="ui-inputgroup-addon">$</span>
+			            <p:inputNumber id="inAbono" value="#{pension.inAbono}" disabled="#{pension.ckAbono eq false? true:false}" decimalPlaces="2" inputStyle="width: 60px; text-align: end">
+			            	<p:ajax update="inSaldo" />	
+			            </p:inputNumber>			           
+				    </p:outputPanel>     	
+		        
+					<p:outputPanel style="text-align: end; padding: 5px">Saldo:</p:outputPanel>					
+			        <p:outputPanel class="ui-inputgroup">          
+			            <span class="ui-inputgroup-addon">$</span>
+			            <p:inputNumber id="inSaldo" decimalPlaces="2" inputStyle="width: 60px; text-align: end; background: #f0f0f0; font-weight: bold; color: #003c02;" 
+			            	readonly="true" value="#{pension.inSaldo}" />			           
+			        </p:outputPanel>    								
+															
+					<f:facet name = "footer"><br/>
+					    <h:panelGroup style = "display:block; text-align:center">
+					      	<p:commandButton id="btnPago" value="Registrar pago" icon="fa fa-dollar" actionListener="#{pension.pagar}" update="panelPago dt growl">
+								<p:confirm header="Confirmación" icon="fa fa-warning" message="¿Está seguro(a) que desea registrar el pago?" />
+							</p:commandButton>
+						</h:panelGroup>
+					</f:facet>
+					
+					<p:confirmDialog id="confirmPag" global="false" showEffect="fade" hideEffect="fade">
+						<p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" icon="fa fa-check" />
+						<p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="fa fa-close" />
+					</p:confirmDialog>									
+				</h:panelGrid>	
+			</p:dialog>									
 						
 			<br/>
 			<p:outputPanel style="background-color: white; padding: 5px; text-align: end">

@@ -6,7 +6,10 @@
 package com.ups.uearv.bean;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -21,8 +24,10 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 
+import com.ups.uearv.entidades.GesDescuento;
 import com.ups.uearv.entidades.GesPension;
 import com.ups.uearv.servicios.DAO;
+import com.ups.uearv.servicios.Session;
 import com.ups.uearv.servicios.Util;
 
 /**
@@ -47,11 +52,30 @@ public class Pension implements Serializable {
 	String soPeriodoDia = "";
 	String soDia = "";
 	
+	static String idPension = "";
+	int olMatricula = 0;
+	int olSecuencia = 0;
+	String olEstudiante = "";
+	String soFormaPago = "";
+	String soDescuento = "";
+	
+	boolean ckDescuento = false;
+	boolean ckAbono = false;
+	
+	BigDecimal inValor = new BigDecimal(0);
+	BigDecimal inAbono = new BigDecimal(0);
+	BigDecimal inTotalPagar = new BigDecimal(0);
+	BigDecimal inSaldo = new BigDecimal(0);
+	BigDecimal inPorcentaje = new BigDecimal(0);
+	
 	private List<Object> pensionList = new ArrayList<Object>();
 
 	ArrayList<SelectItem> listPeriodos = new ArrayList<SelectItem>();
 	ArrayList<SelectItem> listOfertas = new ArrayList<SelectItem>();
 	ArrayList<SelectItem> listEstudiantes = new ArrayList<SelectItem>();
+	
+	ArrayList<SelectItem> listFormaPago = new ArrayList<SelectItem>();
+	ArrayList<SelectItem> listDescuentos = new ArrayList<SelectItem>();
 
 	private static EntityManagerFactory emf = Persistence.createEntityManagerFactory("sismacc");
 	private static EntityManager em = emf.createEntityManager();	
@@ -76,6 +100,13 @@ public class Pension implements Serializable {
 		soSecuencia = "NA";
 		
 		closeDialogo();
+		
+		listDescuentos = (ArrayList<SelectItem>) llenaComboDescuento();
+		soDescuento = listDescuentos.get(0).getValue().toString();
+		onChangeDescuento();
+		 
+		listFormaPago = (ArrayList<SelectItem>) llenaComboFormaPago();
+		soFormaPago = listFormaPago.get(0).getValue().toString();
 	}
 
 	// EVENTOS		
@@ -114,6 +145,14 @@ public class Pension implements Serializable {
 		olDiaActual = getDiaVenceActual();	
 	}
 	
+	public void onChangeDescuento() {
+		GesDescuento des = (GesDescuento)  DAO.buscarObject(new GesDescuento(), "from GesDescuento c where c.idDescuento = '" + soDescuento +"'");
+		if (des == null)
+			inPorcentaje = new BigDecimal(0);
+		else
+			inPorcentaje = des.getPorcentaje();	
+	}
+	
 	// CONSULTA		
 	public void buscar() {
 		jpql = 
@@ -150,12 +189,20 @@ public class Pension implements Serializable {
 		return Util.llenaCombo(DAO.getPeriodos(), 2);
 	}
 
+	public List<SelectItem> llenaComboDescuento() {
+		return Util.llenaCombo(DAO.getDescuentos(), 2);
+	}
+	
 	public List<SelectItem> llenaComboOferta() {
 		return Util.llenaCombo(DAO.getOfertas(soPeriodo), 2);
 	}
 
 	public List<SelectItem> llenaComboEstudiante() {
 		return Util.llenaCombo(getEstudiantesOferta(), 2);
+	}
+	
+	public List<SelectItem> llenaComboFormaPago() {
+		return Util.llenaCombo(DAO.getDetCatalogo("FP000"), 2);
 	}
 
 	public Query getEstudiantesOferta() {		
@@ -201,6 +248,54 @@ public class Pension implements Serializable {
 		
 		buscar();
 	}
+	
+	public void pagar() {
+		// VALIDACIONES		
+		if (inAbono.doubleValue() == 0) {			
+			mensaje = "Debe ingresar el valor del abono";
+			FacesContext.getCurrentInstance().addMessage("growl", new FacesMessage(FacesMessage.SEVERITY_ERROR, mensajeTitulo, mensaje));
+			return;
+		}		
+				        
+		// PROCESO
+		Date date = new Date();
+		Timestamp fecha = new Timestamp(date.getTime());
+
+		EntityManager em = emf.createEntityManager();
+		em.getTransaction().begin();
+		try {						
+			GesPension pen = (GesPension)  DAO.buscarObject(new GesPension(), "from GesPension c where c.idPension = '" + idPension +"'");
+			GesDescuento des = (GesDescuento)  DAO.buscarObject(new GesDescuento(), "from GesDescuento c where c.idDescuento = '" + soDescuento +"'");
+			
+			if (ckDescuento)
+				pen.setGesDescuento(des);
+			
+			if (ckAbono)
+				pen.setAbono(inAbono);
+			else
+				pen.setFechaPago(fecha);
+			
+			pen.setSaldo(inSaldo);
+			pen.setFormaPago(soFormaPago);
+			pen.setTotalPagar(inTotalPagar);					
+			pen.setUsuarioAct(Session.getUserName());			
+			pen.setFechaAct(fecha);
+				
+			if (!DAO.saveOrUpdate(pen, 1, em)) {
+				em.getTransaction().rollback();
+				return;					
+			}			
+
+			//em.getTransaction().commit();			
+			mensaje = "Pago exitoso";
+			if (ckAbono)
+				mensaje = "Abono exitoso";			
+			FacesContext.getCurrentInstance().addMessage("growl",	new FacesMessage(FacesMessage.SEVERITY_INFO, mensajeTitulo, mensaje));		
+		} catch (Exception e) {
+			em.getTransaction().rollback();
+			e.printStackTrace();
+		}				
+	}	
 	
 	public String getDiaVenceActual() {
 		try {
@@ -294,5 +389,95 @@ public class Pension implements Serializable {
 	}
 	public void setOlDiaActual(String olDiaActual) {
 		this.olDiaActual = olDiaActual;
+	}
+	public int getOlMatricula() {
+		return olMatricula;
+	}
+	public void setOlMatricula(int olMatricula) {
+		this.olMatricula = olMatricula;
+	}
+	public int getOlSecuencia() {
+		return olSecuencia;
+	}
+	public void setOlSecuencia(int olSecuencia) {
+		this.olSecuencia = olSecuencia;
+	}
+	public String getOlEstudiante() {
+		return olEstudiante;
+	}
+	public void setOlEstudiante(String olEstudiante) {
+		this.olEstudiante = olEstudiante;
+	}
+	public String getSoFormaPago() {
+		return soFormaPago;
+	}
+	public void setSoFormaPago(String soFormaPago) {
+		this.soFormaPago = soFormaPago;
+	}
+	public String getSoDescuento() {
+		return soDescuento;
+	}
+	public void setSoDescuento(String soDescuento) {
+		this.soDescuento = soDescuento;
+	}
+	public boolean isCkDescuento() {
+		return ckDescuento;
+	}
+	public void setCkDescuento(boolean ckDescuento) {
+		this.ckDescuento = ckDescuento;
+	}
+	public boolean isCkAbono() {
+		return ckAbono;
+	}
+	public void setCkAbono(boolean ckAbono) {
+		this.ckAbono = ckAbono;
+	}
+	public BigDecimal getInValor() {
+		return inValor;
+	}
+	public void setInValor(BigDecimal inValor) {
+		this.inValor = inValor;
+	}
+	public BigDecimal getInAbono() {
+		return inAbono;
+	}
+	public void setInAbono(BigDecimal inAbono) {
+		this.inAbono = inAbono;
+	}
+	public BigDecimal getInTotalPagar() {
+		return inTotalPagar;
+	}
+	public void setInTotalPagar(BigDecimal inTotalPagar) {
+		this.inTotalPagar = inTotalPagar;
+	}
+	public BigDecimal getInSaldo() {
+		return inSaldo;
+	}
+	public void setInSaldo(BigDecimal inSaldo) {
+		this.inSaldo = inSaldo;
+	}
+	public ArrayList<SelectItem> getListFormaPago() {
+		return listFormaPago;
+	}
+	public void setListFormaPago(ArrayList<SelectItem> listFormaPago) {
+		this.listFormaPago = listFormaPago;
+	}
+	public ArrayList<SelectItem> getListDescuentos() {
+		return listDescuentos;
+	}
+	public void setListDescuentos(ArrayList<SelectItem> listDescuentos) {
+		this.listDescuentos = listDescuentos;
+	}
+	public String getIdPension() {
+		return idPension;
+	}
+	public void setIdPension(String idPension) {
+		Pension.idPension = idPension;
+	}
+	public BigDecimal getInPorcentaje() {
+		return inPorcentaje;
+	}
+	public void setInPorcentaje(BigDecimal inPorcentaje) {
+		this.inPorcentaje = inPorcentaje;
 	}
 }
