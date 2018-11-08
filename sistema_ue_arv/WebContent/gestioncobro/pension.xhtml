@@ -235,8 +235,7 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 							<f:setPropertyActionListener value="#{dtpension.totalPagar}" target="#{pension.inTotalPagar}" />
 							<f:setPropertyActionListener value="#{dtpension.saldo}" target="#{pension.inSaldo}" />							
 							<f:setPropertyActionListener value="false" target="#{pension.ckDescuento}" />
-							<f:setPropertyActionListener value="false" target="#{pension.ckAbono}" />
-								
+															
 						</p:commandLink>
 						<h:outputLabel value=" | " style="color: #222" /> 
 						<p:commandLink title="Enviar notificación de pago" disabled="#{dtpension.saldo eq '0.00'?true:false}">	
@@ -316,6 +315,7 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 						<h:selectBooleanCheckbox value="#{pension.ckDescuento}" style="margin-top: 6px"> 
 							<p:ajax update="soDescuento opPorcentaje inTotalPagar inSaldo" />
 						</h:selectBooleanCheckbox>
+						<p:spacer width="5px" />
 						<p:selectOneMenu id="soDescuento" value="#{pension.soDescuento}" style="display: #{pension.ckDescuento eq false ? 'none' : ''}">
 							<f:selectItems value="#{pension.listDescuentos}" />
 							<p:ajax listener="#{pension.onChangeDescuento()}" update="opPorcentaje inTotalPagar inSaldo"/>		
@@ -335,15 +335,16 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 			            	value="#{pension.inTotalPagar}" />			           
 			        </p:outputPanel>     	
 			        					
-					<p:outputPanel style="text-align: end; padding: 5px">Abono:</p:outputPanel>
-					<h:selectBooleanCheckbox value="#{pension.ckAbono}" style="margin-top: 6px">
-						<p:ajax update="inAbono" />
-					</h:selectBooleanCheckbox> 
+					<p:outputPanel style="text-align: end; padding: 5px">Opción de pago:</p:outputPanel>
+					<p:selectOneMenu id="soOpcion" value="#{pension.soOpcion}">            
+			            <f:selectItem itemLabel="Total" itemValue="PT" />
+			            <f:selectItem itemLabel="Abono" itemValue="AB" />			            
+				    </p:selectOneMenu>
 			        
-			        <p:outputPanel style="text-align: end; padding: 5px">Valor de abono:</p:outputPanel>
+			        <p:outputPanel style="text-align: end; padding: 5px">Valor a pagar:</p:outputPanel>
 					<p:outputPanel class="ui-inputgroup">          
 			            <span class="ui-inputgroup-addon">$</span>
-			            <p:inputNumber id="inAbono" value="#{pension.inAbono}" disabled="#{pension.ckAbono eq false? true:false}" decimalPlaces="2" inputStyle="width: 60px; text-align: end">
+			            <p:inputNumber id="inValorPagar" value="#{pension.inValorPagar}" decimalPlaces="2" inputStyle="width: 60px; text-align: end">
 			            	<p:ajax update="inSaldo" />	
 			            </p:inputNumber>			           
 				    </p:outputPanel>     	

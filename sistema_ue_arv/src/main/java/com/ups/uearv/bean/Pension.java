@@ -58,12 +58,13 @@ public class Pension implements Serializable {
 	String olEstudiante = "";
 	String soFormaPago = "";
 	String soDescuento = "";
+	String soOpcion = "";
 	
 	boolean ckDescuento = false;
-	boolean ckAbono = false;
+	
 	
 	BigDecimal inValor = new BigDecimal(0);
-	BigDecimal inAbono = new BigDecimal(0);
+	BigDecimal inValorPagar = new BigDecimal(0);
 	BigDecimal inTotalPagar = new BigDecimal(0);
 	BigDecimal inSaldo = new BigDecimal(0);
 	BigDecimal inPorcentaje = new BigDecimal(0);
@@ -251,11 +252,11 @@ public class Pension implements Serializable {
 	
 	public void pagar() {
 		// VALIDACIONES		
-		if (inAbono.doubleValue() == 0) {			
-			mensaje = "Debe ingresar el valor del abono";
+		if (inValorPagar == new BigDecimal(0)) {			
+			mensaje = "Debe ingresar el valor a pagar";
 			FacesContext.getCurrentInstance().addMessage("growl", new FacesMessage(FacesMessage.SEVERITY_ERROR, mensajeTitulo, mensaje));
 			return;
-		}		
+		}
 				        
 		// PROCESO
 		Date date = new Date();
@@ -270,9 +271,9 @@ public class Pension implements Serializable {
 			if (ckDescuento)
 				pen.setGesDescuento(des);
 			
-			if (ckAbono)
-				pen.setAbono(inAbono);
-			else
+			if (soOpcion.equals("AB"))
+				pen.setAbono(inValorPagar);
+			else if (soOpcion.equals("PT"))
 				pen.setFechaPago(fecha);
 			
 			pen.setSaldo(inSaldo);
@@ -286,9 +287,9 @@ public class Pension implements Serializable {
 				return;					
 			}			
 
-			//em.getTransaction().commit();			
+			em.getTransaction().commit();			
 			mensaje = "Pago exitoso";
-			if (ckAbono)
+			if (soOpcion.equals("AB"))
 				mensaje = "Abono exitoso";			
 			FacesContext.getCurrentInstance().addMessage("growl",	new FacesMessage(FacesMessage.SEVERITY_INFO, mensajeTitulo, mensaje));		
 		} catch (Exception e) {
@@ -426,23 +427,17 @@ public class Pension implements Serializable {
 	public void setCkDescuento(boolean ckDescuento) {
 		this.ckDescuento = ckDescuento;
 	}
-	public boolean isCkAbono() {
-		return ckAbono;
-	}
-	public void setCkAbono(boolean ckAbono) {
-		this.ckAbono = ckAbono;
-	}
 	public BigDecimal getInValor() {
 		return inValor;
 	}
 	public void setInValor(BigDecimal inValor) {
 		this.inValor = inValor;
 	}
-	public BigDecimal getInAbono() {
-		return inAbono;
+	public BigDecimal getInValorPagar() {
+		return inValorPagar;
 	}
-	public void setInAbono(BigDecimal inAbono) {
-		this.inAbono = inAbono;
+	public void setInValorPagar(BigDecimal inValorPagar) {
+		this.inValorPagar = inValorPagar;
 	}
 	public BigDecimal getInTotalPagar() {
 		return inTotalPagar;
@@ -479,5 +474,11 @@ public class Pension implements Serializable {
 	}
 	public void setInPorcentaje(BigDecimal inPorcentaje) {
 		this.inPorcentaje = inPorcentaje;
+	}
+	public String getSoOpcion() {
+		return soOpcion;
+	}
+	public void setSoOpcion(String soOpcion) {
+		this.soOpcion = soOpcion;
 	}
 }
