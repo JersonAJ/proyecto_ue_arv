@@ -1,0 +1,46 @@
+/* h:dataTable */
+@page {
+	size: auto;
+	margin-left: 5mm;
+	margin-right: 5mm;
+	margin-top: 5mm;
+	margin-bottom: 5mm;
+}
+
+html {
+	background-color: #FFFFFF;
+	margin: 0px;	
+}
+
+body {	
+	font-family: "Source Sans Pro", Arial, sans-serif;
+	font-size: 12px;
+	margin-left: 5mm;
+	margin-right: 5mm;
+	margin-top: 5mm;
+	margin-bottom: 5mm;
+}
+
+thead {
+	text-align: center;
+	border-bottom: 1px solid #BBBBBB;
+	border-top: 1px solid #BBBBBB;
+	padding: 5px;
+}
+
+tr {
+	text-align: center;
+	border-top: 1px dashed #BBBBBB;
+	height: 15px;
+}
+
+#nreporte {
+	font-size: 15px;
+	font-weight: bold;
+}
+
+.order-table {
+	border-collapse: collapse;
+	width: 100%;
+	font-size: 11px;
+}

@@ -6,6 +6,8 @@
 package com.ups.uearv.bean;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -100,6 +102,12 @@ public class General implements Serializable {
 		return ob.getDescripcion().trim();
 	}
 
+	// OBTENER FECHA EN FORMATO
+	public String getFechaString(Date f) {
+		SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+		return dateFormat.format(f.getTime());
+	}
+	
 	// CAMBIO DE CLAVE
 	String clave1 = "";
 	String clave2 = "";

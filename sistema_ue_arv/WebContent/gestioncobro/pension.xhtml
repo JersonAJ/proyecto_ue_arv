@@ -3,7 +3,8 @@ xmlns="http://www.w3.org/1999/xhtml"
 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
 xmlns:h="http://xmlns.jcp.org/jsf/html"
 xmlns:p="http://primefaces.org/ui"
-xmlns:f="http://xmlns.jcp.org/jsf/core">
+xmlns:f="http://xmlns.jcp.org/jsf/core"
+xmlns:fn="http://xmlns.jcp.org/jsp/jstl/functions">
 			
 	<ui:define name="titulo"><i class="fa fa-money" /> Gestión de cobros / Matrículas y Pensiones</ui:define>
 	
@@ -142,13 +143,13 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 			<p:dataTable id="dt" var="dtpension" value="#{pension.pensionList}" tableStyle="width: auto; min-width: 100%;" scrollable="true" scrollHeight="350"
                 selectionMode="single" rowKey="#{dtpension.idPension}" emptyMessage="No existen datos a mostrar">
 									    
-				<p:column headerText="Matrícula" width="80" style="text-align: center" sortBy="#{dtpension.matMatricula.idMatricula}">
+				<p:column headerText="Matrícula" width="75" style="text-align: center" sortBy="#{dtpension.matMatricula.idMatricula}">
 			        <h:outputText value="#{dtpension.matMatricula.idMatricula}">
 			        	<f:convertNumber pattern="00000" />
 			        </h:outputText>
 			    </p:column>		
 			    
-			    <p:column headerText="No." width="20" style="text-align: center">
+			    <p:column headerText="No." width="40" style="text-align: center" sortBy="#{dtpension.secuencia}">
 			        <h:outputText value="#{dtpension.secuencia}">
 			        	<f:convertNumber pattern="00" />
 			        </h:outputText>
@@ -159,13 +160,13 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 			        	title="#{dtpension.matMatricula.matOferta.descripcion}" />
 			    </p:column>	
 			    
-			    <p:column headerText="Fecha V." width="70" style="text-align: center">
+			    <p:column headerText="Fecha V." width="65" style="text-align: center">
 			        <h:outputText value="#{dtpension.fechaVence}">
 			        	<f:convertDateTime pattern = "dd/MM/yyyy" />
 			        </h:outputText>
 			    </p:column>						    			 
 			    
-			    <p:column headerText="Fecha P." width="70" style="text-align: center">
+			    <p:column headerText="Fecha P." width="65" style="text-align: center">
 			        <h:outputText value="#{dtpension.fechaPago}">
 			        	<f:convertDateTime pattern = "dd/MM/yyyy" />
 			        </h:outputText>
@@ -224,17 +225,22 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 			    
 			    <p:column headerText="Acciones" width="200" style="text-align: center" exportable="false">
 			        <div style="background-color: white; border-radius: 2px; padding: 2px;">
-				        <p:commandLink title="Pagar" disabled="#{dtpension.saldo eq '0.00'?true:false}" oncomplete="PF('dglPag').show();" update=":form:panelPago">	
+				        <p:commandLink title="Pagar" oncomplete="PF('dglPag').show();" update=":form:dglPag">	
 							<i class="fa fa-dollar" /> Pagar
 							
 							<f:setPropertyActionListener value="#{dtpension.idPension}" target="#{pension.idPension}" />
 							<f:setPropertyActionListener value="#{dtpension.matMatricula.idMatricula}" target="#{pension.olMatricula}" />
 							<f:setPropertyActionListener value="#{dtpension.secuencia}" target="#{pension.olSecuencia}" />
-							<f:setPropertyActionListener value="#{dtpension.matMatricula.matEstudiante.apellidos} #{dtpension.matMatricula.matEstudiante.nombres}" target="#{pension.olEstudiante}" />
+							<f:setPropertyActionListener value="#{dtpension.fechaVence}" target="#{pension.itVence}" />
+							<f:setPropertyActionListener value="#{dtpension.matMatricula.matEstudiante.apellidos} #{dtpension.matMatricula.matEstudiante.nombres}" target="#{pension.olEstudiante}" />							
 							<f:setPropertyActionListener value="#{dtpension.precio}" target="#{pension.inValor}" />							
+							<f:setPropertyActionListener value="#{dtpension.gesDescuento eq null?false:true}" target="#{pension.ckDescuento}" />
+							<f:setPropertyActionListener value="#{dtpension.gesDescuento.idDescuento}" target="#{pension.soDescuento}" />
 							<f:setPropertyActionListener value="#{dtpension.totalPagar}" target="#{pension.inTotalPagar}" />
-							<f:setPropertyActionListener value="#{dtpension.saldo}" target="#{pension.inSaldo}" />							
-							<f:setPropertyActionListener value="false" target="#{pension.ckDescuento}" />
+							<f:setPropertyActionListener value="PT" target="#{pension.soOpcion}" />
+							<f:setPropertyActionListener value="0" target="#{pension.inValorPagar}" />
+							<f:setPropertyActionListener value="#{dtpension.abono}" target="#{pension.inAbono}" />
+							<f:setPropertyActionListener value="#{dtpension.saldo}" target="#{pension.inSaldo}" />
 															
 						</p:commandLink>
 						<h:outputLabel value=" | " style="color: #222" /> 
@@ -242,7 +248,21 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 							<i class="fa fa-send" /> Notificar
 						</p:commandLink>
 						<h:outputLabel value=" | " style="color: #222" />
-						<p:commandLink title="Imprimir comprobante de pago" disabled="#{dtpension.saldo eq '0.00'?false:true}">	
+						<p:commandLink title="Imprimir comprobante de pago" disabled="#{dtpension.saldo eq '0.00'?false:true}"
+							onclick="printComprobante(
+								'#{dtpension.idPension}',
+								'#{dtpension.matMatricula.idMatricula}',
+								'#{dtpension.matMatricula.matEstudiante.apellidos} #{dtpension.matMatricula.matEstudiante.nombres}',
+								'#{general.getDesCatalogoDet(dtpension.formaPago)}',
+								'#{general.getFechaString(dtpension.fechaPago)}',
+								'#{dtpension.precio}',
+								'#{dtpension.secuencia}',
+								'#{dtpension.gesDescuento.porcentaje}% (#{dtpension.gesDescuento.descripcion})',
+								'#{dtpension.totalPagar}',
+								'#{dtpension.totalPagar}',
+								'#{dtpension.saldo}',
+								'#{login.getNombre()}'
+										)">	
 							<i class="fa fa-file-text-o" /> Imprimir
 						</p:commandLink>
 					</div>
@@ -275,50 +295,148 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 			    </f:facet>      
 			</p:dataTable>
 			
-			<p:dialog header="Pagar" widgetVar="dglPag" modal="true" closable="true" maximizable="false" resizable="false" width="600px" height="350px">
+			<script type="text/javascript">
+				function printComprobante(idPension, codMatricula, estudiante, formaPago, fechaPago, valor, concepto, descuento, totalPagar, valorPagado, saldo, usuario) {
+				  var newWin = window.open('','Print-Window');
+				  				  
+				  var f = new Date()
+				 
+				  var dd = f.getDate()
+				  var mm = f.getMonth() + 1
+				  if (dd &lt; 10) { dd = '0' + dd } 
+				  if (mm &lt; 10) { mm = '0' + mm }
+				  var yyyy = f.getFullYear()
+				  /*var yy = yyyy.toString().substr(2,2)*/				  
+				  var fecha = dd + '/' + mm + '/' + yyyy
+
+				  var hh = f.getHours()
+				  var mi = f.getMinutes()
+				  var ss = f.getSeconds()							 							  
+				  if (hh &lt; 10) { hh = '0' + hh } 
+				  if (mi &lt; 10) { mi = '0' + mi } 
+				  if (ss &lt; 10) { ss = '0' + ss }
+				  var hora = hh + ':' + mi + ':' + ss
+				  
+				  if (descuento == '% ()') { descuento = '--' }
+				  if (concepto == 0) { concepto = 'Pago de Matrícula' } else { concepto = 'Pago de Pensión No. '+ concepto.padStart(2,"0") }
+				  
+				  newWin.document.open();
+				  newWin.document.write('<link type="text/css" rel="stylesheet" href="/sistema_ue_arv/recursos/css/printV.css"/> '				  	
+				  	+'<body onload="window.print()">'
+				  	+'<div>'
+				  	+'<table style="width: 100%; font-size: 13px; border-top: 1px dashed #222;">'
+				  	+'	<tbody>'
+				  	+'		<tr>'
+				  	+'			<td style="width: 20%">'
+				  	+'				<img src="/sistema_ue_arv/recursos/images/ESCUELA_ARV2.png" height="80" />'
+				  	+'			</td>'
+				  	+'			<td style="width: 80%" align="center">'
+				  	+'				<div id="nreporte">'
+				  	+'				Comprobante de Pago No. '+ idPension.padStart(6,"0")
+				  	+'				</div>'
+				  	+'				<div>Fecha y hora: '+ fecha +' '+ hora
+				  	+'				</div>'
+				  	+'				<div>Usuario: '+ usuario				  	
+				  	+'				</div>'
+				  	+'			</td>'
+				  	+'		</tr>'
+				  	+'	</tbody>'
+				  	+'</table>'
+				  	+'</div>'
+				  	+'<table style="width: 100%; font-size: 13px; border-bottom: 1px dashed #222; margin-top: 3px">'
+				  	+'<tbody>'
+				  	+'	<tr style="border: none">'
+				  	+'		<td style="text-align: start; font-weight: bold">Matricula: <span style="font-weight: normal">'+ codMatricula.padStart(5,"0")
+				  	+'		</span></td>'				
+				  	+'	</tr>'
+				  	+'	<tr style="border: none">'
+				  	+'		<td style="text-align: start; font-weight: bold">Estudiante: <span style="font-weight: normal">'+ estudiante
+				  	+'		</span></td>'				
+				  	+'	</tr>'
+				  	+'	<tr style="border: none">'
+				  	+'		<td style="text-align: start; font-weight: bold">Forma de pago: <span style="font-weight: normal">' + formaPago
+				  	+'		</span></td>'
+				  	+'		<td style="text-align: start; font-weight: bold">Fecha de pago: <span style="font-weight: normal">' + fechaPago
+				  	+'		</span></td>'
+				  	+'	</tr>'
+				  	+'	<tr style="border: none">'
+				  	+'		<td style="text-align: start; font-weight: bold">Valor: <span style="font-weight: normal; font-size: 14px; font-weight: bold">$ ' + valor
+				  	+'		</span></td>'
+				  	+'	</tr>'
+				  	+'	<tr style="border: none">'
+				  	+'		<td style="text-align: start; font-weight: bold">Concepto: <span style="font-weight: normal">' + concepto
+				  	+'		</span></td>'				
+				  	+'	</tr>'
+				  	+'	<tr style="border: none">'
+				  	+'		<td style="text-align: start; font-weight: bold">Descuento: <span style="font-weight: normal">' + descuento
+				  	+'		</span></td>'
+				  	+'	</tr>'
+				  	+'	<tr style="border: none">'
+				  	+'		<td style="text-align: start; font-weight: bold">Total a pagar: <span style="font-weight: normal; font-size: 14px; font-weight: bold">$ ' + totalPagar
+					+'		</span></td>'
+				  	+'		<td style="text-align: start; font-weight: bold">Valor pagado: <span style="font-weight: normal; font-size: 14px; font-weight: bold">$ ' + valorPagado
+				  	+'		</span></td>'				
+				  	+'	</tr>'
+				  	+'	<tr style="border: none">'
+				  	+'		<td style="text-align: start; font-weight: bold">Saldo: <span style="font-weight: normal; font-size: 14px; font-weight: bold">$ ' + saldo
+				  	+'		</span></td>'
+				  	+'	</tr>'	
+				  	+'</tbody>'
+				  	+'</table>'	
+				  	+'</body>');				  			  
+				  newWin.document.close();
+				  setTimeout(function(){newWin.close();},400);			  
+				}
+			</script>	
+			
+			<p:dialog header="Pagar #{pension.olSecuencia eq 0 ? 'Matrícula' : 'Pensión'}" id="dglPag" widgetVar="dglPag" modal="true" closable="true" maximizable="false" resizable="false" width="500px" height="350px">
 				<p:ajax event="close" update="form" listener="#{pension.closeDialogo}" />
 				
 				<h:panelGrid id="panelPago" columns="2" cellpadding="0" style="width: auto; min-width: 100%;" columnClasses="ui-grid-col-3,ui-grid-col-9">				
 					<p:outputPanel style="text-align: end; padding: 5px; font-weight: bold">Matrícula:</p:outputPanel>
-					<p:inputText style="width: 50px; text-align: center; background: #f0f0f0; font-weight: bold;" value="#{pension.olMatricula}" readonly="true">
+					<p:inputText style="width: 50px; text-align: center; background: #fff8ba; font-weight: bold;" value="#{pension.olMatricula}" readonly="true">
 						<f:convertNumber pattern="00000" />
 			        </p:inputText>
 										
 					<p:outputPanel style="text-align: end; padding: 5px; font-weight: bold">Pago de:</p:outputPanel>
 					<p:outputPanel style="display: inline-flex;">
-						<p:inputText style="width: 70px; text-align: center; background: #f0f0f0; font-weight: bold;" readonly="true" 
+						<p:inputText style="width: 60px; text-align: center; background: #fff8ba; font-weight: bold;" readonly="true" 
 							value="#{pension.olSecuencia eq 0 ? 'Matrícula' : 'Pensión'}">						
 				        </p:inputText>
-				        <p:outputPanel style="text-align: end; padding: 5px; font-weight: bold; display: #{pension.olSecuencia eq 0 ? 'none' : ''}" >No.</p:outputPanel>
-				        <p:inputText style="width: 20px; text-align: center; background: #f0f0f0; font-weight: bold; display: #{pension.olSecuencia eq 0 ? 'none' : ''}" 
+				        <p:outputPanel style="text-align: end; padding: 5px; font-weight: bold; display: #{pension.olSecuencia eq 0 ? 'none' : ''}">No.</p:outputPanel>
+				        <p:inputText style="width: 20px; text-align: center; background: #fff8ba; font-weight: bold; display: #{pension.olSecuencia eq 0 ? 'none' : ''}" 
 				        	readonly="true"	value="#{pension.olSecuencia}">					
 							<f:convertNumber pattern="00" />	
 				        </p:inputText>
+				        <p:outputPanel style="text-align: end; padding: 5px; font-weight: bold;">Vence el día</p:outputPanel>				        
+				        <p:inputText style="width: 70px; text-align: center; background: #fff8ba; font-weight: bold;" value="#{pension.itVence}" readonly="true">
+				        	<f:convertDateTime pattern = "dd/MM/yyyy" />
+				        </p:inputText>				        
 			        </p:outputPanel>
 					
 					<p:outputPanel style="text-align: end; padding: 5px; font-weight: bold">Estudiante:</p:outputPanel>
-					<p:inputText style="width: 90%; background: #f0f0f0; font-weight: bold;" readonly="true" value="#{pension.olEstudiante}" />	
+					<p:inputText style="width: 90%; background: #fff8ba; font-weight: bold;" readonly="true" value="#{pension.olEstudiante}" />	
 								
-					<p:outputPanel style="text-align: end; padding: 5px">Forma de pago:</p:outputPanel>
-					<p:selectOneMenu id="soFormaPago" value="#{pension.soFormaPago}">
+					<p:outputPanel style="text-align: end; padding: 5px; font-weight: bold">Forma de pago:</p:outputPanel>
+					<p:selectOneMenu id="soFormaPago" value="#{pension.soFormaPago}" style="min-width: 73px;">
 						<f:selectItems value="#{pension.listFormaPago}" />		
 					</p:selectOneMenu>
 										
-				   	<p:outputPanel style="text-align: end; padding: 5px">Valor:</p:outputPanel>					
+				   	<p:outputPanel style="text-align: end; padding: 5px; font-weight: bold">Valor:</p:outputPanel>					
 			        <p:outputPanel class="ui-inputgroup">          
 			            <span class="ui-inputgroup-addon">$</span>
 			            <p:inputNumber value="#{pension.inValor}" decimalPlaces="2" inputStyle="width: 60px; text-align: end; background: #f0f0f0; font-weight: bold;" readonly="true" />			           
 			        </p:outputPanel>
 			        
-			        <p:outputPanel style="text-align: end; padding: 5px">Descuento:</p:outputPanel>
+			        <p:outputPanel style="text-align: end; padding: 5px; font-weight: bold">Descuento:</p:outputPanel>
 					<p:outputPanel style="display: inline-flex;">
 						<h:selectBooleanCheckbox value="#{pension.ckDescuento}" style="margin-top: 6px"> 
-							<p:ajax update="soDescuento opPorcentaje inTotalPagar inSaldo" />
+							<p:ajax listener="#{pension.calcularValores()}" update="soDescuento opPorcentaje inTotalPagar inValorPagar inAbono inSaldo" />
 						</h:selectBooleanCheckbox>
 						<p:spacer width="5px" />
 						<p:selectOneMenu id="soDescuento" value="#{pension.soDescuento}" style="display: #{pension.ckDescuento eq false ? 'none' : ''}">
 							<f:selectItems value="#{pension.listDescuentos}" />
-							<p:ajax listener="#{pension.onChangeDescuento()}" update="opPorcentaje inTotalPagar inSaldo"/>		
+							<p:ajax listener="#{pension.calcularValores()}" update="opPorcentaje inTotalPagar inValorPagar inAbono inSaldo"/>		
 						</p:selectOneMenu>
 						<p:spacer width="10px" />
 						<p:outputPanel id="opPorcentaje" class="ui-inputgroup" style="display: #{pension.ckDescuento eq false ? 'none' : ''}">
@@ -328,38 +446,48 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 				        </p:outputPanel>
 					</p:outputPanel>
 					
-					<p:outputPanel style="text-align: end; padding: 5px">Total a pagar:</p:outputPanel>
+					<p:outputPanel style="text-align: end; padding: 5px; font-weight: bold">Total a pagar:</p:outputPanel>
 					<p:outputPanel class="ui-inputgroup">          
 			            <span class="ui-inputgroup-addon">$</span>
 			            <p:inputNumber id="inTotalPagar" decimalPlaces="2" inputStyle="width: 60px; text-align: end; background: #f0f0f0; font-weight: bold;" readonly="true"  
 			            	value="#{pension.inTotalPagar}" />			           
 			        </p:outputPanel>     	
 			        					
-					<p:outputPanel style="text-align: end; padding: 5px">Opción de pago:</p:outputPanel>
-					<p:selectOneMenu id="soOpcion" value="#{pension.soOpcion}">            
+					<p:outputPanel style="text-align: end; padding: 5px; font-weight: bold">Opción de pago:</p:outputPanel>
+					<p:selectOneMenu id="soOpcion" value="#{pension.soOpcion}" style="min-width: 73px;">            
 			            <f:selectItem itemLabel="Total" itemValue="PT" />
-			            <f:selectItem itemLabel="Abono" itemValue="AB" />			            
+			            <f:selectItem itemLabel="Abono" itemValue="AB" />
+			            <p:ajax listener="#{pension.calcularValores()}" update="inAbono inSaldo btnPago"/>			            
 				    </p:selectOneMenu>
 			        
-			        <p:outputPanel style="text-align: end; padding: 5px">Valor a pagar:</p:outputPanel>
+			        <p:outputPanel style="text-align: end; padding: 5px; font-weight: bold">Valor a pagar:</p:outputPanel>
 					<p:outputPanel class="ui-inputgroup">          
 			            <span class="ui-inputgroup-addon">$</span>
 			            <p:inputNumber id="inValorPagar" value="#{pension.inValorPagar}" decimalPlaces="2" inputStyle="width: 60px; text-align: end">
-			            	<p:ajax update="inSaldo" />	
+			            	<p:ajax listener="#{pension.calcularValores()}" update="inValorPagar inAbono inSaldo btnPago" />	
 			            </p:inputNumber>			           
 				    </p:outputPanel>     	
 		        
-					<p:outputPanel style="text-align: end; padding: 5px">Saldo:</p:outputPanel>					
+		        	<p:outputPanel style="text-align: end; padding: 5px; font-weight: bold">Valor abonado:</p:outputPanel>
+					<p:outputPanel class="ui-inputgroup">          
+			            <span class="ui-inputgroup-addon">$</span>
+			            <p:inputNumber id="inAbono" decimalPlaces="2" inputStyle="width: 60px; text-align: end; background: #f0f0f0; font-weight: bold;" 
+			            	readonly="true" value="#{pension.inAbono}" />			            					           
+				    </p:outputPanel>
+		        
+					<p:outputPanel style="text-align: end; padding: 5px; font-weight: bold">Saldo:</p:outputPanel>					
 			        <p:outputPanel class="ui-inputgroup">          
 			            <span class="ui-inputgroup-addon">$</span>
-			            <p:inputNumber id="inSaldo" decimalPlaces="2" inputStyle="width: 60px; text-align: end; background: #f0f0f0; font-weight: bold; color: #003c02;" 
-			            	readonly="true" value="#{pension.inSaldo}" />			           
+			            <p:inputNumber id="inSaldo" decimalPlaces="2" readonly="true" value="#{pension.inSaldo}" 
+			            	inputStyle="width: 60px; text-align: end; background: #f0f0f0; font-weight: bold; color: #{fn:substring(pension.inSaldo, 0, 1) eq '-'? 'red':'#003c02'};"/>			           
 			        </p:outputPanel>    								
 															
-					<f:facet name = "footer"><br/>
+					<f:facet name="footer"><br/>
 					    <h:panelGroup style = "display:block; text-align:center">
 					      	<p:commandButton id="btnPago" value="Registrar pago" icon="fa fa-dollar" actionListener="#{pension.pagar}" update="panelPago dt growl">
-								<p:confirm header="Confirmación" icon="fa fa-warning" message="¿Está seguro(a) que desea registrar el pago?" />
+								<p:confirm header="Confirmación" icon="fa fa-warning" 
+									message="¿Está seguro(a) que desea registrar el #{pension.soOpcion eq 'AB'?'abono ':'pago total '}
+												de $ #{pension.inValorPagar}? " />
 							</p:commandButton>
 						</h:panelGroup>
 					</f:facet>

@@ -58,12 +58,14 @@ public class Pension implements Serializable {
 	String olEstudiante = "";
 	String soFormaPago = "";
 	String soDescuento = "";
-	String soOpcion = "";
+	String soOpcion = "";	
+	Date itVence = new Date();
 	
 	boolean ckDescuento = false;
 	
 	
 	BigDecimal inValor = new BigDecimal(0);
+	BigDecimal inAbono = new BigDecimal(0);
 	BigDecimal inValorPagar = new BigDecimal(0);
 	BigDecimal inTotalPagar = new BigDecimal(0);
 	BigDecimal inSaldo = new BigDecimal(0);
@@ -104,7 +106,7 @@ public class Pension implements Serializable {
 		
 		listDescuentos = (ArrayList<SelectItem>) llenaComboDescuento();
 		soDescuento = listDescuentos.get(0).getValue().toString();
-		onChangeDescuento();
+		calcularValores();
 		 
 		listFormaPago = (ArrayList<SelectItem>) llenaComboFormaPago();
 		soFormaPago = listFormaPago.get(0).getValue().toString();
@@ -146,12 +148,29 @@ public class Pension implements Serializable {
 		olDiaActual = getDiaVenceActual();	
 	}
 	
-	public void onChangeDescuento() {
-		GesDescuento des = (GesDescuento)  DAO.buscarObject(new GesDescuento(), "from GesDescuento c where c.idDescuento = '" + soDescuento +"'");
-		if (des == null)
-			inPorcentaje = new BigDecimal(0);
-		else
-			inPorcentaje = des.getPorcentaje();	
+	public void calcularValores() {		
+		if (!idPension.equals("")) {			
+			inValorPagar = (inValorPagar == null ? BigDecimal.ZERO : inValorPagar);
+			
+			GesPension pen = (GesPension)  DAO.buscarObject(new GesPension(), "from GesPension c where c.idPension = '" + idPension +"'");
+			if (ckDescuento) {
+				if (soDescuento.equals("")) 
+					soDescuento = listDescuentos.get(0).getValue().toString();							
+
+				GesDescuento des = (GesDescuento)  DAO.buscarObject(new GesDescuento(), "from GesDescuento c where c.idDescuento = '" + soDescuento +"'");			
+				inPorcentaje = des.getPorcentaje();			
+				inTotalPagar = inValor.subtract((inValor.multiply(inPorcentaje).divide(new BigDecimal(100))));				
+			} else {
+				inPorcentaje = new BigDecimal(0);
+				inTotalPagar = inValor;				
+			}
+			inSaldo = inTotalPagar.subtract(pen.getAbono()).subtract(inValorPagar);
+			
+			if (soOpcion.equals("AB"))
+				inAbono = inValorPagar.add(pen.getAbono());
+			else if (soOpcion.equals("PT"))
+				inAbono = pen.getAbono();
+		}
 	}
 	
 	// CONSULTA		
@@ -252,12 +271,28 @@ public class Pension implements Serializable {
 	
 	public void pagar() {
 		// VALIDACIONES		
-		if (inValorPagar == new BigDecimal(0)) {			
-			mensaje = "Debe ingresar el valor a pagar";
-			FacesContext.getCurrentInstance().addMessage("growl", new FacesMessage(FacesMessage.SEVERITY_ERROR, mensajeTitulo, mensaje));
-			return;
+		if (inSaldo.compareTo(BigDecimal.ZERO) != 0) {
+			if (inValorPagar.compareTo(BigDecimal.ZERO) == 0) {					
+				mensaje = "Debe ingresar el valor a pagar";
+				FacesContext.getCurrentInstance().addMessage("growl", new FacesMessage(FacesMessage.SEVERITY_ERROR, mensajeTitulo, mensaje));
+				return;
+			}
+		}		
+		if (soOpcion.equals("AB")) {
+			if (inSaldo.compareTo(BigDecimal.ZERO) <= 0) {
+				mensaje = "El saldo no debe quedar en 0 o negativo, cuando la opción de pago es Abono";
+				FacesContext.getCurrentInstance().addMessage("growl", new FacesMessage(FacesMessage.SEVERITY_ERROR, mensajeTitulo, mensaje));
+				return;
+			}
+		}		
+		if (soOpcion.equals("PT")) {
+			if (inSaldo.compareTo(BigDecimal.ZERO) != 0) {
+				mensaje = "El saldo debe quedar en 0, cuando la opción de pago es Total";
+				FacesContext.getCurrentInstance().addMessage("growl", new FacesMessage(FacesMessage.SEVERITY_ERROR, mensajeTitulo, mensaje));
+				return;
+			}
 		}
-				        
+		
 		// PROCESO
 		Date date = new Date();
 		Timestamp fecha = new Timestamp(date.getTime());
@@ -270,28 +305,35 @@ public class Pension implements Serializable {
 			
 			if (ckDescuento)
 				pen.setGesDescuento(des);
+			else
+				pen.setGesDescuento(null);
 			
-			if (soOpcion.equals("AB"))
-				pen.setAbono(inValorPagar);
-			else if (soOpcion.equals("PT"))
-				pen.setFechaPago(fecha);
-			
-			pen.setSaldo(inSaldo);
 			pen.setFormaPago(soFormaPago);
-			pen.setTotalPagar(inTotalPagar);					
+			if (soOpcion.equals("AB")) {
+				pen.setAbono(inAbono);
+				pen.setFechaPago(null);
+			}
+			pen.setTotalPagar(inTotalPagar);				
+			pen.setSaldo(inSaldo);
+			
+			if (soOpcion.equals("PT")) {
+				pen.setAbono(BigDecimal.ZERO);
+				pen.setFechaPago(fecha);
+			}
+			
 			pen.setUsuarioAct(Session.getUserName());			
 			pen.setFechaAct(fecha);
 				
 			if (!DAO.saveOrUpdate(pen, 1, em)) {
 				em.getTransaction().rollback();
 				return;					
-			}			
-
+			}
 			em.getTransaction().commit();			
 			mensaje = "Pago exitoso";
 			if (soOpcion.equals("AB"))
 				mensaje = "Abono exitoso";			
-			FacesContext.getCurrentInstance().addMessage("growl",	new FacesMessage(FacesMessage.SEVERITY_INFO, mensajeTitulo, mensaje));		
+			FacesContext.getCurrentInstance().addMessage("growl",	new FacesMessage(FacesMessage.SEVERITY_INFO, mensajeTitulo, mensaje));			
+			buscar();
 		} catch (Exception e) {
 			em.getTransaction().rollback();
 			e.printStackTrace();
@@ -480,5 +522,17 @@ public class Pension implements Serializable {
 	}
 	public void setSoOpcion(String soOpcion) {
 		this.soOpcion = soOpcion;
+	}
+	public Date getItVence() {
+		return itVence;
+	}
+	public void setItVence(Date itVence) {
+		this.itVence = itVence;
+	}
+	public BigDecimal getInAbono() {
+		return inAbono;
+	}
+	public void setInAbono(BigDecimal inAbono) {
+		this.inAbono = inAbono;
 	}
 }
