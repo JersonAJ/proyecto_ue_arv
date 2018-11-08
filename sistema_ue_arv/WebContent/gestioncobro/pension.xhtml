@@ -244,8 +244,12 @@ xmlns:fn="http://xmlns.jcp.org/jsp/jstl/functions">
 															
 						</p:commandLink>
 						<h:outputLabel value=" | " style="color: #222" /> 
-						<p:commandLink title="Enviar notificación de pago" disabled="#{dtpension.saldo eq '0.00'?true:false}">	
+						<p:commandLink title="Enviar notificación de pago" actionListener="#{pension.notificar}" disabled="#{dtpension.saldo eq '0.00'?true:false}">	
 							<i class="fa fa-send" /> Notificar
+							
+							<p:confirm header="Confirmación" icon="fa fa-warning" 
+									message="¿Está seguro(a) que desea enviar la notificación? " />
+							
 						</p:commandLink>
 						<h:outputLabel value=" | " style="color: #222" />
 						<p:commandLink title="Imprimir comprobante de pago" disabled="#{dtpension.saldo eq '0.00'?false:true}"

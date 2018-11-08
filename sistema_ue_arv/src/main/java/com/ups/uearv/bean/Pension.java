@@ -27,6 +27,7 @@ import javax.persistence.Query;
 import com.ups.uearv.entidades.GesDescuento;
 import com.ups.uearv.entidades.GesPension;
 import com.ups.uearv.servicios.DAO;
+import com.ups.uearv.servicios.SMTPConfig;
 import com.ups.uearv.servicios.Session;
 import com.ups.uearv.servicios.Util;
 
@@ -339,6 +340,16 @@ public class Pension implements Serializable {
 			e.printStackTrace();
 		}				
 	}	
+	
+	public void notificar() {		
+		SMTPConfig smtp = new SMTPConfig();
+		String destinatario = "jarmijosjaen@gmail.com";
+		boolean correo = smtp.sendMail("Nombre", "Asunto", "Este es el mensaje", destinatario, "");
+		if (correo) 
+			System.out.println(">>> SE ENVIO CORREO <<<"); 
+		else 
+			System.out.println(">>> ERROR AL ENVIAR CORREO <<<");		
+	}
 	
 	public String getDiaVenceActual() {
 		try {
