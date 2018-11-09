@@ -4,7 +4,8 @@ xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
 xmlns:h="http://xmlns.jcp.org/jsf/html"
 xmlns:p="http://primefaces.org/ui"
 xmlns:f="http://xmlns.jcp.org/jsf/core"
-xmlns:fn="http://xmlns.jcp.org/jsp/jstl/functions">
+xmlns:fn="http://xmlns.jcp.org/jsp/jstl/functions"
+xmlns:pe="http://primefaces.org/ui/extensions">
 			
 	<ui:define name="titulo"><i class="fa fa-money" /> Gestión de cobros / Matrículas y Pensiones</ui:define>
 	
@@ -244,11 +245,20 @@ xmlns:fn="http://xmlns.jcp.org/jsp/jstl/functions">
 															
 						</p:commandLink>
 						<h:outputLabel value=" | " style="color: #222" /> 
-						<p:commandLink title="Enviar notificación de pago" actionListener="#{pension.notificar}" disabled="#{dtpension.saldo eq '0.00'?true:false}">	
+						<p:commandLink title="Enviar notificación de pago" disabled="#{dtpension.saldo eq '0.00'?true:false}" oncomplete="PF('dglNot').show();" update=":form:dglNot">								
 							<i class="fa fa-send" /> Notificar
 							
-							<p:confirm header="Confirmación" icon="fa fa-warning" 
-									message="¿Está seguro(a) que desea enviar la notificación? " />
+							<f:setPropertyActionListener value="#{dtpension.idPension}" target="#{pension.idPension}" />
+							<f:setPropertyActionListener 
+								value="#{fn:substringBefore(dtpension.matMatricula.matEstudiante.matRepresentante.nombres,' ') eq ''? 
+									dtpension.matMatricula.matEstudiante.matRepresentante.nombres : 
+									fn:substringBefore(dtpension.matMatricula.matEstudiante.matRepresentante.nombres,' ') }" 
+								target="#{pension.olRepresentante}" />
+							<f:setPropertyActionListener value="#{dtpension.secuencia}" target="#{pension.olSecuencia}" />
+							<f:setPropertyActionListener value="#{dtpension.matMatricula.matEstudiante.apellidos} #{dtpension.matMatricula.matEstudiante.nombres}" target="#{pension.olEstudiante}" />
+							<f:setPropertyActionListener value="#{dtpension.totalPagar}" target="#{pension.inTotalPagar}" />
+							
+							<f:setPropertyActionListener value="#{dtpension.matMatricula.matEstudiante.matRepresentante.correo}" target="#{pension.olCorreo}" />
 							
 						</p:commandLink>
 						<h:outputLabel value=" | " style="color: #222" />
@@ -266,7 +276,7 @@ xmlns:fn="http://xmlns.jcp.org/jsp/jstl/functions">
 								'#{dtpension.totalPagar}',
 								'#{dtpension.saldo}',
 								'#{login.getNombre()}')">	
-							<i class="fa fa-file-text-o" /> Imprimir
+							<i class="fa fa-print" /> Imprimir
 						</p:commandLink>
 					</div>
 			    </p:column>
@@ -299,18 +309,16 @@ xmlns:fn="http://xmlns.jcp.org/jsp/jstl/functions">
 			</p:dataTable>
 			
 			<!-- IMPRIMIR -->
-			<script type="text/javascript">
+			<script type="text/javascript">			
+				/* COMPROBANTE */	
 				function printComprobante(idPension, codMatricula, estudiante, formaPago, fechaPago, valor, concepto, descuento, totalPagar, valorPagado, saldo, usuario) {
-				  var newWin = window.open('','Print-Window');
-				  				  
-				  var f = new Date()
-				 
+				  var f = new Date()				 
 				  var dd = f.getDate()
 				  var mm = f.getMonth() + 1
 				  if (dd &lt; 10) { dd = '0' + dd } 
 				  if (mm &lt; 10) { mm = '0' + mm }
 				  var yyyy = f.getFullYear()
-				  /*var yy = yyyy.toString().substr(2,2)*/				  
+				  var yy = yyyy.toString().substr(2,2)				  
 				  var fecha = dd + '/' + mm + '/' + yyyy
 
 				  var hh = f.getHours()
@@ -324,75 +332,113 @@ xmlns:fn="http://xmlns.jcp.org/jsp/jstl/functions">
 				  if (descuento == '% ()') { descuento = '--' }
 				  if (concepto == 0) { concepto = 'Pago de Matrícula' } else { concepto = 'Pago de Pensión No. '+ concepto.padStart(2,"0") }
 				  
-				  newWin.document.open();
+				  var newWin = window.open('','Print-Window');
 				  newWin.document.write('<link type="text/css" rel="stylesheet" href="/sistema_ue_arv/recursos/css/printV.css"/> '				  	
-				  	+'<body onload="window.print()">'
-				  	+'<div>'
-				  	+'<table style="width: 100%; font-size: 13px; border-top: 1px dashed #222;">'
-				  	+'	<tbody>'
-				  	+'		<tr>'
-				  	+'			<td style="width: 20%">'
-				  	+'				<img src="/sistema_ue_arv/recursos/images/ESCUELA_ARV2.png" height="80" />'
-				  	+'			</td>'
-				  	+'			<td style="width: 80%" align="center">'
-				  	+'				<div id="nreporte">'
-				  	+'				Comprobante de Pago No. '+ idPension.padStart(6,"0")
-				  	+'				</div>'
-				  	+'				<div>Fecha y hora: '+ fecha +' '+ hora
-				  	+'				</div>'
-				  	+'				<div>Usuario: '+ usuario				  	
-				  	+'				</div>'
-				  	+'			</td>'
-				  	+'		</tr>'
-				  	+'	</tbody>'
-				  	+'</table>'
-				  	+'</div>'
-				  	+'<table style="width: 100%; font-size: 13px; border-bottom: 1px dashed #222; margin-top: 3px">'
-				  	+'<tbody>'
-				  	+'	<tr style="border: none">'
-				  	+'		<td style="text-align: start; font-weight: bold">Matricula: <span style="font-weight: normal">'+ codMatricula.padStart(5,"0")
-				  	+'		</span></td>'				
-				  	+'	</tr>'
-				  	+'	<tr style="border: none">'
-				  	+'		<td style="text-align: start; font-weight: bold">Estudiante: <span style="font-weight: normal">'+ estudiante
-				  	+'		</span></td>'				
-				  	+'	</tr>'
-				  	+'	<tr style="border: none">'
-				  	+'		<td style="text-align: start; font-weight: bold">Forma de pago: <span style="font-weight: normal">' + formaPago
-				  	+'		</span></td>'
-				  	+'		<td style="text-align: start; font-weight: bold">Fecha y hora de pago: <span style="font-weight: normal">' + fechaPago
-				  	+'		</span></td>'
-				  	+'	</tr>'
-				  	+'	<tr style="border: none">'
-				  	+'		<td style="text-align: start; font-weight: bold">Valor: <span style="font-weight: normal; font-size: 14px; font-weight: bold">$ ' + valor
-				  	+'		</span></td>'
-				  	+'	</tr>'
-				  	+'	<tr style="border: none">'
-				  	+'		<td style="text-align: start; font-weight: bold">Concepto: <span style="font-weight: normal">' + concepto
-				  	+'		</span></td>'				
-				  	+'	</tr>'
-				  	+'	<tr style="border: none">'
-				  	+'		<td style="text-align: start; font-weight: bold">Descuento: <span style="font-weight: normal">' + descuento
-				  	+'		</span></td>'
-				  	+'	</tr>'
-				  	+'	<tr style="border: none">'
-				  	+'		<td style="text-align: start; font-weight: bold">Total a pagar: <span style="font-weight: normal; font-size: 14px; font-weight: bold">$ ' + totalPagar
+				 	+'<body onload="window.print()">'
+				 	+'<div>'
+				 	+'<table style="width: 100%; font-size: 13px; border-top: 1px dashed #222;">'
+				 	+'	<tbody>'
+				 	+'		<tr>'
+				 	+'			<td style="width: 20%">'
+				 	+'				<img src="/sistema_ue_arv/recursos/images/ESCUELA_ARV2.png" height="80" />'
+				 	+'			</td>'
+				 	+'			<td style="width: 80%" align="center">'
+				 	+'				<div id="nreporte">'
+				 	+'				Comprobante de Pago No. '+ idPension.padStart(6,"0")
+				 	+'				</div>'
+				 	+'				<div>Fecha y hora: '+ fecha +' '+ hora
+				 	+'				</div>'
+				 	+'				<div>Usuario: '+ usuario				  	
+				 	+'				</div>'
+				 	+'			</td>'
+				 	+'		</tr>'
+				 	+'	</tbody>'
+				 	+'</table>'
+				 	+'</div>'
+				 	+'<table style="width: 100%; font-size: 13px; border-bottom: 1px dashed #222; margin-top: 3px">'
+				 	+'<tbody>'
+				 	+'	<tr style="border: none">'
+				 	+'		<td style="text-align: start; font-weight: bold">Matricula: <span style="font-weight: normal">'+ codMatricula.padStart(5,"0")
+				 	+'		</span></td>'				
+				 	+'	</tr>'
+				 	+'	<tr style="border: none">'
+				 	+'		<td style="text-align: start; font-weight: bold">Estudiante: <span style="font-weight: normal">'+ estudiante
+				 	+'		</span></td>'				
+				 	+'	</tr>'
+				 	+'	<tr style="border: none">'
+				 	+'		<td style="text-align: start; font-weight: bold">Forma de pago: <span style="font-weight: normal">' + formaPago
+				 	+'		</span></td>'
+				 	+'		<td style="text-align: start; font-weight: bold">Fecha y hora de pago: <span style="font-weight: normal">' + fechaPago
+				 	+'		</span></td>'
+				 	+'	</tr>'
+				 	+'	<tr style="border: none">'
+				 	+'		<td style="text-align: start; font-weight: bold">Valor: <span style="font-weight: normal; font-size: 14px; font-weight: bold">$ ' + valor
+				 	+'		</span></td>'
+				 	+'	</tr>'
+				 	+'	<tr style="border: none">'
+				 	+'		<td style="text-align: start; font-weight: bold">Concepto: <span style="font-weight: normal">' + concepto
+				 	+'		</span></td>'				
+				 	+'	</tr>'
+				 	+'	<tr style="border: none">'
+				 	+'		<td style="text-align: start; font-weight: bold">Descuento: <span style="font-weight: normal">' + descuento
+				 	+'		</span></td>'
+				 	+'	</tr>'
+				 	+'	<tr style="border: none">'
+				 	+'		<td style="text-align: start; font-weight: bold">Total a pagar: <span style="font-weight: normal; font-size: 14px; font-weight: bold">$ ' + totalPagar
 					+'		</span></td>'
-				  	+'		<td style="text-align: start; font-weight: bold">Valor pagado: <span style="font-weight: normal; font-size: 14px; font-weight: bold">$ ' + valorPagado
-				  	+'		</span></td>'				
-				  	+'	</tr>'
-				  	+'	<tr style="border: none">'
-				  	+'		<td style="text-align: start; font-weight: bold">Saldo: <span style="font-weight: normal; font-size: 14px; font-weight: bold">$ ' + saldo
-				  	+'		</span></td>'
-				  	+'	</tr>'	
-				  	+'</tbody>'
-				  	+'</table>'	
-				  	+'</body>');				  			  
+				 	+'		<td style="text-align: start; font-weight: bold">Valor pagado: <span style="font-weight: normal; font-size: 14px; font-weight: bold">$ ' + valorPagado
+				 	+'		</span></td>'				
+				 	+'	</tr>'
+				 	+'	<tr style="border: none">'
+				 	+'		<td style="text-align: start; font-weight: bold">Saldo: <span style="font-weight: normal; font-size: 14px; font-weight: bold">$ ' + saldo
+				 	+'		</span></td>'
+				 	+'	</tr>'	
+				 	+'</tbody>'
+				 	+'</table>'	
+				 	+'</body>');			  			  
 				  newWin.document.close();
-				  setTimeout(function(){newWin.close();},400);			  
+				  setTimeout(function(){newWin.close();},300);		  
 				}
-			</script>	
+				
+				/* NOTIFICACION */				
+				function printNotificacion(representante, estudiante, valor, concepto) {
+				  if (concepto == 0) { concepto = 'Pago de Matrícula' } else { concepto = 'Pago de Pensión No. '+ concepto.padStart(2,"0") }
+				  
+				  var newWin = window.open('','Print-Window');				  
+				  newWin.document.write('<body onload="window.print()">'
+					+'<div align="center" style="font-family: Arial, sans-serif">'
+					+'<table style="width: 100%; border: 2px solid #8f3b4f; padding: 5px; font-size: 13px">'
+					+'<tbody>'
+					+'	<tr>'
+					+'		<td style="background: #8f3b4f; color: white; padding: 3px; font-size: 16px; font-weight: bold" align="center">'
+					+'			NOTIFICACIÓN DE PAGO'
+					+'		</td>'
+					+'	</tr>'
+					+'	<tr>'
+					+'		<td>'
+					+'			<br/>'
+					+'			Buen día estimado(a) Sr(a). ' + representante + ', reciba un cordial saludo'
+					+'			de parte de la Escuela Dr. Aquiles Rodríguez Venegas. '
+					+'			<br/>'
+					+'			El motivo de este mensaje es para recordarle que tiene una valor pendiente <b>($ ' + valor + ')</b> de '
+					+'			cancelar por concepto de: <b>' + concepto + '</b> del estudiante '
+					+'			<b>' + estudiante + '</b>. '
+					+'			<br/><br/>'
+					+'			Saludos, '
+					+'			<br/>'
+					+'			Escuela Dr. Aquiles Rodríguez Venegas.'
+					+'		</td>'
+					+'	</tr>'
+					+'</tbody>'
+					+'</table>'
+  					+'</div>'
+  					+'</body>');			  			  
+				  newWin.document.close();
+				  setTimeout(function(){newWin.close();},300);		  
+				}
+			</script>
 			
+			<!-- PAGAR -->
 			<p:dialog header="Pagar #{pension.olSecuencia eq 0 ? 'Matrícula' : 'Pensión'}" id="dglPag" widgetVar="dglPag" modal="true" closable="true" maximizable="false" resizable="false" width="500px" height="350px">
 				<p:ajax event="close" update="form" listener="#{pension.closeDialogo}" />
 				<h:panelGrid id="panelPago" columns="2" cellpadding="0" style="width: auto; min-width: 100%;" columnClasses="ui-grid-col-3,ui-grid-col-9">				
@@ -503,18 +549,69 @@ xmlns:fn="http://xmlns.jcp.org/jsp/jstl/functions">
 			</p:dialog>									
 						
 			<!-- NOTIFICAR -->
-			<p:dialog header="Notificar" widgetVar="dglNot" modal="true" closable="true" maximizable="false" resizable="false" width="400px" height="150px">
+			<p:dialog header="Notificar" id="dglNot" widgetVar="dglNot" modal="true" closable="true" maximizable="false" resizable="false" width="550px" height="300px">
 				<p:ajax event="close" update="form" listener="#{pension.closeDialogo}" />
 				<p:outputPanel id="panelNot">	
-					<p:outputPanel style="text-align: center">	
-				   	
-				   		
-						 			   
-					</p:outputPanel>  
+				   	<div align='center' style='font-family: Arial, sans-serif'>
+				   		<p:commandLink id="btnCopy" title="Copiar notificación">
+							<i class="fa fa-copy" /> Copiar
+						</p:commandLink>  
+						<pe:clipboard id="clipCopy" trigger="btnCopy" action="copy" target="opText" />
+						
+						<p:spacer width="10px" />
+						
+						<p:commandLink id="btnImp" title="Imprimir notificación" 
+							onclick="printNotificacion('#{pension.olRepresentante}','#{pension.inTotalPagar}','#{pension.olEstudiante}','#{pension.olSecuencia}')">	
+							<i class="fa fa-print" /> Imprimir							 
+						</p:commandLink>
+						<br /><br />	
+						<table style='width: 100%; border: 2px solid #8f3b4f; padding: 5px; font-size: 12px'>
+							<tbody>
+								<tr>
+									<td style='background: #8f3b4f; color: white; padding: 3px; font-size: 15px; font-weight: bold' align='center'>
+										NOTIFICACIÓN DE PAGO
+									</td>
+								</tr>
+								<tr>
+									<td>
+									<br />
+										<p:outputPanel id="opText">
+											Buen día estimado(a) Sr(a). <p:outputLabel value="#{pension.olRepresentante}" />, reciba un cordial saludo
+											de parte de la Escuela Dr. Aquiles Rodríguez Venegas. 
+											<br/>
+											El motivo de este mensaje es para recordarle que tiene una valor pendiente <b>($ <p:outputLabel value="#{pension.inTotalPagar}" />)</b> de
+											cancelar por concepto de: 
+											<b>										
+											<p:outputLabel value="#{pension.olSecuencia eq '0'?'Pago de Matrícula':'Pago de Pensión No. '}" />										
+											<p:outputLabel value="#{pension.olSecuencia eq '0'?'':pension.olSecuencia}">
+												<f:convertNumber pattern="00" />	
+											</p:outputLabel>
+											</b> del estudiante
+											<b><p:outputLabel value="#{pension.olEstudiante}" /></b>.
+											<br/><br/>
+											Saludos,
+											<br/>
+											Escuela Dr. Aquiles Rodríguez Venegas.
+										</p:outputPanel>
+									</td>
+								</tr>
+							</tbody>
+						</table>										
+					</div>														
+					<br />
+					<b>
+					<p:outputLabel style="font-size:13px" value="#{pension.olCorreo eq ''? '' : 'Para: '}" />
+					</b>
+					<b style="font-size:13px; font-style: italic;">  
+					<p:outputLabel style="color: #f70000" value="#{pension.olCorreo eq ''? 'El representante no tiene un correo registrado' : ''}" />
+					
+					<p:outputLabel style="color: #3f51b5" value="#{pension.olCorreo eq ''? '' : pension.olCorreo}" />
+					</b>
+				   	<br />
 					<br />					
 			   		<h:panelGroup style="display: block; text-align: center">
-						<p:commandButton id="btnDia" value="Enviar notificación" disabled="#{pension.soDia eq 'NA'?true:false}" 
-							icon="fa fa-send" actionListener="#{pension.notificar}" update="panelNot growl">
+						<p:commandButton id="btnNot" value="Enviar notificación" icon="fa fa-send" actionListener="#{pension.notificar}" update="panelNot growl"
+							disabled="#{pension.olCorreo eq ''? 'true' : false}">
 							<p:confirm header="Confirmación" icon="fa fa-warning"
 								message="¿Está seguro(a) que desea enviar la notificación?" />
 						</p:commandButton>	
@@ -523,9 +620,10 @@ xmlns:fn="http://xmlns.jcp.org/jsp/jstl/functions">
 				<p:confirmDialog id="confirmNot" global="false" showEffect="fade" hideEffect="fade">
 					<p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" icon="fa fa-check" />
 					<p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="fa fa-close" />
-				</p:confirmDialog>				
+				</p:confirmDialog>
+								
 			</p:dialog>		
-												
+			
 			<br/>
 			<p:outputPanel style="background-color: white; padding: 5px; text-align: end">
 				<h:commandLink value="Exportar a excel" style="color: green">                

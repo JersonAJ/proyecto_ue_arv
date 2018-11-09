@@ -196,5 +196,8 @@ public class Util {
 	}
 
 	public static void main(String[] args) throws IOException, NoSuchAlgorithmException, ParseException {					
+	
+		System.out.println(String.format("%02d", 2));
+
 	}
 }

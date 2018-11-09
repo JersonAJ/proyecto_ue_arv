@@ -61,7 +61,7 @@ public class Pension implements Serializable {
 	String olEstudiante = "";
 	String soFormaPago = "";
 	String soDescuento = "";
-	String soOpcion = "";	
+	String soOpcion = "";
 	Date itVence = new Date();
 	
 	boolean ckDescuento = false;	
@@ -72,6 +72,9 @@ public class Pension implements Serializable {
 	BigDecimal inTotalPagar = new BigDecimal(0);
 	BigDecimal inSaldo = new BigDecimal(0);
 	BigDecimal inPorcentaje = new BigDecimal(0);
+		
+	String olCorreo = "";
+	String olRepresentante = "";
 	
 	private List<Object> pensionList = new ArrayList<Object>();
 
@@ -334,7 +337,7 @@ public class Pension implements Serializable {
 			mensaje = "Pago exitoso";
 			if (soOpcion.equals("AB"))
 				mensaje = "Abono exitoso";			
-			FacesContext.getCurrentInstance().addMessage("growl",	new FacesMessage(FacesMessage.SEVERITY_INFO, mensajeTitulo, mensaje));			
+			FacesContext.getCurrentInstance().addMessage("growl", new FacesMessage(FacesMessage.SEVERITY_INFO, mensajeTitulo, mensaje));			
 			buscar();
 		} catch (Exception e) {
 			em.getTransaction().rollback();
@@ -342,45 +345,56 @@ public class Pension implements Serializable {
 		}				
 	}	
 	
-	public void notificar(String rep, String val, String con, String est) throws UnsupportedEncodingException, MessagingException {		
-		String personal = "Escuela ARV";
-		String para = "jarmijosjaen@gmail.com";
-		String asunto = "Notificación de pago";
-		
-		String representante = "";
-		String estudiante = "";
-		String concepto = "Pago de Pensión No. 04";
-		String valor = "";
-		
-		String mensaje = 
-		"<div align='center' style='font-family: Arial, sans-serif'>\r\n" + 
-		"	<table style='width: 50%; border: 2px solid #8f3b4f; padding: 5px; font-size: 13px'>\r\n" + 
-		"		<tbody>\r\n" + 
-		"			<tr>\r\n" + 
-		"				<td style='background: #8f3b4f; color: white; padding: 3px; font-size: 16px; font-weight: bold' align='center'>\r\n" + 
-		"					NOTIFICACIÓN DE PAGO\r\n" + 
-		"				</td>\r\n" + 
-		"			</tr>\r\n" + 
-		"			<tr>\r\n" + 
-		"				<td>\r\n" + 
-		"					<br/>\r\n" + 
-		"					Buen día estimado(a) Sr(a). " + representante + ", reciba un cordial saludo\r\n" + 
-		"					de parte de la Escuela Dr. Aquiles Rodríguez Venegas. \r\n" + 
-		"					<br/>\r\n" + 
-		"					El motivo de este mensaje es para recordarle que tiene una valor pendiente <b>($ " + valor + ")</b> de\r\n" + 
-		"					cancelar por concepto de: <b>" + concepto + "</b> del estudiante\r\n" + 
-		"					<b>" + estudiante + "</b>.\r\n" + 
-		"					<br/><br/>\r\n" + 
-		"					Saludos,\r\n" + 
-		"					<br/>\r\n" + 
-		"					Escuela Dr. Aquiles Rodríguez Venegas.\r\n" + 
-		"				</td>\r\n" + 
-		"			</tr>\r\n" + 
-		"		</tbody>\r\n" + 
-		"	</table>\r\n" + 
-		"</div>";
-		
-		EmailClient.sendAsHtml(personal, para, asunto, mensaje);
+	public void notificar() throws UnsupportedEncodingException, MessagingException {		
+		try {
+			String personal = "ESCUELA ARV";
+			String para = olCorreo.trim();
+			String asunto = "NOTIFICACIÓN DE PAGO";
+			
+			GesPension pen = (GesPension)  DAO.buscarObject(new GesPension(), "from GesPension c where c.idPension = '" + idPension +"'");
+			
+			String representante = pen.getMatMatricula().getMatEstudiante().getMatRepresentante().getNombres();
+			try { representante = representante.substring(0, representante.indexOf(' ')); } catch (Exception e) { }
+			String estudiante = pen.getMatMatricula().getMatEstudiante().getApellidos().trim() + " " + pen.getMatMatricula().getMatEstudiante().getNombres().trim();
+			String concepto = (pen.getSecuencia() == 0 ? "Pago de Matrícula" : "Pago de Pensión No. " + String.format("%02d", pen.getSecuencia()));
+			BigDecimal valor = pen.getTotalPagar();
+			
+			String mensaje = 
+			"<div align='center' style='font-family: Arial, sans-serif'>\r\n" + 
+			"	<table style='width: 50%; border: 2px solid #8f3b4f; padding: 5px; font-size: 13px'>\r\n" + 
+			"		<tbody>\r\n" + 
+			"			<tr>\r\n" + 
+			"				<td style='background: #8f3b4f; color: white; padding: 3px; font-size: 16px; font-weight: bold' align='center'>\r\n" + 
+			"					NOTIFICACIÓN DE PAGO\r\n" + 
+			"				</td>\r\n" + 
+			"			</tr>\r\n" + 
+			"			<tr>\r\n" + 
+			"				<td>\r\n" + 
+			"					<br/>\r\n" + 
+			"					Buen día estimado(a) Sr(a). " + representante + ", reciba un cordial saludo\r\n" + 
+			"					de parte de la Escuela Dr. Aquiles Rodríguez Venegas. \r\n" + 
+			"					<br/>\r\n" + 
+			"					El motivo de este mensaje es para recordarle que tiene una valor pendiente <b>($ " + valor + ")</b> de\r\n" + 
+			"					cancelar por concepto de: <b>" + concepto + "</b> del estudiante\r\n" + 
+			"					<b>" + estudiante + "</b>.\r\n" + 
+			"					<br/><br/>\r\n" + 
+			"					Saludos,\r\n" + 
+			"					<br/>\r\n" + 
+			"					Escuela Dr. Aquiles Rodríguez Venegas.\r\n" + 
+			"				</td>\r\n" + 
+			"			</tr>\r\n" + 
+			"		</tbody>\r\n" + 
+			"	</table>\r\n" + 
+			"</div>";
+			
+			EmailClient.sendAsHtml(personal, para, asunto, mensaje);
+			
+			mensaje = "Envió exitoso";			
+			FacesContext.getCurrentInstance().addMessage("growl", new FacesMessage(FacesMessage.SEVERITY_INFO, mensajeTitulo, mensaje));				
+		} catch (Exception e) {
+			mensaje = "No se pudo enviar la notificación";			
+			FacesContext.getCurrentInstance().addMessage("growl", new FacesMessage(FacesMessage.SEVERITY_ERROR, mensajeTitulo, mensaje));	
+		}		
 	}
 	
 	public String getDiaVenceActual() {
@@ -577,5 +591,17 @@ public class Pension implements Serializable {
 	}
 	public void setInAbono(BigDecimal inAbono) {
 		this.inAbono = inAbono;
+	}
+	public String getOlCorreo() {
+		return olCorreo;
+	}
+	public void setOlCorreo(String olCorreo) {
+		this.olCorreo = olCorreo;
+	}
+	public String getOlRepresentante() {
+		return olRepresentante;
+	}
+	public void setOlRepresentante(String olRepresentante) {
+		this.olRepresentante = olRepresentante;
 	}
 }

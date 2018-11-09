@@ -1,4 +1,5 @@
-<pretty-config xmlns="http://ocpsoft.org/schema/rewrite-config-prettyfaces"
+<pretty-config
+	xmlns="http://ocpsoft.org/schema/rewrite-config-prettyfaces"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://ocpsoft.org/xml/ns/prettyfaces/rewrite-config-prettyfaces.xsd">
 
@@ -7,19 +8,19 @@
 		<pattern value="/login" />
 		<view-id value="/login.xhtml" />
 	</url-mapping>
-	
+
 	<!-- INICIO -->
 	<url-mapping id="inicio">
 		<pattern value="/inicio" />
 		<view-id value="/inicio.xhtml" />
 	</url-mapping>
-	
+
 	<!-- SEGURIDAD -->
 	<url-mapping id="usuario">
 		<pattern value="/seg/usuario" />
 		<view-id value="/seguridad/usuario.xhtml" />
 	</url-mapping>
-	
+
 	<url-mapping id="perfil">
 		<pattern value="/seg/perfil" />
 		<view-id value="/seguridad/perfil.xhtml" />
@@ -30,48 +31,48 @@
 		<pattern value="/man/catalog" />
 		<view-id value="/mantenimientos/catalogo.xhtml" />
 	</url-mapping>
-	
+
 	<url-mapping id="curso">
 		<pattern value="/man/curso" />
 		<view-id value="/mantenimientos/curso.xhtml" />
 	</url-mapping>
-	
+
 	<url-mapping id="docente">
 		<pattern value="/man/docente" />
 		<view-id value="/mantenimientos/docente.xhtml" />
 	</url-mapping>
-	
+
 	<url-mapping id="asignatura">
 		<pattern value="/man/asignatura" />
 		<view-id value="/mantenimientos/asignatura.xhtml" />
 	</url-mapping>
-	
+
 	<url-mapping id="escala">
 		<pattern value="/man/escala" />
 		<view-id value="/mantenimientos/escala.xhtml" />
 	</url-mapping>
-	
+
 	<url-mapping id="reparto">
 		<pattern value="/man/reparto" />
 		<view-id value="/mantenimientos/reparto.xhtml" />
 	</url-mapping>
-	
+
 	<url-mapping id="comportamiento">
 		<pattern value="/man/comportamiento" />
 		<view-id value="/mantenimientos/comportamiento.xhtml" />
 	</url-mapping>
-	
+
 	<url-mapping id="paralelo">
 		<pattern value="/man/paralelo" />
 		<view-id value="/mantenimientos/paralelo.xhtml" />
 	</url-mapping>
-	
+
 	<!-- MATRICULACION -->
 	<url-mapping id="representante">
 		<pattern value="/mat/representante" />
 		<view-id value="/matriculacion/representante.xhtml" />
 	</url-mapping>
-	
+
 	<url-mapping id="estudiante">
 		<pattern value="/mat/estudiante" />
 		<view-id value="/matriculacion/estudiante.xhtml" />
@@ -81,44 +82,60 @@
 		<pattern value="/mat/periodo" />
 		<view-id value="/matriculacion/periodo.xhtml" />
 	</url-mapping>
-	
+
 	<url-mapping id="oferta">
 		<pattern value="/mat/oferta" />
 		<view-id value="/matriculacion/oferta.xhtml" />
 	</url-mapping>
-	
+
 	<url-mapping id="matricula">
 		<pattern value="/mat/matricula" />
 		<view-id value="/matriculacion/matricula.xhtml" />
 	</url-mapping>
-	
-	<url-mapping id="reporte">
+
+	<url-mapping id="reportem">
 		<pattern value="/mat/reporte" />
 		<view-id value="/matriculacion/reporte.xhtml" />
 	</url-mapping>
-	
+
 	<!-- GESTION DE COBROS -->
 	<url-mapping id="descuento">
 		<pattern value="/ges/descuento" />
 		<view-id value="/gestioncobro/descuento.xhtml" />
 	</url-mapping>
-	
+
 	<url-mapping id="pension">
 		<pattern value="/ges/pension" />
 		<view-id value="/gestioncobro/pension.xhtml" />
 	</url-mapping>
-	
-	<url-mapping id="reporte">
+
+	<url-mapping id="reporteg">
 		<pattern value="/ges/reporte" />
 		<view-id value="/gestioncobro/reporte.xhtml" />
 	</url-mapping>
+
+	<!-- CALIFICACIONES -->
+	<url-mapping id="asistencia">
+		<pattern value="/cal/asistencia" />
+		<view-id value="/calificaciones/asistencia.xhtml" />
+	</url-mapping>
+
+	<url-mapping id="asistencia">
+		<pattern value="/cal/controlacademico" />
+		<view-id value="/calificaciones/control.xhtml" />
+	</url-mapping>
 	
-	<!-- ERRORES -->	
+	<url-mapping id="reportec">
+		<pattern value="/cal/reporte" />
+		<view-id value="/calificaciones/reporte.xhtml" />
+	</url-mapping>
+	
+	<!-- ERRORES -->
 	<url-mapping id="error">
 		<pattern value="/err/sesion" />
 		<view-id value="/errores/error_sesion.xhtml" />
 	</url-mapping>
-	
+
 	<url-mapping id="error404">
 		<pattern value="/err/nopag" />
 		<view-id value="/errores/error_no_pag.xhtml" />
