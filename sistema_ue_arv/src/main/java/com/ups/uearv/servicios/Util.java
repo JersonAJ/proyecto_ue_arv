@@ -195,7 +195,6 @@ public class Util {
 		return Util.llenaCombo(DAO.getOfertas("1"), 2);
 	}
 
-	public static void main(String[] args) throws IOException, NoSuchAlgorithmException, ParseException {
-		DAO.spActualizaDiaVence(13, 1);					
+	public static void main(String[] args) throws IOException, NoSuchAlgorithmException, ParseException {					
 	}
 }

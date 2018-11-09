@@ -6,6 +6,7 @@
 package com.ups.uearv.bean;
 
 import java.io.Serializable;
+import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -19,6 +20,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
+import javax.mail.MessagingException;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -27,7 +29,7 @@ import javax.persistence.Query;
 import com.ups.uearv.entidades.GesDescuento;
 import com.ups.uearv.entidades.GesPension;
 import com.ups.uearv.servicios.DAO;
-import com.ups.uearv.servicios.SMTPConfig;
+import com.ups.uearv.servicios.EmailClient;
 import com.ups.uearv.servicios.Session;
 import com.ups.uearv.servicios.Util;
 
@@ -62,8 +64,7 @@ public class Pension implements Serializable {
 	String soOpcion = "";	
 	Date itVence = new Date();
 	
-	boolean ckDescuento = false;
-	
+	boolean ckDescuento = false;	
 	
 	BigDecimal inValor = new BigDecimal(0);
 	BigDecimal inAbono = new BigDecimal(0);
@@ -341,14 +342,45 @@ public class Pension implements Serializable {
 		}				
 	}	
 	
-	public void notificar() {		
-		SMTPConfig smtp = new SMTPConfig();
-		String destinatario = "jarmijosjaen@gmail.com";
-		boolean correo = smtp.sendMail("Nombre", "Asunto", "Este es el mensaje", destinatario, "");
-		if (correo) 
-			System.out.println(">>> SE ENVIO CORREO <<<"); 
-		else 
-			System.out.println(">>> ERROR AL ENVIAR CORREO <<<");		
+	public void notificar(String rep, String val, String con, String est) throws UnsupportedEncodingException, MessagingException {		
+		String personal = "Escuela ARV";
+		String para = "jarmijosjaen@gmail.com";
+		String asunto = "Notificación de pago";
+		
+		String representante = "";
+		String estudiante = "";
+		String concepto = "Pago de Pensión No. 04";
+		String valor = "";
+		
+		String mensaje = 
+		"<div align='center' style='font-family: Arial, sans-serif'>\r\n" + 
+		"	<table style='width: 50%; border: 2px solid #8f3b4f; padding: 5px; font-size: 13px'>\r\n" + 
+		"		<tbody>\r\n" + 
+		"			<tr>\r\n" + 
+		"				<td style='background: #8f3b4f; color: white; padding: 3px; font-size: 16px; font-weight: bold' align='center'>\r\n" + 
+		"					NOTIFICACIÓN DE PAGO\r\n" + 
+		"				</td>\r\n" + 
+		"			</tr>\r\n" + 
+		"			<tr>\r\n" + 
+		"				<td>\r\n" + 
+		"					<br/>\r\n" + 
+		"					Buen día estimado(a) Sr(a). " + representante + ", reciba un cordial saludo\r\n" + 
+		"					de parte de la Escuela Dr. Aquiles Rodríguez Venegas. \r\n" + 
+		"					<br/>\r\n" + 
+		"					El motivo de este mensaje es para recordarle que tiene una valor pendiente <b>($ " + valor + ")</b> de\r\n" + 
+		"					cancelar por concepto de: <b>" + concepto + "</b> del estudiante\r\n" + 
+		"					<b>" + estudiante + "</b>.\r\n" + 
+		"					<br/><br/>\r\n" + 
+		"					Saludos,\r\n" + 
+		"					<br/>\r\n" + 
+		"					Escuela Dr. Aquiles Rodríguez Venegas.\r\n" + 
+		"				</td>\r\n" + 
+		"			</tr>\r\n" + 
+		"		</tbody>\r\n" + 
+		"	</table>\r\n" + 
+		"</div>";
+		
+		EmailClient.sendAsHtml(personal, para, asunto, mensaje);
 	}
 	
 	public String getDiaVenceActual() {
