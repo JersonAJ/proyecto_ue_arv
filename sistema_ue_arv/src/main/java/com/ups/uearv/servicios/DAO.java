@@ -175,11 +175,21 @@ public class DAO {
 	
 	public static Query getOfertas(String periodo) {
 		Query query = em.createNativeQuery(
-				"SELECT o.id_oferta, o.descripcion " + 
-				"FROM mat_oferta o " + 
-				"  	INNER JOIN mat_curso c ON c.id_curso = o.id_curso " + 
-				"	INNER JOIN catalogo_det k ON k.codigo_det = c.nivel " + 
+				"SELECT o.id_oferta, o.descripcion \r\n" + 
+				"FROM mat_oferta o \r\n" + 
+				"  	INNER JOIN mat_curso c ON c.id_curso = o.id_curso \r\n" + 
+				"	INNER JOIN catalogo_det k ON k.codigo_det = c.nivel \r\n" + 
 				"WHERE o.id_periodo = '" + periodo + "'  ORDER BY k.codigo_det, c.id_curso ");
+		return query;
+	}
+	
+	public static Query getAsignaturasControl(String oferta) {
+		Query query = em.createNativeQuery(
+				"SELECT a.id_asignatura, a.nombre \r\n" + 
+				"FROM cal_asignatura a \r\n" + 
+				"	INNER JOIN cal_reparto r ON r.id_asignatura = a.id_asignatura \r\n" + 
+				"	INNER JOIN mat_oferta o ON o.id_curso = r.id_curso \r\n" + 
+				"WHERE o.id_oferta = '" + oferta + "' AND a.estado = 'AC' ");
 		return query;
 	}		
 	

@@ -17,191 +17,33 @@ xmlns:pe="http://primefaces.org/ui/extensions">
 			<p:growl id="growl" for="growl" showDetail="true" closable="true" />
 			
 			<p:outputPanel style="background-color: white; padding: 5px;">
-				<p:commandLink title="Generar listado de estudiantes" oncomplete="PF('dglEst').show();" update="panelEst">
-					<i class="fa fa-list-ul" />
-					<span>Generar listado</span>					
-					<p:spacer width="10px" />							
-					
-					<f:setPropertyActionListener value="NA" target="#{matricula.soPeriodoEst}" />					
-				</p:commandLink>		
-			
-				<p:commandLink title="Procesar matrículas aprobadas" oncomplete="PF('dglMat').show();" update="panelMat">
-					<i class="fa fa-check"></i>
-					<span>Procesar matrículas</span>											
-					<p:spacer width="10px" />													
-					
-					<f:setPropertyActionListener value="NA" target="#{matricula.soPeriodoMat}" />									
-				</p:commandLink>
 				
-				<p:commandLink style="float: right" title="Anular matrícula" oncomplete="PF('dglAnu').show();" update="panelAnu">
-					<i class="fa fa-ban"></i>
-					<span>Anular matrícula</span>
-					<p:spacer width="10px" />																										
-				</p:commandLink>					
 			</p:outputPanel>	
 			
-			<!-- GENERA LISTADO DE ESTUDIANTES -->
-			<p:dialog header="Generar listado" widgetVar="dglEst" modal="true" closable="true" maximizable="false" resizable="false" width="500px" height="400px">
-				<p:ajax event="close" update="form" listener="#{matricula.closeDialogo}" />
-				<p:outputPanel id="panelEst">		   		
-			   		<p:outputPanel style="text-align: center">	
-				   		<p:selectOneMenu id="soPeriodoEst" value="#{matricula.soPeriodoEst}">
-							<f:selectItem itemLabel="Seleccione Período" itemValue="NA" />
-							<f:selectItems value="#{matricula.listPeriodos}" />		
-							<p:ajax listener="#{matricula.onChangePeriodoEst()}" update="dtestudiante btnGenerar sheet"/>								
-						</p:selectOneMenu>					    			
-					</p:outputPanel>
-					<br/>
-					<p:dataTable id="dtestudiante" var="dtestudiante" value="#{matricula.generaEstudianteList}" tableStyle="width: auto; min-width: 100%;" 
-						paginator="true" rows="10" rowsPerPageTemplate="5,10" paginatorPosition="top" emptyMessage="No existe listado a generar" >
-					 
-					    <p:column headerText="Cédula" style="text-align: center" width="80">
-					        <h:outputText value="#{dtestudiante.idEstudiante}" />
-					    </p:column>
-								    
-						<p:column headerText="Estudiante">
-					        <h:outputText value="#{dtestudiante.apellidos} #{dtestudiante.nombres}" />
-					    </p:column>
-					    
-					    <f:facet name="footer">  
-				        	<h:outputText id="footer" value="#{matricula.generaEstudianteList.size()} Registros" />  
-				        	<h:outputLabel id="tooltip1" style="float: right;">
-						        <i  class="fa fa-info" style="font-size: 15px; color: #001fff;"></i>
-						    </h:outputLabel>
-						    <p:tooltip for="tooltip1" style="width: 30%"
-						    	value="Se muestra el listado de estudiantes activos, que estén pendientes de generar matrículas dentro del período seleccionado." position="top"/>
-				    	</f:facet>  
-					</p:dataTable>
-					<br/>	
-					<h:panelGroup style="display:block; text-align:center">
-						<p:commandButton id="btnGenerar" value="Generar listado" icon="fa fa-list-ul"  actionListener="#{matricula.generaListadoEst}"
-							disabled="#{matricula.generaEstudianteList.size() == 0 ? true : false}" update="dtestudiante growl btnGenerar">
-							<p:confirm header="Confirmación" icon="fa fa-warning"
-								message="¿Está seguro(a) que desea generar el listado de matrícula(s) para #{matricula.generaEstudianteList.size()} estudiante(s)?" />
-						</p:commandButton>	
-					</h:panelGroup>				
-				</p:outputPanel>	
-				<p:confirmDialog id="confirmGenEst" global="false" showEffect="fade" hideEffect="fade">
-					<p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" icon="fa fa-check" />
-					<p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="fa fa-close" />
-				</p:confirmDialog>				
-			</p:dialog>
-			
-			<!-- PROCESA MATRICULAS APROBADAS -->
-			<p:dialog header="Procesar matrículas" widgetVar="dglMat" modal="true" closable="true" maximizable="false" resizable="false" width="700px" height="400px">
-				<p:ajax event="close" update="form" listener="#{matricula.closeDialogo}" />
-				<p:outputPanel id="panelMat">		   		
-			   		<p:outputPanel style="text-align: center">	
-				   		<p:selectOneMenu id="soPeriodoMat" value="#{matricula.soPeriodoMat}">
-							<f:selectItem itemLabel="Seleccione Período" itemValue="NA" />
-							<f:selectItems value="#{matricula.listPeriodos}" />		
-							<p:ajax listener="#{matricula.onChangePeriodoMat()}" update="dtmatricula btnProcesar sheet"/>								
-						</p:selectOneMenu>					    			
-					</p:outputPanel>
-					<br/>
-					<p:dataTable id="dtmatricula" var="dtmatricula" value="#{matricula.procesaMatriculaList}" tableStyle="width: auto; min-width: 100%;" 
-						paginator="true" rows="10" rowsPerPageTemplate="5,10" paginatorPosition="top" emptyMessage="No existen matrículas a procesar" >
-					 
-					    <p:column headerText="Cédula" style="text-align: center" width="80">
-					        <h:outputText value="#{dtmatricula.matEstudiante.idEstudiante}" />
-					    </p:column>
-								    
-						<p:column headerText="Estudiante">
-					        <h:outputText value="#{dtmatricula.matEstudiante.apellidos} #{dtmatricula.matEstudiante.nombres}" />
-					    </p:column>
-					    
-					    <p:column headerText="Oferta" width="200">
-					        <h:outputText value="#{dtmatricula.matOferta.descripcion}" />
-					    </p:column>
-					    
-					    <f:facet name="footer">  
-				        	<h:outputText id="footer" value="#{matricula.procesaMatriculaList.size()} Registros" />
-				        	<h:outputLabel id="tooltip2" style="float: right;">
-						        <i  class="fa fa-info" style="font-size: 15px; color: #001fff;"></i>
-						    </h:outputLabel>
-						    <p:tooltip for="tooltip2" style="width: 30%"
-						    	value="Se muestra el listado de matrículas a procesar que estén aprobadas y tengan una oferta asiganada dentro del período seleccionado." position="top"/>				        	  
-				    	</f:facet>  
-					</p:dataTable>
-					<br/>	
-					<h:panelGroup style="display:block; text-align:center">
-						<p:commandButton id="btnProcesar" value="Procesar matrículas" icon="fa fa-check"  actionListener="#{matricula.procesaMatriculas}"
-							disabled="#{matricula.procesaMatriculaList.size() == 0 ? true : false}" update="dtmatricula growl btnProcesar">
-							<p:confirm header="Confirmación" icon="fa fa-warning"
-								message="¿Está seguro(a) que desea procesar #{matricula.procesaMatriculaList.size()} matrículas?" />
-						</p:commandButton>	
-					</h:panelGroup>				
-				</p:outputPanel>	
-				<p:confirmDialog id="confirmProMat" global="false" showEffect="fade" hideEffect="fade">
-					<p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" icon="fa fa-check" />
-					<p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="fa fa-close" />
-				</p:confirmDialog>				
-			</p:dialog>
-			
-			<p:dialog header="Anular matrícula" widgetVar="dglAnu" modal="true" closable="true" maximizable="false" resizable="false" width="500px" height="250px">
-				<p:ajax event="close" update="form" listener="#{matricula.closeDialogo}" />
-				<p:outputPanel id="panelAnu">		   		
-			   		<p:outputPanel style="text-align: center">	
-				   		<p:selectOneMenu id="soPeriodoAnu" value="#{matricula.soPeriodoAnu}">
-							<f:selectItem itemLabel="Seleccione Período" itemValue="NA" />
-							<f:selectItems value="#{matricula.listPeriodos}" />		
-							<p:ajax listener="#{matricula.onChangePeriodoAnu()}" update="soMatricula"/>								
-						</p:selectOneMenu>					    			
-						<p:spacer width="10px" />		
-						<style>
-							.uiselectonemenupanel .uiselectonemenufilter { width: 135px; paddingright: 15px; }
-						</style>						
-				   		<p:selectOneMenu id="soMatricula" value="#{matricula.soMatricula}" effect="fade" var="k" filter="true" filterMatchMode="contains" panelStyle="width: 135px" style="width: 135px">
-							<f:selectItem itemLabel="Seleccione Matrícula" itemValue="NA" />
-							<f:selectItems value="#{matricula.listMatriculas}" />		
-						    <p:column>
-				                <h:outputText value="#{k}" />
-				            </p:column>			            
-				            <p:ajax listener="#{matricula.onChangeMatricula()}" update="itEstudiante btnAnular"/>
-			        	</p:selectOneMenu>
-					</p:outputPanel>  
-					<br />
-					<p:outputPanel style="text-align: center">
-						<span style="font-weight: bold">Estudiante</span>
-						<br />
-						<p:inputText id="itEstudiante" value="#{matricula.itEstudiante}" style="width: 70%; text-align: center; background-color: #ffe8e7;" readonly="true"/>
-					</p:outputPanel>
-					<br />
-					<p:outputPanel style="text-align: center">
-						<span style="font-weight: bold">Observación(motivo de anulación)</span>
-						<br />
-						<p:inputTextarea id="itaObservacion" value="#{matricula.itaObservacion}" rows="3" style="width: 90%"/>
-					</p:outputPanel>
-					<br />
-			   		<h:panelGroup style="display: block; text-align: center">
-						<p:commandButton id="btnAnular" value="Anular matrícula" disabled="#{matricula.soMatricula eq 'NA'?true:false}" 
-							icon="fa fa-ban" actionListener="#{matricula.anularMatricula}"	update="sheet panelAnu growl">
-							<p:confirm header="Confirmación" icon="fa fa-warning"
-								message="¿Está seguro(a) que desea anular la matrícula #{matricula.soMatricula} del estudiante #{matricula.itEstudiante}?" />
-						</p:commandButton>	
-					</h:panelGroup>				
-				</p:outputPanel>	
-				<p:confirmDialog id="confirmAnuMat" global="false" showEffect="fade" hideEffect="fade">
-					<p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" icon="fa fa-check" />
-					<p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="fa fa-close" />
-				</p:confirmDialog>				
-			</p:dialog>																				
-			
+		
 			<!-- CONSULTA -->	
 			<style>				
 				.ui-datatable thead th, .ui-datatable tbody td, .ui-datatable tfoot td, .ui-datatable tfoot th { padding: 2px 10px; }
 			</style>
 			<br/>		
 			<p:outputPanel>		   		
-		   		<p:selectOneMenu id="soPeriodo" value="#{matricula.soPeriodo}">
+		   		<p:selectOneMenu id="soPeriodo" value="#{control.soPeriodo}">
 					<f:selectItem itemLabel="Seleccione Período" itemValue="NA" />
-					<f:selectItems value="#{matricula.listPeriodos}" />		
-					<p:ajax listener="#{matricula.onChangePeriodo()}" update="sheet"/>								
+					<f:selectItems value="#{control.listPeriodos}" />		
+					<p:ajax listener="#{control.onChangePeriodo()}" update="soOferta soAsignatura sheet"/>								
 				</p:selectOneMenu>	
 				<p:spacer width="10px" />
-				<p:inputText style="width: 300px" value="#{matricula.itBuscar}" placeholder="Buscar por estudiante">
-					<p:ajax event="keyup" update="sheet" listener="#{matricula.llenarListMatriculas}"/>
-				</p:inputText>			   		  		    			      				      		      			
+				<p:selectOneMenu id="soOferta" value="#{control.soOferta}">
+					<f:selectItem itemLabel="Seleccione Oferta" itemValue="NA" />
+					<f:selectItems value="#{control.listOfertas}" />
+					<p:ajax listener="#{control.onChangeOferta()}" update="soAsignatura sheet"/>
+				</p:selectOneMenu>	
+				<p:spacer width="10px" />
+				<p:selectOneMenu id="soAsignatura" value="#{control.soAsignatura}">
+					<f:selectItem itemLabel="Seleccione Asignatura" itemValue="NA" />
+					<f:selectItems value="#{control.listAsignaturas}" />
+					<p:ajax listener="#{control.onChangeAsignatura()}" update="sheet"/>
+				</p:selectOneMenu>			      		      			
 			</p:outputPanel>
 			 				 	
 			<p:separator />
@@ -213,24 +55,19 @@ xmlns:pe="http://primefaces.org/ui/extensions">
 				.handsontable .htAutocompleteArrow { float: right; font-size: 12px; color: #474a4b; cursor: default; width: 16px; text-align: center; }
 				.handsontable tbody th.ht__highlight, .handsontable thead th.ht__highlight { background-color: #dcdcdc; color: #8f3b4f; }
 			</style>
-			<pe:sheet id="sheet" widgetVar="sheetWidget" value="#{matricula.matriculaList}" var="row"   
+			<pe:sheet id="sheet" widgetVar="sheetWidget" value="#{control.controlList}" var="row"   
 			    height="350" rowKey="#{row.codMatricula}" showRowHeaders="true" resizableCols="true" resizableRows="true" 
 			    readOnly="false" sortBy="#{row.nomEstudiante}" sortOrder="ascending" emptyMessage="No existen datos a mostrar">  
 			  
-			    <p:ajax event="change" listener="#{matricula.cellChangeEvent}" />  
+			    <p:ajax event="change" listener="#{control.cellChangeEvent}" />  
 			  			   			  
-			    <pe:sheetcolumn headerText="Matrícula" readonly="true" value="#{row.codMatricula}" colWidth="55" styleClass="htCenter" sortBy="#{row.codMatricula}" />   
-			    				
-			    <pe:sheetcolumn headerText="Cédula" readonly="true" value="#{row.codEstudiante}" colWidth="60" styleClass="htCenter" />			    
-			    				
-			   	<pe:sheetcolumn headerText="Estudiante" readonly="true" value="#{row.nomEstudiante}" sortBy="#{row.nomEstudiante}" />
-			    
-			    <pe:sheetcolumn headerText="Oferta" value="#{row.nomOferta}" colWidth="200" colType="dropdown" selectItems="#{matricula.llenaComboOfertas()}" sortBy="#{row.nomOferta}" />
-			       
-			    <pe:sheetcolumn headerText="Aprobada" value="#{row.snAprobada}" colWidth="60" colType="checkbox" styleClass="htCenter" sortBy="#{row.snAprobada}" />
+			    <pe:sheetcolumn headerText="Estudiante" readonly="true" 
+			    	value="#{row.matMatricula.matEstudiante.apellidos} #{row.matMatricula.matEstudiante.nombre}" 
+			    	sortBy="#{row.matMatricula.matEstudiante.apellidos} #{row.matMatricula.matEstudiante.nombre}" />
+			    			    
 			    		    
 			    <f:facet name="footer">  
-			        <h:outputText id="footer" value="#{matricula.matriculaList.size()} Registros" />  
+			        <h:outputText id="footer" value="#{control.controlList.size()} Registros" />  
 			    </f:facet>  
 			</pe:sheet>  
 			

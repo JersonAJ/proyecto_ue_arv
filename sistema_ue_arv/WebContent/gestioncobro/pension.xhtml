@@ -405,7 +405,8 @@ xmlns:pe="http://primefaces.org/ui/extensions">
 				  if (concepto == 0) { concepto = 'Pago de Matrícula' } else { concepto = 'Pago de Pensión No. '+ concepto.padStart(2,"0") }
 				  
 				  var newWin = window.open('','Print-Window');				  
-				  newWin.document.write('<body onload="window.print()">'
+				  newWin.document.write('<link type="text/css" rel="stylesheet" href="/sistema_ue_arv/recursos/css/printV.css"/>'
+				  	+'<body onload="window.print()">'
 					+'<div align="center" style="font-family: Arial, sans-serif">'
 					+'<table style="width: 100%; border: 2px solid #8f3b4f; padding: 5px; font-size: 13px">'
 					+'<tbody>'
@@ -420,7 +421,7 @@ xmlns:pe="http://primefaces.org/ui/extensions">
 					+'			Buen día estimado(a) Sr(a). ' + representante + ', reciba un cordial saludo'
 					+'			de parte de la Escuela Dr. Aquiles Rodríguez Venegas. '
 					+'			<br/>'
-					+'			El motivo de este mensaje es para recordarle que tiene una valor pendiente <b>($ ' + valor + ')</b> de '
+					+'			El motivo de este mensaje es para recordarle que tiene un valor pendiente <b>($ ' + valor + ')</b> de '
 					+'			cancelar por concepto de: <b>' + concepto + '</b> del estudiante '
 					+'			<b>' + estudiante + '</b>. '
 					+'			<br/><br/>'
@@ -579,7 +580,7 @@ xmlns:pe="http://primefaces.org/ui/extensions">
 											Buen día estimado(a) Sr(a). <p:outputLabel value="#{pension.olRepresentante}" />, reciba un cordial saludo
 											de parte de la Escuela Dr. Aquiles Rodríguez Venegas. 
 											<br/>
-											El motivo de este mensaje es para recordarle que tiene una valor pendiente <b>($ <p:outputLabel value="#{pension.inTotalPagar}" />)</b> de
+											El motivo de este mensaje es para recordarle que tiene un valor pendiente <b>($ <p:outputLabel value="#{pension.inTotalPagar}" />)</b> de
 											cancelar por concepto de: 
 											<b>										
 											<p:outputLabel value="#{pension.olSecuencia eq '0'?'Pago de Matrícula':'Pago de Pensión No. '}" />										
