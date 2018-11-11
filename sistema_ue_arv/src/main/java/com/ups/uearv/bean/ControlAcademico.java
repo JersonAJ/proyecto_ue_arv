@@ -9,33 +9,25 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
-import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
-import javax.persistence.Query;
 
 import org.primefaces.extensions.component.sheet.Sheet;
 import org.primefaces.extensions.event.SheetEvent;
 import org.primefaces.extensions.model.sheet.SheetUpdate;
 
-import com.ups.uearv.bean.Matricula.MatriculaEst;
-import com.ups.uearv.entidades.GesPension;
-import com.ups.uearv.entidades.MatEstudiante;
+import com.ups.uearv.entidades.CalControl;
 import com.ups.uearv.entidades.MatMatricula;
-import com.ups.uearv.entidades.MatOferta;
-import com.ups.uearv.entidades.MatPeriodo;
 import com.ups.uearv.servicios.DAO;
 import com.ups.uearv.servicios.Session;
 import com.ups.uearv.servicios.Util;
@@ -56,13 +48,13 @@ public class ControlAcademico implements Serializable {
 	String soAsignatura = "";
 	String soQuimestre = "";
 	String soParcial = "";
-		
+
 	private List<Object> controlList = new ArrayList<Object>();
-		
+
 	ArrayList<SelectItem> listPeriodos = new ArrayList<SelectItem>();
 	ArrayList<SelectItem> listOfertas = new ArrayList<SelectItem>();		
 	ArrayList<SelectItem> listAsignaturas = new ArrayList<SelectItem>();
-	
+
 	private static EntityManagerFactory emf = Persistence.createEntityManagerFactory("sismacc");
 	private static EntityManager em = emf.createEntityManager();	
 
@@ -75,7 +67,7 @@ public class ControlAcademico implements Serializable {
 
 	@PostConstruct
 	public void init() {
-		
+
 		listPeriodos = (ArrayList<SelectItem>) llenaComboPeriodo();
 		soPeriodo = "NA";
 
@@ -87,29 +79,26 @@ public class ControlAcademico implements Serializable {
 		final Sheet sheet = event.getSheet();  
 		final List<SheetUpdate> updates = sheet.getUpdates();    
 		final HashSet<MatMatricula> processed = new HashSet<MatMatricula>();  
-		
+
 		for (final SheetUpdate update : updates) {  
 			final Object asset = (Object) update.getRowData();  
 			if (processed.contains(asset)) {  
 				continue;  
 			}
-			
+
 			Date date = new Date();
 			Timestamp fecha = new Timestamp(date.getTime());
 
 			EntityManager em = emf.createEntityManager();
 			em.getTransaction().begin();
 			try {
-				MatOferta oferta = (MatOferta) DAO.buscarObject(new MatOferta(), "from MatOferta c where c.descripcion = '" + ((MatriculaEst) asset).getNomOferta() + "'");
-				MatMatricula mat = (MatMatricula) DAO.buscarObject(new MatMatricula(), "from MatMatricula c where c.idMatricula = '" + ((MatriculaEst) asset).getCodMatricula() + "'");
-								
-				mat.setSnAprobado(((MatriculaEst) asset).isSnAprobada() ? "S" : "N");
-				mat.setMatOferta(oferta);
-				mat.setObservaciones(((MatriculaEst) asset).getObservacion());
-				mat.setUsuarioAct(Session.getUserName());			
-				mat.setFechaAct(fecha);			
-								
-				if (!DAO.saveOrUpdate(mat, 1, em)) 
+				
+				CalControl con = (CalControl) DAO.buscarObject(new CalControl(), "from MatMatricula c where c.idMatricula = '" + ((ControlEst) asset).getCodControl() + "'");
+				
+				con.setUsuarioAct(Session.getUserName());			
+				con.setFechaAct(fecha);			
+
+				if (!DAO.saveOrUpdate(con, 1, em)) 
 					em.getTransaction().rollback();			
 				else
 					em.getTransaction().commit();				
@@ -121,70 +110,73 @@ public class ControlAcademico implements Serializable {
 		}  
 		sheet.commitUpdates();  
 	}  
-	
+
 	public void closeDialogo() {
 		init();
-		
+
 		controlList.clear();
 	}
-	
+
 	public void onChangePeriodo() {
 		listOfertas = (ArrayList<SelectItem>) llenaComboOferta();
 		soOferta = "NA";
-		
+
 		onChangeOferta();
 	}
 
 	public void onChangeOferta() {
 		listAsignaturas = (ArrayList<SelectItem>) llenaComboAsignaturas();
 		soAsignatura = "NA";
-		
+
 		onChangeAsignatura();
 	}
-	
+
 	public void onChangeAsignatura() {
 		llenarListControl();
 	}
-	
+
 	// CONSULTA	
 	public void llenarListControl() {		
 		controlList.clear();
 		if(!soPeriodo.equals("NA")) {
-			jpql = 
-			"";
+			if(!soOferta.equals("NA")) {
+				if(!soAsignatura.equals("NA")) {
+					jpql = "CALL consulta_control_academico (" + null + "," + soOferta + "," + null + ","
+							+ null + "," + null + ")";
 
-			@SuppressWarnings("unchecked")
-			List<Object> result = em.createNativeQuery(jpql).getResultList();
-			Iterator<Object> itr = result.iterator();
-			for (int k = 0; k < result.size(); k++) {
-				Object[] obj = (Object[]) itr.next();
+					@SuppressWarnings("unchecked")
+					List<Object> result = em.createNativeQuery(jpql).getResultList();
+					Iterator<Object> itr = result.iterator();
+					for (int k = 0; k < result.size(); k++) {
+						Object[] obj = (Object[]) itr.next();
 
-				ControlEst e = new ControlEst();				
-				e.setCodMatricula(obj[0].toString());				
-				e.setNomEstudiante(obj[2].toString());
+						ControlEst e = new ControlEst();				
+						e.setCodMatricula(obj[1].toString());				
+						e.setNomEstudiante(obj[2].toString());
 
-				controlList.add(e);
+						controlList.add(e);
+					}
+				}
 			}
 		}			
 	}
-	
-	
+
 	public List<SelectItem> llenaComboPeriodo() {
 		return Util.llenaCombo(DAO.getPeriodos(), 2);
 	}
-	
+
 	public List<SelectItem> llenaComboOferta() {
 		return Util.llenaCombo(DAO.getOfertas(soPeriodo), 2);
 	}
-	
+
 	public List<SelectItem> llenaComboAsignaturas() {
 		return Util.llenaCombo(DAO.getAsignaturasControl(soOferta), 2);
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	public List<String> llenaComboComportamiento() {
 		jpql = 
-		" ";
+				" ";
 
 		ArrayList<String> listaOfertas = new ArrayList<String>();
 		listaOfertas.add("Seleccione");
@@ -197,9 +189,9 @@ public class ControlAcademico implements Serializable {
 		}		
 		return listaOfertas;
 	}
-	
+
 	// ACCIONES
-	
+
 	// CLASES
 	public class ControlEst  implements Serializable {
 

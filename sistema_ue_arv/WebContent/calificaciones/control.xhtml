@@ -61,9 +61,13 @@ xmlns:pe="http://primefaces.org/ui/extensions">
 			  
 			    <p:ajax event="change" listener="#{control.cellChangeEvent}" />  
 			  			   			  
-			    <pe:sheetcolumn headerText="Estudiante" readonly="true" 
-			    	value="#{row.matMatricula.matEstudiante.apellidos} #{row.matMatricula.matEstudiante.nombre}" 
-			    	sortBy="#{row.matMatricula.matEstudiante.apellidos} #{row.matMatricula.matEstudiante.nombre}" />
+			    <pe:sheetcolumn headerText="Estudiante" readonly="true" value="#{row.nomEstudiante}" sortBy="#{row.nomEstudiante}" />
+			    	
+			     <pe:sheetcolumn headerText="Lección" value="#{row.leccion}" colWidth="20" />
+			     
+			     <pe:sheetcolumn headerText="Deber" value="#{row.deber}" colWidth="20" />
+			     
+			     <pe:sheetcolumn headerText="Taller" value="#{row.taller}" colWidth="20" />
 			    			    
 			    		    
 			    <f:facet name="footer">  
