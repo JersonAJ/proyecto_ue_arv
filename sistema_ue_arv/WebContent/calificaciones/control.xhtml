@@ -16,11 +16,6 @@ xmlns:pe="http://primefaces.org/ui/extensions">
 				
 			<p:growl id="growl" for="growl" showDetail="true" closable="true" />
 			
-			<p:outputPanel style="background-color: white; padding: 5px;">
-				
-			</p:outputPanel>	
-			
-		
 			<!-- CONSULTA -->	
 			<style>				
 				.ui-datatable thead th, .ui-datatable tbody td, .ui-datatable tfoot td, .ui-datatable tfoot th { padding: 2px 10px; }
@@ -30,20 +25,40 @@ xmlns:pe="http://primefaces.org/ui/extensions">
 		   		<p:selectOneMenu id="soPeriodo" value="#{control.soPeriodo}">
 					<f:selectItem itemLabel="Seleccione Período" itemValue="NA" />
 					<f:selectItems value="#{control.listPeriodos}" />		
-					<p:ajax listener="#{control.onChangePeriodo()}" update="soOferta soAsignatura sheet"/>								
+					<p:ajax listener="#{control.onChangePeriodo()}" update="soOferta soAsignatura opSheet1 opSheet2"/>								
 				</p:selectOneMenu>	
 				<p:spacer width="10px" />
 				<p:selectOneMenu id="soOferta" value="#{control.soOferta}">
 					<f:selectItem itemLabel="Seleccione Oferta" itemValue="NA" />
 					<f:selectItems value="#{control.listOfertas}" />
-					<p:ajax listener="#{control.onChangeOferta()}" update="soAsignatura sheet"/>
+					<p:ajax listener="#{control.onChangeOferta()}" update="soAsignatura opSheet1 opSheet2"/>
 				</p:selectOneMenu>	
 				<p:spacer width="10px" />
 				<p:selectOneMenu id="soAsignatura" value="#{control.soAsignatura}">
 					<f:selectItem itemLabel="Seleccione Asignatura" itemValue="NA" />
 					<f:selectItems value="#{control.listAsignaturas}" />
-					<p:ajax listener="#{control.onChangeAsignatura()}" update="sheet"/>
-				</p:selectOneMenu>			      		      			
+					<p:ajax listener="#{control.onChangeAsignatura()}" update="opSheet1 opSheet2"/>
+				</p:selectOneMenu>
+				<br/><br/>
+				<p:outputPanel style="background-color: white; padding: 5px; display: inline-flex">
+					<p:outputPanel style="padding: 5px">Quimestre:</p:outputPanel>
+					<p:selectOneMenu id="soQuimestre" value="#{control.soQuimestre}" style="width: 40px">
+			            <f:selectItem itemLabel="Q1" itemValue="1" /> 
+			            <f:selectItem itemLabel="Q2" itemValue="2" />		
+			            <p:ajax listener="#{control.llenarListControl()}" update="opSheet1 opSheet2"/>
+			        </p:selectOneMenu>
+			        <p:spacer width="10px" />
+			        <p:outputPanel style="padding: 5px">Registro:</p:outputPanel>
+					<p:selectOneMenu id="soParcial" value="#{control.soParcial}" style="width: 40px">
+			            <f:selectItem itemLabel="P1" itemValue="1" /> 
+			            <f:selectItem itemLabel="P2" itemValue="2" />		
+			            <f:selectItem itemLabel="P3" itemValue="3" />
+			            <f:selectItem itemLabel="EX" itemValue="0" />
+			            <p:ajax listener="#{control.llenarListControl()}" update="opSheet1 opSheet2"/>
+			        </p:selectOneMenu>
+			        <p:spacer width="10px" />	    	      
+				</p:outputPanel>	
+						      			
 			</p:outputPanel>
 			 				 	
 			<p:separator />
@@ -55,26 +70,50 @@ xmlns:pe="http://primefaces.org/ui/extensions">
 				.handsontable .htAutocompleteArrow { float: right; font-size: 12px; color: #474a4b; cursor: default; width: 16px; text-align: center; }
 				.handsontable tbody th.ht__highlight, .handsontable thead th.ht__highlight { background-color: #dcdcdc; color: #8f3b4f; }
 			</style>
-			<pe:sheet id="sheet" widgetVar="sheetWidget" value="#{control.controlList}" var="row"   
-			    height="350" rowKey="#{row.codMatricula}" showRowHeaders="true" resizableCols="true" resizableRows="true" 
-			    readOnly="false" sortBy="#{row.nomEstudiante}" sortOrder="ascending" emptyMessage="No existen datos a mostrar">  
-			  
-			    <p:ajax event="change" listener="#{control.cellChangeEvent}" />  
-			  			   			  
-			    <pe:sheetcolumn headerText="Estudiante" readonly="true" value="#{row.nomEstudiante}" sortBy="#{row.nomEstudiante}" />
-			    	
-			     <pe:sheetcolumn headerText="Lección" value="#{row.leccion}" colWidth="20" />
-			     
-			     <pe:sheetcolumn headerText="Deber" value="#{row.deber}" colWidth="20" />
-			     
-			     <pe:sheetcolumn headerText="Taller" value="#{row.taller}" colWidth="20" />
-			    			    
-			    		    
-			    <f:facet name="footer">  
-			        <h:outputText id="footer" value="#{control.controlList.size()} Registros" />  
-			    </f:facet>  
-			</pe:sheet>  
-			
+			<p:outputPanel id="opSheet1" style="display: #{control.soParcial eq '0'? 'none':''}">
+				<pe:sheet id="sheet1" widgetVar="sheetWidget1" value="#{control.controlList}" var="row"   
+				    height="350" rowKey="#{row.codMatricula}" showRowHeaders="true" resizableCols="true" resizableRows="true" 
+				    readOnly="false" sortBy="#{row.nomEstudiante}" sortOrder="ascending" emptyMessage="No existen datos a mostrar">  
+				  
+					<p:ajax event="change" listener="#{control.cellChangeEvent}" update="sheet1" />  
+				  			   			  
+				    <pe:sheetcolumn headerText="Estudiante" readonly="true" value="#{row.nomEstudiante}" sortBy="#{row.nomEstudiante}" />
+				    	
+				    <pe:sheetcolumn headerText="Lección" value="#{row.leccion}" colWidth="40"
+				    	styleClass="htRight #{row.leccion gt 0 ? 'positive' : 'negative'}" colType="numeric" numericPattern="0.00" />
+				     
+				    <pe:sheetcolumn headerText="Deber" value="#{row.deber}" colWidth="40" 
+				   		styleClass="htRight #{row.deber gt 0 ? 'positive' : 'negative'}" colType="numeric" numericPattern="0.00" />
+				     
+				    <pe:sheetcolumn headerText="Taller" value="#{row.taller}" colWidth="40" 
+						styleClass="htRight #{row.taller gt 0 ? 'positive' : 'negative'}" colType="numeric" numericPattern="0.00" />
+				     			    
+				    <pe:sheetcolumn headerText="Comportamiento" value="#{row.nomComportamiento}" colType="dropdown" 
+				     	selectItems="#{control.llenaComboComportamiento()}" sortBy="#{row.nomComportamiento}" />	    			    
+				    		    
+				    <f:facet name="footer">  
+				        <h:outputText value="#{control.controlList.size()} Registros" />  
+				    </f:facet>  
+				</pe:sheet>
+			</p:outputPanel>
+			<p:outputPanel id="opSheet2" style="display: #{control.soParcial eq '0'? '':'none'}">
+				<pe:sheet id="sheet2" widgetVar="sheetWidget2" value="#{control.controlList}" var="row"   
+				    height="350" rowKey="#{row.codMatricula}" showRowHeaders="true" resizableCols="true" resizableRows="true" 
+				    readOnly="false" sortBy="#{row.nomEstudiante}" sortOrder="ascending" emptyMessage="No existen datos a mostrar">   
+				  
+					<p:ajax event="change" listener="#{control.cellChangeEvent}" update="sheet2" />  
+				  			   			  
+				    <pe:sheetcolumn headerText="Estudiante" readonly="true" value="#{row.nomEstudiante}" sortBy="#{row.nomEstudiante}" />
+				    	
+				    	
+				    <pe:sheetcolumn id="Examen" headerText="Examen" value="#{row.examen}" colWidth="40"
+				    	styleClass="htRight #{row.examen gt 0 ? 'positive' : 'negative'}" colType="numeric" numericPattern="0.00" />
+				    		    
+				    <f:facet name="footer">  
+				        <h:outputText value="#{control.controlList.size()} Registros" />  
+				    </f:facet>  
+				</pe:sheet>    
+			</p:outputPanel>
 			<br/>
 									
 	   	</h:form>

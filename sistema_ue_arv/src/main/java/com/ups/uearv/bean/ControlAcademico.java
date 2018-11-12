@@ -26,6 +26,8 @@ import org.primefaces.extensions.component.sheet.Sheet;
 import org.primefaces.extensions.event.SheetEvent;
 import org.primefaces.extensions.model.sheet.SheetUpdate;
 
+import com.ups.uearv.entidades.CalAsignatura;
+import com.ups.uearv.entidades.CalComportamiento;
 import com.ups.uearv.entidades.CalControl;
 import com.ups.uearv.entidades.MatMatricula;
 import com.ups.uearv.servicios.DAO;
@@ -70,6 +72,9 @@ public class ControlAcademico implements Serializable {
 
 		listPeriodos = (ArrayList<SelectItem>) llenaComboPeriodo();
 		soPeriodo = "NA";
+		
+		soQuimestre = "1";
+		soParcial = "1";
 
 		onChangePeriodo();
 	}
@@ -91,17 +96,55 @@ public class ControlAcademico implements Serializable {
 
 			EntityManager em = emf.createEntityManager();
 			em.getTransaction().begin();
-			try {
+			try {				
+				String codControl = ((ControlEst) asset).getCodControl();
+				String codMatricula = ((ControlEst) asset).getCodMatricula();
+				String nomComportamiento = ((ControlEst) asset).getNomComportamiento();				
+				BigDecimal leccion = ((ControlEst) asset).getLeccion();
+				BigDecimal deber = ((ControlEst) asset).getDeber();
+				BigDecimal taller = ((ControlEst) asset).getTaller();
+				BigDecimal examen = ((ControlEst) asset).getExamen();
 				
-				CalControl con = (CalControl) DAO.buscarObject(new CalControl(), "from MatMatricula c where c.idMatricula = '" + ((ControlEst) asset).getCodControl() + "'");
+				MatMatricula matricula = (MatMatricula) DAO.buscarObject(new MatMatricula(), "from MatMatricula c where c.idMatricula = '" + codMatricula + "'");
+				CalAsignatura asignatura = (CalAsignatura) DAO.buscarObject(new CalAsignatura(), "from CalAsignatura c where c.idAsignatura = '" + soAsignatura + "'");
+				CalComportamiento comportamiento = (CalComportamiento) DAO.buscarObject(new CalComportamiento(),"from CalComportamiento c where c.descripcion = '" + nomComportamiento + "'");
 				
-				con.setUsuarioAct(Session.getUserName());			
-				con.setFechaAct(fecha);			
+				int op = 0; // NUEVO REGISTRO		
+				CalControl con = new CalControl();
+								
+				if (!codControl.equals("--")) {
+					op = 1; // ACTUALIZA REGISTRO
+					con = (CalControl) DAO.buscarObject(new CalControl(), "from CalControl c where c.idControl = '" + codControl + "'");
+					
+					con.setUsuarioAct(Session.getUserName());
+					con.setFechaAct(fecha);		
+				} else {
+					con.setUsuarioIng(Session.getUserName());
+					con.setFechaIng(fecha);		
+					con.setEstado("AC");
+				}
+					
+				con.setMatMatricula(matricula);
+				con.setCalAsignatura(asignatura);				
+				con.setQuimestre(Integer.parseInt(soQuimestre));
+				con.setParcial(Integer.parseInt(soParcial));
+				
+				if (!soParcial.equals("0")) {								
+					con.setCalComportamiento(comportamiento);					
+					con.setLeccion(leccion);
+					con.setDeber(deber);
+					con.setTaller(taller);					
+				} else {
+					con.setExam(examen);
+				}		
+					
 
-				if (!DAO.saveOrUpdate(con, 1, em)) 
+				if (!DAO.saveOrUpdate(con, op, em)) 
 					em.getTransaction().rollback();			
 				else
-					em.getTransaction().commit();				
+					em.getTransaction().commit();	
+				
+				llenarListControl();
 			} catch (Exception e) {
 				em.getTransaction().rollback();
 				e.printStackTrace();
@@ -122,6 +165,8 @@ public class ControlAcademico implements Serializable {
 		soOferta = "NA";
 
 		onChangeOferta();
+		
+		llenaComboComportamiento();
 	}
 
 	public void onChangeOferta() {
@@ -136,13 +181,14 @@ public class ControlAcademico implements Serializable {
 	}
 
 	// CONSULTA	
-	public void llenarListControl() {		
+	public void llenarListControl() {
 		controlList.clear();
-		if(!soPeriodo.equals("NA")) {
-			if(!soOferta.equals("NA")) {
-				if(!soAsignatura.equals("NA")) {
-					jpql = "CALL consulta_control_academico (" + null + "," + soOferta + "," + null + ","
-							+ null + "," + null + ")";
+		if (!soPeriodo.equals("NA")) {
+			if (!soOferta.equals("NA")) {
+				if (!soAsignatura.equals("NA")) {
+					
+					jpql = "CALL consulta_control_academico (" + soPeriodo + "," + soOferta + "," + soAsignatura + ","
+							+ soQuimestre + "," + soParcial + ")";
 
 					@SuppressWarnings("unchecked")
 					List<Object> result = em.createNativeQuery(jpql).getResultList();
@@ -150,15 +196,21 @@ public class ControlAcademico implements Serializable {
 					for (int k = 0; k < result.size(); k++) {
 						Object[] obj = (Object[]) itr.next();
 
-						ControlEst e = new ControlEst();				
-						e.setCodMatricula(obj[1].toString());				
+						ControlEst e = new ControlEst();
+						e.setCodControl(obj[0].toString());
+						e.setCodMatricula(obj[1].toString());
 						e.setNomEstudiante(obj[2].toString());
+						e.setNomComportamiento(obj[3].toString());
+						e.setLeccion(new BigDecimal(obj[4].toString()));
+						e.setDeber(new BigDecimal(obj[5].toString()));
+						e.setTaller(new BigDecimal(obj[6].toString()));
+						e.setExamen(new BigDecimal(obj[7].toString()));
 
 						controlList.add(e);
 					}
 				}
 			}
-		}			
+		}
 	}
 
 	public List<SelectItem> llenaComboPeriodo() {
@@ -175,11 +227,10 @@ public class ControlAcademico implements Serializable {
 
 	@SuppressWarnings("unchecked")
 	public List<String> llenaComboComportamiento() {
-		jpql = 
-				" ";
+		jpql = " SELECT id_comportamiento, descripcion FROM cal_comportamiento WHERE estado = 'AC' ";
 
 		ArrayList<String> listaOfertas = new ArrayList<String>();
-		listaOfertas.add("Seleccione");
+		listaOfertas.add("Seleccione Comportamiento");
 
 		List<Object> result = em.createNativeQuery(jpql).getResultList();
 		Iterator<Object> itr = result.iterator();
