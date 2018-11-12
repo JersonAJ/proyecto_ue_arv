@@ -36,12 +36,18 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 			</style>
 			<br/>		
 			<p:outputPanel>
-			   <p:inputText style="width: 500px" value="#{oferta.itBuscar}" placeholder="Buscar por oferta">
-				<p:ajax event="keyup" update="dt" listener="#{oferta.buscar}"/>
-			     	</p:inputText>	
+			   <p:selectOneMenu id="soPeriodoCon" value="#{oferta.soPeriodoCon}">
+					<f:selectItem itemLabel="Seleccione Período" itemValue="NA" />
+					<f:selectItems value="#{oferta.listPeriodo}" />
+					<p:ajax listener="#{oferta.onChangePeriodo()}" update="dt"/>						
+				</p:selectOneMenu>	
 				<p:spacer width="10px" />
-			
-				<div style="display: inline-flex">
+					
+			   	<p:inputText style="width: 500px" value="#{oferta.itBuscar}" placeholder="Buscar por oferta">
+					<p:ajax event="keyup" update="dt" listener="#{oferta.buscar}"/>
+			    </p:inputText>	
+				<p:spacer width="10px" />			
+				<div style="display: inline-flex">					
 					<h:selectBooleanCheckbox value="#{oferta.ckMostrarIC}">
 	    				<p:ajax update="dt" listener="#{oferta.buscar}" />
 	 				</h:selectBooleanCheckbox> 

@@ -30,6 +30,8 @@ import com.ups.uearv.entidades.CalAsignatura;
 import com.ups.uearv.entidades.CalComportamiento;
 import com.ups.uearv.entidades.CalControl;
 import com.ups.uearv.entidades.MatMatricula;
+import com.ups.uearv.entidades.MatOferta;
+import com.ups.uearv.entidades.MatPeriodo;
 import com.ups.uearv.servicios.DAO;
 import com.ups.uearv.servicios.Session;
 import com.ups.uearv.servicios.Util;
@@ -52,6 +54,7 @@ public class ControlAcademico implements Serializable {
 	String soParcial = "";
 
 	private List<Object> controlList = new ArrayList<Object>();
+	private List<Object> procesaNotasList = new ArrayList<Object>();
 
 	ArrayList<SelectItem> listPeriodos = new ArrayList<SelectItem>();
 	ArrayList<SelectItem> listOfertas = new ArrayList<SelectItem>();		
@@ -183,12 +186,13 @@ public class ControlAcademico implements Serializable {
 	// CONSULTA	
 	public void llenarListControl() {
 		controlList.clear();
+		procesaNotasList.clear();
+		
 		if (!soPeriodo.equals("NA")) {
 			if (!soOferta.equals("NA")) {
 				if (!soAsignatura.equals("NA")) {
-					
-					jpql = "CALL consulta_control_academico (" + soPeriodo + "," + soOferta + "," + soAsignatura + ","
-							+ soQuimestre + "," + soParcial + ")";
+
+					jpql = "CALL consulta_control_academico (" + soPeriodo + "," + soOferta + "," + soAsignatura + "," + soQuimestre + "," + soParcial + ")";
 
 					@SuppressWarnings("unchecked")
 					List<Object> result = em.createNativeQuery(jpql).getResultList();
@@ -208,6 +212,41 @@ public class ControlAcademico implements Serializable {
 
 						controlList.add(e);
 					}
+
+					jpql = "CALL consulta_control_consolidado (" + soPeriodo + "," + soOferta + "," + soAsignatura  + ")";
+
+					@SuppressWarnings("unchecked")
+					List<Object> resultNotas = em.createNativeQuery(jpql).getResultList();
+					Iterator<Object> itrNotas = resultNotas.iterator();
+					for (int k = 0; k < resultNotas.size(); k++) {
+						Object[] obj = (Object[]) itrNotas.next();
+
+						Notas e = new Notas();
+						e.setCodMatricula(obj[0].toString());
+						e.setNomEstudiante(obj[1].toString());
+						e.setLeccionQ1P1(new BigDecimal(obj[2].toString()));
+						e.setDeberQ1P1(new BigDecimal(obj[3].toString()));
+						e.setTallerQ1P1(new BigDecimal(obj[4].toString()));
+						e.setLeccionQ1P2(new BigDecimal(obj[5].toString()));
+						e.setDeberQ1P2(new BigDecimal(obj[6].toString()));
+						e.setTallerQ1P2(new BigDecimal(obj[7].toString()));
+						e.setLeccionQ1P3(new BigDecimal(obj[8].toString()));
+						e.setDeberQ1P3(new BigDecimal(obj[9].toString()));
+						e.setTallerQ1P3(new BigDecimal(obj[10].toString()));
+						e.setExamenQ1(new BigDecimal(obj[11].toString()));
+						e.setLeccionQ2P1(new BigDecimal(obj[12].toString()));
+						e.setDeberQ2P1(new BigDecimal(obj[13].toString()));
+						e.setTallerQ2P1(new BigDecimal(obj[14].toString()));
+						e.setLeccionQ2P2(new BigDecimal(obj[15].toString()));
+						e.setDeberQ2P2(new BigDecimal(obj[16].toString()));
+						e.setTallerQ2P2(new BigDecimal(obj[17].toString()));
+						e.setLeccionQ2P3(new BigDecimal(obj[18].toString()));
+						e.setDeberQ2P3(new BigDecimal(obj[19].toString()));
+						e.setTallerQ2P3(new BigDecimal(obj[20].toString()));
+						e.setExamenQ2(new BigDecimal(obj[21].toString()));
+						procesaNotasList.add(e);
+					}
+
 				}
 			}
 		}
@@ -240,11 +279,50 @@ public class ControlAcademico implements Serializable {
 		}		
 		return listaOfertas;
 	}
+	
+	public String getDesPeriodo(String cod) {
+		if (!cod.equals("NA")) {
+			MatPeriodo ob = new MatPeriodo();
+			ob = (MatPeriodo) DAO.buscarObject(new MatPeriodo(), "from MatPeriodo c where c.idPeriodo = '" + cod + "'");
+			if (ob == null)
+				return "--";
+			else
+				return ob.getDescripcion().trim();
+		} else
+			return "--";
+	}
+	
+	public String getDesOferta(String cod) {
+		if (!cod.equals("NA")) {
+			MatOferta ob = new MatOferta();
+			ob = (MatOferta) DAO.buscarObject(new MatOferta(), "from MatOferta c where c.idOferta = '" + cod + "'");
+			if (ob == null)
+				return "--";
+			else
+				return ob.getDescripcion().trim();
+		} else
+			return "--";
+	}
+	
+	public String getDesAsignatura(String cod) {
+		if (!cod.equals("NA")) {
+			CalAsignatura ob = new CalAsignatura();
+			ob = (CalAsignatura) DAO.buscarObject(new CalAsignatura(), "from CalAsignatura c where c.idAsignatura = '" + cod + "'");
+			if (ob == null)
+				return "--";
+			else
+				return ob.getNombre().trim();
+		} else
+			return "--";
+	}
 
 	// ACCIONES
-
+	public void procesaNotas() {
+		
+	}
+	
 	// CLASES
-	public class ControlEst  implements Serializable {
+	public class ControlEst implements Serializable {
 
 		private static final long serialVersionUID = 1L;
 
@@ -307,6 +385,167 @@ public class ControlAcademico implements Serializable {
 		}	
 	}
 
+	public class Notas implements Serializable {
+
+		private static final long serialVersionUID = 1L;
+
+		public String codMatricula = "";
+		public String nomEstudiante = "";				
+		public BigDecimal leccionQ1P1;
+		public BigDecimal deberQ1P1;
+		public BigDecimal tallerQ1P1;		
+		public BigDecimal leccionQ1P2;
+		public BigDecimal deberQ1P2;
+		public BigDecimal tallerQ1P2;		
+		public BigDecimal leccionQ1P3;
+		public BigDecimal deberQ1P3;
+		public BigDecimal tallerQ1P3;
+		public BigDecimal examenQ1;
+		public BigDecimal leccionQ2P1;
+		public BigDecimal deberQ2P1;
+		public BigDecimal tallerQ2P1;		
+		public BigDecimal leccionQ2P2;
+		public BigDecimal deberQ2P2;
+		public BigDecimal tallerQ2P2;		
+		public BigDecimal leccionQ2P3;
+		public BigDecimal deberQ2P3;
+		public BigDecimal tallerQ2P3;
+		public BigDecimal examenQ2;
+		
+		public String getCodMatricula() {
+			return codMatricula;
+		}
+		public void setCodMatricula(String codMatricula) {
+			this.codMatricula = codMatricula;
+		}
+		public String getNomEstudiante() {
+			return nomEstudiante;
+		}
+		public void setNomEstudiante(String nomEstudiante) {
+			this.nomEstudiante = nomEstudiante;
+		}
+		public BigDecimal getLeccionQ1P1() {
+			return leccionQ1P1;
+		}
+		public void setLeccionQ1P1(BigDecimal leccionQ1P1) {
+			this.leccionQ1P1 = leccionQ1P1;
+		}
+		public BigDecimal getDeberQ1P1() {
+			return deberQ1P1;
+		}
+		public void setDeberQ1P1(BigDecimal deberQ1P1) {
+			this.deberQ1P1 = deberQ1P1;
+		}
+		public BigDecimal getTallerQ1P1() {
+			return tallerQ1P1;
+		}
+		public void setTallerQ1P1(BigDecimal tallerQ1P1) {
+			this.tallerQ1P1 = tallerQ1P1;
+		}
+		public BigDecimal getLeccionQ1P2() {
+			return leccionQ1P2;
+		}
+		public void setLeccionQ1P2(BigDecimal leccionQ1P2) {
+			this.leccionQ1P2 = leccionQ1P2;
+		}
+		public BigDecimal getDeberQ1P2() {
+			return deberQ1P2;
+		}
+		public void setDeberQ1P2(BigDecimal deberQ1P2) {
+			this.deberQ1P2 = deberQ1P2;
+		}
+		public BigDecimal getTallerQ1P2() {
+			return tallerQ1P2;
+		}
+		public void setTallerQ1P2(BigDecimal tallerQ1P2) {
+			this.tallerQ1P2 = tallerQ1P2;
+		}
+		public BigDecimal getLeccionQ1P3() {
+			return leccionQ1P3;
+		}
+		public void setLeccionQ1P3(BigDecimal leccionQ1P3) {
+			this.leccionQ1P3 = leccionQ1P3;
+		}
+		public BigDecimal getDeberQ1P3() {
+			return deberQ1P3;
+		}
+		public void setDeberQ1P3(BigDecimal deberQ1P3) {
+			this.deberQ1P3 = deberQ1P3;
+		}
+		public BigDecimal getTallerQ1P3() {
+			return tallerQ1P3;
+		}
+		public void setTallerQ1P3(BigDecimal tallerQ1P3) {
+			this.tallerQ1P3 = tallerQ1P3;
+		}
+		public BigDecimal getExamenQ1() {
+			return examenQ1;
+		}
+		public void setExamenQ1(BigDecimal examenQ1) {
+			this.examenQ1 = examenQ1;
+		}
+		public BigDecimal getLeccionQ2P1() {
+			return leccionQ2P1;
+		}
+		public void setLeccionQ2P1(BigDecimal leccionQ2P1) {
+			this.leccionQ2P1 = leccionQ2P1;
+		}
+		public BigDecimal getDeberQ2P1() {
+			return deberQ2P1;
+		}
+		public void setDeberQ2P1(BigDecimal deberQ2P1) {
+			this.deberQ2P1 = deberQ2P1;
+		}
+		public BigDecimal getTallerQ2P1() {
+			return tallerQ2P1;
+		}
+		public void setTallerQ2P1(BigDecimal tallerQ2P1) {
+			this.tallerQ2P1 = tallerQ2P1;
+		}
+		public BigDecimal getLeccionQ2P2() {
+			return leccionQ2P2;
+		}
+		public void setLeccionQ2P2(BigDecimal leccionQ2P2) {
+			this.leccionQ2P2 = leccionQ2P2;
+		}
+		public BigDecimal getDeberQ2P2() {
+			return deberQ2P2;
+		}
+		public void setDeberQ2P2(BigDecimal deberQ2P2) {
+			this.deberQ2P2 = deberQ2P2;
+		}
+		public BigDecimal getTallerQ2P2() {
+			return tallerQ2P2;
+		}
+		public void setTallerQ2P2(BigDecimal tallerQ2P2) {
+			this.tallerQ2P2 = tallerQ2P2;
+		}
+		public BigDecimal getLeccionQ2P3() {
+			return leccionQ2P3;
+		}
+		public void setLeccionQ2P3(BigDecimal leccionQ2P3) {
+			this.leccionQ2P3 = leccionQ2P3;
+		}
+		public BigDecimal getDeberQ2P3() {
+			return deberQ2P3;
+		}
+		public void setDeberQ2P3(BigDecimal deberQ2P3) {
+			this.deberQ2P3 = deberQ2P3;
+		}
+		public BigDecimal getTallerQ2P3() {
+			return tallerQ2P3;
+		}
+		public void setTallerQ2P3(BigDecimal tallerQ2P3) {
+			this.tallerQ2P3 = tallerQ2P3;
+		}
+		public BigDecimal getExamenQ2() {
+			return examenQ2;
+		}
+		public void setExamenQ2(BigDecimal examenQ2) {
+			this.examenQ2 = examenQ2;
+		}		
+	}
+		
 	// GETTERS AND SETTERS
 	public int getAccion() {
 		return accion;
@@ -368,4 +607,10 @@ public class ControlAcademico implements Serializable {
 	public void setListAsignaturas(ArrayList<SelectItem> listAsignaturas) {
 		this.listAsignaturas = listAsignaturas;
 	}
+	public List<Object> getProcesaNotasList() {
+		return procesaNotasList;
+	}
+	public void setProcesaNotasList(List<Object> procesaNotasList) {
+		this.procesaNotasList = procesaNotasList;
+	}	
 }

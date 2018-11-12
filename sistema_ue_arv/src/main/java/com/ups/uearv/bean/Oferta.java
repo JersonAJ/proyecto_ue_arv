@@ -47,6 +47,7 @@ public class Oferta implements Serializable {
 	String itDescripcion = "";
 	boolean ckEstado = false;
 
+	String soPeriodoCon = "NA";
 	String itBuscar = "";
 	boolean ckMostrarIC = false;
 
@@ -70,7 +71,7 @@ public class Oferta implements Serializable {
 
 		listPeriodo = (ArrayList<SelectItem>) llenaComboPeriodo();
 		soPeriodo = listPeriodo.get(0).getValue().toString();
-
+		
 		listCurso = (ArrayList<SelectItem>) llenaComboCursos();
 		soCurso = listCurso.get(0).getValue().toString();
 				
@@ -85,26 +86,28 @@ public class Oferta implements Serializable {
 	// CONSULTA
 	public void llenarLista(String jpql) {
 		ofertaList.clear();
-		List<Object> l = DAO.nqObject(new MatOferta(), jpql);
+		if(!soPeriodoCon.equals("NA")) {	
+			List<Object> l = DAO.nqObject(new MatOferta(), jpql);
 
-		for (Object in : l)
-			ofertaList.add(in);
+			for (Object in : l)
+				ofertaList.add(in);
+		}
 	}
 
 	public void buscar() {
 		if (ckMostrarIC) {
-			jpql = "SELECT o.* " +
-				   "FROM mat_oferta o " +
-				   "	INNER JOIN mat_curso c ON c.id_curso = o.id_curso " +
-				   "	INNER JOIN catalogo_det k ON k.codigo_det = c.nivel " +
-				   "WHERE o.descripcion LIKE '%" + itBuscar + "%' ORDER BY k.codigo_det, c.id_curso ";
+			jpql = "SELECT o.*  \r\n" +
+				   "FROM mat_oferta o  \r\n" +
+				   "	INNER JOIN mat_curso c ON c.id_curso = o.id_curso  \r\n" +
+				   "	INNER JOIN catalogo_det k ON k.codigo_det = c.nivel  \r\n" +
+				   "WHERE o.id_periodo = '" + soPeriodoCon + "' AND o.descripcion LIKE '%" + itBuscar + "%' ORDER BY k.codigo_det, c.id_curso ";
 			
 		} else {
-			jpql = "SELECT o.* " +
+			jpql = "SELECT o.*  \r\n" +
 				   "FROM mat_oferta o " +
-				   "	INNER JOIN mat_curso c ON c.id_curso = o.id_curso " +
-				   "	INNER JOIN catalogo_det k ON k.codigo_det = c.nivel " +
-				   "WHERE o.descripcion LIKE '%" + itBuscar + "%' AND c.estado = 'AC' ORDER BY k.codigo_det, c.id_curso ";
+				   "	INNER JOIN mat_curso c ON c.id_curso = o.id_curso  \r\n" +
+				   "	INNER JOIN catalogo_det k ON k.codigo_det = c.nivel  \r\n" +
+				   "WHERE o.id_periodo = '" + soPeriodoCon + "' AND o.descripcion LIKE '%" + itBuscar + "%' AND o.estado = 'AC' ORDER BY k.codigo_det, c.id_curso ";
 		}
 		llenarLista(jpql);
 	}
@@ -203,6 +206,10 @@ public class Oferta implements Serializable {
 			
 	public void onChangeCombos() {
 		itDescripcion = descripcionOferta();
+	}
+	
+	public void onChangePeriodo() {
+		buscar();
 	}
 	
 	public String descripcionOferta() {
@@ -308,5 +315,11 @@ public class Oferta implements Serializable {
 	}
 	public void setSoParalelo(String soParalelo) {
 		this.soParalelo = soParalelo;
+	}
+	public String getSoPeriodoCon() {
+		return soPeriodoCon;
+	}
+	public void setSoPeriodoCon(String soPeriodoCon) {
+		this.soPeriodoCon = soPeriodoCon;
 	}
 }

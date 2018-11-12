@@ -12,7 +12,6 @@
 		<class>com.ups.uearv.entidades.CalComportamiento</class>
 		<class>com.ups.uearv.entidades.CalControl</class>
 		<class>com.ups.uearv.entidades.CalEscala</class>
-		<class>com.ups.uearv.entidades.CalFalta</class>
 		<class>com.ups.uearv.entidades.CalReparto</class>
 		<class>com.ups.uearv.entidades.CatalogoCab</class>
 		<class>com.ups.uearv.entidades.CatalogoDet</class>

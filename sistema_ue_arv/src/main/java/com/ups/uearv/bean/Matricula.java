@@ -30,6 +30,9 @@ import org.primefaces.extensions.component.sheet.Sheet;
 import org.primefaces.extensions.event.SheetEvent;
 import org.primefaces.extensions.model.sheet.SheetUpdate;
 
+import com.ups.uearv.entidades.CalAsistencia;
+import com.ups.uearv.entidades.CalCalificacion;
+import com.ups.uearv.entidades.CalControl;
 import com.ups.uearv.entidades.GesPension;
 import com.ups.uearv.entidades.MatEstudiante;
 import com.ups.uearv.entidades.MatMatricula;
@@ -401,6 +404,42 @@ public class Matricula implements Serializable {
 					return;
 				}		
 			}			
+			
+			jpql = "SELECT c.* FROM cal_control c WHERE c.id_matricula = '" + soMatricula + "' ";
+			List<Object> listCon = DAO.nqObject(new CalControl(), jpql);						
+			for (Object con : listCon) {
+				((CalControl) con).setUsuarioAct(Session.getUserName());
+				((CalControl) con).setFechaAct(fecha);	
+				((CalControl) con).setEstado("IC");
+				if (!DAO.saveOrUpdate(con, 1, em)) {
+					em.getTransaction().rollback();
+					return;
+				}
+			}
+			
+			jpql = "SELECT a.* FROM cal_asistencia a WHERE a.id_matricula = '" + soMatricula + "' ";
+			List<Object> listAsi = DAO.nqObject(new CalAsistencia(), jpql);						
+			for (Object asi : listAsi) {
+				((CalAsistencia) asi).setUsuarioAct(Session.getUserName());
+				((CalAsistencia) asi).setFechaAct(fecha);	
+				((CalAsistencia) asi).setEstado("IC");
+				if (!DAO.saveOrUpdate(asi, 1, em)) {
+					em.getTransaction().rollback();
+					return;
+				}		
+			}
+			
+			jpql = "SELECT ca.* FROM cal_calificacion ca WHERE ca.id_matricula = '" + soMatricula + "' ";
+			List<Object> listCal = DAO.nqObject(new CalCalificacion(), jpql);						
+			for (Object cal : listCal) {
+				((CalCalificacion) cal).setUsuarioAct(Session.getUserName());
+				((CalCalificacion) cal).setFechaAct(fecha);	
+				((CalCalificacion) cal).setEstado("IC");
+				if (!DAO.saveOrUpdate(cal, 1, em)) {
+					em.getTransaction().rollback();
+					return;
+				}		
+			}
 			
 			em.getTransaction().commit();
 			mensaje = "Anulación exitosa";

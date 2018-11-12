@@ -52,11 +52,7 @@ public class MatMatricula implements Serializable {
 	//bi-directional many-to-one association to CalControl
 	@OneToMany(mappedBy="matMatricula")
 	private List<CalControl> calControls;
-
-	//bi-directional many-to-one association to CalFalta
-	@OneToMany(mappedBy="matMatricula")
-	private List<CalFalta> calFaltas;
-
+	
 	//bi-directional many-to-one association to GesPension
 	@OneToMany(mappedBy="matMatricula")
 	private List<GesPension> gesPensions;
@@ -207,28 +203,6 @@ public class MatMatricula implements Serializable {
 		calControl.setMatMatricula(null);
 
 		return calControl;
-	}
-
-	public List<CalFalta> getCalFaltas() {
-		return this.calFaltas;
-	}
-
-	public void setCalFaltas(List<CalFalta> calFaltas) {
-		this.calFaltas = calFaltas;
-	}
-
-	public CalFalta addCalFalta(CalFalta calFalta) {
-		getCalFaltas().add(calFalta);
-		calFalta.setMatMatricula(this);
-
-		return calFalta;
-	}
-
-	public CalFalta removeCalFalta(CalFalta calFalta) {
-		getCalFaltas().remove(calFalta);
-		calFalta.setMatMatricula(null);
-
-		return calFalta;
 	}
 
 	public List<GesPension> getGesPensions() {

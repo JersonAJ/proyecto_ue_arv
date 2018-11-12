@@ -19,22 +19,21 @@ xmlns:pe="http://primefaces.org/ui/extensions">
 			<!-- CONSULTA -->	
 			<style>				
 				.ui-datatable thead th, .ui-datatable tbody td, .ui-datatable tfoot td, .ui-datatable tfoot th { padding: 2px 10px; }
-			</style>
-			<br/>		
+			</style>					
 			<p:outputPanel>		   		
-		   		<p:selectOneMenu id="soPeriodo" value="#{control.soPeriodo}">
+		   		<p:selectOneMenu id="soPeriodo" value="#{control.soPeriodo}" style="width: 130px">
 					<f:selectItem itemLabel="Seleccione Período" itemValue="NA" />
 					<f:selectItems value="#{control.listPeriodos}" />		
 					<p:ajax listener="#{control.onChangePeriodo()}" update="soOferta soAsignatura opSheet1 opSheet2"/>								
 				</p:selectOneMenu>	
 				<p:spacer width="10px" />
-				<p:selectOneMenu id="soOferta" value="#{control.soOferta}">
+				<p:selectOneMenu id="soOferta" value="#{control.soOferta}" style="width: 190px">
 					<f:selectItem itemLabel="Seleccione Oferta" itemValue="NA" />
 					<f:selectItems value="#{control.listOfertas}" />
 					<p:ajax listener="#{control.onChangeOferta()}" update="soAsignatura opSheet1 opSheet2"/>
 				</p:selectOneMenu>	
 				<p:spacer width="10px" />
-				<p:selectOneMenu id="soAsignatura" value="#{control.soAsignatura}">
+				<p:selectOneMenu id="soAsignatura" value="#{control.soAsignatura}" style="width: 150px">
 					<f:selectItem itemLabel="Seleccione Asignatura" itemValue="NA" />
 					<f:selectItems value="#{control.listAsignaturas}" />
 					<p:ajax listener="#{control.onChangeAsignatura()}" update="opSheet1 opSheet2"/>
@@ -57,9 +56,137 @@ xmlns:pe="http://primefaces.org/ui/extensions">
 			            <p:ajax listener="#{control.llenarListControl()}" update="opSheet1 opSheet2"/>
 			        </p:selectOneMenu>
 			        <p:spacer width="10px" />	    	      
-				</p:outputPanel>	
-						      			
+			        <p:outputPanel style="padding: 5px">
+				        <p:commandLink title="Control consolidado" oncomplete="PF('dglCon').show();" update="panelCon">
+							<i class="fa fa-table" />
+							<span>Control consolidado</span>					
+							<p:spacer width="10px" />					
+						</p:commandLink>			        
+					</p:outputPanel>
+				</p:outputPanel>							      			
 			</p:outputPanel>
+			
+			<!-- PROCESA NOTAS -->
+			<p:dialog header="Control consolidado" widgetVar="dglCon" modal="true" closable="true" maximizable="false" resizable="false" width="90%" height="500px">
+				<p:outputPanel id="panelCon">		  		
+			   		<style>
+				   		.ui-datatable th.ui-state-default, .ui-datatable tfoot td.ui-state-default { background: #e0edff; border-color: #000000; }
+				   		.ui-datatable tbody>tr.ui-widget-content { border-color: #000000; }
+			   		</style>
+			   		<b>
+				   		Período: #{control.getDesPeriodo(control.soPeriodo)} 
+						<br/>
+						Oferta:  #{control.getDesOferta(control.soOferta)}
+						<br/>
+						Asignatura:  #{control.getDesAsignatura(control.soAsignatura)}
+					</b>
+					<br/><br/>
+					<p:dataTable id="dtcontrol" var="dtnotas" value="#{control.procesaNotasList}" tableStyle="width: auto; min-width: 100%;" 
+						emptyMessage="No existen notas a procesar">
+						
+						<p:columnGroup type="header">
+				            <p:row>
+				                <p:column rowspan="3" headerText="Estudiante" width="25%" />
+				                <p:column colspan="10" headerText="Quimestre 1" />
+				                <p:column colspan="10" headerText="Quimestre 2" />				                
+				            </p:row>		         
+				            <p:row>
+				                <p:column colspan="3" headerText="P1" />
+				                <p:column colspan="3" headerText="P2" />		
+				            	<p:column colspan="3" headerText="P3" />				                		                
+				            	<p:column rowspan="2" headerText="EX" width="70" />
+				            	
+				            	<p:column colspan="3" headerText="P1" />
+				                <p:column colspan="3" headerText="P2" />		
+				            	<p:column colspan="3" headerText="P3" />				                		                
+				            	<p:column rowspan="2" headerText="EX" width="70" />
+				            </p:row>
+				            <p:row>
+				                <p:column headerText="L" width="70" />
+				                <p:column headerText="D" width="70" />		
+				                <p:column headerText="T" width="70" />				                		                
+				                
+				                <p:column headerText="L" width="70" />
+				                <p:column headerText="D" width="70" />		
+				                <p:column headerText="T" width="70" />
+				                
+				                <p:column headerText="L" width="70" />
+				                <p:column headerText="D" width="70" />		
+				                <p:column headerText="T" width="70" />
+				                
+				                <p:column headerText="L" width="70" />
+				                <p:column headerText="D" width="70" />		
+				                <p:column headerText="T" width="70" />				                		                
+				                
+				                <p:column headerText="L" width="70" />
+				                <p:column headerText="D" width="70" />		
+				                <p:column headerText="T" width="70" />
+				                
+				                <p:column headerText="L" width="70" />
+				                <p:column headerText="D" width="70" />		
+				                <p:column headerText="T" width="70" />				                
+				            </p:row>
+				        </p:columnGroup>	 	
+			
+						<p:column headerText="Estudiante" style="font-weight: bold">
+					        <h:outputText value="#{dtnotas.nomEstudiante}" />
+					    </p:column>			 
+					    
+					    <p:column headerText="Q1-P1-L">
+					    	<div style="text-align: end"><h:outputText value="#{dtnotas.leccionQ1P1}" /></div></p:column> 
+					    <p:column headerText="Q1-P1-D">
+					    	<div style="text-align: end"><h:outputText value="#{dtnotas.deberQ1P1}" /></div></p:column>
+					    <p:column headerText="Q1-P1-T">
+					    	<div style="text-align: end"><h:outputText value="#{dtnotas.tallerQ1P1}" /></div></p:column>
+					    <p:column headerText="Q1-P2-L">
+					    	<div style="text-align: end"><h:outputText value="#{dtnotas.leccionQ1P2}" /></div></p:column> 
+					    <p:column headerText="Q1-P2-D">
+					    	<div style="text-align: end"><h:outputText value="#{dtnotas.deberQ1P2}" /></div></p:column>
+					    <p:column headerText="Q1-P2-T">
+					    	<div style="text-align: end"><h:outputText value="#{dtnotas.tallerQ1P2}" /></div></p:column>
+					    <p:column headerText="Q1-P3-L">
+					    	<div style="text-align: end"><h:outputText value="#{dtnotas.leccionQ1P3}" /></div></p:column> 
+					    <p:column headerText="Q1-P3-D">
+					    	<div style="text-align: end"><h:outputText value="#{dtnotas.deberQ1P3}" /></div></p:column>
+					    <p:column headerText="Q1-P3-T">
+					    	<div style="text-align: end"><h:outputText value="#{dtnotas.tallerQ1P3}" /></div></p:column>
+					    <p:column headerText="Q1-EX" style="background: #dfffba">
+					    	<div style="text-align: end"><h:outputText value="#{dtnotas.examenQ1}" /></div></p:column>					    	
+					    <p:column headerText="Q2-P1-L">
+					    	<div style="text-align: end"><h:outputText value="#{dtnotas.leccionQ2P1}" /></div></p:column> 
+					    <p:column headerText="Q2-P1-D">
+					    	<div style="text-align: end"><h:outputText value="#{dtnotas.deberQ2P1}" /></div></p:column>
+					    <p:column headerText="Q2-P1-T">
+					    	<div style="text-align: end"><h:outputText value="#{dtnotas.tallerQ2P1}" /></div></p:column>
+					    <p:column headerText="Q2-P2-L">
+					    	<div style="text-align: end"><h:outputText value="#{dtnotas.leccionQ2P2}" /></div></p:column> 
+					    <p:column headerText="Q2-P2-D">
+					    	<div style="text-align: end"><h:outputText value="#{dtnotas.deberQ2P2}" /></div></p:column>
+					    <p:column headerText="Q2-P2-T">
+					    	<div style="text-align: end"><h:outputText value="#{dtnotas.tallerQ2P2}" /></div></p:column>
+					    <p:column headerText="Q2-P3-L">
+					    	<div style="text-align: end"><h:outputText value="#{dtnotas.leccionQ2P3}" /></div></p:column> 
+					    <p:column headerText="Q2-P3-D">
+					    	<div style="text-align: end"><h:outputText value="#{dtnotas.deberQ2P3}" /></div></p:column>
+					    <p:column headerText="Q2-P3-T">
+					    	<div style="text-align: end"><h:outputText value="#{dtnotas.tallerQ2P3}" /></div></p:column>
+					    <p:column headerText="Q2-EX" style="background: #dfffba">
+					    	<div style="text-align: end"><h:outputText value="#{dtnotas.examenQ2}" /></div></p:column>			    
+					</p:dataTable>
+					<br/>	
+					<h:panelGroup style="display:block; text-align:center">
+						<p:commandButton id="btnProcesar" value="Procesar notas" icon="fa fa-check"  actionListener="#{control.procesaNotas}"
+							disabled="#{control.procesaNotasList.size() == 0 ? true : false}" update="dtcontrol growl btnProcesar">
+							<p:confirm header="Confirmación" icon="fa fa-warning"
+								message="¿Está seguro(a) que desea procesar #{control.procesaNotasList.size()} notas?" />
+						</p:commandButton>	
+					</h:panelGroup>
+				</p:outputPanel>
+				<p:confirmDialog id="confirmProNot" global="false" showEffect="fade" hideEffect="fade">
+					<p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" icon="fa fa-check" />
+					<p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="fa fa-close" />
+				</p:confirmDialog>				
+			</p:dialog>
 			 				 	
 			<p:separator />
 			  
@@ -73,9 +200,9 @@ xmlns:pe="http://primefaces.org/ui/extensions">
 			<p:outputPanel id="opSheet1" style="display: #{control.soParcial eq '0'? 'none':''}">
 				<pe:sheet id="sheet1" widgetVar="sheetWidget1" value="#{control.controlList}" var="row"   
 				    height="350" rowKey="#{row.codMatricula}" showRowHeaders="true" resizableCols="true" resizableRows="true" 
-				    readOnly="false" sortBy="#{row.nomEstudiante}" sortOrder="ascending" emptyMessage="No existen datos a mostrar">  
+				    readOnly="false" sortBy="#{row.nomEstudiante}" sortOrder="ascending" emptyMessage="No existen datos a mostrar">
 				  
-					<p:ajax event="change" listener="#{control.cellChangeEvent}" update="sheet1" />  
+					<p:ajax event="change" listener="#{control.cellChangeEvent}" update="sheet1" />
 				  			   			  
 				    <pe:sheetcolumn headerText="Estudiante" readonly="true" value="#{row.nomEstudiante}" sortBy="#{row.nomEstudiante}" />
 				    	
@@ -104,7 +231,6 @@ xmlns:pe="http://primefaces.org/ui/extensions">
 					<p:ajax event="change" listener="#{control.cellChangeEvent}" update="sheet2" />  
 				  			   			  
 				    <pe:sheetcolumn headerText="Estudiante" readonly="true" value="#{row.nomEstudiante}" sortBy="#{row.nomEstudiante}" />
-				    	
 				    	
 				    <pe:sheetcolumn id="Examen" headerText="Examen" value="#{row.examen}" colWidth="40"
 				    	styleClass="htRight #{row.examen gt 0 ? 'positive' : 'negative'}" colType="numeric" numericPattern="0.00" />

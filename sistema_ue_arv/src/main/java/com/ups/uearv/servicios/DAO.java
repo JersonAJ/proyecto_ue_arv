@@ -179,7 +179,7 @@ public class DAO {
 				"FROM mat_oferta o \r\n" + 
 				"  	INNER JOIN mat_curso c ON c.id_curso = o.id_curso \r\n" + 
 				"	INNER JOIN catalogo_det k ON k.codigo_det = c.nivel \r\n" + 
-				"WHERE o.id_periodo = '" + periodo + "'  ORDER BY k.codigo_det, c.id_curso ");
+				"WHERE o.id_periodo = '" + periodo + "' AND o.estado = 'AC' ORDER BY k.codigo_det, c.id_curso ");
 		return query;
 	}
 	

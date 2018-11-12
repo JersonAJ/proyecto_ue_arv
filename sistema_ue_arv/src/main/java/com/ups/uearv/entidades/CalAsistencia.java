@@ -22,6 +22,12 @@ public class CalAsistencia implements Serializable {
 	private int asistencias;
 
 	private int atrasos;
+	
+	private int faltas;
+	
+	private int justificados;
+	
+	private String observacion;
 
 	private String estado;
 
@@ -139,4 +145,27 @@ public class CalAsistencia implements Serializable {
 		this.matMatricula = matMatricula;
 	}
 
+	public int getFaltas() {
+		return faltas;
+	}
+
+	public void setFaltas(int faltas) {
+		this.faltas = faltas;
+	}
+
+	public int getJustificados() {
+		return justificados;
+	}
+
+	public void setJustificados(int justificados) {
+		this.justificados = justificados;
+	}
+
+	public String getObservacion() {
+		return observacion;
+	}
+
+	public void setObservacion(String observacion) {
+		this.observacion = observacion;
+	}
 }
