@@ -57,17 +57,17 @@ xmlns:pe="http://primefaces.org/ui/extensions">
 			        </p:selectOneMenu>
 			        <p:spacer width="10px" />	    	      
 			        <p:outputPanel style="padding: 5px">
-				        <p:commandLink title="Control consolidado" oncomplete="PF('dglCon').show();" update="panelCon">
+				        <p:commandLink title="Resumen" oncomplete="PF('dglCon').show();" update="panelCon">
 							<i class="fa fa-table" />
-							<span>Control consolidado</span>					
+							<span>Resumen</span>					
 							<p:spacer width="10px" />					
 						</p:commandLink>			        
 					</p:outputPanel>
 				</p:outputPanel>							      			
 			</p:outputPanel>
 			
-			<!-- PROCESA NOTAS -->
-			<p:dialog header="Control consolidado" widgetVar="dglCon" modal="true" closable="true" maximizable="false" resizable="false" width="90%" height="500px">
+			<!-- RESUMEN -->
+			<p:dialog header="Resumen" widgetVar="dglCon" modal="true" closable="true" maximizable="false" resizable="false" width="90%" height="400px">
 				<p:outputPanel id="panelCon">		  		
 			   		<style>
 				   		.ui-datatable th.ui-state-default, .ui-datatable tfoot td.ui-state-default { background: #e0edff; border-color: #000000; }
@@ -173,19 +173,7 @@ xmlns:pe="http://primefaces.org/ui/extensions">
 					    <p:column headerText="Q2-EX" style="background: #dfffba">
 					    	<div style="text-align: end"><h:outputText value="#{dtnotas.examenQ2}" /></div></p:column>			    
 					</p:dataTable>
-					<br/>	
-					<h:panelGroup style="display:block; text-align:center">
-						<p:commandButton id="btnProcesar" value="Procesar notas" icon="fa fa-check"  actionListener="#{control.procesaNotas}"
-							disabled="#{control.procesaNotasList.size() == 0 ? true : false}" update="dtcontrol growl btnProcesar">
-							<p:confirm header="Confirmación" icon="fa fa-warning"
-								message="¿Está seguro(a) que desea procesar #{control.procesaNotasList.size()} notas?" />
-						</p:commandButton>	
-					</h:panelGroup>
 				</p:outputPanel>
-				<p:confirmDialog id="confirmProNot" global="false" showEffect="fade" hideEffect="fade">
-					<p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" icon="fa fa-check" />
-					<p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="fa fa-close" />
-				</p:confirmDialog>				
 			</p:dialog>
 			 				 	
 			<p:separator />

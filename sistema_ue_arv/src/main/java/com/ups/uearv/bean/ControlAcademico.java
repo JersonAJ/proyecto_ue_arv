@@ -315,12 +315,7 @@ public class ControlAcademico implements Serializable {
 		} else
 			return "--";
 	}
-
-	// ACCIONES
-	public void procesaNotas() {
 		
-	}
-	
 	// CLASES
 	public class ControlEst implements Serializable {
 
