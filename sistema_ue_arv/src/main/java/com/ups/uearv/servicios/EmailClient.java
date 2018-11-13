@@ -46,6 +46,7 @@ public class EmailClient {
 	private static javax.mail.Session createSession() {
 		Properties props = new Properties();
 		props.put("mail.smtp.auth", "true");// Outgoing server requires authentication
+		props.put("mail.smtp.ssl.trust", "smtp.gmail.com");
 		props.put("mail.smtp.starttls.enable", "true");// TLS must be activated
 		props.put("mail.smtp.host", "smtp.gmail.com"); // Outgoing server (SMTP) - change it to your SMTP server
 		props.put("mail.smtp.port", "587");// Outgoing port
