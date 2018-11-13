@@ -11,17 +11,27 @@ public class EmailClient {
 	private static final String senderEmail = "info.medicita@gmail.com";// change with your sender email
 	private static final String senderPassword = "medicita.info";// change with your sender password
 
-	public static void sendAsHtml(String personal, String to, String title, String html) throws MessagingException, UnsupportedEncodingException {
+	public static void sendAsHtml(String personal, String to, String title, String html) {
 		System.out.println("Enviando correo a " + to);
 
 		javax.mail.Session session = createSession();
 
 		// create message using session
 		MimeMessage message = new MimeMessage(session);
-		prepareEmailMessage(message, personal, to, title, html);
+		try {
+			prepareEmailMessage(message, personal, to, title, html);
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		} catch (MessagingException e) {
+			e.printStackTrace();
+		}
 
 		// sending message
-		Transport.send(message);
+		try {
+			Transport.send(message);
+		} catch (MessagingException e) {
+			e.printStackTrace();
+		}
 		System.out.println("Listo");
 	}
 
@@ -48,7 +58,7 @@ public class EmailClient {
 		return session;
 	}
 
-	public static void main(String[] args) throws MessagingException, UnsupportedEncodingException {
+	public static void main(String[] args) {
 		EmailClient.sendAsHtml("Escuela UEARV", "jarmijosjaen@gmail.com", "Prueba correo", "<h2>Ejemplo</h2><p>hi there!</p>");
 	}
 }
