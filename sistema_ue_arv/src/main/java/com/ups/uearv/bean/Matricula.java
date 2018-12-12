@@ -214,6 +214,7 @@ public class Matricula implements Serializable {
 			"	INNER JOIN mat_estudiante e ON e.id_estudiante = m.id_estudiante AND e.apellidos LIKE '%" + itBuscar + "%' AND e.estado = 'AC' \r\n" + 
 			"	LEFT JOIN mat_oferta o ON o.id_oferta = m.id_oferta AND o.estado = 'AC' \r\n" + 
 			"WHERE m.id_periodo = '" + soPeriodo + "' AND m.estado = 'AC' \r\n" +
+			"AND m.id_matricula NOT IN (SELECT p.id_matricula FROM ges_pension p WHERE secuencia = 0) \r\n" +			
 			"ORDER BY 3 ";
 
 			@SuppressWarnings("unchecked")

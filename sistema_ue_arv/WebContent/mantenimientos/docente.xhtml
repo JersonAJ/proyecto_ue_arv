@@ -61,13 +61,14 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 			<p:dataTable id="dt" var="dtdocente" value="#{docente.docenteList}" tableStyle="width: auto; min-width: 100%;" 
 				paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
                 currentPageReportTemplate="{currentPage} de {totalPages}"
-                paginator="true" rows="10" rowsPerPageTemplate="5,10" paginatorPosition="top" emptyMessage="No existen datos a mostrar" >
+                paginator="true" rows="10" rowsPerPageTemplate="5,10" paginatorPosition="top" emptyMessage="No existen datos a mostrar" 
+                selectionMode="single" rowKey="#{dtdocente.idDocente}">
 			 
 			    <p:column headerText="Cédula" style="text-align: center">
 			        <h:outputText value="#{dtdocente.idDocente}" />
 			    </p:column>
 						    
-				<p:column headerText="Nombre completo">
+				<p:column headerText="Nombre completo" sortBy="#{dtdocente.apellidos} #{dtdocente.nombres}">
 			        <h:outputText value="#{dtdocente.apellidos} #{dtdocente.nombres}" />
 			    </p:column>
 			    
@@ -87,12 +88,13 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 			        <h:outputText value="#{dtdocente.direccion}" />
 			    </p:column>
 			    
-			    <p:column headerText="Activo" width="20" style="text-align: center" exportable="false">
+			    <p:column headerText="Activo" width="20" style="text-align: center" exportable="false" sortBy="#{dtdocente.estado}">
 			    	<h:selectBooleanCheckbox value="#{dtdocente.estado eq 'AC'? true:false}" disabled="true" />			        
 			    </p:column>
 			    
 			    <p:column headerText="Editar" width="20" exportable="false">
 			    	<p:outputPanel style="text-align: center">
+			    	<div style="background-color: white; border-radius: 2px; padding: 2px;">
 						<p:commandLink update=":form:pnl" oncomplete="PF('dgl').show()">	
 							<i class="fa fa-pencil" />
 							
@@ -111,6 +113,7 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 							<f:setPropertyActionListener value="1" target="#{docente.accion}" />
 																																						
 						</p:commandLink>							
+						</div>
 					</p:outputPanel>
 			    </p:column>			  
 			</p:dataTable>

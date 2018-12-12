@@ -17,9 +17,9 @@ xmlns:pe="http://primefaces.org/ui/extensions">
 			<p:growl id="growl" for="growl" showDetail="true" closable="true" />
 			
 			<p:outputPanel style="background-color: white; padding: 5px;">
-				<p:commandLink title="Generar listado de estudiantes" oncomplete="PF('dglEst').show();" update="panelEst">
+				<p:commandLink title="Generar matrícula(s) de estudiante(s)" oncomplete="PF('dglEst').show();" update="panelEst">
 					<i class="fa fa-list-ul" />
-					<span>Generar listado</span>					
+					<span>Generar matrículas</span>					
 					<p:spacer width="10px" />							
 					
 					<f:setPropertyActionListener value="NA" target="#{matricula.soPeriodoEst}" />					
@@ -41,7 +41,7 @@ xmlns:pe="http://primefaces.org/ui/extensions">
 			</p:outputPanel>	
 			
 			<!-- GENERA LISTADO DE ESTUDIANTES -->
-			<p:dialog header="Generar listado" widgetVar="dglEst" modal="true" closable="true" maximizable="false" resizable="false" width="500px" height="400px">
+			<p:dialog header="Generar matrículas" widgetVar="dglEst" modal="true" closable="true" maximizable="false" resizable="false" width="500px" height="400px">
 				<p:ajax event="close" update="form" listener="#{matricula.closeDialogo}" />
 				<p:outputPanel id="panelEst">		   		
 			   		<p:outputPanel style="text-align: center">	
