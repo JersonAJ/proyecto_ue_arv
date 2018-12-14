@@ -128,7 +128,7 @@ xmlns:pe="http://primefaces.org/ui/extensions">
 						<p:commandButton id="btnProcesar" value="Procesar matrículas" icon="fa fa-check"  actionListener="#{matricula.procesaMatriculas}"
 							disabled="#{matricula.procesaMatriculaList.size() == 0 ? true : false}" update="dtmatricula growl btnProcesar">
 							<p:confirm header="Confirmación" icon="fa fa-warning"
-								message="¿Está seguro(a) que desea procesar #{matricula.procesaMatriculaList.size()} matrículas?" />
+								message="¿Está seguro(a) que desea procesar #{matricula.procesaMatriculaList.size()} matrícula(s)?" />
 						</p:commandButton>	
 					</h:panelGroup>				
 				</p:outputPanel>	
@@ -170,7 +170,7 @@ xmlns:pe="http://primefaces.org/ui/extensions">
 					<p:outputPanel style="text-align: center">
 						<span style="font-weight: bold">Observación(motivo de anulación)</span>
 						<br />
-						<p:inputTextarea id="itaObservacion" value="#{matricula.itaObservacion}" rows="3" style="width: 90%"/>
+						<p:inputTextarea id="itaObservacion" value="#{matricula.itaObservacion}" rows="3" maxlength="200" style="width: 90%"/>
 					</p:outputPanel>
 					<br />
 			   		<h:panelGroup style="display: block; text-align: center">

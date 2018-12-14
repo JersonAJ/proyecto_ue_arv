@@ -96,6 +96,7 @@ public class Matricula implements Serializable {
 		itaObservacion = "";
 		
 		onChangePeriodoAnu();
+		onChangePeriodo();
 	}
 
 	// EVENTOS
@@ -125,10 +126,11 @@ public class Matricula implements Serializable {
 				mat.setUsuarioAct(Session.getUserName());			
 				mat.setFechaAct(fecha);			
 								
-				if (!DAO.saveOrUpdate(mat, 1, em)) 
-					em.getTransaction().rollback();			
-				else
-					em.getTransaction().commit();				
+				if (DAO.saveOrUpdate(mat, 1, em)) {
+					em.getTransaction().commit();
+				} else {
+					em.getTransaction().rollback();
+				}
 			} catch (Exception e) {
 				em.getTransaction().rollback();
 				e.printStackTrace();
@@ -387,7 +389,8 @@ public class Matricula implements Serializable {
 			for (Object mat : listMat) {	
 				((MatMatricula) mat).setUsuarioAct(Session.getUserName());
 				((MatMatricula) mat).setFechaAct(fecha);	
-				((MatMatricula) mat).setEstado("IC");				
+				((MatMatricula) mat).setObservaciones(itaObservacion);
+				((MatMatricula) mat).setEstado("IC");
 				if (!DAO.saveOrUpdate(mat, 1, em)) {
 					em.getTransaction().rollback();
 					return;
