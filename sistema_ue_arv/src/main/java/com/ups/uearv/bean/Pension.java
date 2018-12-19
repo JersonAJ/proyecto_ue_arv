@@ -372,7 +372,7 @@ public class Pension implements Serializable {
 			"				<td>\r\n" + 
 			"					<br/>\r\n" + 
 			"					Buen día estimado(a) Sr(a). " + representante + ", reciba un cordial saludo\r\n" + 
-			"					de parte de la Escuela Dr. Aquiles Rodríguez Venegas. \r\n" + 
+			"					de parte de la Escuela de Educación Básica Particular Dr. Aquiles Rodríguez V. \r\n" + 
 			"					<br/>\r\n" + 
 			"					El motivo de este mensaje es para recordarle que tiene un valor pendiente <b>($ " + valor + ")</b> de\r\n" + 
 			"					cancelar por concepto de: <b>" + concepto + "</b> del estudiante\r\n" + 

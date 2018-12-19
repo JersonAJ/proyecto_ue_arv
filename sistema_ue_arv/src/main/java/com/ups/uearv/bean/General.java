@@ -260,7 +260,7 @@ public class General implements Serializable {
 						break;
 					case 14:
 						displayPeriodos = "";
-						seg = true;
+						mat = true;
 						break;
 					case 15:
 						displayOfertas = "";

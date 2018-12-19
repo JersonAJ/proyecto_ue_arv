@@ -187,7 +187,7 @@ to {
 	border: 1px solid #a87380;
 	border-radius: 10px;
 	box-shadow: 15px 15px 10px 0 rgba(0, 0, 0, 0.2);
-	min-height: 380px;
+	min-height: 400px;
 }
 
 .ui-g-login.form-group>div {
@@ -2466,7 +2466,7 @@ body a {
 }
 
 .layout-bottombar {
-	background: white;	
+	background: white;
 	bottom: 0;
 	width: 100%;
 }
@@ -2481,7 +2481,7 @@ body a {
 	}
 	.layout-wrapper.layout-wrapper-overlay-sidebar .layout-main {
 		margin-left: 0;
-	}	
+	}
 }
 
 @media screen and (max-width: 1024px) {

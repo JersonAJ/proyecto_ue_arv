@@ -103,9 +103,31 @@ public class ControlAcademico implements Serializable {
 				String codControl = ((ControlEst) asset).getCodControl();
 				String codMatricula = ((ControlEst) asset).getCodMatricula();
 				String nomComportamiento = ((ControlEst) asset).getNomComportamiento();				
-				BigDecimal leccion = ((ControlEst) asset).getLeccion();
-				BigDecimal deber = ((ControlEst) asset).getDeber();
-				BigDecimal taller = ((ControlEst) asset).getTaller();
+				
+				BigDecimal leccion1 = ((ControlEst) asset).getLeccion1();
+				BigDecimal leccion2 = ((ControlEst) asset).getLeccion2();
+				BigDecimal leccion3 = ((ControlEst) asset).getLeccion3();
+				BigDecimal leccion4 = ((ControlEst) asset).getLeccion4();
+				BigDecimal leccion5 = ((ControlEst) asset).getLeccion5();
+				
+				BigDecimal tarea1 = ((ControlEst) asset).getTarea1();
+				BigDecimal tarea2 = ((ControlEst) asset).getTarea2();
+				BigDecimal tarea3 = ((ControlEst) asset).getTarea3();
+				BigDecimal tarea4 = ((ControlEst) asset).getTarea4();
+				BigDecimal tarea5 = ((ControlEst) asset).getTarea5();
+				
+				BigDecimal actIndividual1 = ((ControlEst) asset).getActIndividual1();
+				BigDecimal actIndividual2 = ((ControlEst) asset).getActIndividual2();
+				BigDecimal actIndividual3 = ((ControlEst) asset).getActIndividual3();
+				BigDecimal actIndividual4 = ((ControlEst) asset).getActIndividual4();
+				BigDecimal actIndividual5 = ((ControlEst) asset).getActIndividual5();
+				
+				BigDecimal actGrupal1 = ((ControlEst) asset).getActGrupal1();
+				BigDecimal actGrupal2 = ((ControlEst) asset).getActGrupal2();
+				BigDecimal actGrupal3 = ((ControlEst) asset).getActGrupal3();
+				BigDecimal actGrupal4 = ((ControlEst) asset).getActGrupal4();
+				BigDecimal actGrupal5 = ((ControlEst) asset).getActGrupal5();
+				
 				BigDecimal examen = ((ControlEst) asset).getExamen();
 				
 				MatMatricula matricula = (MatMatricula) DAO.buscarObject(new MatMatricula(), "from MatMatricula c where c.idMatricula = '" + codMatricula + "'");
@@ -134,9 +156,30 @@ public class ControlAcademico implements Serializable {
 				
 				if (!soParcial.equals("0")) {								
 					con.setCalComportamiento(comportamiento);					
-					con.setLeccion(leccion);
-					con.setDeber(deber);
-					con.setTaller(taller);					
+					
+					con.setLeccion1(leccion1);
+					con.setLeccion2(leccion2);
+					con.setLeccion3(leccion3);
+					con.setLeccion4(leccion4);
+					con.setLeccion5(leccion5);
+
+					con.setTarea1(tarea1);
+					con.setTarea2(tarea2);
+					con.setTarea3(tarea3);
+					con.setTarea4(tarea4);
+					con.setTarea5(tarea5);
+					
+					con.setActIndividual1(actIndividual1);
+					con.setActIndividual2(actIndividual2);
+					con.setActIndividual3(actIndividual3);
+					con.setActIndividual4(actIndividual4);
+					con.setActIndividual5(actIndividual5);
+					
+					con.setActGrupal1(actGrupal1);
+					con.setActGrupal2(actGrupal2);
+					con.setActGrupal3(actGrupal3);
+					con.setActGrupal4(actGrupal4);
+					con.setActGrupal5(actGrupal5);										
 				} else {
 					con.setExam(examen);
 				}		
@@ -205,10 +248,32 @@ public class ControlAcademico implements Serializable {
 						e.setCodMatricula(obj[1].toString());
 						e.setNomEstudiante(obj[2].toString());
 						e.setNomComportamiento(obj[3].toString());
-						e.setLeccion(new BigDecimal(obj[4].toString()));
-						e.setDeber(new BigDecimal(obj[5].toString()));
-						e.setTaller(new BigDecimal(obj[6].toString()));
-						e.setExamen(new BigDecimal(obj[7].toString()));
+						
+						e.setLeccion1(new BigDecimal(obj[4].toString()));
+						e.setLeccion2(new BigDecimal(obj[5].toString()));
+						e.setLeccion3(new BigDecimal(obj[6].toString()));
+						e.setLeccion4(new BigDecimal(obj[7].toString()));
+						e.setLeccion5(new BigDecimal(obj[8].toString()));
+						
+						e.setTarea1(new BigDecimal(obj[9].toString()));
+						e.setTarea2(new BigDecimal(obj[10].toString()));
+						e.setTarea3(new BigDecimal(obj[11].toString()));
+						e.setTarea4(new BigDecimal(obj[12].toString()));
+						e.setTarea5(new BigDecimal(obj[13].toString()));
+						
+						e.setActIndividual1(new BigDecimal(obj[14].toString()));
+						e.setActIndividual2(new BigDecimal(obj[15].toString()));
+						e.setActIndividual3(new BigDecimal(obj[16].toString()));
+						e.setActIndividual4(new BigDecimal(obj[17].toString()));
+						e.setActIndividual5(new BigDecimal(obj[18].toString()));
+												
+						e.setActGrupal1(new BigDecimal(obj[19].toString()));
+						e.setActGrupal2(new BigDecimal(obj[20].toString()));
+						e.setActGrupal3(new BigDecimal(obj[21].toString()));
+						e.setActGrupal4(new BigDecimal(obj[22].toString()));
+						e.setActGrupal5(new BigDecimal(obj[23].toString()));
+												
+						e.setExamen(new BigDecimal(obj[24].toString()));
 
 						controlList.add(e);
 					}
@@ -325,9 +390,26 @@ public class ControlAcademico implements Serializable {
 		public String codMatricula = "";
 		public String nomEstudiante = "";
 		public String nomComportamiento = "";		
-		public BigDecimal leccion;
-		public BigDecimal deber;
-		public BigDecimal taller;
+		public BigDecimal leccion1;
+		public BigDecimal leccion2;
+		public BigDecimal leccion3;
+		public BigDecimal leccion4;
+		public BigDecimal leccion5;
+		public BigDecimal tarea1;
+		public BigDecimal tarea2;
+		public BigDecimal tarea3;
+		public BigDecimal tarea4;
+		public BigDecimal tarea5;
+		public BigDecimal actIndividual1;
+		public BigDecimal actIndividual2;
+		public BigDecimal actIndividual3;
+		public BigDecimal actIndividual4;
+		public BigDecimal actIndividual5;
+		public BigDecimal actGrupal1;
+		public BigDecimal actGrupal2;
+		public BigDecimal actGrupal3;
+		public BigDecimal actGrupal4;
+		public BigDecimal actGrupal5;
 		public BigDecimal examen;
 
 		public String getCodMatricula() {
@@ -353,24 +435,126 @@ public class ControlAcademico implements Serializable {
 		}
 		public void setNomComportamiento(String nomComportamiento) {
 			this.nomComportamiento = nomComportamiento;
+		}		
+		public BigDecimal getLeccion1() {
+			return leccion1;
 		}
-		public BigDecimal getLeccion() {
-			return leccion;
+		public void setLeccion1(BigDecimal leccion1) {
+			this.leccion1 = leccion1;
 		}
-		public void setLeccion(BigDecimal leccion) {
-			this.leccion = leccion;
+		public BigDecimal getLeccion2() {
+			return leccion2;
 		}
-		public BigDecimal getDeber() {
-			return deber;
+		public void setLeccion2(BigDecimal leccion2) {
+			this.leccion2 = leccion2;
 		}
-		public void setDeber(BigDecimal deber) {
-			this.deber = deber;
+		public BigDecimal getLeccion3() {
+			return leccion3;
 		}
-		public BigDecimal getTaller() {
-			return taller;
+		public void setLeccion3(BigDecimal leccion3) {
+			this.leccion3 = leccion3;
 		}
-		public void setTaller(BigDecimal taller) {
-			this.taller = taller;
+		public BigDecimal getLeccion4() {
+			return leccion4;
+		}
+		public void setLeccion4(BigDecimal leccion4) {
+			this.leccion4 = leccion4;
+		}
+		public BigDecimal getLeccion5() {
+			return leccion5;
+		}
+		public void setLeccion5(BigDecimal leccion5) {
+			this.leccion5 = leccion5;
+		}
+		public BigDecimal getTarea1() {
+			return tarea1;
+		}
+		public void setTarea1(BigDecimal tarea1) {
+			this.tarea1 = tarea1;
+		}
+		public BigDecimal getTarea2() {
+			return tarea2;
+		}
+		public void setTarea2(BigDecimal tarea2) {
+			this.tarea2 = tarea2;
+		}
+		public BigDecimal getTarea3() {
+			return tarea3;
+		}
+		public void setTarea3(BigDecimal tarea3) {
+			this.tarea3 = tarea3;
+		}
+		public BigDecimal getTarea4() {
+			return tarea4;
+		}
+		public void setTarea4(BigDecimal tarea4) {
+			this.tarea4 = tarea4;
+		}
+		public BigDecimal getTarea5() {
+			return tarea5;
+		}
+		public void setTarea5(BigDecimal tarea5) {
+			this.tarea5 = tarea5;
+		}
+		public BigDecimal getActIndividual1() {
+			return actIndividual1;
+		}
+		public void setActIndividual1(BigDecimal actIndividual1) {
+			this.actIndividual1 = actIndividual1;
+		}
+		public BigDecimal getActIndividual2() {
+			return actIndividual2;
+		}
+		public void setActIndividual2(BigDecimal actIndividual2) {
+			this.actIndividual2 = actIndividual2;
+		}
+		public BigDecimal getActIndividual3() {
+			return actIndividual3;
+		}
+		public void setActIndividual3(BigDecimal actIndividual3) {
+			this.actIndividual3 = actIndividual3;
+		}
+		public BigDecimal getActIndividual4() {
+			return actIndividual4;
+		}
+		public void setActIndividual4(BigDecimal actIndividual4) {
+			this.actIndividual4 = actIndividual4;
+		}
+		public BigDecimal getActIndividual5() {
+			return actIndividual5;
+		}
+		public void setActIndividual5(BigDecimal actIndividual5) {
+			this.actIndividual5 = actIndividual5;
+		}
+		public BigDecimal getActGrupal1() {
+			return actGrupal1;
+		}
+		public void setActGrupal1(BigDecimal actGrupal1) {
+			this.actGrupal1 = actGrupal1;
+		}
+		public BigDecimal getActGrupal2() {
+			return actGrupal2;
+		}
+		public void setActGrupal2(BigDecimal actGrupal2) {
+			this.actGrupal2 = actGrupal2;
+		}
+		public BigDecimal getActGrupal3() {
+			return actGrupal3;
+		}
+		public void setActGrupal3(BigDecimal actGrupal3) {
+			this.actGrupal3 = actGrupal3;
+		}
+		public BigDecimal getActGrupal4() {
+			return actGrupal4;
+		}
+		public void setActGrupal4(BigDecimal actGrupal4) {
+			this.actGrupal4 = actGrupal4;
+		}
+		public BigDecimal getActGrupal5() {
+			return actGrupal5;
+		}
+		public void setActGrupal5(BigDecimal actGrupal5) {
+			this.actGrupal5 = actGrupal5;
 		}
 		public BigDecimal getExamen() {
 			return examen;
