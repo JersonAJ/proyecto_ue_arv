@@ -8,7 +8,7 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 	<ui:define name="titulo"><i class="fa fa-address-card" /> Matriculación / Estudiantes</ui:define>
 	
 	<ui:define name="content">									
-		<h:form id="form" style="width: 100%">
+		<h:form id="form" style="width: 100%" enctype="multipart/form-data">
 			<f:metadata>		    
 			    <f:viewAction action="#{general.validaSesion}" />
 			</f:metadata>
@@ -57,13 +57,18 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 			</p:outputPanel>
 			 				 	
 			<p:separator />
-			
+		
 			<p:dataTable id="dt" var="dtestudiante" value="#{estudiante.estudianteList}" tableStyle="width: auto; min-width: 100%;" 
 				paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
                 currentPageReportTemplate="{currentPage} de {totalPages}"
-                paginator="true" rows="10" rowsPerPageTemplate="5,10" paginatorPosition="top" emptyMessage="No existen datos a mostrar" 
+                paginator="true" rows="5" rowsPerPageTemplate="5,10" paginatorPosition="top" emptyMessage="No existen datos a mostrar" 
                 selectionMode="single" rowKey="#{dtestudiante.idEstudiante}">
 			 
+			 	<p:column headerText="Foto" style="text-align: center">
+			 		<img src="#{request.contextPath}/fotos/FOTO_DEFAULT.png" alt="Debe seleccionar una imagen" 
+						style=" border: 1px solid #8f3b4f;" width="50" height="50" />						
+				</p:column>
+			
 			    <p:column headerText="Cédula" style="text-align: center">
 			        <h:outputText value="#{dtestudiante.idEstudiante}" />
 			    </p:column>
@@ -130,9 +135,8 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 			<p:dialog header="Datos Estudiante" widgetVar="dgl" modal="true" closable="true" maximizable="false" resizable="false" width="400px">
 			
 			<p:ajax event="close" update="form" listener="#{estudiante.closeDialogo}" />
-				
-				<h:panelGrid id="pnl" columns="2" cellpadding="0" style="width: auto; min-width: 100%;" columnClasses="ui-grid-col-4,ui-grid-col-8">
-										
+						
+				<h:panelGrid id="pnl" columns="2" cellpadding="0" style="width: auto; min-width: 100%;" columnClasses="ui-grid-col-4,ui-grid-col-8">										
 					<p:outputPanel style="text-align: end; padding: 5px">Cédula:</p:outputPanel>
 					<p:inputMask value="#{estudiante.itCedula}" style="width: 45%" disabled="#{estudiante.accion eq 1? true:false}" mask="9999999999" />
 					
@@ -181,14 +185,15 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 					<h:selectBooleanCheckbox value="#{estudiante.ckEstado}" style="margin-top: 6px" />
 					
 					<f:facet name = "footer"><br/>
-					    <h:panelGroup style = "display:block; text-align:center">
-					      	<p:commandButton id="btnGuardar" value="Guardar" icon="fa fa-save" actionListener="#{estudiante.guardar}" update="dt growl" />	
-						</h:panelGroup>
+						<h:panelGroup style = "display:block; text-align:center">
+					      	<p:commandButton id="btnGuardar" value="Guardar" icon="fa fa-save" actionListener="#{estudiante.guardar}"
+					      		update=":form:dt :form:growl" />	
+						</h:panelGroup>					    
 					</f:facet>						
-				</h:panelGrid>
-			</p:dialog>				
-						
-	   	</h:form>
+				</h:panelGrid>				
+			</p:dialog>
+			
+		</h:form>   	
 	</ui:define>		
 	
 </ui:composition>

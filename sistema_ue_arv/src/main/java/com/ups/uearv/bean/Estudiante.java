@@ -21,6 +21,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
+import org.primefaces.model.UploadedFile;
+
 import com.ups.uearv.entidades.MatEstudiante;
 import com.ups.uearv.entidades.MatRepresentante;
 import com.ups.uearv.servicios.DAO;
@@ -49,11 +51,13 @@ public class Estudiante implements Serializable {
 	String soTipoSangre = "";
 	String sorGenero = "";
 	Date cFechaNac = new Date();
-	
+
 	boolean ckEstado = false;
 
 	String itBuscar = "";
 	boolean ckMostrarIC = false;
+
+	UploadedFile file;
 
 	private List<Object> estudianteList = new ArrayList<Object>();
 
@@ -71,10 +75,10 @@ public class Estudiante implements Serializable {
 
 	@PostConstruct
 	public void init() {
-		
+
 		listTipoSangre = (ArrayList<SelectItem>) llenaComboTipoSangre();
 		soTipoSangre = listTipoSangre.get(0).getValue().toString();
-		
+
 		listRepresentante = (ArrayList<SelectItem>) llenaComboRepresentante();
 		soRepresentante = listRepresentante.get(0).getValue().toString();
 
@@ -85,7 +89,7 @@ public class Estudiante implements Serializable {
 	public void llenarLista(String jpql) {
 		estudianteList.clear();
 		List<Object> l = DAO.nqObject(new MatEstudiante(), jpql);
-				
+
 		for (Object in : l)
 			estudianteList.add(in);
 	}
@@ -98,10 +102,11 @@ public class Estudiante implements Serializable {
 		}
 		llenarLista(jpql);
 	}
-
+	
+	
 	// INGRESO - ACTUALIZACION
 	public void guardar() {
-		
+
 		// VALIDACIONES
 		if (itCedula.trim().equals("")) {
 			mensaje = "Debe ingresar la cédula";
@@ -132,26 +137,26 @@ public class Estudiante implements Serializable {
 			FacesContext.getCurrentInstance().addMessage("growl", new FacesMessage(FacesMessage.SEVERITY_ERROR, mensajeTitulo, mensaje));
 			return;
 		}
-		
+
 		// PROCESO		
 		EntityManager em = emf.createEntityManager();
 		em.getTransaction().begin();
 		try {		
 			Date date = new Date();
 			Timestamp fecha = new Timestamp(date.getTime());
-			
+
 			MatEstudiante ob = new MatEstudiante();
 			if (accion == 1) {
 				ob = (MatEstudiante) DAO.buscarObject(new MatEstudiante(), "from MatEstudiante c where c.idEstudiante = '" + itCedula + "'");
 			} else {
 				ob.setIdEstudiante(itCedula);
 			}
-			
+
 			String estado = "IC";
 			if (ckEstado) estado = "AC";
-			
+
 			MatRepresentante representante = (MatRepresentante) DAO.buscarObject(new MatRepresentante(), "from MatRepresentante c where c.idRepresentante = '" + soRepresentante + "'");
-			
+
 			ob.setMatRepresentante(representante);
 			ob.setApellidos(itApellidos);
 			ob.setNombres(itNombres);
@@ -182,7 +187,7 @@ public class Estudiante implements Serializable {
 				mensaje = "Error al guardar";
 				FacesContext.getCurrentInstance().addMessage("growl", new FacesMessage(FacesMessage.SEVERITY_ERROR, mensajeTitulo, mensaje));
 			}
-			
+
 		} catch (Exception e) {
 			em.getTransaction().rollback();
 			e.printStackTrace();
@@ -193,11 +198,11 @@ public class Estudiante implements Serializable {
 	public void closeDialogo() {
 		init();
 	}
-	
+
 	public List<SelectItem> llenaComboTipoSangre() {
 		return Util.llenaCombo(DAO.getDetCatalogo("TS000"), 2);
 	}
-	
+
 	public List<SelectItem> llenaComboRepresentante() {
 		return Util.llenaCombo(DAO.getRepresentantes(), 2);
 	}
@@ -310,5 +315,11 @@ public class Estudiante implements Serializable {
 	}
 	public void setListTipoSangre(ArrayList<SelectItem> listTipoSangre) {
 		this.listTipoSangre = listTipoSangre;
+	}
+	public UploadedFile getFile() {
+		return file;
+	}
+	public void setFile(UploadedFile file) {
+		this.file = file;
 	}
 }
