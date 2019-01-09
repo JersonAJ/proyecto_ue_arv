@@ -5,7 +5,9 @@
  */
 package com.ups.uearv.bean;
 
-import java.io.Serializable;
+import java.awt.Image;
+import java.io.IOException;
+import java.net.URL;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
@@ -17,6 +19,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
+import javax.imageio.ImageIO;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -36,9 +39,7 @@ import com.ups.uearv.servicios.Util;
 
 @ManagedBean(name = "estudiante")
 @ViewScoped
-public class Estudiante implements Serializable {
-
-	private static final long serialVersionUID = 1L;
+public class Estudiante {
 
 	static String itCedula = "";
 	String itNombres = "";
@@ -57,8 +58,6 @@ public class Estudiante implements Serializable {
 	String itBuscar = "";
 	boolean ckMostrarIC = false;
 
-	UploadedFile file;
-
 	private List<Object> estudianteList = new ArrayList<Object>();
 
 	ArrayList<SelectItem> listTipoSangre = new ArrayList<SelectItem>();
@@ -73,9 +72,11 @@ public class Estudiante implements Serializable {
 
 	String jpql = "";
 
+	UploadedFile fuFoto;
+
 	@PostConstruct
 	public void init() {
-
+		
 		listTipoSangre = (ArrayList<SelectItem>) llenaComboTipoSangre();
 		soTipoSangre = listTipoSangre.get(0).getValue().toString();
 
@@ -102,10 +103,24 @@ public class Estudiante implements Serializable {
 		}
 		llenarLista(jpql);
 	}
-	
-	
-	// INGRESO - ACTUALIZACION
+
+	public void upload() {
+		if(fuFoto != null) {
+			FacesMessage message = new FacesMessage("Succesful", fuFoto.getFileName() + " is uploaded.");
+			FacesContext.getCurrentInstance().addMessage(null, message);
+		}
+	}
+		
+	// INGRESO - ACTUALIZACION	
 	public void guardar() {
+		
+		Image image = null;
+		try {
+		    URL url = new URL("http://www.yahoo.com/image_to_read.jpg");
+		    image = ImageIO.read(url);
+		} catch (IOException e) {
+		}
+		
 
 		// VALIDACIONES
 		if (itCedula.trim().equals("")) {
@@ -176,7 +191,7 @@ public class Estudiante implements Serializable {
 				ob.setUsuarioAct(Session.getUserName());			
 				ob.setFechaAct(fecha);			
 			}			
-			
+
 			if (DAO.saveOrUpdate(ob, accion, em)) {
 				em.getTransaction().commit();
 				mensaje = "Guardado exitoso";
@@ -206,7 +221,7 @@ public class Estudiante implements Serializable {
 	public List<SelectItem> llenaComboRepresentante() {
 		return Util.llenaCombo(DAO.getRepresentantes(), 2);
 	}
-	
+
 	// GETTERS AND SETTERS
 	public boolean isCkEstado() {
 		return ckEstado;
@@ -316,10 +331,10 @@ public class Estudiante implements Serializable {
 	public void setListTipoSangre(ArrayList<SelectItem> listTipoSangre) {
 		this.listTipoSangre = listTipoSangre;
 	}
-	public UploadedFile getFile() {
-		return file;
+	public UploadedFile getFuFoto() {
+		return fuFoto;
 	}
-	public void setFile(UploadedFile file) {
-		this.file = file;
+	public void setFuFoto(UploadedFile fuFoto) {
+		this.fuFoto = fuFoto;
 	}
 }
