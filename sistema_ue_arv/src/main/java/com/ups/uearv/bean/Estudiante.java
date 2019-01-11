@@ -6,7 +6,10 @@
 package com.ups.uearv.bean;
 
 import java.awt.Image;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.URL;
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -55,6 +58,8 @@ public class Estudiante {
 
 	boolean ckEstado = false;
 
+	String urlImg = "url";
+	
 	String itBuscar = "";
 	boolean ckMostrarIC = false;
 
@@ -112,14 +117,29 @@ public class Estudiante {
 	}
 		
 	// INGRESO - ACTUALIZACION	
-	public void guardar() {
-		
-		Image image = null;
-		try {
-		    URL url = new URL("http://www.yahoo.com/image_to_read.jpg");
-		    image = ImageIO.read(url);
-		} catch (IOException e) {
+	public void saveImage(String imageUrl, String destinationFile) throws IOException {
+		URL url = new URL(imageUrl);
+		InputStream is = url.openStream();
+		OutputStream os = new FileOutputStream(destinationFile);
+
+		byte[] b = new byte[2048];
+		int length;
+
+		while ((length = is.read(b)) != -1) {
+			os.write(b, 0, length);
 		}
+
+		is.close();
+		os.close();
+	}
+	
+	public void guardar() throws IOException {
+		
+		System.out.println(urlImg);
+		
+		String destinationFile = "image.jpg";
+
+		saveImage(urlImg, destinationFile);
 		
 
 		// VALIDACIONES
@@ -336,5 +356,11 @@ public class Estudiante {
 	}
 	public void setFuFoto(UploadedFile fuFoto) {
 		this.fuFoto = fuFoto;
+	}
+	public String getUrlImg() {
+		return urlImg;
+	}
+	public void setUrlImg(String urlImg) {
+		this.urlImg = urlImg;
 	}
 }

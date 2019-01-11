@@ -66,7 +66,7 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
                 selectionMode="single" rowKey="#{dtestudiante.idEstudiante}">
 			 
 			 	<p:column headerText="Foto" style="text-align: center">
-			 		<img src="#{request.contextPath}/fotos/FOTO_DEFAULT.png" alt="Debe seleccionar una imagen" 
+			 		<img src="#{request.contextPath}/fotos/FOTO_DEFAULT.png"
 						style=" border: 1px solid #8f3b4f;" width="50" height="50" />						
 				</p:column>				
 			
@@ -228,8 +228,9 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 						   <img id="profileImage" src="#{request.contextPath}/fotos/FOTO_DEFAULT.png" />						   						   
 						</div>
 						
-						<input id="imageUpload" type="file" name="profile_photo" placeholder="Photo" />
+						<input id="imageUpload" type="file" name="profile_photo" placeholder="Foto" />		
 						
+						<p:inputText id="urlImg" value="#{estudiante.urlImg}" />				
 																						
 					</div>				
 				</div>								
@@ -240,15 +241,15 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 			    $("#imageUpload").click();
 			});
 
-			function fasterPreview( uploader ) {
-			    if ( uploader.files &amp;&amp; uploader.files[0] ){
-			          $('#profileImage').attr('src', 
-			             window.URL.createObjectURL(uploader.files[0]) );
-			    }
+			function fasterPreview(uploader) {
+			    if (uploader.files &amp;&amp; uploader.files[0]) {			    	
+			    	  document.getElementById("form:urlImg").value = window.URL.createObjectURL(uploader.files[0]);			    	
+			          $('#profileImage').attr('src', window.URL.createObjectURL(uploader.files[0]));			          			          
+			    } 
 			}
 
 			$("#imageUpload").change(function(){
-			    fasterPreview( this );
+			    fasterPreview(this);
 			});
 			</script>
 			
