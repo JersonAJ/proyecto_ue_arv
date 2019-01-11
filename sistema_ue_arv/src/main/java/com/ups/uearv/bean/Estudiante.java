@@ -5,12 +5,7 @@
  */
 package com.ups.uearv.bean;
 
-import java.awt.Image;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.net.URL;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
@@ -22,7 +17,6 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
-import javax.imageio.ImageIO;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -117,30 +111,11 @@ public class Estudiante {
 	}
 		
 	// INGRESO - ACTUALIZACION	
-	public void saveImage(String imageUrl, String destinationFile) throws IOException {
-		URL url = new URL(imageUrl);
-		InputStream is = url.openStream();
-		OutputStream os = new FileOutputStream(destinationFile);
-
-		byte[] b = new byte[2048];
-		int length;
-
-		while ((length = is.read(b)) != -1) {
-			os.write(b, 0, length);
-		}
-
-		is.close();
-		os.close();
-	}
-	
+		
 	public void guardar() throws IOException {
 		
 		System.out.println(urlImg);
-		
-		String destinationFile = "image.jpg";
-
-		saveImage(urlImg, destinationFile);
-		
+			
 
 		// VALIDACIONES
 		if (itCedula.trim().equals("")) {

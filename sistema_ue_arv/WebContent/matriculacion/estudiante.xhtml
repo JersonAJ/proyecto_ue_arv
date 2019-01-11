@@ -134,30 +134,46 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
             
             <!-- INGRESO | ACTUALIZACION -->
             
-            <style>
-				#imageUpload {
-					display: none;
+            <style>			
+				.profile-pic {
+				    max-width: 200px;
+				    max-height: 200px;
+				    display: block;
 				}
 				
-				#profileImage {
-					cursor: pointer;
+				.file-upload {
+				    display: none;
+				}
+				.circle {
+				    border-radius: 1000px !important;
+				    overflow: hidden;
+				    width: 128px;
+				    height: 128px;
+				    border: 8px solid rgba(255, 255, 255, 0.7);
+				    position: absolute;
+				    top: 72px;
+				}
+				img {
+				    max-width: 100%;
+				    height: auto;
+				}
+				.p-image {
+				  position: absolute;
+				  top: 167px;
+				  right: 30px;
+				  color: #666666;
+				  transition: all .3s cubic-bezier(.175, .885, .32, 1.275);
+				}
+				.p-image:hover {
+				  transition: all .3s cubic-bezier(.175, .885, .32, 1.275);
+				}
+				.upload-button {
+				  font-size: 1.2em;
 				}
 				
-				#profile-container {
-					width: 150px;
-					height: 150px;
-					overflow: hidden;
-					-webkit-border-radius: 50%;
-					-moz-border-radius: 50%;
-					-ms-border-radius: 50%;
-					-o-border-radius: 50%;
-					border-radius: 50%;
-					border: 1px solid #8f3b4f;
-				}
-				
-				#profile-container img {
-					width: 150px;
-					height: 150px;
+				.upload-button:hover {
+				  transition: all .3s cubic-bezier(.175, .885, .32, 1.275);
+				  color: #999;
 				}
 			</style>
             
@@ -224,33 +240,51 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 					<div align="center" style="width: 40%">	
 <!-- 						<img src="#{request.contextPath}/fotos/FOTO_DEFAULT.png" style=" border: 1px solid #8f3b4f;" width="150" height="150" />			 -->
 						
-						<div id="profile-container">
-						   <img id="profileImage" src="#{request.contextPath}/fotos/FOTO_DEFAULT.png" />						   						   
+						<p:inputText id="urlImg" value="#{estudiante.urlImg}" />	
+						
+						<div class="row">
+						  <div class="small-12 medium-2 large-2 columns">
+						    <div class="circle">
+						      <!-- User Profile Image -->
+							      <img class="profile-pic" src="#{request.contextPath}/fotos/FOTO_DEFAULT.png" />
+							      
+							    </div>
+							    <div class="p-image">
+							      <i class="fa fa-camera upload-button"></i>
+							       <input class="file-upload" type="file" accept="image/*"/>
+							    </div>
+							 </div>
 						</div>
-						
-						<input id="imageUpload" type="file" name="profile_photo" placeholder="Foto" />		
-						
-						<p:inputText id="urlImg" value="#{estudiante.urlImg}" />				
+									
 																						
 					</div>				
 				</div>								
 			</p:dialog>
 			
-			<script>
-			$("#profileImage").click(function(e) {
-			    $("#imageUpload").click();
-			});
+			<script>			
+				$(document).ready(function() {
 
-			function fasterPreview(uploader) {
-			    if (uploader.files &amp;&amp; uploader.files[0]) {			    	
-			    	  document.getElementById("form:urlImg").value = window.URL.createObjectURL(uploader.files[0]);			    	
-			          $('#profileImage').attr('src', window.URL.createObjectURL(uploader.files[0]));			          			          
-			    } 
-			}
+					var readURL = function(input) {
+						if (input.files &amp;&amp; input.files[0]) {
+							var reader = new FileReader();
 
-			$("#imageUpload").change(function(){
-			    fasterPreview(this);
-			});
+							reader.onload = function(e) {
+								document.getElementById("form:urlImg").value = e.target.result;
+								$('.profile-pic').attr('src', e.target.result);
+							}
+
+							reader.readAsDataURL(input.files[0]);
+						}
+					}
+
+					$(".file-upload").on('change', function() {
+						readURL(this);
+					});
+
+					$(".upload-button").on('click', function() {
+						$(".file-upload").click();
+					});
+				});
 			</script>
 			
 		</h:form>				   	
