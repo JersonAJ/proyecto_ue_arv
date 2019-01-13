@@ -2,6 +2,7 @@ package com.ups.uearv.entidades;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
 import java.util.Date;
 import java.util.List;
 
@@ -48,6 +49,8 @@ public class MatEstudiante implements Serializable {
 	private String nombres;
 
 	private String telefono;
+	
+	private String foto; 
 
 	@Column(name="tipo_sangre")
 	private String tipoSangre;
@@ -156,6 +159,14 @@ public class MatEstudiante implements Serializable {
 
 	public void setNombres(String nombres) {
 		this.nombres = nombres;
+	}
+
+	public String getFoto() {
+		return foto;
+	}
+
+	public void setFoto(String foto) {
+		this.foto = foto;
 	}
 
 	public String getTelefono() {

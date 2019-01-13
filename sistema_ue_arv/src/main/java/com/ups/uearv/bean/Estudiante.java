@@ -5,6 +5,7 @@
  */
 package com.ups.uearv.bean;
 
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -52,7 +53,7 @@ public class Estudiante {
 
 	boolean ckEstado = false;
 
-	String urlImg = "url";
+	String itImagen = "";
 	
 	String itBuscar = "";
 	boolean ckMostrarIC = false;
@@ -110,14 +111,26 @@ public class Estudiante {
 		}
 	}
 		
-	// INGRESO - ACTUALIZACION	
-		
+	// INGRESO - ACTUALIZACION		
 	public void guardar() throws IOException {
+		// VALICADIONES FOTO
+		String base64 = itImagen;
+		base64 = base64.replace("data:image/jpeg;base64,", "");
+		base64 = base64.replace("data:image/jpg;base64,", "");
+		BufferedImage foto = Util.decodeToImage(base64);
 		
-		System.out.println(urlImg);
-			
-
-		// VALIDACIONES
+		if (foto == null) {
+			mensaje = "Debe seleccionar un archivo válido (imagen tipo JPG o JPEG)";
+			FacesContext.getCurrentInstance().addMessage("growl", new FacesMessage(FacesMessage.SEVERITY_ERROR, mensajeTitulo, mensaje));
+			return;
+		}			
+		if (foto.getWidth() > 200 && foto.getHeight() > 250) {
+			mensaje = "El tamaño de la imagen no deben ser mayor a 200(ancho) y 250(alto)";
+			FacesContext.getCurrentInstance().addMessage("growl", new FacesMessage(FacesMessage.SEVERITY_ERROR, mensajeTitulo, mensaje));
+			return;
+		}		
+	
+		// VALIDACIONES	
 		if (itCedula.trim().equals("")) {
 			mensaje = "Debe ingresar la cédula";
 			FacesContext.getCurrentInstance().addMessage("growl", new FacesMessage(FacesMessage.SEVERITY_ERROR, mensajeTitulo, mensaje));
@@ -178,6 +191,9 @@ public class Estudiante {
 			ob.setGenero(sorGenero);
 			ob.setTipoSangre(soTipoSangre);
 			ob.setEstado(estado);
+				
+			ob.setFoto(itImagen);							
+			
 			if (accion == 0) {
 				ob.setUsuarioIng(Session.getUserName());			
 				ob.setFechaIng(fecha);				
@@ -332,10 +348,10 @@ public class Estudiante {
 	public void setFuFoto(UploadedFile fuFoto) {
 		this.fuFoto = fuFoto;
 	}
-	public String getUrlImg() {
-		return urlImg;
+	public String getItImagen() {
+		return itImagen;
 	}
-	public void setUrlImg(String urlImg) {
-		this.urlImg = urlImg;
+	public void setItImagen(String itImagen) {
+		this.itImagen = itImagen;
 	}
 }

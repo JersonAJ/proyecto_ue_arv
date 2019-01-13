@@ -184,28 +184,30 @@ xmlns:pe="http://primefaces.org/ui/extensions">
 				.ui-handsontable .ui-datatable-header, .ui-handsontable .ui-datatable-footer { text-align: left; font-weight: 700; font-size: 12px; color: #212121; }
 				.handsontable .htAutocompleteArrow { float: right; font-size: 12px; color: #474a4b; cursor: default; width: 16px; text-align: center; }
 				.handsontable tbody th.ht__highlight, .handsontable thead th.ht__highlight { background-color: #dcdcdc; color: #8f3b4f; }
+				
+				.info { background-color: #fff8ba !important; }
 			</style>
 			
 			<!-- PARCIALES -->
-			<p:outputPanel id="opSheet1" style="display: #{control.soParcial eq '0'? 'none':''}">
-				<pe:sheet id="sheet1" widgetVar="sheetWidget1" value="#{control.controlList}" var="row"   
+			<p:outputPanel id="opSheet1" style="font-size: 12px; display: #{control.soParcial eq '0'? 'none':''}">
+				<pe:sheet id="sheet1" widgetVar="sheetWidget1" value="#{control.controlList}" var="row" fixedCols="1"   
 				    height="350" rowKey="#{row.codMatricula}" showRowHeaders="true" resizableCols="true" resizableRows="true" 
-				    readOnly="false" sortBy="#{row.nomEstudiante}" sortOrder="ascending" emptyMessage="No existen datos a mostrar">
+				    readOnly="false" sortBy="#{row.nomEstudiante}" sortOrder="ascending" emptyMessage="No existen datos a mostrar" >
 				  
 					<p:ajax event="change" listener="#{control.cellChangeEvent}" update="sheet1" />
 				  			   			  
 				    <pe:sheetcolumn headerText="Estudiante" readonly="true" value="#{row.nomEstudiante}" sortBy="#{row.nomEstudiante}" />
 				    	
 				    <pe:sheetcolumn headerText="L1" value="#{row.leccion1}" colWidth="40" 
-				    	styleClass="htRight #{row.leccion1 gt 0 ? 'positive' : 'negative'}" colType="numeric" numericPattern="0.00" />
+				    	styleClass="info htRight #{row.leccion1 gt 0 ? 'positive' : 'negative'}" colType="numeric" numericPattern="0.00" />
 				    <pe:sheetcolumn headerText="L2" value="#{row.leccion2}" colWidth="40"
-				    	styleClass="htRight #{row.leccion2 gt 0 ? 'positive' : 'negative'}" colType="numeric" numericPattern="0.00" />
+				    	styleClass="info htRight #{row.leccion2 gt 0 ? 'positive' : 'negative'}" colType="numeric" numericPattern="0.00" />
 				    <pe:sheetcolumn headerText="L3" value="#{row.leccion3}" colWidth="40"
-				    	styleClass="htRight #{row.leccion3 gt 0 ? 'positive' : 'negative'}" colType="numeric" numericPattern="0.00" />
+				    	styleClass="info htRight #{row.leccion3 gt 0 ? 'positive' : 'negative'}" colType="numeric" numericPattern="0.00" />
 				    <pe:sheetcolumn headerText="L4" value="#{row.leccion4}" colWidth="40"
-				    	styleClass="htRight #{row.leccion4 gt 0 ? 'positive' : 'negative'}" colType="numeric" numericPattern="0.00" />
+				    	styleClass="info htRight #{row.leccion4 gt 0 ? 'positive' : 'negative'}" colType="numeric" numericPattern="0.00" />
 				    <pe:sheetcolumn headerText="L5" value="#{row.leccion5}" colWidth="40"
-				    	styleClass="htRight #{row.leccion5 gt 0 ? 'positive' : 'negative'}" colType="numeric" numericPattern="0.00" />
+				    	styleClass="info htRight #{row.leccion5 gt 0 ? 'positive' : 'negative'}" colType="numeric" numericPattern="0.00" />
 				     
 				    <pe:sheetcolumn headerText="T1" value="#{row.tarea1}" colWidth="40" 
 				   		styleClass="htRight #{row.tarea1 gt 0 ? 'positive' : 'negative'}" colType="numeric" numericPattern="0.00" />
@@ -219,15 +221,15 @@ xmlns:pe="http://primefaces.org/ui/extensions">
 				   		styleClass="htRight #{row.tarea5 gt 0 ? 'positive' : 'negative'}" colType="numeric" numericPattern="0.00" />
 				     
 				    <pe:sheetcolumn headerText="AI1" value="#{row.actIndividual1}" colWidth="40" 
-						styleClass="htRight #{row.actIndividual1 gt 0 ? 'positive' : 'negative'}" colType="numeric" numericPattern="0.00" />
+						styleClass="info htRight #{row.actIndividual1 gt 0 ? 'positive' : 'negative'}" colType="numeric" numericPattern="0.00" />
 					<pe:sheetcolumn headerText="AI2" value="#{row.actIndividual2}" colWidth="40" 
-						styleClass="htRight #{row.actIndividual2 gt 0 ? 'positive' : 'negative'}" colType="numeric" numericPattern="0.00" />
+						styleClass="info htRight #{row.actIndividual2 gt 0 ? 'positive' : 'negative'}" colType="numeric" numericPattern="0.00" />
 					<pe:sheetcolumn headerText="AI3" value="#{row.actIndividual3}" colWidth="40" 
-						styleClass="htRight #{row.actIndividual3 gt 0 ? 'positive' : 'negative'}" colType="numeric" numericPattern="0.00" />
+						styleClass="info htRight #{row.actIndividual3 gt 0 ? 'positive' : 'negative'}" colType="numeric" numericPattern="0.00" />
 					<pe:sheetcolumn headerText="AI4" value="#{row.actIndividual4}" colWidth="40" 
-						styleClass="htRight #{row.actIndividual4 gt 0 ? 'positive' : 'negative'}" colType="numeric" numericPattern="0.00" />
+						styleClass="info htRight #{row.actIndividual4 gt 0 ? 'positive' : 'negative'}" colType="numeric" numericPattern="0.00" />
 					<pe:sheetcolumn headerText="AI5" value="#{row.actIndividual5}" colWidth="40" 
-						styleClass="htRight #{row.actIndividual5 gt 0 ? 'positive' : 'negative'}" colType="numeric" numericPattern="0.00" />
+						styleClass="info htRight #{row.actIndividual5 gt 0 ? 'positive' : 'negative'}" colType="numeric" numericPattern="0.00" />
 						
 					<pe:sheetcolumn headerText="AG1" value="#{row.actGrupal1}" colWidth="40" 
 						styleClass="htRight #{row.actGrupal1 gt 0 ? 'positive' : 'negative'}" colType="numeric" numericPattern="0.00" />
@@ -246,12 +248,15 @@ xmlns:pe="http://primefaces.org/ui/extensions">
 				    		    
 				    <f:facet name="footer">  
 				        <h:outputText value="#{control.controlList.size()} Registros" />  
+				        <span style="float: right;">
+				        	<h:outputText value="L: Lección | T: Taller | AI: Actividad Individual | AG: Actividad Grupal" />
+				        </span>
 				    </f:facet>  
 				</pe:sheet>
 			</p:outputPanel>
 			
 			<!-- EXAMEN  -->
-			<p:outputPanel id="opSheet2" style="display: #{control.soParcial eq '0'? '':'none'}">
+			<p:outputPanel id="opSheet2" style="font-size: 12px; display: #{control.soParcial eq '0'? '':'none'}">
 				<pe:sheet id="sheet2" widgetVar="sheetWidget2" value="#{control.controlList}" var="row"   
 				    height="350" rowKey="#{row.codMatricula}" showRowHeaders="true" resizableCols="true" resizableRows="true" 
 				    readOnly="false" sortBy="#{row.nomEstudiante}" sortOrder="ascending" emptyMessage="No existen datos a mostrar">   
@@ -261,7 +266,7 @@ xmlns:pe="http://primefaces.org/ui/extensions">
 				    <pe:sheetcolumn headerText="Estudiante" readonly="true" value="#{row.nomEstudiante}" sortBy="#{row.nomEstudiante}" />
 				    	
 				    <pe:sheetcolumn id="Examen" headerText="Examen" value="#{row.examen}" colWidth="40"
-				    	styleClass="htRight #{row.examen gt 0 ? 'positive' : 'negative'}" colType="numeric" numericPattern="0.00" />
+				    	styleClass="info htRight #{row.examen gt 0 ? 'positive' : 'negative'}" colType="numeric" numericPattern="0.00" />
 				    		    
 				    <f:facet name="footer">  
 				        <h:outputText value="#{control.controlList.size()} Registros" />  

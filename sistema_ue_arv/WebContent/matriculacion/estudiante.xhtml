@@ -17,7 +17,7 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 			<p:growl id="growl" for="growl" showDetail="true" closable="true" />
 					
 			<p:outputPanel style="background-color: white; padding: 5px;">
-				<p:commandLink update=":form:pnl" oncomplete="PF('dgl').show();">
+				<p:commandLink update=":form:pnl :form:pnl2" oncomplete="PF('dgl').show();">
 					<i class="fa fa-plus-circle" />
 					<span>Agregar</span>				
 					
@@ -34,6 +34,8 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 					<f:setPropertyActionListener value="" target="#{estudiante.soTipoSangre}" />
 					<f:setPropertyActionListener value="true" target="#{estudiante.ckEstado}" />
 					<f:setPropertyActionListener value="0" target="#{estudiante.accion}" />	
+					
+					<f:setPropertyActionListener value="#{request.contextPath}/fotos/FOTO_DEFAULT.png" target="#{estudiante.itImagen}" />
 															
 				</p:commandLink>					
 			</p:outputPanel> 
@@ -64,12 +66,15 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
                 currentPageReportTemplate="{currentPage} de {totalPages}"
                 paginator="true" rows="5" rowsPerPageTemplate="5,10" paginatorPosition="top" emptyMessage="No existen datos a mostrar" 
                 selectionMode="single" rowKey="#{dtestudiante.idEstudiante}">
-			 
-			 	<p:column headerText="Foto" style="text-align: center">
-			 		<img src="#{request.contextPath}/fotos/FOTO_DEFAULT.png"
-						style=" border: 1px solid #8f3b4f;" width="50" height="50" />						
-				</p:column>				
-			
+			 	
+			 	<p:column headerText="Foto" width="50">
+					<div align="center">
+						<div class="circle-lista" align="center">
+							<img width="50px" height="50px" src="#{dtestudiante.foto eq null? '/sistema_ue_arv/fotos/FOTO_DEFAULT.png' : dtestudiante.foto}" />
+						</div>
+					</div>
+				</p:column>
+						
 			    <p:column headerText="Cédula" style="text-align: center">
 			        <h:outputText value="#{dtestudiante.idEstudiante}" />
 			    </p:column>
@@ -97,7 +102,7 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 			    <p:column headerText="Editar" width="20" exportable="false">
 			    	<p:outputPanel style="text-align: center">
 			    	<div style="background-color: white; border-radius: 2px; padding: 2px;">
-						<p:commandLink update=":form:pnl" oncomplete="PF('dgl').show()">	
+						<p:commandLink update=":form:pnl :form:pnl2" oncomplete="PF('dgl').show()">	
 							<i class="fa fa-pencil" />
 							
 							<f:setPropertyActionListener value="#{dtestudiante.idEstudiante}" target="#{estudiante.itCedula}" />
@@ -113,6 +118,9 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 							<f:setPropertyActionListener value="#{dtestudiante.tipoSangre}" target="#{estudiante.soTipoSangre}" />						
 							<f:setPropertyActionListener value="#{general.getEstado(dtestudiante.estado)}" target="#{estudiante.ckEstado}" />
 							<f:setPropertyActionListener value="1" target="#{estudiante.accion}" />
+							
+							<f:setPropertyActionListener value="#{dtestudiante.foto eq null? '/sistema_ue_arv/fotos/FOTO_DEFAULT.png' 
+								: dtestudiante.foto}" target="#{estudiante.itImagen}" />
 																																						
 						</p:commandLink>
 						</div>							
@@ -132,8 +140,7 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 	            </h:commandLink>		   
             </p:outputPanel>
             
-            <!-- INGRESO | ACTUALIZACION -->
-            
+            <!-- INGRESO | ACTUALIZACION -->            
             <style>			
 				.profile-pic {
 				    max-width: 200px;
@@ -145,35 +152,40 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 				    display: none;
 				}
 				.circle {
-				    border-radius: 1000px !important;
+		       		border-radius: 50px;
 				    overflow: hidden;
-				    width: 128px;
-				    height: 128px;
-				    border: 8px solid rgba(255, 255, 255, 0.7);
-				    position: absolute;
-				    top: 72px;
+				    width: 150px;
+				    height: 150px;
+				    border: 2px solid #8f3b4f;
+				 }
+				.circle-lista {   
+		    	    border-radius: 20px;
+				    overflow: hidden;
+				    width: 50px;
+				    height: 50px;
+				    border: 1px solid #8f3b4f;
 				}
 				img {
 				    max-width: 100%;
 				    height: auto;
 				}
 				.p-image {
-				  position: absolute;
-				  top: 167px;
-				  right: 30px;
-				  color: #666666;
-				  transition: all .3s cubic-bezier(.175, .885, .32, 1.275);
+					position: absolute;
+					top: 150px;
+					right: 30px;
+					color: #666666;
+					transition: all .3s cubic-bezier(.175, .885, .32, 1.275);
 				}
 				.p-image:hover {
-				  transition: all .3s cubic-bezier(.175, .885, .32, 1.275);
+					transition: all .3s cubic-bezier(.175, .885, .32, 1.275);
 				}
 				.upload-button {
-				  font-size: 1.2em;
+					font-size: 25px;
 				}
 				
 				.upload-button:hover {
-				  transition: all .3s cubic-bezier(.175, .885, .32, 1.275);
-				  color: #999;
+					transition: all .3s cubic-bezier(.175, .885, .32, 1.275);
+					color: #999;
 				}
 			</style>
             
@@ -181,108 +193,97 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 			
 			<p:ajax event="close" update="form" listener="#{estudiante.closeDialogo}" />
 				
-				<div style="display: inline-flex; width: 100%">		
-					<h:panelGrid id="pnl" columns="2" cellpadding="0" style="width: 60%" columnClasses="ui-grid-col-4,ui-grid-col-8">										
-						<p:outputPanel style="text-align: end; padding: 5px">Cédula:</p:outputPanel>
-						<p:inputMask value="#{estudiante.itCedula}" style="width: 45%" disabled="#{estudiante.accion eq 1? true:false}" mask="9999999999" />
+			<p:outputPanel  style="display: inline-flex; width: 100%">		
+				<h:panelGrid id="pnl" columns="2" cellpadding="0" style="width: 60%" columnClasses="ui-grid-col-4,ui-grid-col-8">										
+					<p:outputPanel style="text-align: end; padding: 5px">Cédula:</p:outputPanel>
+					<p:inputMask value="#{estudiante.itCedula}" style="width: 45%" disabled="#{estudiante.accion eq 1? true:false}" mask="9999999999" />
+					
+					<p:outputPanel style="text-align: end; padding: 5px">Nombres:</p:outputPanel>					
+					<p:inputText value="#{estudiante.itNombres}" style="width: 90%" />
+					
+					<p:outputPanel style="text-align: end; padding: 5px">Apellidos:</p:outputPanel>
+					<p:inputText value="#{estudiante.itApellidos}" style="width: 90%" />
+					
+												
+					<p:outputPanel style="text-align: end; padding: 5px">Representante:</p:outputPanel>
+				    <p:selectOneMenu value="#{estudiante.soRepresentante}" effect="fade" widgetVar="t" filter="true" filterMatchMode="contains">
+						<f:selectItems value="#{estudiante.listRepresentante}" />	
+					    <p:column>
+			                <h:outputText value="#{t}" />
+			            </p:column>			 
+			        </p:selectOneMenu>			        
+			       					
+					<p:outputPanel style="text-align: end; padding: 5px">Género:</p:outputPanel>
+					<h:selectOneRadio value="#{estudiante.sorGenero}">            
+			            <f:selectItem itemLabel="Masculino" itemValue="M" />
+			            <f:selectItem itemLabel="Femenino" itemValue="F" />
+			        </h:selectOneRadio>
+			        
+			        <p:outputPanel style="text-align: end; padding: 5px">Tipo de sangre:</p:outputPanel>
+					<p:selectOneMenu value="#{estudiante.soTipoSangre}">
+						<f:selectItems value="#{estudiante.listTipoSangre}" />		
+					</p:selectOneMenu>			
+																			
+					<p:outputPanel style="text-align: end; padding: 5px">Teléfono:</p:outputPanel>
+					<p:inputMask value="#{estudiante.itTelefono}" style="width: 45%" mask="9999999999" />
+														
+					<p:outputPanel style="text-align: end; padding: 5px">Dirección:</p:outputPanel>
+					<p:inputTextarea value="#{estudiante.itDireccion}" rows="2" style="width: 90%" />
+								        
+			        <p:outputPanel style="text-align: end; padding: 5px">Fecha Nac.:</p:outputPanel>
+			        <p:calendar value="#{estudiante.cFechaNac}" locale="es" navigator="true" pattern="dd/MM/yyyy" mask="true" inputStyle="width: 45%" />
+			        
+			        <p:outputPanel style="text-align: end; padding: 5px">Alergias:</p:outputPanel>
+					<p:inputTextarea value="#{estudiante.itAlergias}" rows="2" style="width: 90%" />
+			        			     		        									
+			       	<p:outputPanel style="text-align: end; padding: 5px">Institución anterior:</p:outputPanel>
+					<p:inputTextarea value="#{estudiante.itInstitucionAnt}" rows="2" style="width: 90%" />					
 						
-						<p:outputPanel style="text-align: end; padding: 5px">Nombres:</p:outputPanel>					
-						<p:inputText value="#{estudiante.itNombres}" style="width: 90%" />
-						
-						<p:outputPanel style="text-align: end; padding: 5px">Apellidos:</p:outputPanel>
-						<p:inputText value="#{estudiante.itApellidos}" style="width: 90%" />
-						
-													
-						<p:outputPanel style="text-align: end; padding: 5px">Representante:</p:outputPanel>
-					    <p:selectOneMenu value="#{estudiante.soRepresentante}" effect="fade" widgetVar="t" filter="true" filterMatchMode="contains">
-							<f:selectItems value="#{estudiante.listRepresentante}" />	
-						    <p:column>
-				                <h:outputText value="#{t}" />
-				            </p:column>			 
-				        </p:selectOneMenu>			        
-				       					
-						<p:outputPanel style="text-align: end; padding: 5px">Género:</p:outputPanel>
-						<h:selectOneRadio value="#{estudiante.sorGenero}">            
-				            <f:selectItem itemLabel="Masculino" itemValue="M" />
-				            <f:selectItem itemLabel="Femenino" itemValue="F" />
-				        </h:selectOneRadio>
-				        
-				        <p:outputPanel style="text-align: end; padding: 5px">Tipo de sangre:</p:outputPanel>
-						<p:selectOneMenu value="#{estudiante.soTipoSangre}">
-							<f:selectItems value="#{estudiante.listTipoSangre}" />		
-						</p:selectOneMenu>			
-																				
-						<p:outputPanel style="text-align: end; padding: 5px">Teléfono:</p:outputPanel>
-						<p:inputMask value="#{estudiante.itTelefono}" style="width: 45%" mask="9999999999" />
-															
-						<p:outputPanel style="text-align: end; padding: 5px">Dirección:</p:outputPanel>
-						<p:inputTextarea value="#{estudiante.itDireccion}" rows="2" style="width: 90%" />
-									        
-				        <p:outputPanel style="text-align: end; padding: 5px">Fecha Nac.:</p:outputPanel>
-				        <p:calendar value="#{estudiante.cFechaNac}" locale="es" navigator="true" pattern="dd/MM/yyyy" mask="true" inputStyle="width: 45%" />
-				        
-				        <p:outputPanel style="text-align: end; padding: 5px">Alergias:</p:outputPanel>
-						<p:inputTextarea value="#{estudiante.itAlergias}" rows="2" style="width: 90%" />
-				        			     		        									
-				       	<p:outputPanel style="text-align: end; padding: 5px">Institución anterior:</p:outputPanel>
-						<p:inputTextarea value="#{estudiante.itInstitucionAnt}" rows="2" style="width: 90%" />					
-							
-						<p:outputPanel style="text-align: end; padding: 5px">Activo:</p:outputPanel>
-						<h:selectBooleanCheckbox value="#{estudiante.ckEstado}" style="margin-top: 6px" />
-						
-						<f:facet name = "footer"><br/>
-							<h:panelGroup style = "display:block; text-align:center">
-						      	<p:commandButton id="btnGuardar" value="Guardar" icon="fa fa-save" actionListener="#{estudiante.guardar}"
-						      		update=":form:dt :form:growl" />	
-							</h:panelGroup>					    
-						</f:facet>						
-					</h:panelGrid>				
-					<div align="center" style="width: 40%">	
-<!-- 						<img src="#{request.contextPath}/fotos/FOTO_DEFAULT.png" style=" border: 1px solid #8f3b4f;" width="150" height="150" />			 -->
-						
-						<p:inputText id="urlImg" value="#{estudiante.urlImg}" />	
-						
-						<div class="row">
-						  <div class="small-12 medium-2 large-2 columns">
-						    <div class="circle">
-						      <!-- User Profile Image -->
-							    <img class="profile-pic" src="#{request.contextPath}/fotos/FOTO_DEFAULT.png" />
-							      
-							    </div>
-							    <div class="p-image">
-							      <i class="fa fa-camera upload-button"></i>
-							       <input class="file-upload" type="file" accept="image/*"/>
-							    </div>
-							 </div>
+					<p:outputPanel style="text-align: end; padding: 5px">Activo:</p:outputPanel>
+					<h:selectBooleanCheckbox value="#{estudiante.ckEstado}" style="margin-top: 6px" />
+					
+					<f:facet name = "footer"><br/>
+						<h:panelGroup style = "display:block; text-align:center">
+					      	<p:commandButton id="btnGuardar" value="Guardar" icon="fa fa-save" actionListener="#{estudiante.guardar}"
+					      		update=":form:dt :form:growl" />	
+						</h:panelGroup>					    
+					</f:facet>						
+				</h:panelGrid>				
+				<p:outputPanel id="pnl2" style="width: 40%">	
+					<div align="center">
+						<p:inputText id="itImagen" value="#{estudiante.itImagen}" style="display: none" />
+						<div class="circle">
+							<img id="profilepic" class="profile-pic" src="#{estudiante.itImagen}" />
 						</div>
-									
-																						
 					</div>				
-				</div>								
+				</p:outputPanel>
+				<div class="p-image">
+					<i id="uploadbutton" class="fa fa-camera upload-button"></i> 
+					<input id="fileupload" class="file-upload" type="file" accept="image/*" />
+				</div>				
+			</p:outputPanel>								
 			</p:dialog>
 			
 			<script>			
 				$(document).ready(function() {
-
 					var readURL = function(input) {
 						if (input.files &amp;&amp; input.files[0]) {
 							var reader = new FileReader();
 
 							reader.onload = function(e) {
-								document.getElementById("form:urlImg").value = e.target.result;
-								$('.profile-pic').attr('src', e.target.result);
+								document.getElementById("form:itImagen").value = e.target.result;
+								$('#profilepic').attr('src', e.target.result);
 							}
-
 							reader.readAsDataURL(input.files[0]);
 						}
 					}
 
-					$(".file-upload").on('change', function() {
+					$("#fileupload").on('change', function() {
 						readURL(this);
 					});
 
-					$(".upload-button").on('click', function() {
-						$(".file-upload").click();
+					$("#uploadbutton").on('click', function() {
+						$("#fileupload").click();
 					});
 				});
 			</script>
