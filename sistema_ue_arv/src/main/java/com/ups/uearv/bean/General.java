@@ -5,6 +5,7 @@
  */
 package com.ups.uearv.bean;
 
+import java.io.InputStream;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -21,6 +22,8 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
 import org.primefaces.context.RequestContext;
+import org.primefaces.model.DefaultStreamedContent;
+import org.primefaces.model.StreamedContent;
 
 import com.ups.uearv.entidades.CatalogoDet;
 import com.ups.uearv.entidades.SegUsuario;
@@ -47,7 +50,19 @@ public class General implements Serializable {
 	public void init() {	
 		validaMenuSistema();
 		mostrarCambioClave();
+		cargaFichas();
+	}
 
+	// DESCARGA FICHAS
+	private StreamedContent fichaAtencion;
+
+	public void cargaFichas() {        
+		InputStream stream = FacesContext.getCurrentInstance().getExternalContext().getResourceAsStream("/recursos/fichas/FICHA_ATENCION.pdf");
+		fichaAtencion = new DefaultStreamedContent(stream, "application/octet-stream", "FICHA_ATENCION.pdf");
+	}
+
+	public StreamedContent getFichaAtencion() {
+		return fichaAtencion;
 	}
 
 	// VALIDAR SESION
@@ -78,7 +93,7 @@ public class General implements Serializable {
 	public void setDisplayMensajeClave(String displayMensajeClave) {
 		this.displayMensajeClave = displayMensajeClave;
 	}
-	
+
 	// OBTENER ESTADO
 	public boolean getEstado(String estado) {
 		boolean ban = true;
@@ -86,14 +101,14 @@ public class General implements Serializable {
 			ban = false;
 		return ban;
 	}
-	
+
 	public boolean getAprobado(String estado) {
 		boolean ban = true;
 		if (estado.equals("N"))
 			ban = false;
 		return ban;
 	}
-	
+
 	// OBTENER DESCRIPCION DEL CATALOGO DETALLE 
 	public String getDesCatalogoDet(String cod) {
 		CatalogoDet ob = new CatalogoDet();
@@ -107,7 +122,7 @@ public class General implements Serializable {
 		SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 		return dateFormat.format(f.getTime());
 	}
-	
+
 	// CAMBIO DE CLAVE
 	String clave1 = "";
 	String clave2 = "";

@@ -100,16 +100,30 @@
 				</div>			
 				<ul class="route-bar-menu">			
 					<li>
-<!-- 						<p:commandLink oncomplete="PF('calendario').show()"> -->
-<!-- 							<i class="fa fa-calendar"></i> -->
-<!-- 						</p:commandLink> -->
+						<p:commandLink oncomplete="PF('fichas').show()" title="Fichas">
+							<i class="fa fa-file-pdf-o"></i> 
+						</p:commandLink>
 					</li>			
 				</ul>
 			</div>
-			
-			
-			<p:sidebar widgetVar="calendario" position="right" baseZIndex="10000" style="width: 50%">
-			    <h1 style="font-weight:normal">Calendario</h1>	    
+						
+			<p:sidebar id="sbFichas" widgetVar="fichas" position="right" baseZIndex="10000" style="width: 400px">
+			    <h1 style="font-weight:normal">Fichas</h1>
+			    <p:separator /> <br />
+			    <h:form>
+				    <p:commandLink ajax="false" style="font-size: 15px" title="Descargar">
+			        	<i class="fa fa-file-pdf-o" />
+			        	Ficha de atención a padres de familia
+			        	<p:fileDownload value="#{general.fichaAtencion}" />
+			        </p:commandLink>
+			        <br /> <br />
+			        <p:commandLink ajax="false" style="font-size: 15px" title="Descargar">
+			        	<i class="fa fa-file-pdf-o" />
+			        	Ficha de atención a padres de familia
+			        	<p:fileDownload value="#{general.fichaAtencion}" />
+			        </p:commandLink>
+			        
+		        </h:form>
 			</p:sidebar>		
 
 			<div class="layout-main-content">
