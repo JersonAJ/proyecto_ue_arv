@@ -191,77 +191,85 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
             
 			<p:dialog header="Datos Estudiante" widgetVar="dgl" modal="true" closable="true" maximizable="false" resizable="false" width="600px">
 			
-			<p:ajax event="close" update="form" listener="#{estudiante.closeDialogo}" />
-				
-			<p:outputPanel  style="display: inline-flex; width: 100%">		
-				<h:panelGrid id="pnl" columns="2" cellpadding="0" style="width: 60%" columnClasses="ui-grid-col-4,ui-grid-col-8">										
-					<p:outputPanel style="text-align: end; padding: 5px">Cédula:</p:outputPanel>
-					<p:inputMask value="#{estudiante.itCedula}" style="width: 45%" disabled="#{estudiante.accion eq 1? true:false}" mask="9999999999" />
+				<p:ajax event="close" update="form" listener="#{estudiante.closeDialogo}" />
 					
-					<p:outputPanel style="text-align: end; padding: 5px">Nombres:</p:outputPanel>					
-					<p:inputText value="#{estudiante.itNombres}" style="width: 90%" />
-					
-					<p:outputPanel style="text-align: end; padding: 5px">Apellidos:</p:outputPanel>
-					<p:inputText value="#{estudiante.itApellidos}" style="width: 90%" />
-					
-												
-					<p:outputPanel style="text-align: end; padding: 5px">Representante:</p:outputPanel>
-				    <p:selectOneMenu value="#{estudiante.soRepresentante}" effect="fade" widgetVar="t" filter="true" filterMatchMode="contains">
-						<f:selectItems value="#{estudiante.listRepresentante}" />	
-					    <p:column>
-			                <h:outputText value="#{t}" />
-			            </p:column>			 
-			        </p:selectOneMenu>			        
-			       					
-					<p:outputPanel style="text-align: end; padding: 5px">Género:</p:outputPanel>
-					<h:selectOneRadio value="#{estudiante.sorGenero}">            
-			            <f:selectItem itemLabel="Masculino" itemValue="M" />
-			            <f:selectItem itemLabel="Femenino" itemValue="F" />
-			        </h:selectOneRadio>
-			        
-			        <p:outputPanel style="text-align: end; padding: 5px">Tipo de sangre:</p:outputPanel>
-					<p:selectOneMenu value="#{estudiante.soTipoSangre}">
-						<f:selectItems value="#{estudiante.listTipoSangre}" />		
-					</p:selectOneMenu>			
-																			
-					<p:outputPanel style="text-align: end; padding: 5px">Teléfono:</p:outputPanel>
-					<p:inputMask value="#{estudiante.itTelefono}" style="width: 45%" mask="9999999999" />
-														
-					<p:outputPanel style="text-align: end; padding: 5px">Dirección:</p:outputPanel>
-					<p:inputTextarea value="#{estudiante.itDireccion}" rows="2" style="width: 90%" />
-								        
-			        <p:outputPanel style="text-align: end; padding: 5px">Fecha Nac.:</p:outputPanel>
-			        <p:calendar value="#{estudiante.cFechaNac}" locale="es" navigator="true" pattern="dd/MM/yyyy" mask="true" inputStyle="width: 45%" />
-			        
-			        <p:outputPanel style="text-align: end; padding: 5px">Alergias:</p:outputPanel>
-					<p:inputTextarea value="#{estudiante.itAlergias}" rows="2" style="width: 90%" />
-			        			     		        									
-			       	<p:outputPanel style="text-align: end; padding: 5px">Institución anterior:</p:outputPanel>
-					<p:inputTextarea value="#{estudiante.itInstitucionAnt}" rows="2" style="width: 90%" />					
+				<p:outputPanel  style="display: inline-flex; width: 100%">		
+					<h:panelGrid id="pnl" columns="2" cellpadding="0" style="width: 60%" columnClasses="ui-grid-col-4,ui-grid-col-8">										
+						<p:outputPanel style="text-align: end; padding: 5px">Cédula:</p:outputPanel>
+						<p:inputMask value="#{estudiante.itCedula}" style="width: 45%" disabled="#{estudiante.accion eq 1? true:false}" mask="9999999999" />
 						
-					<p:outputPanel style="text-align: end; padding: 5px">Activo:</p:outputPanel>
-					<h:selectBooleanCheckbox value="#{estudiante.ckEstado}" style="margin-top: 6px" />
-					
-					<f:facet name = "footer"><br/>
-						<h:panelGroup style = "display:block; text-align:center">
-					      	<p:commandButton id="btnGuardar" value="Guardar" icon="fa fa-save" actionListener="#{estudiante.guardar}"
-					      		update=":form:dt :form:growl" />	
-						</h:panelGroup>					    
-					</f:facet>						
-				</h:panelGrid>				
-				<p:outputPanel id="pnl2" style="width: 40%">	
-					<div align="center">
-						<p:inputText id="itImagen" value="#{estudiante.itImagen}" style="display: none" />
-						<div class="circle">
-							<img id="profilepic" class="profile-pic" src="#{estudiante.itImagen}" />
+						<p:outputPanel style="text-align: end; padding: 5px">Nombres:</p:outputPanel>					
+						<p:inputText value="#{estudiante.itNombres}" style="width: 90%" />
+						
+						<p:outputPanel style="text-align: end; padding: 5px">Apellidos:</p:outputPanel>
+						<p:inputText value="#{estudiante.itApellidos}" style="width: 90%" />
+						
+													
+						<p:outputPanel style="text-align: end; padding: 5px">Representante:</p:outputPanel>
+					    <p:selectOneMenu value="#{estudiante.soRepresentante}" effect="fade" widgetVar="t" filter="true" filterMatchMode="contains">
+							<f:selectItems value="#{estudiante.listRepresentante}" />	
+						    <p:column>
+				                <h:outputText value="#{t}" />
+				            </p:column>			 
+				        </p:selectOneMenu>			        
+				       					
+						<p:outputPanel style="text-align: end; padding: 5px">Género:</p:outputPanel>
+						<h:selectOneRadio value="#{estudiante.sorGenero}">            
+				            <f:selectItem itemLabel="Masculino" itemValue="M" />
+				            <f:selectItem itemLabel="Femenino" itemValue="F" />
+				        </h:selectOneRadio>
+				        
+				        <p:outputPanel style="text-align: end; padding: 5px">Tipo de sangre:</p:outputPanel>
+						<p:selectOneMenu value="#{estudiante.soTipoSangre}">
+							<f:selectItems value="#{estudiante.listTipoSangre}" />		
+						</p:selectOneMenu>			
+																				
+						<p:outputPanel style="text-align: end; padding: 5px">Teléfono:</p:outputPanel>
+						<p:inputMask value="#{estudiante.itTelefono}" style="width: 45%" mask="9999999999" />
+															
+						<p:outputPanel style="text-align: end; padding: 5px">Dirección:</p:outputPanel>
+						<p:inputTextarea value="#{estudiante.itDireccion}" rows="2" style="width: 90%" />
+									        
+				        <p:outputPanel style="text-align: end; padding: 5px">Fecha Nac.:</p:outputPanel>
+				        <p:calendar value="#{estudiante.cFechaNac}" locale="es" navigator="true" pattern="dd/MM/yyyy" mask="true" inputStyle="width: 45%" />
+				        
+				        <p:outputPanel style="text-align: end; padding: 5px">Alergias:</p:outputPanel>
+						<p:inputTextarea value="#{estudiante.itAlergias}" rows="2" style="width: 90%" />
+				        			     		        									
+				       	<p:outputPanel style="text-align: end; padding: 5px">Institución anterior:</p:outputPanel>
+						<p:inputTextarea value="#{estudiante.itInstitucionAnt}" rows="2" style="width: 90%" />					
+							
+						<p:outputPanel style="text-align: end; padding: 5px">Activo:</p:outputPanel>
+						<h:selectBooleanCheckbox value="#{estudiante.ckEstado}" style="margin-top: 6px" />
+															
+					</h:panelGrid>	
+								
+					<p:outputPanel id="pnl2" style="width: 40%">	
+						<div align="center">
+							<p:inputText id="itImagen" value="#{estudiante.itImagen}" style="display: none" />
+							<div class="circle">
+								<img id="profilepic" class="profile-pic" src="#{estudiante.itImagen}" />
+							</div>
 						</div>
-					</div>				
+						
+						<div style="text-align: center; color: #52202b; font-weight: bold;">
+							<br/>
+							<span style="font-weight: normal; font-size: 11px;"> 
+							<i>Tipos de	archivos aceptados</i>: JPG o JPEG. 
+							<i>Dimensión máxima</i>: 200 píxeles de ancho por 250 píxeles de alto.
+							</span>
+						</div>				
+					</p:outputPanel>
+					<div class="p-image">
+						<i id="uploadbutton" class="fa fa-camera upload-button"></i> 
+						<input id="fileupload" class="file-upload" type="file" accept="image/*" />
+					</div>														
 				</p:outputPanel>
-				<div class="p-image">
-					<i id="uploadbutton" class="fa fa-camera upload-button"></i> 
-					<input id="fileupload" class="file-upload" type="file" accept="image/*" />
-				</div>				
-			</p:outputPanel>								
+				<br/><br/>
+				<h:panelGroup style = "display:block; text-align:center">
+					<p:commandButton id="btnGuardar" value="Guardar" icon="fa fa-save" actionListener="#{estudiante.guardar}"
+						update=":form:dt :form:growl" />	      		
+				</h:panelGroup>								
 			</p:dialog>
 			
 			<script>			

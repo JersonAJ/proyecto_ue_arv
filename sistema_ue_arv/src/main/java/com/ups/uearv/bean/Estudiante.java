@@ -125,7 +125,7 @@ public class Estudiante {
 			return;
 		}			
 		if (foto.getWidth() > 200 && foto.getHeight() > 250) {
-			mensaje = "El tamaño de la imagen no deben ser mayor a 200(ancho) y 250(alto)";
+			mensaje = "Las dimensiones de la imagen no deben ser mayor a 200(ancho) y 250(alto)";
 			FacesContext.getCurrentInstance().addMessage("growl", new FacesMessage(FacesMessage.SEVERITY_ERROR, mensajeTitulo, mensaje));
 			return;
 		}		
