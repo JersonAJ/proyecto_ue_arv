@@ -8,13 +8,18 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 	<ui:define name="titulo"><i class="fa fa-home" /> Inicio</ui:define>
 	
 	<ui:define name="content">									
-		<h:form>
+		<h:form style="width: 100%">
 			<f:metadata>		    
 			    <f:viewAction action="#{general.validaSesion}"/>
 			</f:metadata>
 			
-			<p:growl id="msgRegistro" for="msgRegistro" showDetail="true" closable="true" />
+			<br /> <br />
+			
+			<div align="center" style="width: 100%">
+				<img src="#{request.contextPath}/recursos/images/ESCUELA_ARV2.png" style="filter: contrast(150%); opacity: 0.5;" class="login-icon" />
+			</div>
 				
+			<br /> <br />
 								
 	   	</h:form>    	    
 	</ui:define>		
