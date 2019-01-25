@@ -67,8 +67,8 @@ xmlns:pe="http://primefaces.org/ui/extensions">
 			</p:outputPanel>
 			
 			<!-- RESUMEN -->
-			<p:dialog header="Resumen" widgetVar="dglCon" modal="true" closable="true" maximizable="false" resizable="false" width="90%" height="400px">
-				<p:outputPanel id="panelCon">		  		
+			<p:dialog header="Resumen" widgetVar="dglCon" modal="true" closable="true" maximizable="false" resizable="false" width="95%" height="400px">
+				<p:outputPanel id="panelCon" style="margin-top: -15px;">		  		
 			   		<style>
 				   		.ui-datatable th.ui-state-default, .ui-datatable tfoot td.ui-state-default { background: #e0edff; border-color: #000000; }
 				   		.ui-datatable tbody>tr.ui-widget-content { border-color: #000000; }
@@ -81,98 +81,146 @@ xmlns:pe="http://primefaces.org/ui/extensions">
 						Asignatura:  #{control.getDesAsignatura(control.soAsignatura)}
 					</b>
 					<br/><br/>
-					<p:dataTable id="dtcontrol" var="dtnotas" value="#{control.procesaNotasList}" tableStyle="width: auto; min-width: 100%;" 
-						emptyMessage="No existen notas a procesar">
+					<p:dataTable id="dtcontrol" var="dtnotas" value="#{control.procesaNotasList}" emptyMessage="No existen notas a mostrar"
+						tableStyle="width: auto; min-width: 100%; font-weight: bold; font-size: 10.5px">
+						
 						
 						<p:columnGroup type="header">
 				            <p:row>
 				                <p:column rowspan="3" headerText="Estudiante" width="25%" />
-				                <p:column colspan="10" headerText="Quimestre 1" />
-				                <p:column colspan="10" headerText="Quimestre 2" />				                
+				                <p:column colspan="16" headerText="Quimestre 1" />
+				                <p:column colspan="16" headerText="Quimestre 2" />				                
 				            </p:row>		         
 				            <p:row>
-				                <p:column colspan="3" headerText="P1" />
-				                <p:column colspan="3" headerText="P2" />		
-				            	<p:column colspan="3" headerText="P3" />				                		                
+				                <p:column colspan="5" headerText="P1" />
+				                <p:column colspan="5" headerText="P2" />		
+				            	<p:column colspan="5" headerText="P3" />				                		                
 				            	<p:column rowspan="2" headerText="EX" width="70" />
 				            	
-				            	<p:column colspan="3" headerText="P1" />
-				                <p:column colspan="3" headerText="P2" />		
-				            	<p:column colspan="3" headerText="P3" />				                		                
+				            	<p:column colspan="5" headerText="P1" />
+				                <p:column colspan="5" headerText="P2" />		
+				            	<p:column colspan="5" headerText="P3" />				                		                
 				            	<p:column rowspan="2" headerText="EX" width="70" />
 				            </p:row>
 				            <p:row>
+				                <p:column headerText="T" width="70" />		
+				                <p:column headerText="AI" width="70" />				                		                
+				                <p:column headerText="AG" width="70" />
 				                <p:column headerText="L" width="70" />
-				                <p:column headerText="D" width="70" />		
-				                <p:column headerText="T" width="70" />				                		                
+				                <p:column headerText="EV" width="70" />
 				                
+				                <p:column headerText="T" width="70" />		
+				                <p:column headerText="AI" width="70" />				                		                
+				                <p:column headerText="AG" width="70" />
 				                <p:column headerText="L" width="70" />
-				                <p:column headerText="D" width="70" />		
-				                <p:column headerText="T" width="70" />
+				                <p:column headerText="EV" width="70" />
 				                
+				                <p:column headerText="T" width="70" />		
+				                <p:column headerText="AI" width="70" />				                		                
+				                <p:column headerText="AG" width="70" />
 				                <p:column headerText="L" width="70" />
-				                <p:column headerText="D" width="70" />		
-				                <p:column headerText="T" width="70" />
+				                <p:column headerText="EV" width="70" />
 				                
-				                <p:column headerText="L" width="70" />
-				                <p:column headerText="D" width="70" />		
-				                <p:column headerText="T" width="70" />				                		                
+				                <p:column headerText="T" width="70" />		
+				                <p:column headerText="AI" width="70" />				                		                
+				                <p:column headerText="AG" width="70" />
+				                <p:column headerText="L" width="70" />	
+				                <p:column headerText="EV" width="70" />			                		                
 				                
+				                <p:column headerText="T" width="70" />		
+				                <p:column headerText="AI" width="70" />				                		                
+				                <p:column headerText="AG" width="70" />
 				                <p:column headerText="L" width="70" />
-				                <p:column headerText="D" width="70" />		
-				                <p:column headerText="T" width="70" />
+				                <p:column headerText="EV" width="70" />
 				                
-				                <p:column headerText="L" width="70" />
-				                <p:column headerText="D" width="70" />		
-				                <p:column headerText="T" width="70" />				                
+				                <p:column headerText="T" width="70" />		
+				                <p:column headerText="AI" width="70" />				                		                
+				                <p:column headerText="AG" width="70" />
+				                <p:column headerText="L" width="70" />	
+				                <p:column headerText="EV" width="70" />			                
 				            </p:row>
 				        </p:columnGroup>	 	
 			
-						<p:column headerText="Estudiante" style="font-weight: bold">
+						<p:column headerText="Estudiante" style="font-weight: bold;">
 					        <h:outputText value="#{dtnotas.nomEstudiante}" />
 					    </p:column>			 
 					    
+					    <p:column headerText="Q1-P1-T" width="100px">
+					    	<div style="text-align: end"><h:outputText value="#{dtnotas.tareaQ1P1}" /></div></p:column>
+					    <p:column headerText="Q1-P1-AI">
+					    	<div style="text-align: end"><h:outputText value="#{dtnotas.actIndividualQ1P1}" /></div></p:column>
+					    <p:column headerText="Q1-P1-AG">
+					    	<div style="text-align: end"><h:outputText value="#{dtnotas.actGrupalQ1P1}" /></div></p:column>
 					    <p:column headerText="Q1-P1-L">
-					    	<div style="text-align: end"><h:outputText value="#{dtnotas.leccionQ1P1}" /></div></p:column> 
-					    <p:column headerText="Q1-P1-D">
-					    	<div style="text-align: end"><h:outputText value="#{dtnotas.deberQ1P1}" /></div></p:column>
-					    <p:column headerText="Q1-P1-T">
-					    	<div style="text-align: end"><h:outputText value="#{dtnotas.tallerQ1P1}" /></div></p:column>
-					    <p:column headerText="Q1-P2-L">
-					    	<div style="text-align: end"><h:outputText value="#{dtnotas.leccionQ1P2}" /></div></p:column> 
-					    <p:column headerText="Q1-P2-D">
-					    	<div style="text-align: end"><h:outputText value="#{dtnotas.deberQ1P2}" /></div></p:column>
+					    	<div style="text-align: end"><h:outputText value="#{dtnotas.leccionQ1P1}" /></div></p:column>
+					    <p:column headerText="Q1-P1-EV">
+					    	<div style="text-align: end"><h:outputText value="#{dtnotas.evaluacionQ1P1}" /></div></p:column>
+					    	
 					    <p:column headerText="Q1-P2-T">
-					    	<div style="text-align: end"><h:outputText value="#{dtnotas.tallerQ1P2}" /></div></p:column>
-					    <p:column headerText="Q1-P3-L">
-					    	<div style="text-align: end"><h:outputText value="#{dtnotas.leccionQ1P3}" /></div></p:column> 
-					    <p:column headerText="Q1-P3-D">
-					    	<div style="text-align: end"><h:outputText value="#{dtnotas.deberQ1P3}" /></div></p:column>
+					    	<div style="text-align: end"><h:outputText value="#{dtnotas.tareaQ1P2}" /></div></p:column>
+					    <p:column headerText="Q1-P2-AI">
+					    	<div style="text-align: end"><h:outputText value="#{dtnotas.actIndividualQ1P2}" /></div></p:column>
+					    <p:column headerText="Q1-P2-AG">
+					    	<div style="text-align: end"><h:outputText value="#{dtnotas.actGrupalQ1P2}" /></div></p:column>
+					    <p:column headerText="Q1-P2-L">
+					    	<div style="text-align: end"><h:outputText value="#{dtnotas.leccionQ1P2}" /></div></p:column>
+					    <p:column headerText="Q1-P2-EV">
+					    	<div style="text-align: end"><h:outputText value="#{dtnotas.evaluacionQ2P1}" /></div></p:column>
+					    	
 					    <p:column headerText="Q1-P3-T">
-					    	<div style="text-align: end"><h:outputText value="#{dtnotas.tallerQ1P3}" /></div></p:column>
+					    	<div style="text-align: end"><h:outputText value="#{dtnotas.tareaQ1P3}" /></div></p:column>
+					    <p:column headerText="Q1-P3-AI">
+					    	<div style="text-align: end"><h:outputText value="#{dtnotas.actIndividualQ1P3}" /></div></p:column>
+					    <p:column headerText="Q1-P3-AG">
+					    	<div style="text-align: end"><h:outputText value="#{dtnotas.actGrupalQ1P3}" /></div></p:column>
+					    <p:column headerText="Q1-P3-L">
+					    	<div style="text-align: end"><h:outputText value="#{dtnotas.leccionQ1P3}" /></div></p:column>
+					    <p:column headerText="Q1-P3-EV">
+					    	<div style="text-align: end"><h:outputText value="#{dtnotas.evaluacionQ1P3}" /></div></p:column>
+					    	
 					    <p:column headerText="Q1-EX" style="background: #dfffba">
 					    	<div style="text-align: end"><h:outputText value="#{dtnotas.examenQ1}" /></div></p:column>					    	
-					    <p:column headerText="Q2-P1-L">
-					    	<div style="text-align: end"><h:outputText value="#{dtnotas.leccionQ2P1}" /></div></p:column> 
-					    <p:column headerText="Q2-P1-D">
-					    	<div style="text-align: end"><h:outputText value="#{dtnotas.deberQ2P1}" /></div></p:column>
+					     
 					    <p:column headerText="Q2-P1-T">
-					    	<div style="text-align: end"><h:outputText value="#{dtnotas.tallerQ2P1}" /></div></p:column>
-					    <p:column headerText="Q2-P2-L">
-					    	<div style="text-align: end"><h:outputText value="#{dtnotas.leccionQ2P2}" /></div></p:column> 
-					    <p:column headerText="Q2-P2-D">
-					    	<div style="text-align: end"><h:outputText value="#{dtnotas.deberQ2P2}" /></div></p:column>
+					    	<div style="text-align: end"><h:outputText value="#{dtnotas.tareaQ2P1}" /></div></p:column>
+					    <p:column headerText="Q2-P1-AI">
+					    	<div style="text-align: end"><h:outputText value="#{dtnotas.actIndividualQ2P1}" /></div></p:column>
+					    <p:column headerText="Q2-P1-AG">
+					    	<div style="text-align: end"><h:outputText value="#{dtnotas.actGrupalQ2P1}" /></div></p:column>
+					    <p:column headerText="Q2-P1-L">
+					    	<div style="text-align: end"><h:outputText value="#{dtnotas.leccionQ2P1}" /></div></p:column>
+					    <p:column headerText="Q2-P1-EV">
+					    	<div style="text-align: end"><h:outputText value="#{dtnotas.evaluacionQ2P1}" /></div></p:column>
+					    	
 					    <p:column headerText="Q2-P2-T">
-					    	<div style="text-align: end"><h:outputText value="#{dtnotas.tallerQ2P2}" /></div></p:column>
-					    <p:column headerText="Q2-P3-L">
-					    	<div style="text-align: end"><h:outputText value="#{dtnotas.leccionQ2P3}" /></div></p:column> 
-					    <p:column headerText="Q2-P3-D">
-					    	<div style="text-align: end"><h:outputText value="#{dtnotas.deberQ2P3}" /></div></p:column>
+					    	<div style="text-align: end"><h:outputText value="#{dtnotas.tareaQ2P2}" /></div></p:column>
+					    <p:column headerText="Q2-P2-AI">
+					    	<div style="text-align: end"><h:outputText value="#{dtnotas.actIndividualQ2P2}" /></div></p:column>
+					    <p:column headerText="Q2-P2-AG">
+					    	<div style="text-align: end"><h:outputText value="#{dtnotas.actGrupalQ2P2}" /></div></p:column>
+					    <p:column headerText="Q2-P2-L">
+					    	<div style="text-align: end"><h:outputText value="#{dtnotas.leccionQ2P2}" /></div></p:column>
+					    <p:column headerText="Q2-P2-EV">
+					    	<div style="text-align: end"><h:outputText value="#{dtnotas.evaluacionQ2P2}" /></div></p:column>
+					    	
 					    <p:column headerText="Q2-P3-T">
-					    	<div style="text-align: end"><h:outputText value="#{dtnotas.tallerQ2P3}" /></div></p:column>
+					    	<div style="text-align: end"><h:outputText value="#{dtnotas.tareaQ2P3}" /></div></p:column>
+					    <p:column headerText="Q2-P3-AI">
+					    	<div style="text-align: end"><h:outputText value="#{dtnotas.actIndividualQ2P3}" /></div></p:column>
+					    <p:column headerText="Q2-P3-AG">
+					    	<div style="text-align: end"><h:outputText value="#{dtnotas.actGrupalQ2P3}" /></div></p:column>
+					    <p:column headerText="Q2-P3-L">
+					    	<div style="text-align: end"><h:outputText value="#{dtnotas.leccionQ2P3}" /></div></p:column>
+					    <p:column headerText="Q2-P3-EV">
+					    	<div style="text-align: end"><h:outputText value="#{dtnotas.evaluacionQ2P3}" /></div></p:column>
+					    	
 					    <p:column headerText="Q2-EX" style="background: #dfffba">
 					    	<div style="text-align: end"><h:outputText value="#{dtnotas.examenQ2}" /></div></p:column>			    
 					</p:dataTable>
+					<br />
+					<span style="float: right; font-size: 13px; font-weight: bold;">
+			        	<i><h:outputText value="L: Lección | T: Taller | AI: Actividad Individual | AG: Actividad Grupal | EV: Evaluación Sumativa" /></i>
+			        </span>
 				</p:outputPanel>
 			</p:dialog>
 			 				 	
@@ -186,6 +234,7 @@ xmlns:pe="http://primefaces.org/ui/extensions">
 				.handsontable tbody th.ht__highlight, .handsontable thead th.ht__highlight { background-color: #dcdcdc; color: #8f3b4f; }
 				
 				.info { background-color: #fff8ba !important; }
+				.eval { background-color: #cff0ff !important; }
 			</style>
 			
 			<!-- PARCIALES -->
@@ -198,18 +247,7 @@ xmlns:pe="http://primefaces.org/ui/extensions">
 				  			   			  
 				    <pe:sheetcolumn headerText="Estudiante" readonly="true" value="#{row.nomEstudiante}" sortBy="#{row.nomEstudiante}" />
 				    	
-				    <pe:sheetcolumn headerText="L1" value="#{row.leccion1}" colWidth="40" 
-				    	styleClass="info htRight #{row.leccion1 gt 0 ? 'positive' : 'negative'}" colType="numeric" numericPattern="0.00" />
-				    <pe:sheetcolumn headerText="L2" value="#{row.leccion2}" colWidth="40"
-				    	styleClass="info htRight #{row.leccion2 gt 0 ? 'positive' : 'negative'}" colType="numeric" numericPattern="0.00" />
-				    <pe:sheetcolumn headerText="L3" value="#{row.leccion3}" colWidth="40"
-				    	styleClass="info htRight #{row.leccion3 gt 0 ? 'positive' : 'negative'}" colType="numeric" numericPattern="0.00" />
-				    <pe:sheetcolumn headerText="L4" value="#{row.leccion4}" colWidth="40"
-				    	styleClass="info htRight #{row.leccion4 gt 0 ? 'positive' : 'negative'}" colType="numeric" numericPattern="0.00" />
-				    <pe:sheetcolumn headerText="L5" value="#{row.leccion5}" colWidth="40"
-				    	styleClass="info htRight #{row.leccion5 gt 0 ? 'positive' : 'negative'}" colType="numeric" numericPattern="0.00" />
-				     
-				    <pe:sheetcolumn headerText="T1" value="#{row.tarea1}" colWidth="40" 
+				    <pe:sheetcolumn headerText="T1" value="#{row.tarea1}" colWidth="40"
 				   		styleClass="htRight #{row.tarea1 gt 0 ? 'positive' : 'negative'}" colType="numeric" numericPattern="0.00" />
 				   	<pe:sheetcolumn headerText="T2" value="#{row.tarea2}" colWidth="40" 
 				   		styleClass="htRight #{row.tarea2 gt 0 ? 'positive' : 'negative'}" colType="numeric" numericPattern="0.00" />
@@ -241,15 +279,28 @@ xmlns:pe="http://primefaces.org/ui/extensions">
 						styleClass="htRight #{row.actGrupal4 gt 0 ? 'positive' : 'negative'}" colType="numeric" numericPattern="0.00" />
 					<pe:sheetcolumn headerText="AG5" value="#{row.actGrupal5}" colWidth="40" 
 						styleClass="htRight #{row.actGrupal5 gt 0 ? 'positive' : 'negative'}" colType="numeric" numericPattern="0.00" />
-				     			    
+				    
+				    <pe:sheetcolumn headerText="L1" value="#{row.leccion1}" colWidth="40" 
+				    	styleClass="info htRight #{row.leccion1 gt 0 ? 'positive' : 'negative'}" colType="numeric" numericPattern="0.00" />
+				    <pe:sheetcolumn headerText="L2" value="#{row.leccion2}" colWidth="40"
+				    	styleClass="info htRight #{row.leccion2 gt 0 ? 'positive' : 'negative'}" colType="numeric" numericPattern="0.00" />
+				    <pe:sheetcolumn headerText="L3" value="#{row.leccion3}" colWidth="40"
+				    	styleClass="info htRight #{row.leccion3 gt 0 ? 'positive' : 'negative'}" colType="numeric" numericPattern="0.00" />
+				    <pe:sheetcolumn headerText="L4" value="#{row.leccion4}" colWidth="40"
+				    	styleClass="info htRight #{row.leccion4 gt 0 ? 'positive' : 'negative'}" colType="numeric" numericPattern="0.00" />
+				    <pe:sheetcolumn headerText="L5" value="#{row.leccion5}" colWidth="40"
+				    	styleClass="info htRight #{row.leccion5 gt 0 ? 'positive' : 'negative'}" colType="numeric" numericPattern="0.00" />
+				    	
+				    <pe:sheetcolumn headerText="EV" value="#{row.evaluacion}" colWidth="40" 
+						styleClass="eval htRight #{row.evaluacion gt 0 ? 'positive' : 'negative'}" colType="numeric" numericPattern="0.00" /> 			    
 				     			    
 <!-- 				    <pe:sheetcolumn headerText="Comportamiento" value="#{row.nomComportamiento}" colType="dropdown"  -->
 <!-- 				     	selectItems="#{control.llenaComboComportamiento()}" sortBy="#{row.nomComportamiento}" />	    			     -->
 				    		    
 				    <f:facet name="footer">  
 				        <h:outputText value="#{control.controlList.size()} Registros" />  
-				        <span style="float: right;">
-				        	<h:outputText value="L: Lección | T: Taller | AI: Actividad Individual | AG: Actividad Grupal" />
+				        <span style="float: right; font-size: 13px">
+				        	<i><h:outputText value="L: Lección | T: Taller | AI: Actividad Individual | AG: Actividad Grupal | EV: Evaluación Sumativa" /></i>
 				        </span>
 				    </f:facet>  
 				</pe:sheet>

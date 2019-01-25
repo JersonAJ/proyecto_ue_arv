@@ -22,6 +22,8 @@ public class CalControl implements Serializable {
 
 	private String estado;
 
+	private BigDecimal evaluacion;
+	
 	private BigDecimal exam;
 
 	@Temporal(TemporalType.TIMESTAMP)
@@ -364,4 +366,11 @@ public class CalControl implements Serializable {
 		this.calReparto = calReparto;
 	}
 
+	public BigDecimal getEvaluacion() {
+		return evaluacion;
+	}
+
+	public void setEvaluacion(BigDecimal evaluacion) {
+		this.evaluacion = evaluacion;
+	}
 }

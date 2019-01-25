@@ -40,7 +40,14 @@ xmlns:pe="http://primefaces.org/ui/extensions">
 			            <f:selectItem itemLabel="Q2" itemValue="2" />		
 			            <p:ajax listener="#{asistencia.llenarListAsistencia()}" update="sheet1"/>
 			        </p:selectOneMenu>
-			        <p:spacer width="10px" />			      
+			        <p:spacer width="10px" />	
+			        <p:outputPanel style="padding: 5px">Registro:</p:outputPanel>
+					<p:selectOneMenu id="soParcial" value="#{asistencia.soParcial}" style="width: 40px">
+			            <f:selectItem itemLabel="P1" itemValue="1" /> 
+			            <f:selectItem itemLabel="P2" itemValue="2" />		
+			            <f:selectItem itemLabel="P3" itemValue="3" />			            
+			            <p:ajax listener="#{asistencia.llenarListAsistencia()}" update="sheet1"/>
+			        </p:selectOneMenu>		      
 				</p:outputPanel>							      			
 			</p:outputPanel>
 			<br/>
@@ -74,9 +81,10 @@ xmlns:pe="http://primefaces.org/ui/extensions">
 			   	<pe:sheetcolumn headerText="Observación" readonly="true" value="#{row.observacion}" sortBy="#{row.observacion}" colWidth="200" colType="text" />
 			   
 			    <f:facet name="footer">  
-			        <h:outputText value="#{asistencia.asistenciaList.size()} Registros" />  
-			        
-			        <h:outputText value="AS: Asistencias | AT: Atrasos | FT: Faltas | FJ: Faltas justificadas" style="float: right" />
+			        <h:outputText value="#{asistencia.asistenciaList.size()} Registros" />
+			         <span style="float: right; font-size: 13px">
+			        	<i><h:outputText value="AS: Asistencias | AT: Atrasos | FT: Faltas | FJ: Faltas justificadas" /></i>
+			        </span>			        
 			    </f:facet>  
 			</pe:sheet>
 			<br/>

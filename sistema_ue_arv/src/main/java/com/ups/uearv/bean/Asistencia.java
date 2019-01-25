@@ -45,6 +45,7 @@ public class Asistencia implements Serializable {
 	String soPeriodo = "";
 	String soOferta = "";
 	String soQuimestre = "";
+	String soParcial = "";
 
 	private List<Object> asistenciaList = new ArrayList<Object>();
 
@@ -68,6 +69,7 @@ public class Asistencia implements Serializable {
 		soPeriodo = "NA";
 
 		soQuimestre = "1";
+		soParcial = "1";
 
 		onChangePeriodo();
 	}
@@ -117,6 +119,7 @@ public class Asistencia implements Serializable {
 
 				asi.setMatMatricula(matricula);
 				asi.setQuimestre(Integer.parseInt(soQuimestre));
+				asi.setParcial(Integer.parseInt(soParcial));
 				asi.setAsistencias(asistencias);					
 				asi.setAtrasos(atrasos);
 				asi.setFaltas(faltas);
@@ -162,7 +165,7 @@ public class Asistencia implements Serializable {
 		if (!soPeriodo.equals("NA")) {
 			if (!soOferta.equals("NA")) {
 
-				jpql = "CALL consulta_asistencias (" + soPeriodo + "," + soOferta  + "," + soQuimestre  + ")";
+				jpql = "CALL consulta_asistencias (" + soPeriodo + "," + soOferta  + "," + soQuimestre  + "," + soParcial  + ")";
 
 				@SuppressWarnings("unchecked")
 				List<Object> result = em.createNativeQuery(jpql).getResultList();
@@ -301,5 +304,11 @@ public class Asistencia implements Serializable {
 	}
 	public void setAsistenciaList(List<Object> asistenciaList) {
 		this.asistenciaList = asistenciaList;
+	}
+	public String getSoParcial() {
+		return soParcial;
+	}
+	public void setSoParcial(String soParcial) {
+		this.soParcial = soParcial;
 	}	
 }

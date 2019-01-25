@@ -130,6 +130,8 @@ public class ControlAcademico implements Serializable {
 				
 				BigDecimal examen = ((ControlEst) asset).getExamen();
 				
+				BigDecimal evaluacion = ((ControlEst) asset).getEvaluacion();
+				
 				MatMatricula matricula = (MatMatricula) DAO.buscarObject(new MatMatricula(), "from MatMatricula c where c.idMatricula = '" + codMatricula + "'");
 				CalAsignatura asignatura = (CalAsignatura) DAO.buscarObject(new CalAsignatura(), "from CalAsignatura c where c.idAsignatura = '" + soAsignatura + "'");
 				CalComportamiento comportamiento = (CalComportamiento) DAO.buscarObject(new CalComportamiento(),"from CalComportamiento c where c.descripcion = '" + nomComportamiento + "'");
@@ -179,7 +181,9 @@ public class ControlAcademico implements Serializable {
 					con.setActGrupal2(actGrupal2);
 					con.setActGrupal3(actGrupal3);
 					con.setActGrupal4(actGrupal4);
-					con.setActGrupal5(actGrupal5);										
+					con.setActGrupal5(actGrupal5);
+					
+					con.setEvaluacion(evaluacion);
 				} else {
 					con.setExam(examen);
 				}		
@@ -247,8 +251,7 @@ public class ControlAcademico implements Serializable {
 						e.setCodControl(obj[0].toString());
 						e.setCodMatricula(obj[1].toString());
 						e.setNomEstudiante(obj[2].toString());
-						e.setNomComportamiento(obj[3].toString());
-						
+												
 						e.setLeccion1(new BigDecimal(obj[4].toString()));
 						e.setLeccion2(new BigDecimal(obj[5].toString()));
 						e.setLeccion3(new BigDecimal(obj[6].toString()));
@@ -274,6 +277,8 @@ public class ControlAcademico implements Serializable {
 						e.setActGrupal5(new BigDecimal(obj[23].toString()));
 												
 						e.setExamen(new BigDecimal(obj[24].toString()));
+						
+						e.setEvaluacion(new BigDecimal(obj[25].toString()));
 
 						controlList.add(e);
 					}
@@ -294,33 +299,39 @@ public class ControlAcademico implements Serializable {
 						e.setTareaQ1P1(new BigDecimal(obj[3].toString()));
 						e.setActIndividualQ1P1(new BigDecimal(obj[4].toString()));
 						e.setActGrupalQ1P1(new BigDecimal(obj[5].toString()));
+						e.setEvaluacionQ1P1(new BigDecimal(obj[6].toString()));
 						
-						e.setLeccionQ1P2(new BigDecimal(obj[6].toString()));
-						e.setTareaQ1P2(new BigDecimal(obj[7].toString()));
-						e.setActIndividualQ1P2(new BigDecimal(obj[8].toString()));
-						e.setActGrupalQ1P2(new BigDecimal(obj[9].toString()));
+						e.setLeccionQ1P2(new BigDecimal(obj[7].toString()));
+						e.setTareaQ1P2(new BigDecimal(obj[8].toString()));
+						e.setActIndividualQ1P2(new BigDecimal(obj[9].toString()));
+						e.setActGrupalQ1P2(new BigDecimal(obj[10].toString()));
+						e.setEvaluacionQ1P2(new BigDecimal(obj[11].toString()));
 						
-						e.setLeccionQ1P3(new BigDecimal(obj[10].toString()));
-						e.setTareaQ1P3(new BigDecimal(obj[11].toString()));
-						e.setActIndividualQ1P3(new BigDecimal(obj[12].toString()));
-						e.setActGrupalQ1P3(new BigDecimal(obj[13].toString()));
-						e.setExamenQ1(new BigDecimal(obj[14].toString()));
+						e.setLeccionQ1P3(new BigDecimal(obj[12].toString()));
+						e.setTareaQ1P3(new BigDecimal(obj[13].toString()));
+						e.setActIndividualQ1P3(new BigDecimal(obj[14].toString()));
+						e.setActGrupalQ1P3(new BigDecimal(obj[15].toString()));
+						e.setEvaluacionQ1P3(new BigDecimal(obj[16].toString()));
+						e.setExamenQ1(new BigDecimal(obj[17].toString()));
 						
-						e.setLeccionQ2P1(new BigDecimal(obj[15].toString()));
-						e.setTareaQ2P1(new BigDecimal(obj[16].toString()));
-						e.setActIndividualQ2P1(new BigDecimal(obj[17].toString()));
-						e.setActGrupalQ2P1(new BigDecimal(obj[18].toString()));
+						e.setLeccionQ2P1(new BigDecimal(obj[18].toString()));
+						e.setTareaQ2P1(new BigDecimal(obj[19].toString()));
+						e.setActIndividualQ2P1(new BigDecimal(obj[20].toString()));
+						e.setActGrupalQ2P1(new BigDecimal(obj[21].toString()));
+						e.setEvaluacionQ2P1(new BigDecimal(obj[22].toString()));
 						
-						e.setLeccionQ2P2(new BigDecimal(obj[19].toString()));
-						e.setTareaQ2P2(new BigDecimal(obj[20].toString()));
-						e.setActIndividualQ2P2(new BigDecimal(obj[21].toString()));
-						e.setActGrupalQ2P2(new BigDecimal(obj[22].toString()));
+						e.setLeccionQ2P2(new BigDecimal(obj[23].toString()));
+						e.setTareaQ2P2(new BigDecimal(obj[24].toString()));
+						e.setActIndividualQ2P2(new BigDecimal(obj[25].toString()));
+						e.setActGrupalQ2P2(new BigDecimal(obj[26].toString()));
+						e.setEvaluacionQ2P2(new BigDecimal(obj[27].toString()));
 						
-						e.setLeccionQ2P3(new BigDecimal(obj[23].toString()));
-						e.setTareaQ2P3(new BigDecimal(obj[24].toString()));
-						e.setActIndividualQ2P3(new BigDecimal(obj[25].toString()));
-						e.setActGrupalQ2P3(new BigDecimal(obj[26].toString()));
-						e.setExamenQ2(new BigDecimal(obj[27].toString()));
+						e.setLeccionQ2P3(new BigDecimal(obj[28].toString()));
+						e.setTareaQ2P3(new BigDecimal(obj[29].toString()));
+						e.setActIndividualQ2P3(new BigDecimal(obj[30].toString()));
+						e.setActGrupalQ2P3(new BigDecimal(obj[31].toString()));
+						e.setEvaluacionQ2P3(new BigDecimal(obj[32].toString()));
+						e.setExamenQ2(new BigDecimal(obj[33].toString()));
 						
 						procesaNotasList.add(e);
 					}
@@ -424,6 +435,7 @@ public class ControlAcademico implements Serializable {
 		public BigDecimal actGrupal4;
 		public BigDecimal actGrupal5;
 		public BigDecimal examen;
+		public BigDecimal evaluacion;
 
 		public String getCodMatricula() {
 			return codMatricula;
@@ -574,6 +586,12 @@ public class ControlAcademico implements Serializable {
 		}
 		public void setExamen(BigDecimal examen) {
 			this.examen = examen;
+		}
+		public BigDecimal getEvaluacion() {
+			return evaluacion;
+		}
+		public void setEvaluacion(BigDecimal evaluacion) {
+			this.evaluacion = evaluacion;
 		}	
 	}
 
@@ -583,31 +601,43 @@ public class ControlAcademico implements Serializable {
 
 		public String codMatricula = "";
 		public String nomEstudiante = "";				
+		
 		public BigDecimal leccionQ1P1;
 		public BigDecimal tareaQ1P1;
 		public BigDecimal actIndividualQ1P1;		
-		public BigDecimal actGrupalQ1P1;		
+		public BigDecimal actGrupalQ1P1;
+		public BigDecimal evaluacionQ1P1;
+		
 		public BigDecimal leccionQ1P2;		
 		public BigDecimal tareaQ1P2;
 		public BigDecimal actIndividualQ1P2;	
-		public BigDecimal actGrupalQ1P2;		
+		public BigDecimal actGrupalQ1P2;
+		public BigDecimal evaluacionQ1P2;
+		
 		public BigDecimal leccionQ1P3;
 		public BigDecimal tareaQ1P3;
 		public BigDecimal actIndividualQ1P3;
 		public BigDecimal actGrupalQ1P3;
+		public BigDecimal evaluacionQ1P3;
 		public BigDecimal examenQ1;		
+		
 		public BigDecimal leccionQ2P1;
 		public BigDecimal tareaQ2P1;
 		public BigDecimal actIndividualQ2P1;
-		public BigDecimal actGrupalQ2P1;		
+		public BigDecimal actGrupalQ2P1;
+		public BigDecimal evaluacionQ2P1;
+		
 		public BigDecimal leccionQ2P2;
 		public BigDecimal tareaQ2P2;
 		public BigDecimal actIndividualQ2P2;	
-		public BigDecimal actGrupalQ2P2;		
+		public BigDecimal actGrupalQ2P2;
+		public BigDecimal evaluacionQ2P2;
+		
 		public BigDecimal leccionQ2P3;
 		public BigDecimal tareaQ2P3;
 		public BigDecimal actIndividualQ2P3;
 		public BigDecimal actGrupalQ2P3;
+		public BigDecimal evaluacionQ2P3;
 		public BigDecimal examenQ2;
 		
 		public String getCodMatricula() {
@@ -777,6 +807,42 @@ public class ControlAcademico implements Serializable {
 		}
 		public void setExamenQ2(BigDecimal examenQ2) {
 			this.examenQ2 = examenQ2;
+		}
+		public BigDecimal getEvaluacionQ1P1() {
+			return evaluacionQ1P1;
+		}
+		public void setEvaluacionQ1P1(BigDecimal evaluacionQ1P1) {
+			this.evaluacionQ1P1 = evaluacionQ1P1;
+		}
+		public BigDecimal getEvaluacionQ1P2() {
+			return evaluacionQ1P2;
+		}
+		public void setEvaluacionQ1P2(BigDecimal evaluacionQ1P2) {
+			this.evaluacionQ1P2 = evaluacionQ1P2;
+		}
+		public BigDecimal getEvaluacionQ1P3() {
+			return evaluacionQ1P3;
+		}
+		public void setEvaluacionQ1P3(BigDecimal evaluacionQ1P3) {
+			this.evaluacionQ1P3 = evaluacionQ1P3;
+		}
+		public BigDecimal getEvaluacionQ2P1() {
+			return evaluacionQ2P1;
+		}
+		public void setEvaluacionQ2P1(BigDecimal evaluacionQ2P1) {
+			this.evaluacionQ2P1 = evaluacionQ2P1;
+		}
+		public BigDecimal getEvaluacionQ2P2() {
+			return evaluacionQ2P2;
+		}
+		public void setEvaluacionQ2P2(BigDecimal evaluacionQ2P2) {
+			this.evaluacionQ2P2 = evaluacionQ2P2;
+		}
+		public BigDecimal getEvaluacionQ2P3() {
+			return evaluacionQ2P3;
+		}
+		public void setEvaluacionQ2P3(BigDecimal evaluacionQ2P3) {
+			this.evaluacionQ2P3 = evaluacionQ2P3;
 		}
 	}
 		
