@@ -18,7 +18,8 @@ xmlns:pe="http://primefaces.org/ui/extensions">
 			
 			<!-- CONSULTA -->	
 			<style>				
-				.ui-datatable thead th, .ui-datatable tbody td, .ui-datatable tfoot td, .ui-datatable tfoot th { padding: 2px 10px; }
+				.ui-datatable thead th, .ui-datatable tbody td, .ui-datatable tfoot td, .ui-datatable tfoot th { padding: 2px; }
+				body .ui-datatable .ui-datatable-data tr td { padding: 2px; }
 			</style>					
 			<p:outputPanel>		   		
 		   		<p:selectOneMenu id="soPeriodo" value="#{control.soPeriodo}" style="width: 130px">
@@ -67,7 +68,7 @@ xmlns:pe="http://primefaces.org/ui/extensions">
 			</p:outputPanel>
 			
 			<!-- RESUMEN -->
-			<p:dialog header="Resumen" widgetVar="dglCon" modal="true" closable="true" maximizable="false" resizable="false" width="95%" height="400px">
+			<p:dialog header="Resumen" widgetVar="dglCon" modal="true" closable="true" maximizable="false" resizable="false" width="95%" height="450px">
 				<p:outputPanel id="panelCon" style="margin-top: -15px;">		  		
 			   		<style>
 				   		.ui-datatable th.ui-state-default, .ui-datatable tfoot td.ui-state-default { background: #e0edff; border-color: #000000; }
@@ -82,9 +83,8 @@ xmlns:pe="http://primefaces.org/ui/extensions">
 					</b>
 					<br/><br/>
 					<p:dataTable id="dtcontrol" var="dtnotas" value="#{control.procesaNotasList}" emptyMessage="No existen notas a mostrar"
-						tableStyle="width: auto; min-width: 100%; font-weight: bold; font-size: 10.5px">
-						
-						
+						tableStyle="width: auto; min-width: 100%; font-weight: bold; font-size: 11px">
+												
 						<p:columnGroup type="header">
 				            <p:row>
 				                <p:column rowspan="3" headerText="Estudiante" width="25%" />
@@ -238,7 +238,7 @@ xmlns:pe="http://primefaces.org/ui/extensions">
 			</style>
 			
 			<!-- PARCIALES -->
-			<p:outputPanel id="opSheet1" style="font-size: 12px; display: #{control.soParcial eq '0'? 'none':''}">
+			<p:outputPanel id="opSheet1" style="font-size: 11.5px; display: #{control.soParcial eq '0'? 'none':''}">
 				<pe:sheet id="sheet1" widgetVar="sheetWidget1" value="#{control.controlList}" var="row" fixedCols="1"   
 				    height="350" rowKey="#{row.codMatricula}" showRowHeaders="true" resizableCols="true" resizableRows="true" 
 				    readOnly="false" sortBy="#{row.nomEstudiante}" sortOrder="ascending" emptyMessage="No existen datos a mostrar" >
@@ -307,7 +307,7 @@ xmlns:pe="http://primefaces.org/ui/extensions">
 			</p:outputPanel>
 			
 			<!-- EXAMEN  -->
-			<p:outputPanel id="opSheet2" style="font-size: 12px; display: #{control.soParcial eq '0'? '':'none'}">
+			<p:outputPanel id="opSheet2" style="font-size: 11.5px; display: #{control.soParcial eq '0'? '':'none'}">
 				<pe:sheet id="sheet2" widgetVar="sheetWidget2" value="#{control.controlList}" var="row"   
 				    height="350" rowKey="#{row.codMatricula}" showRowHeaders="true" resizableCols="true" resizableRows="true" 
 				    readOnly="false" sortBy="#{row.nomEstudiante}" sortOrder="ascending" emptyMessage="No existen datos a mostrar">   
