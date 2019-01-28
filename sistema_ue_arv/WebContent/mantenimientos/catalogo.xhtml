@@ -54,53 +54,56 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 			<!-- INGRESO | ACTUALIZACION -->
 			<p:dialog id="dgl" header="Detalle Catálogo" widgetVar="dgl" modal="true" closable="true" maximizable="false" resizable="false" width="500px">
 			
-			<p:ajax event="close" update="form" listener="#{catalogo.closeDialogo}" />
-		
-			<div align="center">				
-				<p:inputText id="descripcionDet" placeholder="Nueva(o) #{catalogo.descripcion}" value="#{catalogo.descripcionDet}" style="width: 50%" />
-				<p:spacer width="5px" />
-				<p:commandLink actionListener="#{catalogo.agregar}" update="dtDetalle growl">
-					<i class="fa fa-plus-circle" style="font-size: 15px" title="Agregar" />				
-				</p:commandLink>			
-			</div>			
-			<br/>	
+				<p:ajax event="close" update="form" listener="#{catalogo.closeDialogo}" />
 			
-			<style>
-				.ui-datatable th.ui-state-default, .ui-datatable tfoot td.ui-state-default { background: #ebedf0 !important; }
-			</style>
-			<p:dataTable id="dtDetalle" var="dtDetalle" value="#{catalogo.catalogoDetList}" tableStyle="width: auto; min-width: 100%;" 
-				emptyMessage="No existen datos a mostrar" editable="true">
+				<div align="center" style="margin-top: -15px;">				
+					<p:inputText id="descripcionDet" placeholder="Nueva(o) #{catalogo.descripcion}" value="#{catalogo.descripcionDet}" style="width: 50%" />
+					<p:spacer width="5px" />
+					<p:commandLink actionListener="#{catalogo.agregar}" update="dtDetalle growl">
+						<i class="fa fa-plus-circle" style="font-size: 15px" title="Agregar" />				
+					</p:commandLink>			
+				</div>			
+				<br/>	
 				
-				<f:facet name="header">
-					<div style="display: inline-flex">
-						<h:selectBooleanCheckbox value="#{catalogo.ckMostrarIC}">
-			    			<p:ajax update="dtDetalle" listener="#{catalogo.buscarDet}" />
-			 			</h:selectBooleanCheckbox> 
-			 			<h:outputLabel value="Mostrar inactivos" style="font-size: 11px; font-weight: normal; color: black; margin-top: 4px;" />			 				
-			 		</div>
-				</f:facet>
-				
-				<p:ajax event="rowEdit" listener="#{catalogo.onRowEdit}" />
-       			<p:ajax event="rowEditCancel" listener="#{catalogo.onRowCancel}" />
-				
-			    <p:column headerText="Descripción" style="background-color: white; border-radius: 2px; padding: 2px;">
-				    <p:cellEditor>
-						<f:facet name="output"><h:outputText value="#{dtDetalle.descripcion}" /></f:facet>
-						<f:facet name="input"><p:inputText id="itDescripcionDet" value="#{dtDetalle.descripcion}" style="width:100%"/></f:facet>
-					</p:cellEditor>	   
-			    </p:column>
-			    
-			    <p:column headerText="Activo" style="text-align: center; background-color: white; border-radius: 2px; padding: 2px;" width="50">
-				    <p:cellEditor>
-		               <f:facet name="output"><h:selectBooleanCheckbox value="#{catalogo.getEstadoDet(dtDetalle.estado)}" disabled="true" /></f:facet>
-		               <f:facet name="input"><h:selectBooleanCheckbox value="#{catalogo.ckEstadoDet}" disabled="false"/></f:facet>
-		          	</p:cellEditor>			       
-			    </p:column>
-			    
-			    <p:column headerText="Editar" style="text-align: center; background-color: white; border-radius: 2px; padding: 2px;" width="50">		        	
-		        	<p:rowEditor />		        	
-		       	</p:column>		     
-			</p:dataTable>
+				<style>
+					.ui-datatable th.ui-state-default, .ui-datatable tfoot td.ui-state-default { background: #ebedf0 !important; }
+					.ui-datatable thead th.ui-state-active .ui-column-title, body .ui-datatable thead th.ui-state-active .ui-sortable-column-icon {
+					    color: #7d3445 !important;
+					}
+				</style>
+				<p:dataTable id="dtDetalle" var="dtDetalle" value="#{catalogo.catalogoDetList}" tableStyle="width: auto; min-width: 100%;" 
+					emptyMessage="No existen datos a mostrar" editable="true" >
+					
+<!-- 				<f:facet name="header"> -->
+<!-- 					<div style="display: inline-flex"> -->
+<!-- 						<h:selectBooleanCheckbox value="#{catalogo.ckMostrarIC}"> -->
+<!-- 			    			<p:ajax update="dtDetalle" listener="#{catalogo.buscarDet}" /> -->
+<!-- 			 			</h:selectBooleanCheckbox>  -->
+<!-- 			 			<h:outputLabel value="Mostrar inactivos" style="font-size: 11px; font-weight: normal; color: black; margin-top: 4px;" />			 				 -->
+<!-- 			 		</div> -->
+<!-- 				</f:facet> -->
+					
+					<p:ajax event="rowEdit" listener="#{catalogo.onRowEdit}" update="dtDetalle" />
+	       			<p:ajax event="rowEditCancel" listener="#{catalogo.onRowCancel}" update="dtDetalle" />
+	       		       			 				
+				    <p:column headerText="Descripción" style="background-color: white; border-radius: 2px; padding: 2px;">
+					    <p:cellEditor>
+							<f:facet name="output"><h:outputText value="#{dtDetalle.descripcion}" /></f:facet>
+							<f:facet name="input"><p:inputText id="itDescripcionDet" value="#{dtDetalle.descripcion}" style="width:100%"/></f:facet>
+						</p:cellEditor>	   
+				    </p:column>
+				    
+				    <p:column headerText="Activo" style="text-align: center; background-color: white; border-radius: 2px; padding: 2px;" width="50">
+					    <p:cellEditor>
+			               <f:facet name="output"><h:selectBooleanCheckbox value="#{catalogo.getEstadoDet(dtDetalle.estado)}" disabled="true" /></f:facet>
+			               <f:facet name="input"><h:selectBooleanCheckbox value="#{catalogo.ckEstadoDet}" disabled="false"/></f:facet>
+			          	</p:cellEditor>			       
+				    </p:column>
+				    
+				    <p:column headerText="Editar" style="text-align: center; background-color: white; border-radius: 2px; padding: 2px;" width="50">		        	
+			        	<p:rowEditor />		        	
+			       	</p:column>		     
+				</p:dataTable>
 			
 			</p:dialog>					
 	   	</h:form>    	    

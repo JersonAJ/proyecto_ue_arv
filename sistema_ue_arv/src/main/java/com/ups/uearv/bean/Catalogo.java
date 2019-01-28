@@ -87,20 +87,20 @@ public class Catalogo implements Serializable {
 	public List<Object> getCatalogoDetalle(String cab) {
 		catalogoDetList.clear();
 		
-		if (ckMostrarIC) 
-			jpql = "SELECT * FROM catalogo_det WHERE codigo_cab = '"+ cab + "' ORDER BY codigo_det";
-		else 		
-			jpql = "SELECT * FROM catalogo_det WHERE codigo_cab = '"+ cab + "' and estado = 'AC' ORDER BY codigo_det";
+//		if (ckMostrarIC) 
+			jpql = "SELECT * FROM catalogo_det WHERE codigo_cab = '"+ cab + "' ORDER BY descripcion";
+//		else 		
+//			jpql = "SELECT * FROM catalogo_det WHERE codigo_cab = '"+ cab + "' and estado = 'AC' ORDER BY descripcion";
 				
 		llenarListaDet(jpql);
 		return catalogoDetList;
 	}
 	
 	public void buscarDet() {		
-		if (ckMostrarIC) 
-			jpql = "SELECT * FROM catalogo_det WHERE codigo_cab = '"+ codigoCab + "' ORDER BY codigo_det";
-		else 		
-			jpql = "SELECT * FROM catalogo_det WHERE codigo_cab = '"+ codigoCab + "' and estado = 'AC' ORDER BY codigo_det";
+//		if (ckMostrarIC) 
+			jpql = "SELECT * FROM catalogo_det WHERE codigo_cab = '"+ codigoCab + "' ORDER BY descripcion";
+//		else 		
+//			jpql = "SELECT * FROM catalogo_det WHERE codigo_cab = '"+ codigoCab + "' and estado = 'AC' ORDER BY descripcion";
 		
 		llenarListaDet(jpql);
 	}
