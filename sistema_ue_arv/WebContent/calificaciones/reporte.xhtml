@@ -16,17 +16,134 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 			<p:growl id="growl" for="growl" showDetail="true" closable="true" />
 			
 			<p:outputPanel style="background-color: white; padding: 5px;">
-				
+				<p:selectOneMenu id="soPeriodo" value="#{reporte.soPeriodoCal}" style="width: 130px">
+					<f:selectItem itemLabel="Seleccione Período" itemValue="NA" />
+					<f:selectItems value="#{reporte.listPeriodoCal}" />		
+					<p:ajax listener="#{reporte.onChangePeriodoCal()}" update="soOferta"/>								
+				</p:selectOneMenu>	
+				<p:spacer width="10px" />
+				<p:selectOneMenu id="soOferta" value="#{reporte.soOfertaCal}" style="width: 190px">
+					<f:selectItem itemLabel="Seleccione Oferta" itemValue="NA" />
+					<f:selectItems value="#{reporte.listOfertaCal}" />
+					<p:ajax listener="#{reporte.onChangeOfertaCal()}" update="soEstudiante"/>
+				</p:selectOneMenu>			
+				<p:spacer width="10px" />
+				<p:selectOneMenu id="soEstudiante" value="#{reporte.soEstudianteCal}" effect="fade" widgetVar="t" filter="true" filterMatchMode="contains">
+					<f:selectItem itemLabel="Seleccione Estudiante" itemValue="NA" />
+					<f:selectItems value="#{reporte.listEstudianteCal}" />	
+				    <p:column>
+		                <h:outputText value="#{t}" />
+		            </p:column>		            
+		        </p:selectOneMenu>
+		        <p:spacer width="5px" />					
 			</p:outputPanel> 
 			<br />
 			<!-- CONSULTA -->							
-			<p:tabView>
+			<p:tabView id="tab">
 				<p:tab title="Libreta de calificaciones">
+					<p:outputPanel style="background-color: white; padding: 5px; display: inline-flex; margin-top: -5px;">
+						<p:outputPanel style="padding: 5px">Quimestre:</p:outputPanel>
+						<p:selectOneMenu id="soQuimestre" value="#{reporte.soQuimestre}" style="width: 40px">
+				            <f:selectItem itemLabel="Q1" itemValue="1" /> 
+				            <f:selectItem itemLabel="Q2" itemValue="2" />				            
+				        </p:selectOneMenu>
+				        <p:spacer width="10px" />	
+				        <p:outputPanel style="padding: 5px">Registro:</p:outputPanel>
+						<p:selectOneMenu id="soParcial" value="#{reporte.soParcial}" style="width: 40px">
+				            <f:selectItem itemLabel="P1" itemValue="1" /> 
+				            <f:selectItem itemLabel="P2" itemValue="2" />		
+				            <f:selectItem itemLabel="P3" itemValue="3" />			            
+				        </p:selectOneMenu>
+				        
+				        <p:spacer width="20px" />
+				        <p:commandButton id="btnVer" value="Ver" style="font-size: 12px !important;" actionListener="#{reporte.verLibretaCalifinaciones}" />
+				        
+				        <p:spacer width="20px" />
+				        <p:commandButton type="button" icon="fa fa-print" title="Imprimir" style="margin-right: 50px;">
+						    <p:printer target="opLibreta" />
+						</p:commandButton>
+					</p:outputPanel>				
+					
+					<p:separator />
+					
+					<p:outputPanel id="opLibreta">					
+						<style type="text/css">
+							.tg  {border-collapse:collapse; border-spacing:0;}
+							.tg td{font-family:Arial, sans-serif; font-size:11.5px; padding:1px; overflow:hidden; word-break:normal; }
+							.tg th{font-family:Arial, sans-serif; font-size:11.5px; font-weight:normal; padding:2px; overflow:hidden; word-break:normal; }
+							.tg .tg-c3ow{text-align:left;}
+							.tg .tg-cudy{font-weight:bold; font-family:Arial, Helvetica, sans-serif !important; text-align:center; vertical-align:top}
+							.tg .tg-0pky{text-align:right;}
+							.tg .tg-757w{font-size:13px; font-family:"Times New Roman", Times, serif !important; text-align:center; vertical-align:top}
+							.tg .tg-mjfx{font-weight:bold; font-family:"Times New Roman", Times, serif !important; text-align:center; vertical-align:top}
+							.tg .tg-0lax{text-align:left; vertical-align:top; font-weight:bold;}
+							
+							.ui-datatable th.ui-state-default, .ui-datatable tfoot td.ui-state-default { background: #ffffff; border-color: #000000; }
+							body .ui-datatable thead th { background-color: #ffffff; padding: 2px;  border-color: #000000; color: #212121 !important; font-size: 10px; font-weight: bold !important; }
+    					</style>
+						
+						<div align="left" style="width: 100%">
+						<table class="tg" style="table-layout: fixed; width: 500px">
+							<colgroup>
+								<col style="width: 150px" />
+								<col style="width: 300px" />
+								<col style="width: 100px" />
+							</colgroup>
+							<tr>
+								<th class="tg-c3ow" rowspan="5">
+									<img src="/sistema_ue_arv/recursos/images/MEE.png" height="70" />
+								</th>
+							    <th class="tg-cudy">ESCUELA DE EDUCACIÓN BÁSICA PARTICULAR</th>
+							    <th class="tg-0pky" rowspan="5">
+							    	<img src="/sistema_ue_arv/recursos/images/ESCUELA_ARV2.png" height="80" />
+							    </th>
+							</tr>
+							<tr>
+							  <td class="tg-757w"><span style="font-weight:bold">" DR. AQUILES RODRÍGUEZ V. "</span></td>
+							</tr>
+							<tr>
+							  <td class="tg-cudy">LIBRETA DE CALIFICACIONES</td>
+							</tr>
+							<tr>
+							  <td class="tg-mjfx">AÑO LECTIVO 2018-2019</td>
+							</tr>
+							<tr>
+							  <td class="tg-mjfx">JORNADA MATUTINA</td>
+							</tr>
+							<tr>
+							  <td class="tg-0lax" colspan="2">ESTUDIANTE:</td>
+							  <td class="tg-0lax">GRADO: </td>
+							</tr>
+							<tr>
+							  <td class="tg-0lax" colspan="2">DOCENTE:</td>
+							  <td class="tg-0lax">PARALELO:</td>
+							</tr>
+						</table>
+						
+						<p:dataTable var="dtnotas" emptyMessage="Debe seleccionar estudiante" tableStyle="width: auto; min-width: 550px; margin-top: 2px; font-size: 11px;">												
+							<p:columnGroup type="header">
+					            <p:row>
+					                <p:column rowspan="2" headerText="ÁREAS" width="25%" />
+					                <p:column colspan="7" headerText="PRIMER PARCIAL DEL PRIMER QUIMESTRE" />
+					            </p:row>		         
+					            <p:row>
+					                <p:column headerText="TAREAS" style="padding: 0px; width: 20px; height: 75px; transform: rotate(-90deg); text-align: center; background: transparent;" />
+					                <p:column headerText="ACTIVIDAD INDIVIDUAL" style="padding: 0px; width: 20px; transform: rotate(-90deg); text-align: center;  background: transparent;" />
+					                <p:column headerText="ACTIVIDAD GRUPAL" style="padding: 0px; width: 20px; transform: rotate(-90deg); text-align: center;  background: transparent;" />
+					                <p:column headerText="LECCIONES" style="padding: 0px; width: 20px; transform: rotate(-90deg); text-align: center;  background: transparent;" />
+					                <p:column headerText="EVALUACIÓN SUMATIVA" style="padding: 0px; width: 20px; transform: rotate(-90deg); text-align: center;  background: transparent;" />
+					                <p:column headerText="PROMEDIO" style="padding: 0px; width: 20px; transform: rotate(-90deg); text-align: center;  background: transparent;" />
+					                <p:column headerText="ESCALA CUALITATIVA" style="padding: 0px; width: 20px; transform: rotate(-90deg); text-align: center;  background: transparent;" />
+					            </p:row>				           
+					        </p:columnGroup>	
+					    </p:dataTable> 	
+						<br />
+						</div>	
+					</p:outputPanel>		           
+		       	</p:tab>
+		       	<p:tab title="Informe de Rendimiento Académico">
 		           
-		       </p:tab>
-		       <p:tab title="Informe de Rendimiento Académico">
-		           
-		       </p:tab>
+		       	</p:tab>
 		   </p:tabView>	       			
 	   	</h:form>
 	</ui:define>		

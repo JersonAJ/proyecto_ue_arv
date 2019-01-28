@@ -182,7 +182,7 @@ public class DAO {
 				"WHERE o.id_periodo = '" + periodo + "' AND o.estado = 'AC' ORDER BY k.codigo_det, c.id_curso ");
 		return query;
 	}
-	
+			
 	public static Query getAsignaturasControl(String oferta) {
 		Query query = em.createNativeQuery(
 				"SELECT a.id_asignatura, a.nombre \r\n" + 

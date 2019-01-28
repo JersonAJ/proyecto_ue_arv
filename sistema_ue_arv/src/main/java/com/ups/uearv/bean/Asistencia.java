@@ -197,7 +197,6 @@ public class Asistencia implements Serializable {
 		}
 	}
 
-
 	public List<SelectItem> llenaComboPeriodo() {
 		return Util.llenaCombo(DAO.getPeriodos(), 2);
 	}
