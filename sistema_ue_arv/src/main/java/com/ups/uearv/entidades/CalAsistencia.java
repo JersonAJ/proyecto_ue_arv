@@ -22,11 +22,11 @@ public class CalAsistencia implements Serializable {
 	private int asistencias;
 
 	private int atrasos;
-	
+
 	private int faltas;
-	
+
 	private int justificados;
-	
+
 	private String observacion;
 
 	private String estado;
@@ -46,13 +46,21 @@ public class CalAsistencia implements Serializable {
 	@Column(name="usuario_act")
 	private String usuarioAct;
 
-	@Column(name="usuario_ing")
-	private String usuarioIng;
+	@Column(name="proyectos_esc")
+	private String proyectosEsc;
 
 	//bi-directional many-to-one association to MatMatricula
 	@ManyToOne
 	@JoinColumn(name="id_matricula")
 	private MatMatricula matMatricula;
+
+	//bi-directional many-to-one association to CalComportamiento
+	@ManyToOne
+	@JoinColumn(name="id_comportamiento")
+	private CalComportamiento calComportamiento;
+
+	@Column(name="usuario_ing")
+	private String usuarioIng;
 
 	public CalAsistencia() {
 	}
@@ -167,5 +175,21 @@ public class CalAsistencia implements Serializable {
 
 	public void setObservacion(String observacion) {
 		this.observacion = observacion;
+	}
+
+	public CalComportamiento getCalComportamiento() {
+		return this.calComportamiento;
+	}
+
+	public void setCalComportamiento(CalComportamiento calComportamiento) {
+		this.calComportamiento = calComportamiento;
+	}
+
+	public String getProyectosEsc() {
+		return proyectosEsc;
+	}
+
+	public void setProyectosEsc(String proyectosEsc) {
+		this.proyectosEsc = proyectosEsc;
 	}
 }

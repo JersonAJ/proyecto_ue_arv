@@ -120,9 +120,9 @@
 		<view-id value="/calificaciones/asistencia.xhtml" />
 	</url-mapping>
 
-	<url-mapping id="asistencia">
-		<pattern value="/cal/controlacademico" />
-		<view-id value="/calificaciones/control.xhtml" />
+	<url-mapping id="controlparcial">
+		<pattern value="/cal/controlparcial" />
+		<view-id value="/calificaciones/controlparcial.xhtml" />
 	</url-mapping>
 	
 	<url-mapping id="reportec">

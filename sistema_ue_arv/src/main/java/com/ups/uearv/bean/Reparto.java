@@ -45,7 +45,7 @@ public class Reparto implements Serializable {
 	String soCurso = "";
 	String soNivel = "";
 	String soAsignatura = "";
-	
+
 	boolean ckEstado = false;
 
 	String itBuscar = "";
@@ -72,12 +72,12 @@ public class Reparto implements Serializable {
 
 		listDocentes = (ArrayList<SelectItem>) llenaComboDocente();
 		soDocente = listDocentes.get(0).getValue().toString();
-	
+
 		listNiveles = (ArrayList<SelectItem>) llenaComboNiveles();
 		soNivel = listNiveles.get(0).getValue().toString();
-		
+
 		onChangeNivel();
-		
+
 		buscar();
 	}
 
@@ -85,7 +85,7 @@ public class Reparto implements Serializable {
 	public void llenarLista(String jpql) {
 		repartoList.clear();
 		List<Object> l = DAO.nqObject(new CalReparto(), jpql);
-				
+
 		for (Object in : l)
 			repartoList.add(in);
 	}
@@ -93,22 +93,21 @@ public class Reparto implements Serializable {
 	public void buscar() {
 		if (ckMostrarIC) {
 			jpql = "SELECT c.* FROM cal_reparto c " + 
-					   "INNER JOIN mat_docente d ON d.id_docente = c.id_docente " + 
-					   "INNER JOIN catalogo_det k ON k.codigo_det = c.nivel " + 
-					   "INNER JOIN catalogo_det k ON k.codigo_det = c.nivel " +
-					   "WHERE d.apellidos LIKE '%"+ itBuscar + "%' ORDER BY k.codigo_det, c.id_curso, d.apellidos";
+					"INNER JOIN mat_docente d ON d.id_docente = c.id_docente " + 
+					"INNER JOIN catalogo_det k ON k.codigo_det = c.nivel " +					
+					"WHERE d.apellidos LIKE '%"+ itBuscar + "%' ORDER BY k.codigo_det, c.id_curso, d.apellidos";
 		} else {
 			jpql = "SELECT c.* FROM cal_reparto c " + 
-					   "INNER JOIN mat_docente d ON d.id_docente = c.id_docente " + 
-					   "INNER JOIN catalogo_det k ON k.codigo_det = c.nivel " + 
-					   "WHERE d.apellidos LIKE '%"+ itBuscar + "%' AND c.estado = 'AC' ORDER BY k.codigo_det, c.id_curso, d.apellidos";
+					"INNER JOIN mat_docente d ON d.id_docente = c.id_docente " + 
+					"INNER JOIN catalogo_det k ON k.codigo_det = c.nivel " + 
+					"WHERE d.apellidos LIKE '%"+ itBuscar + "%' AND c.estado = 'AC' ORDER BY k.codigo_det, c.id_curso, d.apellidos";
 		}
 		llenarLista(jpql);
 	}
 
 	// INGRESO - ACTUALIZACION
 	public void guardar() {
-		
+
 		// VALIDACIONES		
 		if (soDocente.equals("NA")) {
 			mensaje = "Debe seleccionar el docente";
@@ -130,35 +129,40 @@ public class Reparto implements Serializable {
 			FacesContext.getCurrentInstance().addMessage("growl", new FacesMessage(FacesMessage.SEVERITY_ERROR, mensajeTitulo, mensaje));
 			return;
 		}
-		if (accion == 0) {
-			CalReparto val = (CalReparto) DAO.buscarObject(new CalReparto(),
-					"from CalReparto c where c.matCurso.idCurso = " + soCurso + " and c.calAsignatura.idAsignatura = "+ soAsignatura + " ");
-			if (val != null) {
-				mensaje = "Ya existe un docente asignado con los parámetros seleccionados";
-				FacesContext.getCurrentInstance().addMessage("growl", new FacesMessage(FacesMessage.SEVERITY_ERROR, mensajeTitulo, mensaje));
-				return;
-			}
+
+		CalReparto val = null;		
+		if (accion == 1) {
+		val = (CalReparto) DAO.buscarObject(new CalReparto(), 
+				"from CalReparto c where c.matCurso.idCurso = "	+ soCurso + " and c.calAsignatura.idAsignatura = " + soAsignatura + " and c.idReparto != " + idReparto + " and c.estado = 'AC' ");
+		} else {
+			val = (CalReparto) DAO.buscarObject(new CalReparto(), 
+					"from CalReparto c where c.matCurso.idCurso = "	+ soCurso + " and c.calAsignatura.idAsignatura = " + soAsignatura + " and c.estado = 'AC' ");
+		}		
+		if (val != null) {
+			mensaje = "Ya existe un docente asignado con los parámetros seleccionados";
+			FacesContext.getCurrentInstance().addMessage("growl", new FacesMessage(FacesMessage.SEVERITY_ERROR, mensajeTitulo, mensaje));
+			return;
 		}
-		
+
 		// PROCESO		
 		EntityManager em = emf.createEntityManager();
 		em.getTransaction().begin();
 		try {		
 			Date date = new Date();
 			Timestamp fecha = new Timestamp(date.getTime());
-			
+
 			CalReparto ob = new CalReparto();
 			if (accion == 1) {
 				ob = (CalReparto) DAO.buscarObject(new CalReparto(), "from CalReparto c where c.idReparto = " + idReparto);
 			}
-			
+
 			String estado = "IC";
 			if (ckEstado) estado = "AC";
-			
+
 			MatDocente docente = (MatDocente) DAO.buscarObject(new MatDocente(), "from MatDocente c where c.idDocente = '" + soDocente + "'");
 			CalAsignatura asignatura = (CalAsignatura) DAO.buscarObject(new CalAsignatura(), "from CalAsignatura c where c.idAsignatura = " + soAsignatura);
 			MatCurso curso = (MatCurso) DAO.buscarObject(new MatCurso(), "from MatCurso c where c.idCurso = " + soCurso);
-			
+
 			ob.setMatDocente(docente);
 			ob.setMatCurso(curso);
 			ob.setCalAsignatura(asignatura);
@@ -172,7 +176,7 @@ public class Reparto implements Serializable {
 				ob.setUsuarioAct(Session.getUserName());			
 				ob.setFechaAct(fecha);			
 			}			
-			
+
 			if (DAO.saveOrUpdate(ob, accion, em)) {
 				em.getTransaction().commit();
 				mensaje = "Guardado exitoso";
@@ -183,7 +187,7 @@ public class Reparto implements Serializable {
 				mensaje = "Error al guardar";
 				FacesContext.getCurrentInstance().addMessage("growl", new FacesMessage(FacesMessage.SEVERITY_ERROR, mensajeTitulo, mensaje));
 			}
-			
+
 		} catch (Exception e) {
 			em.getTransaction().rollback();
 			e.printStackTrace();
@@ -194,39 +198,39 @@ public class Reparto implements Serializable {
 	public void closeDialogo() {
 		init();
 	}
-	
+
 	public List<SelectItem> llenaComboNiveles() {
 		return Util.llenaCombo(DAO.getDetCatalogo("NI000"), 2);
 	}
-	
+
 	public List<SelectItem> llenaComboDocente() {
 		return Util.llenaCombo(DAO.getDocentes(), 2);
 	}
-	
+
 	public List<SelectItem> llenaComboAsignaturas() {
 		return Util.llenaCombo(DAO.getAsignaturas(soNivel), 2);
 	}
-	
+
 	public List<SelectItem> llenaComboCursos() {
 		return Util.llenaCombo(DAO.getCursos(soNivel), 2);
 	}
-	
+
 	public void onChangeNivel() {
 		listCursos = (ArrayList<SelectItem>) llenaComboCursos();
 		soCurso = listCursos.get(0).getValue().toString();
-	
+
 		listAsignaturas = (ArrayList<SelectItem>) llenaComboAsignaturas();
 		soAsignatura = listAsignaturas.get(0).getValue().toString();
 	}
-	
+
 	public ArrayList<SelectItem> getCursos() {
 		return (ArrayList<SelectItem>) llenaComboCursos();
 	}
-	
+
 	public ArrayList<SelectItem> getAsignaturas() {
 		return (ArrayList<SelectItem>) llenaComboAsignaturas();
 	}
-	
+
 	// GETTERS AND SETTERS
 	public boolean isCkEstado() {
 		return ckEstado;

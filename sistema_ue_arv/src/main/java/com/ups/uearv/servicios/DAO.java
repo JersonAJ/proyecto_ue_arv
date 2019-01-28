@@ -187,7 +187,7 @@ public class DAO {
 		Query query = em.createNativeQuery(
 				"SELECT a.id_asignatura, a.nombre \r\n" + 
 				"FROM cal_asignatura a \r\n" + 
-				"	INNER JOIN cal_reparto r ON r.id_asignatura = a.id_asignatura \r\n" + 
+				"	INNER JOIN cal_reparto r ON r.id_asignatura = a.id_asignatura AND r.estado = 'AC' \r\n" + 
 				"	INNER JOIN mat_oferta o ON o.id_curso = r.id_curso \r\n" + 
 				"WHERE o.id_oferta = '" + oferta + "' AND a.estado = 'AC' ");
 		return query;

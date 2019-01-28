@@ -26,6 +26,7 @@ import org.primefaces.extensions.event.SheetEvent;
 import org.primefaces.extensions.model.sheet.SheetUpdate;
 
 import com.ups.uearv.entidades.CalAsistencia;
+import com.ups.uearv.entidades.CalComportamiento;
 import com.ups.uearv.entidades.MatMatricula;
 import com.ups.uearv.servicios.DAO;
 import com.ups.uearv.servicios.Session;
@@ -98,9 +99,12 @@ public class Asistencia implements Serializable {
 				int atrasos = ((AsistenciaEst) asset).getAtrasos();
 				int faltas = ((AsistenciaEst) asset).getFaltas();
 				int justificados = ((AsistenciaEst) asset).getJustificados();
-				String observacion = ((AsistenciaEst) asset).getObservacion();
+				// String observacion = ((AsistenciaEst) asset).getObservacion();
+				String nomComportamiento = ((AsistenciaEst) asset).getNomComportamiento();
+				String proyectos = ((AsistenciaEst) asset).getProyectos();
 
-				MatMatricula matricula = (MatMatricula) DAO.buscarObject(new MatMatricula(), "from MatMatricula c where c.idMatricula = '" + codMatricula + "'");				
+				MatMatricula matricula = (MatMatricula) DAO.buscarObject(new MatMatricula(), "from MatMatricula c where c.idMatricula = '" + codMatricula + "'");
+				CalComportamiento comportamiento = (CalComportamiento) DAO.buscarObject(new CalComportamiento(),"from CalComportamiento c where c.descripcion = '" + nomComportamiento + "'");
 
 				int op = 0; // NUEVO REGISTRO		
 				CalAsistencia asi = new CalAsistencia();
@@ -124,7 +128,9 @@ public class Asistencia implements Serializable {
 				asi.setAtrasos(atrasos);
 				asi.setFaltas(faltas);
 				asi.setJustificados(justificados);
-				asi.setObservacion(observacion);
+				// asi.setObservacion(observacion);
+				asi.setCalComportamiento(comportamiento);
+				asi.setProyectosEsc(proyectos);
 
 				if (!DAO.saveOrUpdate(asi, op, em)) 
 					em.getTransaction().rollback();			
@@ -182,6 +188,8 @@ public class Asistencia implements Serializable {
 					e.setFaltas(Integer.parseInt(obj[5].toString()));
 					e.setJustificados(Integer.parseInt(obj[6].toString()));
 					e.setObservacion(obj[7].toString());
+					e.setNomComportamiento(obj[8].toString());
+					e.setProyectos(obj[9].toString());
 
 					asistenciaList.add(e);
 				}
@@ -198,6 +206,33 @@ public class Asistencia implements Serializable {
 		return Util.llenaCombo(DAO.getOfertas(soPeriodo), 2);
 	}
 	
+	@SuppressWarnings("unchecked")
+	public List<String> llenaComboComportamiento() {
+		jpql = " SELECT id_comportamiento, descripcion FROM cal_comportamiento WHERE estado = 'AC' ";
+
+		ArrayList<String> listaOfertas = new ArrayList<String>();
+		listaOfertas.add("Seleccione Comportamiento");
+
+		List<Object> result = em.createNativeQuery(jpql).getResultList();
+		Iterator<Object> itr = result.iterator();
+		for (int k = 0; k < result.size(); k++) {
+			Object[] obj = (Object[]) itr.next();
+			listaOfertas.add(obj[1].toString());
+		}		
+		return listaOfertas;
+	}
+	
+	public List<String> llenaComboProyecto() {
+		ArrayList<String> listaProyectos = new ArrayList<String>();
+		listaProyectos.add("Seleccione");
+		listaProyectos.add("Excelente");
+		listaProyectos.add("Muy Bueno");
+		listaProyectos.add("Bueno");
+		listaProyectos.add("Regular");		
+		
+		return listaProyectos;
+	}
+	
 	// CLASES
 	public class AsistenciaEst implements Serializable {
 
@@ -206,11 +241,13 @@ public class Asistencia implements Serializable {
 		public String codAsistencia = "";
 		public String codMatricula = "";
 		public String nomEstudiante = "";
+		public String nomComportamiento = "";
 		public int asistencias;
 		public int atrasos;
 		public int faltas;
 		public int justificados;
 		public String observacion = "";
+		public String proyectos = "";
 
 		public String getCodMatricula() {
 			return codMatricula;
@@ -259,6 +296,18 @@ public class Asistencia implements Serializable {
 		}
 		public void setObservacion(String observacion) {
 			this.observacion = observacion;
+		}
+		public String getNomComportamiento() {
+			return nomComportamiento;
+		}
+		public void setNomComportamiento(String nomComportamiento) {
+			this.nomComportamiento = nomComportamiento;
+		}
+		public String getProyectos() {
+			return proyectos;
+		}
+		public void setProyectos(String proyectos) {
+			this.proyectos = proyectos;
 		}
 	}
 

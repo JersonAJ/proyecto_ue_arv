@@ -6,7 +6,7 @@ xmlns:p="http://primefaces.org/ui"
 xmlns:f="http://xmlns.jcp.org/jsf/core"
 xmlns:pe="http://primefaces.org/ui/extensions">
 			
-	<ui:define name="titulo"><i class="fa fa-book" /> Calificaciones / Asistencias</ui:define>
+	<ui:define name="titulo"><i class="fa fa-book" /> Calificaciones / Control Parcial (Asistencia, Comportamiento y Proyecto Escolar) </ui:define>
 	
 	<ui:define name="content">
 		<h:form id="form" style="width: 100%">
@@ -47,7 +47,8 @@ xmlns:pe="http://primefaces.org/ui/extensions">
 			            <f:selectItem itemLabel="P2" itemValue="2" />		
 			            <f:selectItem itemLabel="P3" itemValue="3" />			            
 			            <p:ajax listener="#{asistencia.llenarListAsistencia()}" update="sheet1"/>
-			        </p:selectOneMenu>		      
+			        </p:selectOneMenu>
+			        <p:spacer width="5px" />
 				</p:outputPanel>							      			
 			</p:outputPanel>
 			<br/>
@@ -58,6 +59,7 @@ xmlns:pe="http://primefaces.org/ui/extensions">
 				.handsontable .htAutocompleteArrow { float: right; font-size: 12px; color: #474a4b; cursor: default; width: 16px; text-align: center; }
 				.handsontable tbody th.ht__highlight, .handsontable thead th.ht__highlight { background-color: #dcdcdc; color: #8f3b4f; }
 			</style>
+			
 			<pe:sheet id="sheet1" widgetVar="sheetWidget1" value="#{asistencia.asistenciaList}" var="row"   
 			    height="350" rowKey="#{row.codMatricula}" showRowHeaders="true" resizableCols="true" resizableRows="true" 
 			    readOnly="false" sortBy="#{row.nomEstudiante}" sortOrder="ascending" emptyMessage="No existen datos a mostrar">
@@ -77,8 +79,14 @@ xmlns:pe="http://primefaces.org/ui/extensions">
 			     
 			    <pe:sheetcolumn headerText="FJ" value="#{row.justificados}" colWidth="30" 
 					styleClass="htRight #{row.justificados gt 0 ? 'positive' : 'negative'}" colType="numeric" numericPattern="0" />
+					
+				<pe:sheetcolumn headerText="Comportamiento" value="#{row.nomComportamiento}" colType="dropdown" colWidth="450"
+					selectItems="#{asistencia.llenaComboComportamiento()}" sortBy="#{row.nomComportamiento}" />	    			    
+				
+				<pe:sheetcolumn headerText="Proyectos Esc." value="#{row.proyectos}" colType="dropdown" colWidth="100"
+					selectItems="#{asistencia.llenaComboProyecto()}" sortBy="#{row.nomComportamiento}" />
 			     			   
-			   	<pe:sheetcolumn headerText="Observación" readonly="true" value="#{row.observacion}" sortBy="#{row.observacion}" colWidth="200" colType="text" />
+<!-- 			   	<pe:sheetcolumn headerText="Observación" readonly="true" value="#{row.observacion}" sortBy="#{row.observacion}" colWidth="200" colType="text" /> -->
 			   
 			    <f:facet name="footer">  
 			        <h:outputText value="#{asistencia.asistenciaList.size()} Registros" />
