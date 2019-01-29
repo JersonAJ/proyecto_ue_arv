@@ -35,6 +35,12 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 		                <h:outputText value="#{t}" />
 		            </p:column>		            
 		        </p:selectOneMenu>
+		        <p:spacer width="10px" />
+		        <p:selectOneMenu id="soDocente" value="#{reporte.soDocenteCal}">
+					<f:selectItem itemLabel="Seleccione Docente" itemValue="NA" />
+					<f:selectItems value="#{reporte.listDocenteCal}" />		
+					<p:ajax listener="#{reporte.onChangeDocenteCal()}" update="tab"/>								
+				</p:selectOneMenu>
 		        <p:spacer width="5px" />					
 			</p:outputPanel> 
 			<br />
@@ -56,7 +62,7 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 				        </p:selectOneMenu>
 				        
 				        <p:spacer width="20px" />
-				        <p:commandButton id="btnVer" value="Ver" style="font-size: 12px !important;" actionListener="#{reporte.verLibretaCalifinaciones}" />
+				        <p:commandButton id="btnVer" value="Ver" style="font-size: 12px !important;" actionListener="#{reporte.verLibretaCalifinaciones}" update="opLibreta" />
 				        
 				        <p:spacer width="20px" />
 				        <p:commandButton type="button" icon="fa fa-print" title="Imprimir" style="margin-right: 50px;">
@@ -119,20 +125,25 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 							  <td class="tg-mjfx">JORNADA MATUTINA</td>
 							</tr>
 							<tr>
-							  <td class="tg-0lax" colspan="2">ESTUDIANTE:</td>
-							  <td class="tg-0lax">GRADO: </td>
+							  <td class="tg-0lax" colspan="2">ESTUDIANTE:
+							  <h:outputText value="#{reporte.olEstudiante}" style="font-weight: normal;"/>	
+							  </td>
+							  <td class="tg-0lax"><h:outputText value="#{reporte.olGrado}" /> </td>
 							</tr>
 							<tr>
-							  <td class="tg-0lax" colspan="2">DOCENTE:</td>
-							  <td class="tg-0lax">PARALELO:</td>
+							  <td class="tg-0lax" colspan="2">DOCENTE: 
+							  	<h:outputText value="#{reporte.olDocente}" style="font-weight: normal;"/> 
+							  </td>
+							  <td class="tg-0lax">PARALELO: <h:outputText value=" “#{reporte.olParalelo}” " style="font-weight: normal;"/> </td>
 							</tr>
 						</table>
 						
-						<p:dataTable var="dtLibreta" emptyMessage="Debe seleccionar estudiante" tableStyle="width: auto; min-width: 550px; margin-top: 5px; font-size: 10px;">												
+						<p:dataTable var="dtlibreta" emptyMessage="--" value="#{reporte.libretaList}"
+							tableStyle="width: auto; min-width: 550px; margin-top: 5px; font-size: 10px;">												
 							<p:columnGroup type="header">
 					            <p:row>
-					                <p:column rowspan="2" headerText="ÁREAS" />
-					                <p:column colspan="7" headerText="PRIMER PARCIAL DEL PRIMER QUIMESTRE" />
+					                <p:column rowspan="2" headerText="ÁREAS" width="130" />
+					                <p:column colspan="7" headerText="#{reporte.olParcial} DEL #{reporte.olQuimestre}" />
 					            </p:row>		         
 					            <p:row>
 					                <p:column headerText="TAREAS" style="padding: 0px; width: 20px; height: 72px; transform: rotate(-90deg); text-align: center; background: transparent;" />
@@ -145,56 +156,82 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 					            </p:row>				           
 					        </p:columnGroup>	
 					        
+					        <p:column headerText="ÁREAS" style="font-weight: bold;">
+						        <h:outputText value="#{dtlibreta.asignatura}" />
+						    </p:column>			 						    
+						    <p:column headerText="TAREA">
+						    	<div style="text-align: center"><h:outputText value="#{dtlibreta.tarea}" /></div></p:column>						    	
+						    <p:column headerText="AI">
+						    	<div style="text-align: center"><h:outputText value="#{dtlibreta.actIndividual}" /></div></p:column>
+						    <p:column headerText="AG">
+						    	<div style="text-align: center"><h:outputText value="#{dtlibreta.actGrupal}" /></div></p:column>
+						    <p:column headerText="LECCIÓN">
+						    	<div style="text-align: center"><h:outputText value="#{dtlibreta.leccion}" /></div></p:column>
+						    <p:column headerText="EVALUACIÓN">
+						    	<div style="text-align: center"><h:outputText value="#{dtlibreta.evaluacion}" /></div></p:column>
+						    <p:column headerText="PROMEDIO">
+						    	<div style="text-align: center"><h:outputText value="#{dtlibreta.promedio}" /></div></p:column>						    
+						    <p:column headerText="ESCALA" style="text-align: center">
+						        <h:outputText value="#{dtlibreta.escala}" />
+						    </p:column>					        
 					    </p:dataTable> 	
 						<br />
 						<table style="table-layout: fixed; width: 550px; font-size: 10px; border-collapse: collapse;">
 							<tr>
-								<td style="border: 1px solid black; text-align: center; width: 140px;">COMPORTAMIENTO</td>
+								<td style="border: 1px solid black; text-align: center; width: 135px;">COMPORTAMIENTO</td>
 								<td style="border: 1px solid black; text-align: center; width: 40px;">--</td>
 								  
 								<td></td>
 								  
-								<td style="border: 1px solid black; text-align: center; width: 181px;">PROMEDIO FINAL</td>
-								<td style="border: 1px solid black; text-align: center; width: 53px;">--</td>
-								<td style="border: 1px solid black; text-align: center; width: 63px;">--</td>
+								<td style="border: 1px solid black; text-align: center; width: 184px;">PROMEDIO FINAL</td>
+								<td style="border: 1px solid black; text-align: center; width: 53px;">#{reporte.olPromedioFinal}</td>
+								<td style="border: 1px solid black; text-align: center; width: 63px;">#{reporte.olPromedioEscala}</td>
 							</tr>
 						</table>
 						<br />
 						<div style="display: inline-flex;">
 							<table style="table-layout: fixed; width: 183px; font-size: 10px; border-collapse: collapse;">
 								<colgroup>
-									<col style="width: 143px" />
-									<col style="width: 42px" />								
+									<col style="width: 138px" />
+									<col style="width: 43px" />								
 									<col style="width: 58px" />
 								</colgroup>
 								<tr>
-									<th style="border: 1px solid black; text-align: center; width: 183px;" colspan="2">
+									<th style="border: 1px solid black; text-align: center;" colspan="2">
 									ASISTENCIAS DEL ESTUDIANTE
 									</th>																  							
 								</tr>
 								<tr>
-									<td style="border: 1px solid black; width: 140px;">DÍAS ASISTIDOS</td>
-									<td style="border: 1px solid black; text-align: center; width: 40px;"></td>								  
+									<td style="border: 1px solid black;">DÍAS ASISTIDOS</td>
+									<td style="border: 1px solid black; text-align: center;">
+										<h:outputText value="#{reporte.olAistencias}" style="font-weight: normal;"/>
+									</td>								  
 									<td></td>								  							
 								</tr>
 								<tr>
-									<td style="border: 1px solid black; width: 140px;">FALTAS JUTIFICADAS</td>
-									<td style="border: 1px solid black; text-align: center; width: 40px;"></td>								  
+									<td style="border: 1px solid black;">FALTAS JUTIFICADAS</td>
+									<td style="border: 1px solid black; text-align: center;">
+										<h:outputText value="#{reporte.olFaltasJustif}" style="font-weight: normal;"/>
+									</td>								  
 									<td></td>								  							
 								</tr>
 								<tr>
-									<td style="border: 1px solid black; width: 140px;">FALTAS INJUTIFICADAS</td>
-									<td style="border: 1px solid black; text-align: center; width: 40px;"></td>								  
+									<td style="border: 1px solid black;">FALTAS INJUTIFICADAS</td>
+									<td style="border: 1px solid black; text-align: center;">
+										<h:outputText value="#{reporte.olFaltas}" style="font-weight: normal;"/>
+									</td>			  
 									<td></td>								  							
 								</tr>
 								<tr>
-									<td style="border: 1px solid black; width: 140px;">ATRASOS</td>
-									<td style="border: 1px solid black; text-align: center; width: 40px;"></td>								  
+									<td style="border: 1px solid black;">ATRASOS</td>
+									<td style="border: 1px solid black; text-align: center;">
+										<h:outputText value="#{reporte.olAtrasos}" style="font-weight: normal;"/>
+									</td>								  
 									<td></td>								  							
 								</tr>
 							</table>
 							
-							<p:dataTable id="dtCom" var="dtCom" value="#{reporte.comportamientoList}" tableStyle="width: 307px; min-width: 307px; margin-top: 2px; font-size: 6px; padding: 0px;">
+							<p:dataTable id="dtCom" var="dtCom" value="#{reporte.comportamientoList}" tableStyle="width: 310px; min-width: 310px; margin-top: 2px; font-size: 6px; padding: 0px;">
 								<f:facet name="header">EVALUACIÓN DEL COMPORTAMIENTO</f:facet>
 								<p:column style="width: 5px; text-align: center;"> <h:outputText value="#{dtCom.abreviatura}" /> </p:column> 
 							    <p:column style="text-align: center"> <h:outputText value="#{dtCom.descripcion}" /> </p:column>				        
@@ -204,37 +241,45 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 						<div style="display: inline-flex;">
 							<table style="table-layout: fixed; width: 183px; font-size: 10px; border-collapse: collapse;">
 								<colgroup>
-									<col style="width: 143px" />
-									<col style="width: 42px" />								
-									<col style="width: 58px" />				
+									<col style="width: 138px" />
+									<col style="width: 43px" />								
+									<col style="width: 58px" />
 								</colgroup>
 								<tr>
-									<th style="border: 1px solid black; text-align: center; width: 183px;" colspan="2">
+									<th style="border: 1px solid black; text-align: center;" colspan="2">
 									PROYECTOS ESCOLARES
 									</th>																  							
 								</tr>
 								<tr>
-									<td style="border: 1px solid black; width: 140px;">EX: EXCELENTE</td>
-									<td style="border: 1px solid black; text-align: center; width: 40px;"></td>								  
+									<td style="border: 1px solid black;">EX: EXCELENTE</td>
+									<td style="border: 1px solid black; text-align: center;">
+										<h:outputText value="#{reporte.olProyectos}" style="font-weight: normal; display: #{reporte.olProyectos eq 'EX' ? '':'none' }" />
+									</td>								  
 									<td></td>								  							
 								</tr>
 								<tr>
-									<td style="border: 1px solid black; width: 140px;">MB: MUY BUENO</td>
-									<td style="border: 1px solid black; text-align: center; width: 40px;"></td>								  
+									<td style="border: 1px solid black;">MB: MUY BUENO</td>
+									<td style="border: 1px solid black; text-align: center;">
+										<h:outputText value="#{reporte.olProyectos}" style="font-weight: normal; display: #{reporte.olProyectos eq 'MB' ? '':'none' }" />
+									</td>
 									<td></td>								  							
 								</tr>
 								<tr>
-									<td style="border: 1px solid black; width: 140px;">B: BUENO</td>
-									<td style="border: 1px solid black; text-align: center; width: 40px;"></td>								  
+									<td style="border: 1px solid black;">B: BUENO</td>
+									<td style="border: 1px solid black; text-align: center;">
+										<h:outputText value="#{reporte.olProyectos}" style="font-weight: normal; display: #{reporte.olProyectos eq 'B' ? '':'none' }" />
+									</td>								  
 									<td></td>								  							
 								</tr>
 								<tr>
-									<td style="border: 1px solid black; width: 140px;">R: REGULAR</td>
-									<td style="border: 1px solid black; text-align: center; width: 40px;"></td>								  
+									<td style="border: 1px solid black;">R: REGULAR</td>
+									<td style="border: 1px solid black; text-align: center;">
+										<h:outputText value="#{reporte.olProyectos}" style="font-weight: normal; display: #{reporte.olProyectos eq 'R' ? '':'none' }" />
+									</td>								  
 									<td></td>								  							
 								</tr>
 							</table>
-							<p:dataTable id="dtEsc" var="dtEsc" value="#{reporte.escalaList}" tableStyle="width: 307px; min-width: 307px; margin-top: 2px; font-size: 6px; padding: 0px;">
+							<p:dataTable id="dtEsc" var="dtEsc" value="#{reporte.escalaList}" tableStyle="width: 310px; min-width: 310px; margin-top: 2px; font-size: 6px; padding: 0px;">
 								<f:facet name="header">CALIFICACIÓN CUALITATIVA</f:facet>
 								<p:column style="width: 15px; text-align: center;"> <h:outputText value="#{dtEsc.cualitativa}" /> </p:column> 
 							    <p:column style="text-align: center"> <h:outputText value="#{dtEsc.descripcion}" /> </p:column>				        

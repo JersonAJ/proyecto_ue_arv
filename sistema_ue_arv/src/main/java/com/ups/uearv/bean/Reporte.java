@@ -8,6 +8,7 @@ package com.ups.uearv.bean;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -21,6 +22,7 @@ import javax.persistence.Query;
 
 import com.ups.uearv.entidades.CalComportamiento;
 import com.ups.uearv.entidades.CalEscala;
+import com.ups.uearv.entidades.MatDocente;
 import com.ups.uearv.servicios.DAO;
 import com.ups.uearv.servicios.Util;
 
@@ -35,20 +37,22 @@ public class Reporte implements Serializable {
 
 	private static EntityManagerFactory emf = Persistence.createEntityManagerFactory("sismacc");
 	private static EntityManager em = emf.createEntityManager();	
-	
+
 	private static final long serialVersionUID = 1L;
 
 	String soPeriodoCal = "";
 	String soOfertaCal = "";
 	String soEstudianteCal = "";
-	
+	String soDocenteCal = "";
+
 	String soQuimestre = "";
 	String soParcial = "";
 
 	ArrayList<SelectItem> listPeriodoCal = new ArrayList<SelectItem>();
 	ArrayList<SelectItem> listOfertaCal = new ArrayList<SelectItem>();		
 	ArrayList<SelectItem> listEstudianteCal = new ArrayList<SelectItem>();
-	
+	ArrayList<SelectItem> listDocenteCal = new ArrayList<SelectItem>();
+
 	// VARIABLES REPORTE LIBRETA CAL
 	String olPeriodo = "";
 	String olJornada = "";
@@ -74,14 +78,17 @@ public class Reporte implements Serializable {
 	public void init() {		
 		listPeriodoCal = (ArrayList<SelectItem>) llenaComboPeriodo();
 		soPeriodoCal = "NA";
+		onChangePeriodoCal();
+
+		listDocenteCal = (ArrayList<SelectItem>) llenaComboDocente();
+		soDocenteCal = "NA";
+		onChangeDocenteCal();
 
 		soQuimestre = "1";
 		soParcial = "1";
-		
+
 		llenarListaComportamiento();
 		llenarListaEscala();
-		
-		onChangePeriodoCal();
 	}
 
 	// CONSULTA	
@@ -101,8 +108,65 @@ public class Reporte implements Serializable {
 		soEstudianteCal = "NA";
 	}
 
-	public void verLibretaCalifinaciones() {
+	public void onChangeDocenteCal() {
+		if (!soDocenteCal.equals("NA")) {
+			MatDocente docente = (MatDocente) DAO.buscarObject(new MatDocente(), "from MatDocente c where c.idDocente = '" + soDocenteCal + "'");
+			olDocente = docente.getApellidos().trim() + " " + docente.getNombres();
+		} else {
+			olDocente = "____________________________________________________";
+		}
+	}
 
+	@SuppressWarnings("unchecked")
+	public void verLibretaCalifinaciones() {
+		libretaList.clear();
+		if (!soPeriodoCal.equals("NA")) {
+			if (!soOfertaCal.equals("NA")) {
+				if (!soEstudianteCal.equals("NA")) {
+					if (soParcial.equals("1")) { olParcial = "PRIMER PARCIAL"; }
+					if (soParcial.equals("2")) { olParcial = "SEGUNDO PARCIAL"; }
+					if (soParcial.equals("3")) { olParcial = "TERCER PARCIAL"; }					
+					if (soQuimestre.equals("1")) { olQuimestre = "PRIMER QUIMESTRE"; }
+					if (soQuimestre.equals("2")) { olQuimestre = "SEGUNDO QUIMESTRE"; }
+
+					String jpql = "CALL consulta_libreta_detalle (" + soPeriodoCal + "," + soOfertaCal + ",'" + soEstudianteCal + "'," + soQuimestre + "," + soParcial + ")";
+					List<Object> result1 = em.createNativeQuery(jpql).getResultList();
+					Iterator<Object> itr1 = result1.iterator();
+					for (int k = 0; k < result1.size(); k++) {
+						Object[] obj = (Object[]) itr1.next();
+
+						LibretaCal e = new LibretaCal();
+						e.setIdAsignatura(obj[0].toString());
+						e.setAsignatura(obj[1].toString());
+						e.setTarea(new BigDecimal(obj[2].toString()));
+						e.setActIndividual(new BigDecimal(obj[3].toString()));
+						e.setActGrupal(new BigDecimal(obj[4].toString()));
+						e.setLeccion(new BigDecimal(obj[5].toString()));
+						e.setEvaluacion(new BigDecimal(obj[6].toString()));
+						e.setPromedio(new BigDecimal(obj[7].toString()));
+						e.setEscala(obj[8].toString());
+						libretaList.add(e);
+
+						olPromedioFinal = obj[9].toString();
+						olPromedioEscala = obj[10].toString();
+					}
+
+					jpql = "CALL consulta_libreta_cabecera (" + soPeriodoCal + "," + soOfertaCal + ",'" + soEstudianteCal + "'," + soQuimestre + "," + soParcial + ")";
+					List<Object> result2 = em.createNativeQuery(jpql).getResultList();
+					Iterator<Object> itr2 = result2.iterator();
+					Object[] obj = (Object[]) itr2.next();
+					olEstudiante = obj[0].toString();
+					olGrado = obj[1].toString();
+					olAistencias = obj[2].toString();
+					olAtrasos = obj[3].toString();
+					olFaltas = obj[4].toString();
+					olFaltasJustif = obj[5].toString();
+					olComportamiento = obj[6].toString();
+					olProyectos = obj[7].toString();
+					olParalelo = obj[8].toString();
+				}
+			}
+		}
 	}
 
 	public List<SelectItem> llenaComboPeriodo() {
@@ -116,45 +180,50 @@ public class Reporte implements Serializable {
 	public List<SelectItem> llenaComboEstudiante() {
 		return Util.llenaCombo(getEstudiantesOferta(), 2);
 	}
-	
+
+	public List<SelectItem> llenaComboDocente() {
+		return Util.llenaCombo(DAO.getDocentes(), 2);
+	}
+
 	public Query getEstudiantesOferta() {		
 		String jpql = 
-		"SELECT e.id_estudiante, CONCAT(IFNULL(e.apellidos, ''), ' ', IFNULL(e.nombres, '')) nombre \r\n" + 
-		"FROM mat_estudiante e \r\n" + 
-		"	INNER JOIN mat_matricula m ON m.id_estudiante = e.id_estudiante \r\n" + 
-		"WHERE m.id_periodo = '" + soPeriodoCal + "' \r\n";		
+				"SELECT e.id_estudiante, CONCAT(IFNULL(e.apellidos, ''), ' ', IFNULL(e.nombres, '')) nombre \r\n" + 
+						"FROM mat_estudiante e \r\n" + 
+						"	INNER JOIN mat_matricula m ON m.id_estudiante = e.id_estudiante \r\n" + 
+						"WHERE m.id_periodo = '" + soPeriodoCal + "' \r\n";		
 		if (!soOfertaCal.equals("NA")) { jpql = jpql + "AND m.id_oferta = '" + soOfertaCal + "' \r\n"; }	
 		jpql = jpql + "AND m.estado = 'AC' AND e.estado = 'AC' AND m.sn_aprobado = 'S' \r\n" + 
-		"ORDER BY 2";
+				"ORDER BY 2";
 
 		Query query = em.createNativeQuery(jpql);
 		return query;
 	}
-	
+
 	public void llenarListaComportamiento() {
 		String jpql = " SELECT c.* FROM cal_comportamiento c WHERE c.estado = 'AC' ORDER BY c.id_comportamiento ";
 		comportamientoList.clear();
 		List<Object> l = DAO.nqObject(new CalComportamiento(), jpql);
-				
+
 		for (Object in : l)
 			comportamientoList.add(in);
 	}
-	
+
 	public void llenarListaEscala() {
 		String jpql = " SELECT c.* FROM cal_escala c WHERE c.estado = 'AC' ORDER BY c.id_escala ";
 		escalaList.clear();
 		List<Object> l = DAO.nqObject(new CalEscala(), jpql);
-				
+
 		for (Object in : l)
 			escalaList.add(in);
 	}
 	// SUBCLASES
-	
+
 	public class LibretaCal implements Serializable {
 
 		private static final long serialVersionUID = 1L;
 
-		public String area;
+		public String idAsignatura;
+		public String asignatura;
 		public BigDecimal tarea;
 		public BigDecimal actIndividual;
 		public BigDecimal actGrupal;
@@ -162,12 +231,19 @@ public class Reporte implements Serializable {
 		public BigDecimal evaluacion;
 		public BigDecimal promedio;
 		public String escala;
-		
-		public String getArea() {
-			return area;
+
+
+		public String getIdAsignatura() {
+			return idAsignatura;
 		}
-		public void setArea(String area) {
-			this.area = area;
+		public void setIdAsignatura(String idAsignatura) {
+			this.idAsignatura = idAsignatura;
+		}
+		public String getAsignatura() {
+			return asignatura;
+		}
+		public void setAsignatura(String asignatura) {
+			this.asignatura = asignatura;
 		}
 		public BigDecimal getTarea() {
 			return tarea;
@@ -212,7 +288,7 @@ public class Reporte implements Serializable {
 			this.escala = escala;
 		}
 	}
-			
+
 	// GETTERS AND SETTERS
 	public String getSoPeriodoCal() {
 		return soPeriodoCal;
@@ -375,5 +451,17 @@ public class Reporte implements Serializable {
 	}
 	public void setEscalaList(List<Object> escalaList) {
 		this.escalaList = escalaList;
+	}
+	public String getSoDocenteCal() {
+		return soDocenteCal;
+	}
+	public void setSoDocenteCal(String soDocenteCal) {
+		this.soDocenteCal = soDocenteCal;
+	}
+	public ArrayList<SelectItem> getListDocenteCal() {
+		return listDocenteCal;
+	}
+	public void setListDocenteCal(ArrayList<SelectItem> listDocenteCal) {
+		this.listDocenteCal = listDocenteCal;
 	}
 }
