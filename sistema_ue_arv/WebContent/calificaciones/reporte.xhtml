@@ -71,30 +71,31 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 						</p:commandButton>
 					</p:outputPanel>				
 					
-					<p:separator />
+					<p:separator style="border: 0.6px solid #8f3b4f;" />
 					
 					<p:outputPanel id="opLibreta">					
 						<style type="text/css">
-							.tg  {border-collapse:collapse; border-spacing:0;}
-							.tg td{font-family:Arial, sans-serif; font-size:11px; padding:1px; overflow:hidden; word-break:normal; }
-							.tg th{font-family:Arial, sans-serif; font-size:11px; font-weight:normal; padding:2px; overflow:hidden; word-break:normal; }
-							.tg .tg-c3ow{text-align:left;}
-							.tg .tg-cudy{font-weight:bold; font-family:Arial, Helvetica, sans-serif !important; text-align:center; vertical-align:top}
-							.tg .tg-0pky{text-align:right;}
-							.tg .tg-757w{font-size:13px; font-family:"Times New Roman", Times, serif !important; text-align:center; vertical-align:top}
-							.tg .tg-mjfx{font-weight:bold; font-family:"Times New Roman", Times, serif !important; text-align:center; vertical-align:top}
-							.tg .tg-0lax{text-align:left; vertical-align:top; font-weight:bold;}
+							.tg  { border-collapse: collapse; border-spacing: 0; }
+							.tg td{ font-family: Arial, sans-serif; font-size: 11px; padding: 1px; overflow: hidden; word-break: normal; }
+							.tg th{ font-family: Arial, sans-serif; font-size: 11px; font-weight: normal; padding: 2px; overflow: hidden; word-break: normal; }
+							.tg .tg-c3ow{ text-align: left; }
+							.tg .tg-cudy{ font-weight: bold; font-family: Arial, Helvetica, sans-serif !important; text-align: center; vertical-align: top }
+							.tg .tg-0pky{ text-align: right; }
+							.tg .tg-757w{ font-size: 13px; font-family: "Times New Roman", Times, serif !important; text-align: center; vertical-align: top }
+							.tg .tg-mjfx{ font-weight: bold; font-family: "Times New Roman", Times, serif !important; text-align: center; vertical-align: top }
+							.tg .tg-0lax{ text-align: left; vertical-align: top; font-weight: bold; }
 							
 							.ui-datatable th.ui-state-default, .ui-datatable tfoot td.ui-state-default { background: #ffffff; border-color: #000000; }
-							body .ui-datatable thead th { background-color: #ffffff; padding: 2px;  border-color: #000000; color: #212121 !important; font-size: 10px; font-weight: bold !important; }
+							.ui-datatable-tablewrapper { overflow: auto; margin-top: -3px; }
 							.ui-datatable tbody td { border-color: black; }
 							
-							div[id="form:tab:dtCom"] thead { display:none; }
-							div[id="form:tab:dtEsc"] thead { display:none; }
-							
+							body .ui-datatable thead th { 
+								background-color: #ffffff; padding: 2px;  border-color: #000000; color: #212121 !important; font-size: 10px; font-weight: bold !important; }
 							body .ui-datatable .ui-datatable-footer, body .ui-datatable .ui-datatable-header {
-    							text-align: center; font-weight: 700; font-size: 8px; color: #212121; background: white;  border: 1px solid black; padding: 0px; }	
-    						.ui-datatable-tablewrapper { overflow: auto; margin-top: -3px; }				
+    							text-align: center; font-weight: 700; font-size: 8px; color: #212121; background: white;  border: 1px solid black; padding: 0px; }
+    							
+    						div[id="form:tab:dtCom"] thead { display:none; }
+							div[id="form:tab:dtEsc"] thead { display:none; }
     					</style>
 						
 						<div align="left" style="width: 100%">

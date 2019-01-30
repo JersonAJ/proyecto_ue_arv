@@ -43,13 +43,14 @@ public class Estudiante {
 	String itNombres = "";
 	String itApellidos = "";
 	String itTelefono = "";
-	String itInstitucionAnt = "";	
-	String itAlergias = "";	
 	String itDireccion = "";	
 	String soRepresentante = "";
 	String soTipoSangre = "";
 	String sorGenero = "";
 	Date cFechaNac = new Date();
+	
+	String itObservacion = "";
+	String itAlergOtras = "";
 
 	boolean ckEstado = false;
 
@@ -183,9 +184,9 @@ public class Estudiante {
 			ob.setMatRepresentante(representante);
 			ob.setApellidos(itApellidos);
 			ob.setNombres(itNombres);
-			ob.setAlergias(itAlergias);
+			ob.setAlergOtras(itAlergOtras);
 			ob.setDireccion(itDireccion);
-			ob.setInstitucionAnt(itInstitucionAnt);
+			ob.setObservacion(itObservacion);
 			ob.setFechaNac(cFechaNac);
 			ob.setTelefono(itTelefono);
 			ob.setGenero(sorGenero);
@@ -299,19 +300,7 @@ public class Estudiante {
 	}
 	public void setItTelefono(String itTelefono) {
 		this.itTelefono = itTelefono;
-	}
-	public String getItInstitucionAnt() {
-		return itInstitucionAnt;
-	}
-	public void setItInstitucionAnt(String itInstitucionAnt) {
-		this.itInstitucionAnt = itInstitucionAnt;
-	}
-	public String getItAlergias() {
-		return itAlergias;
-	}
-	public void setItAlergias(String itAlergias) {
-		this.itAlergias = itAlergias;
-	}
+	}	
 	public String getSoRepresentante() {
 		return soRepresentante;
 	}
@@ -353,5 +342,17 @@ public class Estudiante {
 	}
 	public void setItImagen(String itImagen) {
 		this.itImagen = itImagen;
+	}
+	public String getItObservacion() {
+		return itObservacion;
+	}
+	public void setItObservacion(String itObservacion) {
+		this.itObservacion = itObservacion;
+	}
+	public String getItAlergOtras() {
+		return itAlergOtras;
+	}
+	public void setItAlergOtras(String itAlergOtras) {
+		this.itAlergOtras = itAlergOtras;
 	}
 }

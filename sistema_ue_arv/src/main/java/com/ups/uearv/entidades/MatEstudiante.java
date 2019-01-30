@@ -21,7 +21,8 @@ public class MatEstudiante implements Serializable {
 	@Column(name="id_estudiante")
 	private String idEstudiante;
 
-	private String alergias;
+	@Column(name="alerg_otras")
+	private String alergOtras;
 
 	private String apellidos;
 
@@ -43,8 +44,7 @@ public class MatEstudiante implements Serializable {
 
 	private String genero;
 
-	@Column(name="institucion_ant")
-	private String institucionAnt;
+	private String observacion;
 
 	private String nombres;
 
@@ -79,14 +79,6 @@ public class MatEstudiante implements Serializable {
 
 	public void setIdEstudiante(String idEstudiante) {
 		this.idEstudiante = idEstudiante;
-	}
-
-	public String getAlergias() {
-		return this.alergias;
-	}
-
-	public void setAlergias(String alergias) {
-		this.alergias = alergias;
 	}
 
 	public String getApellidos() {
@@ -144,13 +136,21 @@ public class MatEstudiante implements Serializable {
 	public void setGenero(String genero) {
 		this.genero = genero;
 	}
-
-	public String getInstitucionAnt() {
-		return this.institucionAnt;
+	
+	public String getAlergOtras() {
+		return alergOtras;
 	}
 
-	public void setInstitucionAnt(String institucionAnt) {
-		this.institucionAnt = institucionAnt;
+	public void setAlergOtras(String alergOtras) {
+		this.alergOtras = alergOtras;
+	}
+
+	public String getObservacion() {
+		return observacion;
+	}
+
+	public void setObservacion(String observacion) {
+		this.observacion = observacion;
 	}
 
 	public String getNombres() {
