@@ -62,7 +62,8 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 				        </p:selectOneMenu>
 				        
 				        <p:spacer width="20px" />
-				        <p:commandButton id="btnVer" value="Ver" style="font-size: 12px !important;" actionListener="#{reporte.verLibretaCalifinaciones}" update="opLibreta" />
+				        <p:commandButton id="btnVer" value="Ver" style="font-size: 12px !important;" 
+				        	actionListener="#{reporte.verLibretaCalifinaciones}" update="opLibreta :form:growl" />
 				        
 				        <p:spacer width="20px" />
 				        <p:commandButton type="button" icon="fa fa-print" title="Imprimir" style="margin-right: 50px;">

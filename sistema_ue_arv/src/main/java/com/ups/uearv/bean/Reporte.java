@@ -12,8 +12,10 @@ import java.util.Iterator;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -39,6 +41,10 @@ public class Reporte implements Serializable {
 	private static EntityManager em = emf.createEntityManager();	
 
 	private static final long serialVersionUID = 1L;
+	
+	String mensaje = "";
+	String mensajeTitulo = "Mensaje del sistema";
+	String jpql = "";
 
 	String soPeriodoCal = "";
 	String soOfertaCal = "";
@@ -118,55 +124,96 @@ public class Reporte implements Serializable {
 	}
 
 	@SuppressWarnings("unchecked")
-	public void verLibretaCalifinaciones() {
-		libretaList.clear();
-		if (!soPeriodoCal.equals("NA")) {
-			if (!soOfertaCal.equals("NA")) {
-				if (!soEstudianteCal.equals("NA")) {
-					if (soParcial.equals("1")) { olParcial = "PRIMER PARCIAL"; }
-					if (soParcial.equals("2")) { olParcial = "SEGUNDO PARCIAL"; }
-					if (soParcial.equals("3")) { olParcial = "TERCER PARCIAL"; }					
-					if (soQuimestre.equals("1")) { olQuimestre = "PRIMER QUIMESTRE"; }
-					if (soQuimestre.equals("2")) { olQuimestre = "SEGUNDO QUIMESTRE"; }
-
-					String jpql = "CALL consulta_libreta_detalle (" + soPeriodoCal + "," + soOfertaCal + ",'" + soEstudianteCal + "'," + soQuimestre + "," + soParcial + ")";
-					List<Object> result1 = em.createNativeQuery(jpql).getResultList();
-					Iterator<Object> itr1 = result1.iterator();
-					for (int k = 0; k < result1.size(); k++) {
-						Object[] obj = (Object[]) itr1.next();
-
-						LibretaCal e = new LibretaCal();
-						e.setIdAsignatura(obj[0].toString());
-						e.setAsignatura(obj[1].toString());
-						e.setTarea(new BigDecimal(obj[2].toString()));
-						e.setActIndividual(new BigDecimal(obj[3].toString()));
-						e.setActGrupal(new BigDecimal(obj[4].toString()));
-						e.setLeccion(new BigDecimal(obj[5].toString()));
-						e.setEvaluacion(new BigDecimal(obj[6].toString()));
-						e.setPromedio(new BigDecimal(obj[7].toString()));
-						e.setEscala(obj[8].toString());
-						libretaList.add(e);
-
-						olPromedioFinal = obj[9].toString();
-						olPromedioEscala = obj[10].toString();
-					}
-
-					jpql = "CALL consulta_libreta_cabecera (" + soPeriodoCal + "," + soOfertaCal + ",'" + soEstudianteCal + "'," + soQuimestre + "," + soParcial + ")";
-					List<Object> result2 = em.createNativeQuery(jpql).getResultList();
-					Iterator<Object> itr2 = result2.iterator();
-					Object[] obj = (Object[]) itr2.next();
-					olEstudiante = obj[0].toString();
-					olGrado = obj[1].toString();
-					olAistencias = obj[2].toString();
-					olAtrasos = obj[3].toString();
-					olFaltas = obj[4].toString();
-					olFaltasJustif = obj[5].toString();
-					olComportamiento = obj[6].toString();
-					olProyectos = obj[7].toString();
-					olParalelo = obj[8].toString();
-				}
-			}
+	public void verLibretaCalifinaciones() {	
+		limpiarLibreta();
+		
+		if (soPeriodoCal.equals("NA")) {
+			mensaje = "Debe seleccionarel período";
+			FacesContext.getCurrentInstance().addMessage("growl", new FacesMessage(FacesMessage.SEVERITY_ERROR, mensajeTitulo, mensaje));
+			return;
 		}
+		if (soOfertaCal.equals("NA")) {
+			mensaje = "Debe seleccionar una oferta";
+			FacesContext.getCurrentInstance().addMessage("growl", new FacesMessage(FacesMessage.SEVERITY_ERROR, mensajeTitulo, mensaje));
+			return;
+		}
+		if (soEstudianteCal.equals("NA")) {
+			mensaje = "Debe seleccionar el estudiante";
+			FacesContext.getCurrentInstance().addMessage("growl", new FacesMessage(FacesMessage.SEVERITY_ERROR, mensajeTitulo, mensaje));
+			return;
+		}
+		
+		if (soParcial.equals("1")) { olParcial = "PRIMER PARCIAL"; }
+		if (soParcial.equals("2")) { olParcial = "SEGUNDO PARCIAL"; }
+		if (soParcial.equals("3")) { olParcial = "TERCER PARCIAL"; }					
+		if (soQuimestre.equals("1")) { olQuimestre = "PRIMER QUIMESTRE"; }
+		if (soQuimestre.equals("2")) { olQuimestre = "SEGUNDO QUIMESTRE"; }
+
+		// DETALLE
+		jpql = "CALL consulta_libreta_detalle (" + soPeriodoCal + "," + soOfertaCal + ",'" + soEstudianteCal + "'," + soQuimestre + "," + soParcial + ")";
+		List<Object> result1 = em.createNativeQuery(jpql).getResultList();
+		if (!result1.isEmpty()) {
+			Iterator<Object> itr1 = result1.iterator();
+			for (int k = 0; k < result1.size(); k++) {
+				Object[] obj = (Object[]) itr1.next();					
+				LibretaCal e = new LibretaCal();
+				e.setIdAsignatura(obj[0].toString());
+				e.setAsignatura(obj[1].toString());
+				e.setTarea(new BigDecimal(obj[2].toString()));
+				e.setActIndividual(new BigDecimal(obj[3].toString()));
+				e.setActGrupal(new BigDecimal(obj[4].toString()));
+				e.setLeccion(new BigDecimal(obj[5].toString()));
+				e.setEvaluacion(new BigDecimal(obj[6].toString()));
+				e.setPromedio(new BigDecimal(obj[7].toString()));
+				e.setEscala(obj[8].toString());
+				libretaList.add(e);
+				
+				olPromedioFinal = obj[9].toString();
+				olPromedioEscala = obj[10].toString();
+			}
+		} else {
+			limpiarLibreta();
+			mensaje = "Debe completar los datos del control académico";
+			FacesContext.getCurrentInstance().addMessage("growl", new FacesMessage(FacesMessage.SEVERITY_WARN, mensajeTitulo, mensaje));
+			return;
+		}
+
+		// CABECERA
+		jpql = "CALL consulta_libreta_cabecera (" + soPeriodoCal + "," + soOfertaCal + ",'" + soEstudianteCal + "'," + soQuimestre + "," + soParcial + ")";
+		List<Object> result2 = em.createNativeQuery(jpql).getResultList();
+		if (!result2.isEmpty()) {
+			Iterator<Object> itr2 = result2.iterator();
+			Object[] obj = (Object[]) itr2.next();
+			olEstudiante = obj[0].toString();
+			olGrado = obj[1].toString();
+			olAistencias = obj[2].toString();
+			olAtrasos = obj[3].toString();
+			olFaltas = obj[4].toString();
+			olFaltasJustif = obj[5].toString();
+			olComportamiento = obj[6].toString();
+			olProyectos = obj[7].toString();
+			olParalelo = obj[8].toString();	
+		} else {
+			limpiarLibreta();
+			mensaje = "Debe completar los datos del control parcial";
+			FacesContext.getCurrentInstance().addMessage("growl", new FacesMessage(FacesMessage.SEVERITY_WARN, mensajeTitulo, mensaje));
+			return;
+		}
+	}
+	
+	public void limpiarLibreta() {
+		libretaList.clear();
+		olPromedioFinal = "";
+		olPromedioEscala = "";
+		olEstudiante = "";
+		olGrado = "";
+		olAistencias = "";
+		olAtrasos = "";
+		olFaltas = "";
+		olFaltasJustif = "";
+		olComportamiento = "";
+		olProyectos = "";
+		olParalelo = "";
 	}
 
 	public List<SelectItem> llenaComboPeriodo() {
@@ -188,11 +235,11 @@ public class Reporte implements Serializable {
 	public Query getEstudiantesOferta() {		
 		String jpql = 
 				"SELECT e.id_estudiante, CONCAT(IFNULL(e.apellidos, ''), ' ', IFNULL(e.nombres, '')) nombre \r\n" + 
-						"FROM mat_estudiante e \r\n" + 
-						"	INNER JOIN mat_matricula m ON m.id_estudiante = e.id_estudiante \r\n" + 
-						"WHERE m.id_periodo = '" + soPeriodoCal + "' \r\n";		
-		if (!soOfertaCal.equals("NA")) { jpql = jpql + "AND m.id_oferta = '" + soOfertaCal + "' \r\n"; }	
-		jpql = jpql + "AND m.estado = 'AC' AND e.estado = 'AC' AND m.sn_aprobado = 'S' \r\n" + 
+				"FROM mat_estudiante e \r\n" + 
+				"	INNER JOIN mat_matricula m ON m.id_estudiante = e.id_estudiante \r\n" + 
+				"WHERE m.id_periodo = '" + soPeriodoCal + "' \r\n"+
+				"AND m.id_oferta = '" + soOfertaCal + "' \r\n"+
+				"AND m.estado = 'AC' AND e.estado = 'AC' AND m.sn_aprobado = 'S' \r\n" + 
 				"ORDER BY 2";
 
 		Query query = em.createNativeQuery(jpql);
