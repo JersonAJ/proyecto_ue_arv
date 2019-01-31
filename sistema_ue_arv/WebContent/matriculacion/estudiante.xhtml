@@ -154,8 +154,13 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 				.upload-button { font-size: 25px; }
 				.upload-button:hover { transition: all .3s cubic-bezier(.175, .885, .32, 1.275); color: #999; }
 				
+				.ui-accordion .ui-accordion-header .ui-icon { position: absolute; left: .5em; top: 5px; margin-top: 0px; }
+
 				body .ui-tabs.ui-tabs-bottom .ui-tabs-nav li a, body .ui-tabs.ui-tabs-left .ui-tabs-nav li a, body .ui-tabs.ui-tabs-right .ui-tabs-nav li a, body .ui-tabs.ui-tabs-top .ui-tabs-nav li a {
-    				padding: 8px 10px; color: #212121; font-weight: bold; font-size: 12px; }
+    				padding: 7px 10px; color: #212121; font-weight: bold; font-size: 12px; 
+    			}
+    			
+    			body .ui-accordion .ui-accordion-header { padding: 2px 10px; }
 			</style>
             
 			<p:dialog header="Datos Estudiante" widgetVar="dgl" modal="true" closable="true" maximizable="false" resizable="false" width="650px">
@@ -276,12 +281,14 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 									<p:inputText style="width: 300px" />
 									
 									<p:outputPanel style="text-align: end; padding: 5px">Cédula:</p:outputPanel>
-									<p:inputMask style="width: 80px" mask="9999999999" />
-									
-									<p:outputPanel style="text-align: end; padding: 5px">Estado civil:</p:outputPanel>
-									<p:selectOneMenu>
-										<f:selectItems value="#{docente.listEstadoCivil}" />		
-									</p:selectOneMenu>
+									<p:outputPanel style="display: inline-flex;">
+										<p:inputMask style="width: 80px" mask="9999999999" />
+										
+										<p:outputPanel style="text-align: end; padding: 5px">Estado civil:</p:outputPanel>
+										<p:selectOneMenu>
+											<f:selectItems value="#{docente.listEstadoCivil}" />		
+										</p:selectOneMenu>
+									</p:outputPanel>
 									
 									<p:outputPanel style="text-align: end; padding: 5px">Estudios:</p:outputPanel>
 									<h:selectOneRadio>            
@@ -313,10 +320,12 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 									<p:inputMask style="width: 80px" mask="9999999999" />
 									
 									<p:outputPanel style="text-align: end; padding: 5px">Celular:</p:outputPanel>
-									<p:inputMask style="width: 80px" mask="9999999999" />
-									
-									<p:outputPanel style="text-align: end; padding: 5px">Correo:</p:outputPanel>
-									<p:inputText style="width: 300px" />
+									<p:outputPanel style="display: inline-flex;">
+										<p:inputMask style="width: 80px" mask="9999999999" />
+										
+										<p:outputPanel style="text-align: end; padding: 5px">Correo:</p:outputPanel>
+										<p:inputText style="width: 300px" />
+									</p:outputPanel>
 								</h:panelGrid>
 							</p:tab>
 							
@@ -326,12 +335,14 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 									<p:inputText style="width: 300px" />
 															
 									<p:outputPanel style="text-align: end; padding: 5px">Cédula:</p:outputPanel>
-									<p:inputMask style="width: 80px" mask="9999999999" />
-								
-									<p:outputPanel style="text-align: end; padding: 5px">Estado civil:</p:outputPanel>
-									<p:selectOneMenu>
-										<f:selectItems value="#{docente.listEstadoCivil}" />		
-									</p:selectOneMenu>							
+									<p:outputPanel style="display: inline-flex;">
+										<p:inputMask style="width: 80px" mask="9999999999" />
+										
+										<p:outputPanel style="text-align: end; padding: 5px">Estado civil:</p:outputPanel>
+										<p:selectOneMenu>
+											<f:selectItems value="#{docente.listEstadoCivil}" />		
+										</p:selectOneMenu>
+									</p:outputPanel>
 									
 									<p:outputPanel style="text-align: end; padding: 5px">Estudios:</p:outputPanel>
 									<h:selectOneRadio>            
@@ -363,10 +374,12 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 									<p:inputMask style="width: 80px" mask="9999999999" />
 									
 									<p:outputPanel style="text-align: end; padding: 5px">Celular:</p:outputPanel>
-									<p:inputMask style="width: 80px" mask="9999999999" />
-									
-									<p:outputPanel style="text-align: end; padding: 5px">Correo:</p:outputPanel>
-									<p:inputText style="width: 300px" />
+									<p:outputPanel style="display: inline-flex;">
+										<p:inputMask style="width: 80px" mask="9999999999" />
+										
+										<p:outputPanel style="text-align: end; padding: 5px">Correo:</p:outputPanel>
+										<p:inputText style="width: 300px" />
+									</p:outputPanel>
 								</h:panelGrid>
 							</p:tab>	
 							
@@ -390,7 +403,17 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 					</p:tab>
 					
 					<p:tab title="Bio-Psico-Sociales">
-					
+						<h:panelGrid id="pnlPsico" columns="2" cellpadding="0" style="width: 100%" columnClasses="ui-grid-col-2,ui-grid-col-10">
+							<p:outputPanel style="text-align: end; padding: 5px">Vive con:</p:outputPanel>
+							<h:selectOneRadio >            					            
+					            <f:selectItem itemLabel="Padre" itemValue="PA" />
+					            <f:selectItem itemLabel="Madre" itemValue="MA" />
+					            <f:selectItem itemLabel="Ambos" itemValue="AP" />
+					            <f:selectItem itemLabel="Hermanos" itemValue="HE" />
+					            <f:selectItem itemLabel="Abuelos" itemValue="AB" />
+					            <f:selectItem itemLabel="Otros" itemValue="OP" />					            
+					        </h:selectOneRadio>
+						</h:panelGrid>       
 					</p:tab>
 					
 					<p:tab title="Médicos">

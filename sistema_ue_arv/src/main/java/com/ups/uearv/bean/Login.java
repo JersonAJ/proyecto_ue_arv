@@ -74,7 +74,6 @@ public class Login implements Serializable {
 			return navegacion.toLogin();
 
 		} catch (Exception e) {
-			e.printStackTrace();
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error de acceso:", "Contacte al administrador"));
 			usuario = null;
 			return navegacion.toLogin();
