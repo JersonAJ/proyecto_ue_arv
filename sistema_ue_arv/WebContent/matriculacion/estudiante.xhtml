@@ -390,37 +390,211 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 									<p:outputPanel style="font-weight: bold; color: #8f3b4f; padding: 5px">Tiene hermanos(as) estudiante en esta institución</p:outputPanel>
 									
 									<p:outputPanel />
-									<h:selectOneRadio>            
-							            <f:selectItem itemLabel="SI" itemValue="S" />
-							            <f:selectItem itemLabel="NO" itemValue="N" />
+									<h:selectOneRadio style="margin-top: -8px;">            
+							           	<f:selectItem itemLabel="Si" itemValue="S" />
+						          		<f:selectItem itemLabel="No" itemValue="N" />
 							        </h:selectOneRadio>
 							        
 							        <p:outputPanel />
-									<p:inputTextarea rows="3" style="width: 400px" placeholder="Nombre (Grado/Curso)"/>
+									<p:inputTextarea rows="3" style="width: 500px" placeholder="Nombre (Grado/Curso)"/>
 								</h:panelGrid>
 							</p:tab>
 						</p:accordionPanel>							
 					</p:tab>
 					
 					<p:tab title="Bio-Psico-Sociales">
-						<h:panelGrid id="pnlPsico" columns="2" cellpadding="0" style="width: 100%" columnClasses="ui-grid-col-2,ui-grid-col-10">
-							<p:outputPanel style="text-align: end; padding: 5px">Vive con:</p:outputPanel>
-							<h:selectOneRadio >            					            
-					            <f:selectItem itemLabel="Padre" itemValue="PA" />
-					            <f:selectItem itemLabel="Madre" itemValue="MA" />
-					            <f:selectItem itemLabel="Ambos" itemValue="AP" />
-					            <f:selectItem itemLabel="Hermanos" itemValue="HE" />
-					            <f:selectItem itemLabel="Abuelos" itemValue="AB" />
-					            <f:selectItem itemLabel="Otros" itemValue="OP" />					            
-					        </h:selectOneRadio>
-						</h:panelGrid>       
+						<p:accordionPanel>
+							<p:tab title="Sección 1">
+								<h:panelGrid id="pnlPsico1" columns="2" cellpadding="0" style="width: 100%" columnClasses="ui-grid-col-2,ui-grid-col-10">
+									<p:outputPanel />
+									<p:outputPanel style="font-weight: bold; color: #8f3b4f; padding: 5px">Actualmente vive con:</p:outputPanel>
+									<p:outputPanel />
+									<h:selectOneRadio style="margin-top: -8px;">            					            
+							            <f:selectItem itemLabel="Padre" itemValue="PA" />
+							            <f:selectItem itemLabel="Madre" itemValue="MA" />
+							            <f:selectItem itemLabel="Ambos Padres" itemValue="AP" />
+							            <f:selectItem itemLabel="Hermanos" itemValue="HE" />
+							            <f:selectItem itemLabel="Abuelos" itemValue="AB" />
+							            <f:selectItem itemLabel="Otros" itemValue="OP" />					            
+							        </h:selectOneRadio>
+							        
+							        <p:outputPanel />
+									<p:outputPanel style="font-weight: bold; color: #8f3b4f; padding: 5px">
+										<span title="Fallecimiento o separación de los padres, desempleo" >¿Hay algo de situación familiar que se pueda considerar especial?</span>
+									</p:outputPanel>									
+									<p:outputPanel />
+									<p:inputText style="width: 500px; margin-top: -10px;" />
+									
+									<p:outputPanel />
+									<p:outputPanel style="font-weight: bold; color: #8f3b4f; padding: 5px">¿Como es su relación con sus padres?</p:outputPanel>
+									<p:outputPanel />
+									<h:selectOneRadio style="margin-top: -8px;">            					            
+							            <f:selectItem itemLabel="Muy Buena" itemValue="MB" />
+							            <f:selectItem itemLabel="Buena" itemValue="BU" />
+							            <f:selectItem itemLabel="Regular" itemValue="RE" />
+							            <f:selectItem itemLabel="Mala" itemValue="MA" />
+							            <f:selectItem itemLabel="Muy Mala" itemValue="MM" />					            					            
+							        </h:selectOneRadio>
+									
+									<p:outputPanel />
+									<p:outputPanel style="font-weight: bold; color: #8f3b4f; padding: 5px">¿Recibe clases particulares o control de tareas?</p:outputPanel>
+									<p:outputPanel />							
+									<p:outputPanel style="display: inline-flex;">
+										<h:selectOneRadio>            
+								            <f:selectItem itemLabel="Si" itemValue="S" />
+								            <f:selectItem itemLabel="No" itemValue="N" />
+								        </h:selectOneRadio>
+										
+										<p:outputPanel style="text-align: end; padding: 5px">¿Por qué?</p:outputPanel>
+										<p:inputText style="width: 300px;" />
+									</p:outputPanel>
+									
+									<p:outputPanel />
+									<p:outputPanel style="font-weight: bold; color: #8f3b4f; padding: 5px"> 
+										<span title="Academia, natación, música, idiomas, informática" >¿Realiza otro tipo de estudios fuera del instituto?</span> 
+									</p:outputPanel>
+									<p:outputPanel />							
+									<p:outputPanel style="display: inline-flex;">
+										<h:selectOneRadio>            
+								            <f:selectItem itemLabel="Si" itemValue="S" />
+								            <f:selectItem itemLabel="No" itemValue="N" />
+								        </h:selectOneRadio>
+										
+										<p:outputPanel style="text-align: end; padding: 5px">¿Cuál?</p:outputPanel>
+										<p:inputText style="width: 300px;" />
+									</p:outputPanel>									
+								</h:panelGrid>
+							</p:tab>
+							
+							<p:tab title="Sección 2">
+								<h:panelGrid id="pnlPsico2" columns="2" cellpadding="0" style="width: 100%" columnClasses="ui-grid-col-2,ui-grid-col-10">
+									<p:outputPanel />
+									<p:outputPanel style="font-weight: bold; color: #8f3b4f; padding: 5px">¿Como piensa que ha sido su rendimiento hasta ahora?</p:outputPanel>
+									<p:outputPanel />
+									<h:selectOneRadio style="margin-top: -8px;">            					            
+							            <f:selectItem itemLabel="Muy Bueno" itemValue="MB" />
+							            <f:selectItem itemLabel="Bueno" itemValue="BU" />
+							            <f:selectItem itemLabel="Regular" itemValue="RE" />
+							            <f:selectItem itemLabel="Malo" itemValue="MA" />
+							            <f:selectItem itemLabel="Muy Malo" itemValue="MM" />					            					            
+							        </h:selectOneRadio>
+								
+								  	<p:outputPanel />
+									<p:outputPanel style="font-weight: bold; color: #8f3b4f; padding: 5px">
+										Las asignaturas que más le han gustado en los últimos grados han sido:
+									</p:outputPanel>									
+									<p:outputPanel />
+									<p:inputText style="width: 500px; margin-top: -10px;" />
+									
+									<p:outputPanel />
+									<p:outputPanel style="font-weight: bold; color: #8f3b4f; padding: 5px">
+										Las asignaturas que menos le han interesado en los últimos grados han sido:
+									</p:outputPanel>									
+									<p:outputPanel />
+									<p:inputText style="width: 500px; margin-top: -10px;" />
+									
+									<p:outputPanel />
+									<p:outputPanel style="font-weight: bold; color: #8f3b4f; padding: 5px">
+										¿Como reaccionan sus padres ante las notas?
+									</p:outputPanel>									
+									<p:outputPanel />
+									<p:inputText style="width: 500px; margin-top: -10px;" />
+									
+									<p:outputPanel />
+									<p:outputPanel style="padding: 5px; display: inline-flex"> 
+										<span style="font-weight: bold; color: #8f3b4f;">¿Crees que cumples con lo que ellos esperan de ti?</span>
+										<h:selectOneRadio style="margin-top: -4px;">                
+								            <f:selectItem itemLabel="Si" itemValue="S" />
+								            <f:selectItem itemLabel="No" itemValue="N" />
+								        </h:selectOneRadio> 
+									</p:outputPanel>									
+							        
+							        <p:outputPanel />								
+							        <p:outputPanel style="font-weight: bold; color: #8f3b4f; padding: 5px; margin-top: -10px;">
+										¿Por qué lo crees así?
+									</p:outputPanel>
+									<p:outputPanel />
+									<p:inputText style="width: 500px; margin-top: -10px;" />								
+								</h:panelGrid>
+							</p:tab>
+						</p:accordionPanel>       
 					</p:tab>
 					
-					<p:tab title="Médicos">
-						<h:panelGrid id="pnlMedicos" columns="2" cellpadding="0" style="width: 100%" columnClasses="ui-grid-col-2,ui-grid-col-10">
-							<p:outputPanel style="text-align: end; padding: 5px">Otras Alergias:</p:outputPanel>
-							<p:inputTextarea value="#{estudiante.itAlergOtras}" rows="1" style="width: 96%" />
-						</h:panelGrid>					
+					<p:tab title="Médicos">					
+						<p:accordionPanel>
+							<p:tab title="Sección 1">
+								<h:panelGrid id="pnlMedicos1" columns="2" cellpadding="0" style="width: 100%" columnClasses="ui-grid-col-2,ui-grid-col-10">							
+									<p:outputPanel />
+									<p:outputPanel style="font-weight: bold; color: #8f3b4f; padding: 5px">
+										<span title="Oído, vista, enfermedades respiratorias,...">
+										¿Padece alguna enfermedad o existe alguna condición física que le afecte?</span>
+									</p:outputPanel>
+									<p:outputPanel />
+									<h:selectOneRadio style="margin-top: -8px; width: 500px;">            					            
+							            <f:selectItem itemLabel="Asma" itemValue="BU" />
+							            <f:selectItem itemLabel="Epilepsia" itemValue="BU" />
+							            <f:selectItem itemLabel="Diabetes" itemValue="RE" />
+							            <f:selectItem itemLabel="Migraña" itemValue="MA" />
+							            <f:selectItem itemLabel="Arritmia cardiaca" itemValue="BU" />
+							            <f:selectItem itemLabel="Hemofilia" itemValue="MA" />					            					            
+							        </h:selectOneRadio>
+									
+									<p:outputPanel />
+									<p:outputPanel style="font-weight: bold; color: #8f3b4f; padding: 5px"> 
+										¿Es alérgico a algún medicamento? 
+									</p:outputPanel>
+									<p:outputPanel />							
+									<p:outputPanel style="display: inline-flex;">
+										<h:selectOneRadio>            
+								            <f:selectItem itemLabel="Si" itemValue="S" />
+								            <f:selectItem itemLabel="No" itemValue="N" />
+								        </h:selectOneRadio>
+										
+										<p:outputPanel style="text-align: end; padding: 5px">¿Cuál?</p:outputPanel>
+										<p:inputText style="width: 200px;" />
+									</p:outputPanel>
+									
+									<p:outputPanel />
+									<p:outputPanel style="font-weight: bold; color: #8f3b4f; padding: 5px"> 
+										¿Es alérgico a la picadura de algún insecto? 
+									</p:outputPanel>
+									<p:outputPanel />							
+									<p:outputPanel style="display: inline-flex;">
+										<h:selectOneRadio>            
+								            <f:selectItem itemLabel="Si" itemValue="S" />
+								            <f:selectItem itemLabel="No" itemValue="N" />
+								        </h:selectOneRadio>
+										
+										<p:outputPanel style="text-align: end; padding: 5px">¿Cuál?</p:outputPanel>
+										<p:inputText style="width: 200px;" />
+									</p:outputPanel>												
+									
+									<p:outputPanel />
+									<p:outputPanel style="font-weight: bold; color: #8f3b4f; padding: 5px"> 
+										¿Es alérgico a algún alimento?  
+									</p:outputPanel>
+									<p:outputPanel />							
+									<p:outputPanel style="display: inline-flex;">
+										<h:selectOneRadio>            
+								            <f:selectItem itemLabel="Si" itemValue="S" />
+								            <f:selectItem itemLabel="No" itemValue="N" />
+								        </h:selectOneRadio>
+										
+										<p:outputPanel style="text-align: end; padding: 5px">¿Cuál?</p:outputPanel>
+										<p:inputText style="width: 200px;" />
+									</p:outputPanel>
+									
+									<p:outputPanel />
+									<p:outputPanel style="display: inline-flex; margin-top: 5px;">
+										<p:outputPanel style="font-weight: bold; color: #8f3b4f; padding: 5px"> 
+											Otras: 
+										</p:outputPanel>
+										<p:inputTextarea value="#{estudiante.itAlergOtras}" rows="1" style="width: 400px" />
+									</p:outputPanel>
+								</h:panelGrid>		
+							</p:tab>							
+							
+						</p:accordionPanel>									
 					</p:tab>
 				</p:tabView>
 				
