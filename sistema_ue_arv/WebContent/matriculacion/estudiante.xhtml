@@ -592,8 +592,92 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 										<p:inputTextarea value="#{estudiante.itAlergOtras}" rows="1" style="width: 400px" />
 									</p:outputPanel>
 								</h:panelGrid>		
-							</p:tab>							
-							
+							</p:tab>		
+							<p:tab title="Sección 2">
+								<h:panelGrid id="pnlMedicos2" columns="2" cellpadding="0" style="width: 100%" columnClasses="ui-grid-col-2,ui-grid-col-10">
+									<p:outputPanel />
+									<p:outputPanel style="display: inline-flex;">
+										<p:outputPanel style="font-weight: bold; color: #8f3b4f; padding: 5px"> 
+											Actualmente ¿Recibe algún tratamiento médico o psicológico?  
+										</p:outputPanel>
+										
+										<h:selectOneRadio>            
+								            <f:selectItem itemLabel="Si" itemValue="S" />
+								            <f:selectItem itemLabel="No" itemValue="N" />
+								        </h:selectOneRadio>
+									</p:outputPanel>
+									
+									<p:outputPanel />
+									<p:outputPanel style="display: inline-flex;">
+										<p:outputPanel style="font-weight: bold; color: #8f3b4f; padding: 5px"> 
+											¿Lo ha recibido alguna vez? 
+										</p:outputPanel>
+										
+										<h:selectOneRadio>            
+								            <f:selectItem itemLabel="Si" itemValue="S" />
+								            <f:selectItem itemLabel="No" itemValue="N" />
+								        </h:selectOneRadio>
+									</p:outputPanel>
+									
+									<p:outputPanel />
+									<p:outputPanel style="font-weight: bold; color: #8f3b4f; padding: 5px"> 
+										¿Ha estado alguna vez hospitalizado?  
+									</p:outputPanel>
+									<p:outputPanel />							
+									<p:outputPanel style="display: inline-flex;">
+										<h:selectOneRadio>            
+								            <f:selectItem itemLabel="Si" itemValue="S" />
+								            <f:selectItem itemLabel="No" itemValue="N" />
+								        </h:selectOneRadio>
+										
+										<p:outputPanel style="text-align: end; padding: 5px">Motivo:</p:outputPanel>
+										<p:inputText style="width: 250px;" />
+									</p:outputPanel>
+									
+									<p:outputPanel />
+									<p:outputPanel style="font-weight: bold; color: #8f3b4f; padding: 5px"> 
+										¿Estás operado(a) de algo?  
+									</p:outputPanel>
+									<p:outputPanel />							
+									<p:outputPanel style="display: inline-flex;">
+										<h:selectOneRadio>            
+								            <f:selectItem itemLabel="Si" itemValue="S" />
+								            <f:selectItem itemLabel="No" itemValue="N" />
+								        </h:selectOneRadio>
+										
+										<p:outputPanel style="text-align: end; padding: 5px">¿De qué?</p:outputPanel>
+										<p:inputText style="width: 250px;" />
+									</p:outputPanel>
+									
+									<p:outputPanel />
+									<p:outputPanel style="display: inline-flex;">
+										<p:outputPanel style="font-weight: bold; color: #8f3b4f; padding: 5px"> 
+											¿Padece alguna minusvalía? Indique el motivo y grado  
+										</p:outputPanel>
+										<h:selectOneRadio>            
+								            <f:selectItem itemLabel="Si" itemValue="S" />
+								            <f:selectItem itemLabel="No" itemValue="N" />
+								        </h:selectOneRadio>
+								    </p:outputPanel>
+									
+									<p:outputPanel />							
+									<p:outputPanel style="display: inline-flex;">
+										<p:outputPanel style="text-align: end; padding: 5px">Motivo:</p:outputPanel>
+										<p:inputText style="width: 200px;" />
+										
+										<p:outputPanel style="text-align: end; padding: 5px">Grado:</p:outputPanel>
+										<p:selectOneMenu>
+											<f:selectItem itemLabel="Seleccione" itemValue="" />
+											<f:selectItem itemLabel="Nula" itemValue="Nula" />
+											<f:selectItem itemLabel="Leve" itemValue="Leve" />			
+											<f:selectItem itemLabel="Moderada" itemValue="Moderada" />
+											<f:selectItem itemLabel="Grave" itemValue="Grave" />
+											<f:selectItem itemLabel="Muy Grave" itemValue="Muy Grave" />
+										</p:selectOneMenu>
+									</p:outputPanel>
+								
+								</h:panelGrid>				
+							</p:tab>
 						</p:accordionPanel>									
 					</p:tab>
 				</p:tabView>
