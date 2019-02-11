@@ -39,22 +39,90 @@ import com.ups.uearv.servicios.Util;
 @ViewScoped
 public class Estudiante {
 
+	// PERSONAL
 	static String itCedula = "";
 	String itNombres = "";
 	String itApellidos = "";
-	String itTelefono = "";
-	String itDireccion = "";	
 	String soRepresentante = "";
-	String soTipoSangre = "";
 	String sorGenero = "";
+	String soTipoSangre = "";
+	String itLugarNac = "";
+	String itNacionalidad = "";	
 	Date cFechaNac = new Date();
-	
+	boolean ckDiscapacidad = false;
 	String itObservacion = "";
-	String itAlergOtras = "";
-
 	boolean ckEstado = false;
-
 	String itImagen = "";
+	
+	// RESIDENCIA
+	String itProvincia = "";
+	String itCanton = "";
+	String itCiudad = "";
+	String itParroquia = "";
+	String itTelefono = "";
+	String itDireccion = "";
+	String itPersonaEmerg = "";
+	String itTelefonoEmerg = "";
+	
+	// FAMILIARES
+	String itPaNombre = "";
+	String itPaCedula = "";
+	String soPaEstadoCivil = "";
+	String opPaEstudios = "";	
+	String itPaProfesion = "";
+	String opPaOcupacion = "";
+	String itPaInstitucion = "";
+	String itPaPuesto = "";
+	String itPaTelefono = "";
+	String itPaCelular = "";
+	String itPaCorreo = "";
+	String itMaNombre = "";
+	String itMaCedula = "";
+	String soMaEstadoCivil = "";
+	String opMaEstudios = "";	
+	String itMaProfesion = "";
+	String opMaOcupacion = "";
+	String itMaInstitucion = "";
+	String itMaPuesto = "";
+	String itMaTelefono = "";
+	String itMaCelular = "";
+	String itMaCorreo = "";
+	String snHermanos = "";
+	String itHermanos = "";
+	
+	// BI-PSICO SOCIALES
+	String opViveCon = "";
+	String itSituacionFam = "";
+	String opRelacionPadres = "";
+	String snClasesPart = "";
+	String itClasesPart = "";
+	String snEstudiosFuera = "";
+	String itEstudiosFuera = "";
+	String opRendimiento = "";
+	String itAsigMas = "";
+	String itAsigMenos = "";
+	String itReaccionPadres = "";
+	String snCumples = "";
+	String itCumples = "";
+	
+	// MEDICOS	
+	String opEnfermedad = "";
+	String snAlergiaMed = "";
+	String itAlergiaMed = "";
+	String snAlergiaIns = "";
+	String itAlergiaIns = "";
+	String snAlergiaAli = "";
+	String itAlergiaAli = "";
+	String itAlergOtras = "";
+	String snTratamientoAct = "";
+	String snTratamientoAnt = "";
+	String snHospital = "";
+	String itHospital = "";
+	String snOperado = "";
+	String itOperado = "";
+	String snMinusvalia = "";
+	String itMinusvalia = "";
+	String soGradoMinusvalia = "";
 	
 	String itBuscar = "";
 	boolean ckMostrarIC = false;
@@ -63,7 +131,8 @@ public class Estudiante {
 
 	ArrayList<SelectItem> listTipoSangre = new ArrayList<SelectItem>();
 	ArrayList<SelectItem> listRepresentante = new ArrayList<SelectItem>();
-
+	ArrayList<SelectItem> listEstadoCivil = new ArrayList<SelectItem>();
+	
 	private static EntityManagerFactory emf = Persistence.createEntityManagerFactory("sismacc");
 
 	int accion = 0; // 0 = ingresar; 1 = modificar
@@ -83,6 +152,8 @@ public class Estudiante {
 
 		listRepresentante = (ArrayList<SelectItem>) llenaComboRepresentante();
 		soRepresentante = listRepresentante.get(0).getValue().toString();
+
+		listEstadoCivil = (ArrayList<SelectItem>) llenaComboEstadoCivil();
 
 		buscar();
 	}
@@ -110,6 +181,10 @@ public class Estudiante {
 			FacesMessage message = new FacesMessage("Succesful", fuFoto.getFileName() + " is uploaded.");
 			FacesContext.getCurrentInstance().addMessage(null, message);
 		}
+	}
+	
+	public List<SelectItem> llenaComboEstadoCivil() {
+		return Util.llenaCombo(DAO.getDetCatalogo("EC000"), 2);
 	}
 		
 	// INGRESO - ACTUALIZACION		
@@ -354,5 +429,377 @@ public class Estudiante {
 	}
 	public void setItAlergOtras(String itAlergOtras) {
 		this.itAlergOtras = itAlergOtras;
+	}
+	public String getItLugarNac() {
+		return itLugarNac;
+	}
+	public void setItLugarNac(String itLugarNac) {
+		this.itLugarNac = itLugarNac;
+	}
+	public String getItNacionalidad() {
+		return itNacionalidad;
+	}
+	public void setItNacionalidad(String itNacionalidad) {
+		this.itNacionalidad = itNacionalidad;
+	}
+	public boolean isCkDiscapacidad() {
+		return ckDiscapacidad;
+	}
+	public void setCkDiscapacidad(boolean ckDiscapacidad) {
+		this.ckDiscapacidad = ckDiscapacidad;
+	}
+	public String getItProvincia() {
+		return itProvincia;
+	}
+	public void setItProvincia(String itProvincia) {
+		this.itProvincia = itProvincia;
+	}
+	public String getItCanton() {
+		return itCanton;
+	}
+	public void setItCanton(String itCanton) {
+		this.itCanton = itCanton;
+	}
+	public String getItCiudad() {
+		return itCiudad;
+	}
+	public void setItCiudad(String itCiudad) {
+		this.itCiudad = itCiudad;
+	}
+	public String getItParroquia() {
+		return itParroquia;
+	}
+	public void setItParroquia(String itParroquia) {
+		this.itParroquia = itParroquia;
+	}
+	public String getItPersonaEmerg() {
+		return itPersonaEmerg;
+	}
+	public void setItPersonaEmerg(String itPersonaEmerg) {
+		this.itPersonaEmerg = itPersonaEmerg;
+	}
+	public String getItTelefonoEmerg() {
+		return itTelefonoEmerg;
+	}
+	public void setItTelefonoEmerg(String itTelefonoEmerg) {
+		this.itTelefonoEmerg = itTelefonoEmerg;
+	}
+	public String getItPaNombre() {
+		return itPaNombre;
+	}
+	public void setItPaNombre(String itPaNombre) {
+		this.itPaNombre = itPaNombre;
+	}
+	public String getItPaCedula() {
+		return itPaCedula;
+	}
+	public void setItPaCedula(String itPaCedula) {
+		this.itPaCedula = itPaCedula;
+	}
+	public String getSoPaEstadoCivil() {
+		return soPaEstadoCivil;
+	}
+	public void setSoPaEstadoCivil(String soPaEstadoCivil) {
+		this.soPaEstadoCivil = soPaEstadoCivil;
+	}
+	public String getOpPaEstudios() {
+		return opPaEstudios;
+	}
+	public void setOpPaEstudios(String opPaEstudios) {
+		this.opPaEstudios = opPaEstudios;
+	}
+	public String getItPaProfesion() {
+		return itPaProfesion;
+	}
+	public void setItPaProfesion(String itPaProfesion) {
+		this.itPaProfesion = itPaProfesion;
+	}
+	public String getOpPaOcupacion() {
+		return opPaOcupacion;
+	}
+	public void setOpPaOcupacion(String opPaOcupacion) {
+		this.opPaOcupacion = opPaOcupacion;
+	}
+	public String getItPaInstitucion() {
+		return itPaInstitucion;
+	}
+	public void setItPaInstitucion(String itPaInstitucion) {
+		this.itPaInstitucion = itPaInstitucion;
+	}
+	public String getItPaPuesto() {
+		return itPaPuesto;
+	}
+	public void setItPaPuesto(String itPaPuesto) {
+		this.itPaPuesto = itPaPuesto;
+	}
+	public String getItPaTelefono() {
+		return itPaTelefono;
+	}
+	public void setItPaTelefono(String itPaTelefono) {
+		this.itPaTelefono = itPaTelefono;
+	}
+	public String getItPaCelular() {
+		return itPaCelular;
+	}
+	public void setItPaCelular(String itPaCelular) {
+		this.itPaCelular = itPaCelular;
+	}
+	public String getItPaCorreo() {
+		return itPaCorreo;
+	}
+	public void setItPaCorreo(String itPaCorreo) {
+		this.itPaCorreo = itPaCorreo;
+	}
+	public String getItMaNombre() {
+		return itMaNombre;
+	}
+	public void setItMaNombre(String itMaNombre) {
+		this.itMaNombre = itMaNombre;
+	}
+	public String getItMaCedula() {
+		return itMaCedula;
+	}
+	public void setItMaCedula(String itMaCedula) {
+		this.itMaCedula = itMaCedula;
+	}
+	public String getSoMaEstadoCivil() {
+		return soMaEstadoCivil;
+	}
+	public void setSoMaEstadoCivil(String soMaEstadoCivil) {
+		this.soMaEstadoCivil = soMaEstadoCivil;
+	}
+	public String getOpMaEstudios() {
+		return opMaEstudios;
+	}
+	public void setOpMaEstudios(String opMaEstudios) {
+		this.opMaEstudios = opMaEstudios;
+	}
+	public String getItMaProfesion() {
+		return itMaProfesion;
+	}
+	public void setItMaProfesion(String itMaProfesion) {
+		this.itMaProfesion = itMaProfesion;
+	}
+	public String getOpMaOcupacion() {
+		return opMaOcupacion;
+	}
+	public void setOpMaOcupacion(String opMaOcupacion) {
+		this.opMaOcupacion = opMaOcupacion;
+	}
+	public String getItMaInstitucion() {
+		return itMaInstitucion;
+	}
+	public void setItMaInstitucion(String itMaInstitucion) {
+		this.itMaInstitucion = itMaInstitucion;
+	}
+	public String getItMaPuesto() {
+		return itMaPuesto;
+	}
+	public void setItMaPuesto(String itMaPuesto) {
+		this.itMaPuesto = itMaPuesto;
+	}
+	public String getItMaTelefono() {
+		return itMaTelefono;
+	}
+	public void setItMaTelefono(String itMaTelefono) {
+		this.itMaTelefono = itMaTelefono;
+	}
+	public String getItMaCelular() {
+		return itMaCelular;
+	}
+	public void setItMaCelular(String itMaCelular) {
+		this.itMaCelular = itMaCelular;
+	}
+	public String getItMaCorreo() {
+		return itMaCorreo;
+	}
+	public void setItMaCorreo(String itMaCorreo) {
+		this.itMaCorreo = itMaCorreo;
+	}
+	public String getSnHermanos() {
+		return snHermanos;
+	}
+	public void setSnHermanos(String snHermanos) {
+		this.snHermanos = snHermanos;
+	}
+	public String getItHermanos() {
+		return itHermanos;
+	}
+	public void setItHermanos(String itHermanos) {
+		this.itHermanos = itHermanos;
+	}
+	public String getOpViveCon() {
+		return opViveCon;
+	}
+	public void setOpViveCon(String opViveCon) {
+		this.opViveCon = opViveCon;
+	}
+	public String getItSituacionFam() {
+		return itSituacionFam;
+	}
+	public void setItSituacionFam(String itSituacionFam) {
+		this.itSituacionFam = itSituacionFam;
+	}
+	public String getOpRelacionPadres() {
+		return opRelacionPadres;
+	}
+	public void setOpRelacionPadres(String opRelacionPadres) {
+		this.opRelacionPadres = opRelacionPadres;
+	}
+	public String getSnClasesPart() {
+		return snClasesPart;
+	}
+	public void setSnClasesPart(String snClasesPart) {
+		this.snClasesPart = snClasesPart;
+	}
+	public String getItClasesPart() {
+		return itClasesPart;
+	}
+	public void setItClasesPart(String itClasesPart) {
+		this.itClasesPart = itClasesPart;
+	}
+	public String getSnEstudiosFuera() {
+		return snEstudiosFuera;
+	}
+	public void setSnEstudiosFuera(String snEstudiosFuera) {
+		this.snEstudiosFuera = snEstudiosFuera;
+	}
+	public String getItEstudiosFuera() {
+		return itEstudiosFuera;
+	}
+	public void setItEstudiosFuera(String itEstudiosFuera) {
+		this.itEstudiosFuera = itEstudiosFuera;
+	}
+	public String getOpRendimiento() {
+		return opRendimiento;
+	}
+	public void setOpRendimiento(String opRendimiento) {
+		this.opRendimiento = opRendimiento;
+	}
+	public String getItAsigMas() {
+		return itAsigMas;
+	}
+	public void setItAsigMas(String itAsigMas) {
+		this.itAsigMas = itAsigMas;
+	}
+	public String getItAsigMenos() {
+		return itAsigMenos;
+	}
+	public void setItAsigMenos(String itAsigMenos) {
+		this.itAsigMenos = itAsigMenos;
+	}
+	public String getItReaccionPadres() {
+		return itReaccionPadres;
+	}
+	public void setItReaccionPadres(String itReaccionPadres) {
+		this.itReaccionPadres = itReaccionPadres;
+	}
+	public String getSnCumples() {
+		return snCumples;
+	}
+	public void setSnCumples(String snCumples) {
+		this.snCumples = snCumples;
+	}
+	public String getItCumples() {
+		return itCumples;
+	}
+	public void setItCumples(String itCumples) {
+		this.itCumples = itCumples;
+	}
+	public String getOpEnfermedad() {
+		return opEnfermedad;
+	}
+	public void setOpEnfermedad(String opEnfermedad) {
+		this.opEnfermedad = opEnfermedad;
+	}
+	public String getSnAlergiaMed() {
+		return snAlergiaMed;
+	}
+	public void setSnAlergiaMed(String snAlergiaMed) {
+		this.snAlergiaMed = snAlergiaMed;
+	}
+	public String getItAlergiaMed() {
+		return itAlergiaMed;
+	}
+	public void setItAlergiaMed(String itAlergiaMed) {
+		this.itAlergiaMed = itAlergiaMed;
+	}
+	public String getSnAlergiaIns() {
+		return snAlergiaIns;
+	}
+	public void setSnAlergiaIns(String snAlergiaIns) {
+		this.snAlergiaIns = snAlergiaIns;
+	}
+	public String getItAlergiaIns() {
+		return itAlergiaIns;
+	}
+	public void setItAlergiaIns(String itAlergiaIns) {
+		this.itAlergiaIns = itAlergiaIns;
+	}
+	public String getSnAlergiaAli() {
+		return snAlergiaAli;
+	}
+	public void setSnAlergiaAli(String snAlergiaAli) {
+		this.snAlergiaAli = snAlergiaAli;
+	}
+	public String getItAlergiaAli() {
+		return itAlergiaAli;
+	}
+	public void setItAlergiaAli(String itAlergiaAli) {
+		this.itAlergiaAli = itAlergiaAli;
+	}
+	public String getSnTratamientoAct() {
+		return snTratamientoAct;
+	}
+	public void setSnTratamientoAct(String snTratamientoAct) {
+		this.snTratamientoAct = snTratamientoAct;
+	}
+	public String getSnTratamientoAnt() {
+		return snTratamientoAnt;
+	}
+	public void setSnTratamientoAnt(String snTratamientoAnt) {
+		this.snTratamientoAnt = snTratamientoAnt;
+	}
+	public String getSnHospital() {
+		return snHospital;
+	}
+	public void setSnHospital(String snHospital) {
+		this.snHospital = snHospital;
+	}
+	public String getItHospital() {
+		return itHospital;
+	}
+	public void setItHospital(String itHospital) {
+		this.itHospital = itHospital;
+	}
+	public String getSnOperado() {
+		return snOperado;
+	}
+	public void setSnOperado(String snOperado) {
+		this.snOperado = snOperado;
+	}
+	public String getItOperado() {
+		return itOperado;
+	}
+	public void setItOperado(String itOperado) {
+		this.itOperado = itOperado;
+	}
+	public String getSnMinusvalia() {
+		return snMinusvalia;
+	}
+	public void setSnMinusvalia(String snMinusvalia) {
+		this.snMinusvalia = snMinusvalia;
+	}
+	public String getItMinusvalia() {
+		return itMinusvalia;
+	}
+	public void setItMinusvalia(String itMinusvalia) {
+		this.itMinusvalia = itMinusvalia;
+	}
+	public String getSoGradoMinusvalia() {
+		return soGradoMinusvalia;
+	}
+	public void setSoGradoMinusvalia(String soGradoMinusvalia) {
+		this.soGradoMinusvalia = soGradoMinusvalia;
 	}
 }
