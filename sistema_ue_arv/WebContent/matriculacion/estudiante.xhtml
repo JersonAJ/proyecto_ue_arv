@@ -28,15 +28,79 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 					<f:setPropertyActionListener value="M" target="#{estudiante.sorGenero}" />
 					<f:setPropertyActionListener value="" target="#{estudiante.soRepresentante}" />
 					<f:setPropertyActionListener value="" target="#{estudiante.soTipoSangre}" />
+					<f:setPropertyActionListener value="" target="#{estudiante.itLugarNac}" />
+					<f:setPropertyActionListener value="" target="#{estudiante.itNacionalidad}" />
+					<f:setPropertyActionListener value="false" target="#{estudiante.ckDiscapacidad}" />
 					<f:setPropertyActionListener value="true" target="#{estudiante.ckEstado}" />
 					<f:setPropertyActionListener value="" target="#{estudiante.itObservacion}" />
 					<f:setPropertyActionListener value="#{request.contextPath}/fotos/FOTO_DEFAULT.png" target="#{estudiante.itImagen}" />
-					
+															
+					<f:setPropertyActionListener value="" target="#{estudiante.itProvincia}" />
+					<f:setPropertyActionListener value="" target="#{estudiante.itCanton}" />
+					<f:setPropertyActionListener value="" target="#{estudiante.itCiudad}" />
+					<f:setPropertyActionListener value="" target="#{estudiante.itParroquia}" />
 					<f:setPropertyActionListener value="" target="#{estudiante.itTelefono}" />
 					<f:setPropertyActionListener value="" target="#{estudiante.itDireccion}" />
+					<f:setPropertyActionListener value="" target="#{estudiante.itPersonaEmerg}" />
+					<f:setPropertyActionListener value="" target="#{estudiante.itTelefonoEmerg}" />
 					
-					<f:setPropertyActionListener value="" target="#{estudiante.itAlergOtras}" />
+					<f:setPropertyActionListener value="" target="#{estudiante.itPaNombre}" />
+					<f:setPropertyActionListener value="" target="#{estudiante.itPaCedula}" />
+					<f:setPropertyActionListener value="" target="#{estudiante.soPaEstadoCivil}" />
+					<f:setPropertyActionListener value="" target="#{estudiante.opPaEstudios}" />
+					<f:setPropertyActionListener value="" target="#{estudiante.itPaProfesion}" />
+					<f:setPropertyActionListener value="" target="#{estudiante.opPaOcupacion}" />
+					<f:setPropertyActionListener value="" target="#{estudiante.itPaInstitucion}" />
+					<f:setPropertyActionListener value="" target="#{estudiante.itPaPuesto}" />
+					<f:setPropertyActionListener value="" target="#{estudiante.itPaTelefono}" />
+					<f:setPropertyActionListener value="" target="#{estudiante.itPaCelular}" />
+					<f:setPropertyActionListener value="" target="#{estudiante.itPaCorreo}" />
+					<f:setPropertyActionListener value="" target="#{estudiante.itMaNombre}" />
+					<f:setPropertyActionListener value="" target="#{estudiante.itMaCedula}" />
+					<f:setPropertyActionListener value="" target="#{estudiante.soMaEstadoCivil}" />
+					<f:setPropertyActionListener value="" target="#{estudiante.opMaEstudios}" />
+					<f:setPropertyActionListener value="" target="#{estudiante.itMaProfesion}" />
+					<f:setPropertyActionListener value="" target="#{estudiante.opMaOcupacion}" />
+					<f:setPropertyActionListener value="" target="#{estudiante.itMaInstitucion}" />
+					<f:setPropertyActionListener value="" target="#{estudiante.itMaPuesto}" />
+					<f:setPropertyActionListener value="" target="#{estudiante.itMaTelefono}" />
+					<f:setPropertyActionListener value="" target="#{estudiante.itMaCelular}" />
+					<f:setPropertyActionListener value="" target="#{estudiante.itMaCorreo}" />
+					<f:setPropertyActionListener value="" target="#{estudiante.snHermanos}" />
+					<f:setPropertyActionListener value="" target="#{estudiante.itHermanos}" />
+					
+					<f:setPropertyActionListener value="" target="#{estudiante.opViveCon}" />
+					<f:setPropertyActionListener value="" target="#{estudiante.itSituacionFam}" />
+					<f:setPropertyActionListener value="" target="#{estudiante.opRelacionPadres}" />
+					<f:setPropertyActionListener value="" target="#{estudiante.snClasesPart}" />
+					<f:setPropertyActionListener value="" target="#{estudiante.itClasesPart}" />
+					<f:setPropertyActionListener value="" target="#{estudiante.snEstudiosFuera}" />
+					<f:setPropertyActionListener value="" target="#{estudiante.itEstudiosFuera}" />
+					<f:setPropertyActionListener value="" target="#{estudiante.opRendimiento}" />
+					<f:setPropertyActionListener value="" target="#{estudiante.itAsigMas}" />
+					<f:setPropertyActionListener value="" target="#{estudiante.itAsigMenos}" />
+					<f:setPropertyActionListener value="" target="#{estudiante.itReaccionPadres}" />
+					<f:setPropertyActionListener value="" target="#{estudiante.snCumples}" />
+					<f:setPropertyActionListener value="" target="#{estudiante.itCumples}" />
 										
+					<f:setPropertyActionListener value="" target="#{estudiante.opEnfermedad}" />
+					<f:setPropertyActionListener value="" target="#{estudiante.snAlergiaMed}" />
+					<f:setPropertyActionListener value="" target="#{estudiante.itAlergiaMed}" />
+					<f:setPropertyActionListener value="" target="#{estudiante.snAlergiaIns}" />
+					<f:setPropertyActionListener value="" target="#{estudiante.itAlergiaIns}" />
+					<f:setPropertyActionListener value="" target="#{estudiante.snAlergiaAli}" />
+					<f:setPropertyActionListener value="" target="#{estudiante.itAlergiaAli}" />
+					<f:setPropertyActionListener value="" target="#{estudiante.itAlergOtras}" />
+					<f:setPropertyActionListener value="" target="#{estudiante.snTratamientoAct}" />
+					<f:setPropertyActionListener value="" target="#{estudiante.snTratamientoAnt}" />
+					<f:setPropertyActionListener value="" target="#{estudiante.snHospital}" />
+					<f:setPropertyActionListener value="" target="#{estudiante.itHospital}" />
+					<f:setPropertyActionListener value="" target="#{estudiante.snOperado}" />
+					<f:setPropertyActionListener value="" target="#{estudiante.itOperado}" />
+					<f:setPropertyActionListener value="" target="#{estudiante.snMinusvalia}" />
+					<f:setPropertyActionListener value="" target="#{estudiante.itMinusvalia}" />
+					<f:setPropertyActionListener value="" target="#{estudiante.soGradoMinusvalia}" />
+																			
 					<f:setPropertyActionListener value="0" target="#{estudiante.accion}" />
 					
 				</p:commandLink>					
@@ -246,16 +310,16 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 					<p:tab title="Residencia">
 						<h:panelGrid id="pnlResidencia" columns="2" cellpadding="0" style="width: 100%" columnClasses="ui-grid-col-2,ui-grid-col-10">
 							<p:outputPanel style="text-align: end; padding: 5px">Provincia:</p:outputPanel>					
-							<p:inputText style="width: 200px" />
+							<p:inputText value="#{estudiante.itProvincia}" style="width: 200px" />
 							
 							<p:outputPanel style="text-align: end; padding: 5px">Cantón:</p:outputPanel>					
-							<p:inputText style="width: 200px" />
+							<p:inputText value="#{estudiante.itCanton}" style="width: 200px" />
 							
 							<p:outputPanel style="text-align: end; padding: 5px">Ciudad:</p:outputPanel>					
-							<p:inputText style="width: 200px" />
+							<p:inputText value="#{estudiante.itCiudad}" style="width: 200px" />
 							
 							<p:outputPanel style="text-align: end; padding: 5px">Parroquia:</p:outputPanel>					
-							<p:inputText style="width: 200px" />
+							<p:inputText value="#{estudiante.itParroquia}" style="width: 200px" />
 							
 							<p:outputPanel style="text-align: end; padding: 5px">Teléfono:</p:outputPanel>
 							<p:inputMask value="#{estudiante.itTelefono}" style="width: 80px" mask="9999999999" />
@@ -267,10 +331,10 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 							<p:outputPanel style="font-weight: bold; color: #8f3b4f; padding: 5px">En caso de emergencia</p:outputPanel>
 							
 							<p:outputPanel style="text-align: end; padding: 5px">LLamar a:</p:outputPanel>					
-							<p:inputText style="width: 300px" />
+							<p:inputText value="#{estudiante.itPersonaEmerg}" style="width: 300px" />
 							
 							<p:outputPanel style="text-align: end; padding: 5px">Teléfono:</p:outputPanel>
-							<p:inputMask value="#{estudiante.itTelefono}" style="width: 80px" mask="9999999999" />
+							<p:inputMask value="#{estudiante.itTelefonoEmerg}" style="width: 80px" mask="9999999999" />
 						</h:panelGrid>
 					
 					</p:tab>				
@@ -280,20 +344,20 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 							<p:tab title="Padre">
 								<h:panelGrid id="pnlPadre" columns="2" cellpadding="0" style="width: 100%" columnClasses="ui-grid-col-2,ui-grid-col-10">
 									<p:outputPanel style="text-align: end; padding: 5px">Nombre:</p:outputPanel>
-									<p:inputText style="width: 300px" />
+									<p:inputText value="#{estudiante.itPaNombre}" style="width: 300px" />
 									
 									<p:outputPanel style="text-align: end; padding: 5px">Cédula:</p:outputPanel>
 									<p:outputPanel style="display: inline-flex;">
-										<p:inputMask style="width: 80px" mask="9999999999" />
+										<p:inputMask value="#{estudiante.itPaCedula}" style="width: 80px" mask="9999999999" />
 										
 										<p:outputPanel style="text-align: end; padding: 5px">Estado civil:</p:outputPanel>
-										<p:selectOneMenu>
-											<f:selectItems value="#{docente.listEstadoCivil}" />		
+										<p:selectOneMenu value="#{estudiante.soPaEstadoCivil}">
+											<f:selectItems value="#{estudiante.listEstadoCivil}" />		
 										</p:selectOneMenu>
 									</p:outputPanel>
 									
 									<p:outputPanel style="text-align: end; padding: 5px">Estudios:</p:outputPanel>
-									<h:selectOneRadio>            
+									<h:selectOneRadio value="#{estudiante.opPaEstudios}">
 							            <f:selectItem itemLabel="Estudiante" itemValue="ES" />
 							            <f:selectItem itemLabel="Básica" itemValue="BA" />
 							            <f:selectItem itemLabel="Bachillerato" itemValue="BC" />
@@ -302,10 +366,10 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 							        </h:selectOneRadio>
 							        
 							        <p:outputPanel style="text-align: end; padding: 5px">Profesión:</p:outputPanel>
-									<p:inputText style="width: 150px" />
+									<p:inputText value="#{estudiante.itPaProfesion}" style="width: 150px" />
 									
 									<p:outputPanel style="text-align: end; padding: 5px">Ocupación:</p:outputPanel>
-									<h:selectOneRadio>            
+									<h:selectOneRadio value="#{estudiante.opPaOcupacion}">
 							            <f:selectItem itemLabel="Empleado Público" itemValue="PU" />
 							            <f:selectItem itemLabel="Empleado Privado" itemValue="PR" />
 							            <f:selectItem itemLabel="Independiente" itemValue="IN" />
@@ -313,20 +377,20 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 							        </h:selectOneRadio>
 							        
 							        <p:outputPanel style="text-align: end; padding: 5px">Institución:</p:outputPanel>
-									<p:inputText style="width: 300px" />
+									<p:inputText value="#{estudiante.itPaInstitucion}" style="width: 300px" />
 									
 									<p:outputPanel style="text-align: end; padding: 5px">Puesto:</p:outputPanel>
-									<p:inputText style="width: 150px" />
+									<p:inputText value="#{estudiante.itPaPuesto}" style="width: 150px" />
 									
 									<p:outputPanel style="text-align: end; padding: 5px">Teléfono:</p:outputPanel>
-									<p:inputMask style="width: 80px" mask="9999999999" />
+									<p:inputMask value="#{estudiante.itPaTelefono}" style="width: 80px" mask="9999999999" />
 									
 									<p:outputPanel style="text-align: end; padding: 5px">Celular:</p:outputPanel>
 									<p:outputPanel style="display: inline-flex;">
-										<p:inputMask style="width: 80px" mask="9999999999" />
+										<p:inputMask value="#{estudiante.itPaCelular}" style="width: 80px" mask="9999999999" />
 										
 										<p:outputPanel style="text-align: end; padding: 5px">Correo:</p:outputPanel>
-										<p:inputText style="width: 300px" />
+										<p:inputText value="#{estudiante.itPaCorreo}" style="width: 300px" />
 									</p:outputPanel>
 								</h:panelGrid>
 							</p:tab>
@@ -334,20 +398,20 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 							<p:tab title="Madre">
 								<h:panelGrid id="pnlMadre" columns="2" cellpadding="0" style="width: 100%" columnClasses="ui-grid-col-2,ui-grid-col-10">
 									<p:outputPanel style="text-align: end; padding: 5px">Nombre:</p:outputPanel>
-									<p:inputText style="width: 300px" />
+									<p:inputText value="#{estudiante.itMaNombre}" style="width: 300px" />
 															
 									<p:outputPanel style="text-align: end; padding: 5px">Cédula:</p:outputPanel>
 									<p:outputPanel style="display: inline-flex;">
-										<p:inputMask style="width: 80px" mask="9999999999" />
+										<p:inputMask value="#{estudiante.itMaCedula}" style="width: 80px" mask="9999999999" />
 										
 										<p:outputPanel style="text-align: end; padding: 5px">Estado civil:</p:outputPanel>
-										<p:selectOneMenu>
-											<f:selectItems value="#{docente.listEstadoCivil}" />		
+										<p:selectOneMenu value="#{estudiante.soMaEstadoCivil}">
+											<f:selectItems value="#{estudiante.listEstadoCivil}" />		
 										</p:selectOneMenu>
 									</p:outputPanel>
 									
 									<p:outputPanel style="text-align: end; padding: 5px">Estudios:</p:outputPanel>
-									<h:selectOneRadio>            
+									<h:selectOneRadio value="#{estudiante.opMaEstudios}">
 							            <f:selectItem itemLabel="Estudiante" itemValue="ES" />
 							            <f:selectItem itemLabel="Básica" itemValue="BA" />
 							            <f:selectItem itemLabel="Bachillerato" itemValue="BC" />
@@ -356,10 +420,10 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 							        </h:selectOneRadio>					
 							        
 							        <p:outputPanel style="text-align: end; padding: 5px">Profesión:</p:outputPanel>
-									<p:inputText style="width: 150px" />
+									<p:inputText value="#{estudiante.itMaProfesion}" style="width: 150px" />
 									
 									<p:outputPanel style="text-align: end; padding: 5px">Ocupación:</p:outputPanel>
-									<h:selectOneRadio>            
+									<h:selectOneRadio value="#{estudiante.opMaOcupacion}">
 							            <f:selectItem itemLabel="Empleada Pública" itemValue="PU" />
 							            <f:selectItem itemLabel="Empleada Privada" itemValue="PR" />
 							            <f:selectItem itemLabel="Independiente" itemValue="IN" />
@@ -367,20 +431,20 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 							        </h:selectOneRadio>
 							        
 							        <p:outputPanel style="text-align: end; padding: 5px">Institución:</p:outputPanel>
-									<p:inputText style="width: 300px" />
+									<p:inputText value="#{estudiante.itMaInstitucion}" style="width: 300px" />
 									
 									<p:outputPanel style="text-align: end; padding: 5px">Puesto:</p:outputPanel>
-									<p:inputText style="width: 150px" />
+									<p:inputText value="#{estudiante.itMaPuesto}" style="width: 150px" />
 									
 									<p:outputPanel style="text-align: end; padding: 5px">Teléfono:</p:outputPanel>
-									<p:inputMask style="width: 80px" mask="9999999999" />
+									<p:inputMask value="#{estudiante.itMaTelefono}" style="width: 80px" mask="9999999999" />
 									
 									<p:outputPanel style="text-align: end; padding: 5px">Celular:</p:outputPanel>
 									<p:outputPanel style="display: inline-flex;">
-										<p:inputMask style="width: 80px" mask="9999999999" />
+										<p:inputMask value="#{estudiante.itMaCelular}" style="width: 80px" mask="9999999999" />
 										
 										<p:outputPanel style="text-align: end; padding: 5px">Correo:</p:outputPanel>
-										<p:inputText style="width: 300px" />
+										<p:inputText value="#{estudiante.itMaCorreo}" style="width: 300px" />
 									</p:outputPanel>
 								</h:panelGrid>
 							</p:tab>	
@@ -392,13 +456,14 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 									<p:outputPanel style="font-weight: bold; color: #8f3b4f; padding: 5px">Tiene hermanos(as) estudiante en esta institución</p:outputPanel>
 									
 									<p:outputPanel />
-									<h:selectOneRadio style="margin-top: -8px;">            
+									<h:selectOneRadio value="#{estudiante.snHermanos}" style="margin-top: -8px;">            
 							           	<f:selectItem itemLabel="Si" itemValue="S" />
 						          		<f:selectItem itemLabel="No" itemValue="N" />
 							        </h:selectOneRadio>
 							        
 							        <p:outputPanel />
-									<p:inputTextarea rows="3" style="width: 500px" placeholder="Nombre (Grado/Curso)"/>
+									<p:inputTextarea rows="3" value="#{estudiante.itHermanos}" 
+										style="width: 500px" placeholder="Nombre (Grado/Curso)"/>
 								</h:panelGrid>
 							</p:tab>
 						</p:accordionPanel>							
@@ -411,7 +476,7 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 									<p:outputPanel />
 									<p:outputPanel style="font-weight: bold; color: #8f3b4f; padding: 5px">Actualmente vive con:</p:outputPanel>
 									<p:outputPanel />
-									<h:selectOneRadio style="margin-top: -8px;">            					            
+									<h:selectOneRadio value="#{estudiante.opViveCon}" style="margin-top: -8px;">
 							            <f:selectItem itemLabel="Padre" itemValue="PA" />
 							            <f:selectItem itemLabel="Madre" itemValue="MA" />
 							            <f:selectItem itemLabel="Ambos Padres" itemValue="AP" />
@@ -425,12 +490,12 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 										<span title="Fallecimiento o separación de los padres, desempleo" >¿Hay algo de situación familiar que se pueda considerar especial?</span>
 									</p:outputPanel>									
 									<p:outputPanel />
-									<p:inputText style="width: 500px; margin-top: -10px;" />
+									<p:inputText value="#{estudiante.itSituacionFam}" style="width: 500px; margin-top: -10px;" />
 									
 									<p:outputPanel />
 									<p:outputPanel style="font-weight: bold; color: #8f3b4f; padding: 5px">¿Como es su relación con sus padres?</p:outputPanel>
 									<p:outputPanel />
-									<h:selectOneRadio style="margin-top: -8px;">            					            
+									<h:selectOneRadio value="#{estudiante.opRelacionPadres}" style="margin-top: -8px;">            					            
 							            <f:selectItem itemLabel="Muy Buena" itemValue="MB" />
 							            <f:selectItem itemLabel="Buena" itemValue="BU" />
 							            <f:selectItem itemLabel="Regular" itemValue="RE" />
@@ -442,13 +507,13 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 									<p:outputPanel style="font-weight: bold; color: #8f3b4f; padding: 5px">¿Recibe clases particulares o control de tareas?</p:outputPanel>
 									<p:outputPanel />							
 									<p:outputPanel style="display: inline-flex;">
-										<h:selectOneRadio>            
+										<h:selectOneRadio value="#{estudiante.snClasesPart}">            
 								            <f:selectItem itemLabel="Si" itemValue="S" />
 								            <f:selectItem itemLabel="No" itemValue="N" />
 								        </h:selectOneRadio>
 										
 										<p:outputPanel style="text-align: end; padding: 5px">¿Por qué?</p:outputPanel>
-										<p:inputText style="width: 300px;" />
+										<p:inputText value="#{estudiante.itClasesPart}" style="width: 300px;" />
 									</p:outputPanel>
 									
 									<p:outputPanel />
@@ -457,13 +522,13 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 									</p:outputPanel>
 									<p:outputPanel />							
 									<p:outputPanel style="display: inline-flex;">
-										<h:selectOneRadio>            
+										<h:selectOneRadio value="#{estudiante.snEstudiosFuera}">
 								            <f:selectItem itemLabel="Si" itemValue="S" />
 								            <f:selectItem itemLabel="No" itemValue="N" />
 								        </h:selectOneRadio>
 										
 										<p:outputPanel style="text-align: end; padding: 5px">¿Cuál?</p:outputPanel>
-										<p:inputText style="width: 300px;" />
+										<p:inputText value="#{estudiante.itEstudiosFuera}" style="width: 300px;" />
 									</p:outputPanel>									
 								</h:panelGrid>
 							</p:tab>
@@ -473,7 +538,7 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 									<p:outputPanel />
 									<p:outputPanel style="font-weight: bold; color: #8f3b4f; padding: 5px">¿Como piensa que ha sido su rendimiento hasta ahora?</p:outputPanel>
 									<p:outputPanel />
-									<h:selectOneRadio style="margin-top: -8px;">            					            
+									<h:selectOneRadio value="#{estudiante.opRendimiento}" style="margin-top: -8px;">            					            
 							            <f:selectItem itemLabel="Muy Bueno" itemValue="MB" />
 							            <f:selectItem itemLabel="Bueno" itemValue="BU" />
 							            <f:selectItem itemLabel="Regular" itemValue="RE" />
@@ -486,26 +551,26 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 										Las asignaturas que más le han gustado en los últimos grados han sido:
 									</p:outputPanel>									
 									<p:outputPanel />
-									<p:inputText style="width: 500px; margin-top: -10px;" />
+									<p:inputText value="#{estudiante.itAsigMas}" style="width: 500px; margin-top: -10px;" />
 									
 									<p:outputPanel />
 									<p:outputPanel style="font-weight: bold; color: #8f3b4f; padding: 5px">
 										Las asignaturas que menos le han interesado en los últimos grados han sido:
 									</p:outputPanel>									
 									<p:outputPanel />
-									<p:inputText style="width: 500px; margin-top: -10px;" />
+									<p:inputText value="#{estudiante.itAsigMenos}" style="width: 500px; margin-top: -10px;" />
 									
 									<p:outputPanel />
 									<p:outputPanel style="font-weight: bold; color: #8f3b4f; padding: 5px">
 										¿Como reaccionan sus padres ante las notas?
 									</p:outputPanel>									
 									<p:outputPanel />
-									<p:inputText style="width: 500px; margin-top: -10px;" />
+									<p:inputText value="#{estudiante.itReaccionPadres}" style="width: 500px; margin-top: -10px;" />
 									
 									<p:outputPanel />
 									<p:outputPanel style="padding: 5px; display: inline-flex"> 
 										<span style="font-weight: bold; color: #8f3b4f;">¿Crees que cumples con lo que ellos esperan de ti?</span>
-										<h:selectOneRadio style="margin-top: -4px;">                
+										<h:selectOneRadio value="#{estudiante.snCumples}" style="margin-top: -4px;">                
 								            <f:selectItem itemLabel="Si" itemValue="S" />
 								            <f:selectItem itemLabel="No" itemValue="N" />
 								        </h:selectOneRadio> 
@@ -516,7 +581,7 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 										¿Por qué lo crees así?
 									</p:outputPanel>
 									<p:outputPanel />
-									<p:inputText style="width: 500px; margin-top: -10px;" />								
+									<p:inputText value="#{estudiante.itCumples}" style="width: 500px; margin-top: -10px;" />								
 								</h:panelGrid>
 							</p:tab>
 						</p:accordionPanel>       
@@ -532,7 +597,7 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 										¿Padece alguna enfermedad o existe alguna condición física que le afecte?</span>
 									</p:outputPanel>
 									<p:outputPanel />
-									<h:selectOneRadio style="margin-top: -8px; width: 500px;">            					            
+									<h:selectOneRadio value="#{estudiante.opEnfermedad}" style="margin-top: -8px; width: 500px;">            					            
 							            <f:selectItem itemLabel="Asma" itemValue="BU" />
 							            <f:selectItem itemLabel="Epilepsia" itemValue="BU" />
 							            <f:selectItem itemLabel="Diabetes" itemValue="RE" />
@@ -547,13 +612,13 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 									</p:outputPanel>
 									<p:outputPanel />							
 									<p:outputPanel style="display: inline-flex;">
-										<h:selectOneRadio>            
+										<h:selectOneRadio value="#{estudiante.snAlergiaMed}">
 								            <f:selectItem itemLabel="Si" itemValue="S" />
 								            <f:selectItem itemLabel="No" itemValue="N" />
 								        </h:selectOneRadio>
 										
 										<p:outputPanel style="text-align: end; padding: 5px">¿Cuál?</p:outputPanel>
-										<p:inputText style="width: 200px;" />
+										<p:inputText value="#{estudiante.itAlergiaMed}" style="width: 200px;" />
 									</p:outputPanel>
 									
 									<p:outputPanel />
@@ -562,13 +627,13 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 									</p:outputPanel>
 									<p:outputPanel />							
 									<p:outputPanel style="display: inline-flex;">
-										<h:selectOneRadio>            
+										<h:selectOneRadio value="#{estudiante.snAlergiaIns}">
 								            <f:selectItem itemLabel="Si" itemValue="S" />
 								            <f:selectItem itemLabel="No" itemValue="N" />
 								        </h:selectOneRadio>
 										
 										<p:outputPanel style="text-align: end; padding: 5px">¿Cuál?</p:outputPanel>
-										<p:inputText style="width: 200px;" />
+										<p:inputText value="#{estudiante.itAlergiaIns}" style="width: 200px;" />
 									</p:outputPanel>												
 									
 									<p:outputPanel />
@@ -577,13 +642,13 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 									</p:outputPanel>
 									<p:outputPanel />							
 									<p:outputPanel style="display: inline-flex;">
-										<h:selectOneRadio>            
+										<h:selectOneRadio value="#{estudiante.snAlergiaAli}">
 								            <f:selectItem itemLabel="Si" itemValue="S" />
 								            <f:selectItem itemLabel="No" itemValue="N" />
 								        </h:selectOneRadio>
 										
 										<p:outputPanel style="text-align: end; padding: 5px">¿Cuál?</p:outputPanel>
-										<p:inputText style="width: 200px;" />
+										<p:inputText value="#{estudiante.itAlergiaAli}" style="width: 200px;" />
 									</p:outputPanel>
 									
 									<p:outputPanel />
@@ -603,7 +668,7 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 											Actualmente ¿Recibe algún tratamiento médico o psicológico?  
 										</p:outputPanel>
 										
-										<h:selectOneRadio>            
+										<h:selectOneRadio value="#{estudiante.snTratamientoAct}">            
 								            <f:selectItem itemLabel="Si" itemValue="S" />
 								            <f:selectItem itemLabel="No" itemValue="N" />
 								        </h:selectOneRadio>
@@ -615,7 +680,7 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 											¿Lo ha recibido alguna vez? 
 										</p:outputPanel>
 										
-										<h:selectOneRadio>            
+										<h:selectOneRadio value="#{estudiante.snTratamientoAnt}">            
 								            <f:selectItem itemLabel="Si" itemValue="S" />
 								            <f:selectItem itemLabel="No" itemValue="N" />
 								        </h:selectOneRadio>
@@ -627,13 +692,13 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 									</p:outputPanel>
 									<p:outputPanel />							
 									<p:outputPanel style="display: inline-flex;">
-										<h:selectOneRadio>            
+										<h:selectOneRadio value="#{estudiante.snHospital}">
 								            <f:selectItem itemLabel="Si" itemValue="S" />
 								            <f:selectItem itemLabel="No" itemValue="N" />
 								        </h:selectOneRadio>
 										
 										<p:outputPanel style="text-align: end; padding: 5px">Motivo:</p:outputPanel>
-										<p:inputText style="width: 250px;" />
+										<p:inputText value="#{estudiante.itHospital}" style="width: 250px;" />
 									</p:outputPanel>
 									
 									<p:outputPanel />
@@ -642,13 +707,13 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 									</p:outputPanel>
 									<p:outputPanel />							
 									<p:outputPanel style="display: inline-flex;">
-										<h:selectOneRadio>            
+										<h:selectOneRadio value="#{estudiante.snOperado}">
 								            <f:selectItem itemLabel="Si" itemValue="S" />
 								            <f:selectItem itemLabel="No" itemValue="N" />
 								        </h:selectOneRadio>
 										
 										<p:outputPanel style="text-align: end; padding: 5px">¿De qué?</p:outputPanel>
-										<p:inputText style="width: 250px;" />
+										<p:inputText value="#{estudiante.itOperado}" style="width: 250px;" />
 									</p:outputPanel>
 									
 									<p:outputPanel />
@@ -656,7 +721,7 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 										<p:outputPanel style="font-weight: bold; color: #8f3b4f; padding: 5px"> 
 											¿Padece alguna minusvalía? Indique el motivo y grado  
 										</p:outputPanel>
-										<h:selectOneRadio>            
+										<h:selectOneRadio value="#{estudiante.snMinusvalia}">
 								            <f:selectItem itemLabel="Si" itemValue="S" />
 								            <f:selectItem itemLabel="No" itemValue="N" />
 								        </h:selectOneRadio>
@@ -665,10 +730,10 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 									<p:outputPanel />							
 									<p:outputPanel style="display: inline-flex;">
 										<p:outputPanel style="text-align: end; padding: 5px">Motivo:</p:outputPanel>
-										<p:inputText style="width: 200px;" />
+										<p:inputText value="#{estudiante.itMinusvalia}" style="width: 200px;" />
 										
 										<p:outputPanel style="text-align: end; padding: 5px">Grado:</p:outputPanel>
-										<p:selectOneMenu>
+										<p:selectOneMenu value="#{estudiante.soGradoMinusvalia}">
 											<f:selectItem itemLabel="Seleccione" itemValue="" />
 											<f:selectItem itemLabel="Nula" itemValue="Nula" />
 											<f:selectItem itemLabel="Leve" itemValue="Leve" />			

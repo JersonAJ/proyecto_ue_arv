@@ -253,22 +253,90 @@ public class Estudiante {
 
 			String estado = "IC";
 			if (ckEstado) estado = "AC";
+			
+			String discapacidad = "NO";
+			if (ckDiscapacidad) discapacidad = "SI";
 
 			MatRepresentante representante = (MatRepresentante) DAO.buscarObject(new MatRepresentante(), "from MatRepresentante c where c.idRepresentante = '" + soRepresentante + "'");
 
 			ob.setMatRepresentante(representante);
 			ob.setApellidos(itApellidos);
 			ob.setNombres(itNombres);
-			ob.setAlergOtras(itAlergOtras);
-			ob.setDireccion(itDireccion);
+			ob.setLugarNacimiento(itLugarNac);
+			ob.setNacionalidad(itNacionalidad);			
 			ob.setObservacion(itObservacion);
-			ob.setFechaNac(cFechaNac);
-			ob.setTelefono(itTelefono);
+			ob.setFechaNac(cFechaNac);			
 			ob.setGenero(sorGenero);
 			ob.setTipoSangre(soTipoSangre);
 			ob.setEstado(estado);
-				
+			ob.setSnDiscapacidad(discapacidad);
 			ob.setFoto(itImagen);							
+			
+			ob.setProvincia(itProvincia);
+			ob.setCanton(itCanton);
+			ob.setCiudad(itCiudad);
+			ob.setParroquia(itParroquia);
+			ob.setTelefono(itTelefono);
+			ob.setDireccion(itDireccion);
+			ob.setEmergLlamar(itPersonaEmerg);
+			ob.setEmergTelefono(itTelefonoEmerg);
+			
+			ob.setPaCedula(itPaCedula);
+			ob.setPaNombre(itPaNombre);
+			ob.setPaEstadoCivil(soPaEstadoCivil);
+			ob.setPaEstudios(opPaEstudios);
+			ob.setPaProfesion(itPaProfesion);
+			ob.setPaOcupacion(opPaOcupacion);
+			ob.setPaPuesto(itPaPuesto);
+			ob.setPaInstitucion(itPaInstitucion);
+			ob.setPaTelefono(itPaTelefono);
+			ob.setPaCelular(itPaCelular);
+			ob.setPaCorreo(itPaCorreo);
+			ob.setMaCedula(itMaCedula);
+			ob.setMaNombre(itMaNombre);
+			ob.setMaEstadoCivil(soMaEstadoCivil);
+			ob.setMaEstudios(opMaEstudios);
+			ob.setMaProfesion(itMaProfesion);
+			ob.setMaOcupacion(opMaOcupacion);
+			ob.setMaPuesto(itMaPuesto);
+			ob.setMaInstitucion(itMaInstitucion);
+			ob.setMaTelefono(itMaTelefono);
+			ob.setMaCelular(itMaCelular);
+			ob.setMaCorreo(itMaCorreo);
+			ob.setSnHermanos(snHermanos);
+			ob.setDsHermanos(itHermanos);
+			
+			ob.setViveCon(opViveCon);
+			ob.setSituacionFamiliar(itSituacionFam);
+			ob.setRelacionPadres(opRelacionPadres);
+			ob.setSnClasesPart(snClasesPart);
+			ob.setDsClasesPart(itClasesPart);
+			ob.setSnEstudiosFuera(snEstudiosFuera);
+			ob.setDsEstudiosFuera(itEstudiosFuera);
+			ob.setRendimiento(opRendimiento);
+			ob.setAsigMas(itAsigMas);
+			ob.setAsigMenos(itAsigMenos);
+			ob.setReaccionPadres(itReaccionPadres);
+			ob.setSnCumples(snCumples);
+			ob.setDsCumples(itCumples);
+			
+			ob.setEnfermedad(opEnfermedad);
+			ob.setSnAlergiaMed(snAlergiaMed);
+			ob.setDsAlergiaMed(itAlergiaMed);
+			ob.setSnAlergiaIns(snAlergiaIns);
+			ob.setDsAlergiaIns(itAlergiaIns);
+			ob.setSnAlergiaAli(snAlergiaAli);
+			ob.setDsAlergiaAli(itAlergiaAli);
+			ob.setAlergOtras(itAlergOtras);
+			ob.setSnTratamineto(snTratamientoAct);
+			ob.setSnTratRecibido(snTratamientoAnt);
+			ob.setSnHospital(snHospital);
+			ob.setDsHospital(itHospital);
+			ob.setSnOperado(snOperado);
+			ob.setDsOperado(itOperado);
+			ob.setSnMinusvalia(snMinusvalia);
+			ob.setDsMinusvalia(itMinusvalia);
+			ob.setGdMinusvalia(soGradoMinusvalia);
 			
 			if (accion == 0) {
 				ob.setUsuarioIng(Session.getUserName());			
@@ -278,7 +346,7 @@ public class Estudiante {
 				ob.setUsuarioAct(Session.getUserName());			
 				ob.setFechaAct(fecha);			
 			}			
-
+			
 			if (DAO.saveOrUpdate(ob, accion, em)) {
 				em.getTransaction().commit();
 				mensaje = "Guardado exitoso";
@@ -801,5 +869,11 @@ public class Estudiante {
 	}
 	public void setSoGradoMinusvalia(String soGradoMinusvalia) {
 		this.soGradoMinusvalia = soGradoMinusvalia;
+	}
+	public ArrayList<SelectItem> getListEstadoCivil() {
+		return listEstadoCivil;
+	}
+	public void setListEstadoCivil(ArrayList<SelectItem> listEstadoCivil) {
+		this.listEstadoCivil = listEstadoCivil;
 	}
 }
