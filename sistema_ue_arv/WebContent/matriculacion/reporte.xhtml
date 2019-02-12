@@ -15,24 +15,530 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 				
 			<p:growl id="growl" for="growl" showDetail="true" closable="true" />
 			
+			<!-- FILTROS BUSQ -->
 			<p:outputPanel style="background-color: white; padding: 5px;">
-			
-			</p:outputPanel>
+				<p:selectOneMenu id="soPeriodo" value="#{reporteMat.soPeriodo}" style="width: 130px">
+					<f:selectItem itemLabel="Seleccione Período" itemValue="NA" />
+					<f:selectItems value="#{reporteMat.listPeriodo}" />		
+					<p:ajax listener="#{reporteMat.onChangePeriodo()}" update=":form:tab:soOferta"/>								
+				</p:selectOneMenu>	
+				<p:spacer width="5px" />					
+			</p:outputPanel> 				
 			<br />
+			
+			<style>
+				.profile-pic { width: 110px; height: 130px; display: block; }
+				.circle { border-radius: 20px; overflow: hidden; width: 110px; height: 130px; border: 2px solid #8f3b4f; }
+			</style>
+			
 			<!-- CONSULTA -->			
-			<p:tabView>
-		       <p:tab title="Ficha del estudiante">
-		           
-		       </p:tab>
-		       
-		       <p:tab title="Listado de Matrículas">
-		           
-		       </p:tab>
-		       
-		       <p:tab title="Gráfica">
-		           
-		       </p:tab>		      
-		   </p:tabView>							
+			<p:tabView id="tab">
+				<p:tab title="Ficha del estudiante">
+					<p:outputPanel style="background-color: white; padding: 5px; display: inline-flex; margin-top: -5px;">
+						<p:selectOneMenu id="soOferta" value="#{reporteMat.soOferta}" style="width: 190px">
+							<f:selectItem itemLabel="Seleccione Oferta" itemValue="NA" />
+							<f:selectItems value="#{reporteMat.listOferta}" />
+							<p:ajax listener="#{reporteMat.onChangeOferta()}" update="soEstudiante"/>
+						</p:selectOneMenu>			
+						<p:spacer width="10px" />
+						
+						<p:selectOneMenu id="soEstudiante" value="#{reporteMat.soEstudiante}" effect="fade" widgetVar="t" filter="true" filterMatchMode="contains">
+							<f:selectItem itemLabel="Seleccione Estudiante" itemValue="NA" />
+							<f:selectItems value="#{reporteMat.listEstudiante}" />	
+						    <p:column>
+				                <h:outputText value="#{t}" />
+				            </p:column>		            
+				        </p:selectOneMenu>
+				        <p:spacer width="10px" />
+						  
+						<p:commandButton id="btnVerFicha" value="Ver" style="font-size: 12px !important;" 
+							actionListener="#{reporteMat.verFichaEstudiante}" update="opFicha :form:growl" />
+						  
+						<p:spacer width="20px" />
+						<p:commandButton type="button" icon="fa fa-print" title="Imprimir" style="margin-right: 50px;">
+							<p:printer target="opFicha" />
+						</p:commandButton>
+					</p:outputPanel>				
+				
+					<p:separator style="border: 0.6px solid #8f3b4f;" />
+					
+					<p:outputPanel id="opFicha">
+						<div style="display: inline-flex; width: 100%;">
+							<div style="width: 25%;">
+								<img src="/sistema_ue_arv/recursos/images/ESCUELA_ARV2.png" height="100" style="padding-top: 15px;" />
+							</div>
+							<div style="width: 50%;" align="center">		
+								<span style="font-weight: bold;">ESCUELA PARTICULAR MIXTA No. 387</span> <br />
+								<span style="font-size: 20px;">“  Dr. Aquiles Rodríguez V. ”</span> <br />
+								<span style="font-size: 12px;">Fundada 1970</span> <br />
+								<span style="font-size: 12px;">Guayaquil - Ecuador</span> <br /> <br />
+								<span style="font-weight: bold; font-size: 16px;">Ficha del Estudiante</span> <br /> 
+								<span style="font-weight: bold; font-size: 13px;"> #{reporteMat.olGrado} “#{reporteMat.olParalelo}” </span> <br />
+							</div>					
+							<div style="width: 25%;" align="right">		
+								<div class="circle">
+									<img class="profile-pic" src="#{reporteMat.itImagen}" />					
+								</div>
+							</div>
+						</div>
+						<p:separator />
+												
+						<span style="font-weight: bold; font-size: 13px;">Datos Personales:</span> <br />
+						<h:panelGrid id="pnlPersonales" columns="2" cellpadding="0" >										
+							<p:outputPanel>Cédula:</p:outputPanel>
+							<p:outputLabel value="#{reporteMat.itCedula}" style="width: 45%" />
+							
+							<p:outputPanel>Nombre Completo:</p:outputPanel>
+							<p:outputLabel value="#{reporteMat.itApellidos} #{reporteMat.itNombres}" style="width: 90%" />
+																						
+							<p:outputPanel>Representante:</p:outputPanel>
+						    <p:outputLabel value="#{reporteMat.soRepresentante}" />			        
+					       					
+							<p:outputPanel>Género:</p:outputPanel>
+							<h:selectOneRadio value="#{reporteMat.sorGenero}">            
+					            <f:selectItem itemLabel="Masculino" itemValue="M" />
+					            <f:selectItem itemLabel="Femenino" itemValue="F" />
+					        </h:selectOneRadio>
+					        
+					        <p:outputPanel>Tipo de sangre:</p:outputPanel>
+							<p:outputLabel value="#{reporteMat.soTipoSangre}" />
+														
+							<p:outputPanel>Lugar Nac.:</p:outputPanel>					
+							<p:outputLabel value="#{reporteMat.itLugarNac}" style="width: 150px" />
+							
+							<p:outputPanel>Nacionalidad:</p:outputPanel>					
+							<p:outputLabel value="#{reporteMat.itNacionalidad}" style="width: 150px" />			
+											
+							<p:outputPanel>Fecha Nac.:</p:outputPanel>
+							<p:outputPanel style="display: inline-flex;">
+						        <p:outputLabel value="#{reporteMat.itFechaNac}" style="width: 250px" />
+						        
+						        <p:outputPanel>Edad:</p:outputPanel>					
+								<p:outputLabel value="#{reporteMat.itEdad}" style="width: 50px" />
+							</p:outputPanel>			
+					        
+					        <p:outputPanel>Discapacidad:</p:outputPanel>
+							<h:selectBooleanCheckbox value="#{reporteMat.ckDiscapacidad}" style="margin-top: 6px" />
+						</h:panelGrid>										
+							
+						<br />				
+						<span style="font-weight: bold; font-size: 13px;">Datos Residencia:</span> <br />	
+						<h:panelGrid id="pnlResidencia" columns="2" cellpadding="0">
+							<p:outputPanel>Provincia:</p:outputPanel>
+							<p:outputPanel style="display: inline-flex;">					
+								<p:outputLabel value="#{reporteMat.itProvincia}" style="width: 150px" />															
+								
+								<p:outputPanel>Cantón:</p:outputPanel>					
+								<p:outputLabel value="#{reporteMat.itCanton}" style="width: 150px" />
+								
+								<p:outputPanel>Ciudad:</p:outputPanel>					
+								<p:outputLabel value="#{reporteMat.itCiudad}" style="width: 150px" />
+							</p:outputPanel>
+							
+							<p:outputPanel>Parroquia:</p:outputPanel>					
+							<p:outputLabel value="#{reporteMat.itParroquia}" style="width: 200px" />
+							
+							<p:outputPanel>Teléfono:</p:outputPanel>
+							<p:outputLabel value="#{reporteMat.itTelefono}" style="width: 80px" />
+																
+							<p:outputPanel>Dirección:</p:outputPanel>
+							<p:outputLabel value="#{reporteMat.itDireccion}" rows="2" style="width: 300px" />
+							
+							<p:outputPanel />
+							<p:outputPanel style="font-weight: bold; color: #8f3b4f; margin-top: 3px">En caso de emergencia</p:outputPanel>
+							
+							<p:outputPanel>LLamar a:</p:outputPanel>					
+							<p:outputLabel value="#{reporteMat.itPersonaEmerg}" style="width: 300px" />
+							
+							<p:outputPanel>Teléfono:</p:outputPanel>
+							<p:outputLabel value="#{reporteMat.itTelefonoEmerg}" style="width: 80px" />
+						</h:panelGrid>					
+					
+						<br />
+						<span style="font-weight: bold; font-size: 13px;">Datos Familiares:</span> <br />
+						<span style="font-weight: bold;">Padre</span> <br />
+						<h:panelGrid id="pnlPadre" columns="2" cellpadding="0">
+							<p:outputPanel>Nombre:</p:outputPanel>
+							<p:outputLabel value="#{reporteMat.itPaNombre}" style="width: 300px" />
+							
+							<p:outputPanel>Cédula:</p:outputPanel>
+							<p:outputLabel value="#{reporteMat.itPaCedula}" style="width: 80px" />
+							
+							<p:outputPanel>Estado civil:</p:outputPanel>
+							<p:outputLabel value="#{reporteMat.soPaEstadoCivil}" />
+							
+							<p:outputPanel>Estudios:</p:outputPanel>
+							<h:selectOneRadio value="#{reporteMat.opPaEstudios}">
+					            <f:selectItem itemLabel="Estudiante" itemValue="ES" />
+					            <f:selectItem itemLabel="Básica" itemValue="BA" />
+					            <f:selectItem itemLabel="Bachillerato" itemValue="BC" />
+					            <f:selectItem itemLabel="Tercer Nivel" itemValue="TN" />
+					            <f:selectItem itemLabel="Cuarto Nivel" itemValue="CN" />
+					        </h:selectOneRadio>
+					        
+					        <p:outputPanel>Profesión:</p:outputPanel>
+							<p:outputLabel value="#{reporteMat.itPaProfesion}" style="width: 150px" />
+							
+							<p:outputPanel>Ocupación:</p:outputPanel>
+							<h:selectOneRadio value="#{reporteMat.opPaOcupacion}">
+					            <f:selectItem itemLabel="Empleado Público" itemValue="PU" />
+					            <f:selectItem itemLabel="Empleado Privado" itemValue="PR" />
+					            <f:selectItem itemLabel="Independiente" itemValue="IN" />
+					            <f:selectItem itemLabel="Jublidado" itemValue="JU" />							            
+					        </h:selectOneRadio>
+					        
+					        <p:outputPanel>Institución:</p:outputPanel>
+							<p:outputLabel value="#{reporteMat.itPaInstitucion}" style="width: 300px" />
+							
+							<p:outputPanel>Puesto:</p:outputPanel>
+							<p:outputLabel value="#{reporteMat.itPaPuesto}" style="width: 150px" />
+							
+							<p:outputPanel>Teléfono:</p:outputPanel>
+							<p:outputLabel value="#{reporteMat.itPaTelefono}" style="width: 80px" />
+							
+							<p:outputPanel>Celular:</p:outputPanel>
+							<p:outputLabel value="#{reporteMat.itPaCelular}" style="width: 80px" />
+								
+							<p:outputPanel>Correo:</p:outputPanel>
+							<p:outputLabel value="#{reporteMat.itPaCorreo}" style="width: 300px" />							
+						</h:panelGrid>
+						
+						<span style="font-weight: bold;">Madre</span> <br />						
+						<h:panelGrid id="pnlMadre" columns="2" cellpadding="0">
+							<p:outputPanel>Nombre:</p:outputPanel>
+							<p:outputLabel value="#{reporteMat.itMaNombre}" style="width: 300px" />
+													
+							<p:outputPanel>Cédula:</p:outputPanel>
+							<p:outputLabel value="#{reporteMat.itMaCedula}" style="width: 80px" />
+								
+							<p:outputPanel>Estado civil:</p:outputPanel>
+							<p:outputLabel value="#{reporteMat.soMaEstadoCivil}" />											
+														
+							<p:outputPanel>Estudios:</p:outputPanel>
+							<h:selectOneRadio value="#{reporteMat.opMaEstudios}">
+					            <f:selectItem itemLabel="Estudiante" itemValue="ES" />
+					            <f:selectItem itemLabel="Básica" itemValue="BA" />
+					            <f:selectItem itemLabel="Bachillerato" itemValue="BC" />
+					            <f:selectItem itemLabel="Tercer Nivel" itemValue="TN" />
+					            <f:selectItem itemLabel="Cuarto Nivel" itemValue="CN" />
+					        </h:selectOneRadio>					
+					        
+					        <p:outputPanel>Profesión:</p:outputPanel>
+							<p:outputLabel value="#{reporteMat.itMaProfesion}" style="width: 150px" />
+							
+							<p:outputPanel>Ocupación:</p:outputPanel>
+							<h:selectOneRadio value="#{reporteMat.opMaOcupacion}">
+					            <f:selectItem itemLabel="Empleada Pública" itemValue="PU" />
+					            <f:selectItem itemLabel="Empleada Privada" itemValue="PR" />
+					            <f:selectItem itemLabel="Independiente" itemValue="IN" />
+					            <f:selectItem itemLabel="Jublidada" itemValue="JU" />							            
+					        </h:selectOneRadio>
+					        
+					        <p:outputPanel>Institución:</p:outputPanel>
+							<p:outputLabel value="#{reporteMat.itMaInstitucion}" style="width: 300px" />
+							
+							<p:outputPanel>Puesto:</p:outputPanel>
+							<p:outputLabel value="#{reporteMat.itMaPuesto}" style="width: 150px" />
+							
+							<p:outputPanel>Teléfono:</p:outputPanel>
+							<p:outputLabel value="#{reporteMat.itMaTelefono}" style="width: 80px" />
+							
+							<p:outputPanel>Celular:</p:outputPanel>
+							<p:outputLabel value="#{reporteMat.itMaCelular}" style="width: 80px" />
+								
+							<p:outputPanel>Correo:</p:outputPanel>
+							<p:outputLabel value="#{reporteMat.itMaCorreo}" style="width: 300px" />							
+						</h:panelGrid>
+						
+						<span style="font-weight: bold;">Hermanos</span> <br />							
+						<h:panelGrid id="pnlHermanos" columns="2" cellpadding="0">
+						
+							<p:outputPanel style="font-weight: bold; color: #8f3b4f; padding: 5px">Tiene hermanos(as) estudiante en esta institución</p:outputPanel>
+							
+							<h:selectOneRadio value="#{reporteMat.snHermanos}" style="margin-top: -8px;">            
+					           	<f:selectItem itemLabel="Si" itemValue="S" />
+				          		<f:selectItem itemLabel="No" itemValue="N" />
+					        </h:selectOneRadio>
+					        
+					        <p:outputPanel>Nombre de sus hermanos(as):</p:outputPanel>
+							<p:outputLabel value="#{reporteMat.itHermanos}" />
+						</h:panelGrid>
+						
+						<br />
+						<span style="font-weight: bold; font-size: 13px;">Datos Bio-Psico-Sociales:</span> <br />																		
+						<h:panelGrid id="pnlPsico1" columns="2" cellpadding="0">
+							<p:outputPanel />
+							<p:outputPanel style="font-weight: bold; color: #8f3b4f; padding: 5px">Actualmente vive con:</p:outputPanel>
+							<p:outputPanel />
+							<h:selectOneRadio value="#{reporteMat.opViveCon}" style="margin-top: -8px;">
+					            <f:selectItem itemLabel="Padre" itemValue="PA" />
+					            <f:selectItem itemLabel="Madre" itemValue="MA" />
+					            <f:selectItem itemLabel="Ambos Padres" itemValue="AP" />
+					            <f:selectItem itemLabel="Hermanos" itemValue="HE" />
+					            <f:selectItem itemLabel="Abuelos" itemValue="AB" />
+					            <f:selectItem itemLabel="Otros" itemValue="OP" />					            
+					        </h:selectOneRadio>
+					        
+					        <p:outputPanel />
+							<p:outputPanel style="font-weight: bold; color: #8f3b4f; padding: 5px">
+								<span title="Fallecimiento o separación de los padres, desempleo" >¿Hay algo de situación familiar que se pueda considerar especial?</span>
+							</p:outputPanel>									
+							<p:outputPanel />
+							<p:outputLabel value="#{reporteMat.itSituacionFam}" style="width: 500px; margin-top: -10px;" />
+							
+							<p:outputPanel />
+							<p:outputPanel style="font-weight: bold; color: #8f3b4f; padding: 5px">¿Como es su relación con sus padres?</p:outputPanel>
+							<p:outputPanel />
+							<h:selectOneRadio value="#{reporteMat.opRelacionPadres}" style="margin-top: -8px;">            					            
+					            <f:selectItem itemLabel="Muy Buena" itemValue="MB" />
+					            <f:selectItem itemLabel="Buena" itemValue="BU" />
+					            <f:selectItem itemLabel="Regular" itemValue="RE" />
+					            <f:selectItem itemLabel="Mala" itemValue="MA" />
+					            <f:selectItem itemLabel="Muy Mala" itemValue="MM" />					            					            
+					        </h:selectOneRadio>
+							
+							<p:outputPanel />
+							<p:outputPanel style="font-weight: bold; color: #8f3b4f; padding: 5px">¿Recibe clases particulares o control de tareas?</p:outputPanel>
+							<p:outputPanel />							
+							<p:outputPanel style="display: inline-flex;">
+								<h:selectOneRadio value="#{reporteMat.snClasesPart}">            
+						            <f:selectItem itemLabel="Si" itemValue="S" />
+						            <f:selectItem itemLabel="No" itemValue="N" />
+						        </h:selectOneRadio>
+								
+								<p:outputPanel>¿Por qué?</p:outputPanel>
+								<p:outputLabel value="#{reporteMat.itClasesPart}" style="width: 300px;" />
+							</p:outputPanel>
+							
+							<p:outputPanel />
+							<p:outputPanel style="font-weight: bold; color: #8f3b4f; padding: 5px"> 
+								<span title="Academia, natación, música, idiomas, informática" >¿Realiza otro tipo de estudios fuera del instituto?</span> 
+							</p:outputPanel>
+							<p:outputPanel />							
+							<p:outputPanel style="display: inline-flex;">
+								<h:selectOneRadio value="#{reporteMat.snEstudiosFuera}">
+						            <f:selectItem itemLabel="Si" itemValue="S" />
+						            <f:selectItem itemLabel="No" itemValue="N" />
+						        </h:selectOneRadio>
+								
+								<p:outputPanel>¿Cuál?</p:outputPanel>
+								<p:outputLabel value="#{reporteMat.itEstudiosFuera}" style="width: 300px;" />
+							</p:outputPanel>									
+						</h:panelGrid>
+					
+						<h:panelGrid id="pnlPsico2" columns="2" cellpadding="0">
+							<p:outputPanel />
+							<p:outputPanel style="font-weight: bold; color: #8f3b4f; padding: 5px">¿Como piensa que ha sido su rendimiento hasta ahora?</p:outputPanel>
+							<p:outputPanel />
+							<h:selectOneRadio value="#{reporteMat.opRendimiento}" style="margin-top: -8px;">            					            
+					            <f:selectItem itemLabel="Muy Bueno" itemValue="MB" />
+					            <f:selectItem itemLabel="Bueno" itemValue="BU" />
+					            <f:selectItem itemLabel="Regular" itemValue="RE" />
+					            <f:selectItem itemLabel="Malo" itemValue="MA" />
+					            <f:selectItem itemLabel="Muy Malo" itemValue="MM" />					            					            
+					        </h:selectOneRadio>
+						
+						  	<p:outputPanel />
+							<p:outputPanel style="font-weight: bold; color: #8f3b4f; padding: 5px">
+								Las asignaturas que más le han gustado en los últimos grados han sido:
+							</p:outputPanel>									
+							<p:outputPanel />
+							<p:outputLabel value="#{reporteMat.itAsigMas}" style="width: 500px; margin-top: -10px;" />
+							
+							<p:outputPanel />
+							<p:outputPanel style="font-weight: bold; color: #8f3b4f; padding: 5px">
+								Las asignaturas que menos le han interesado en los últimos grados han sido:
+							</p:outputPanel>									
+							<p:outputPanel />
+							<p:outputLabel value="#{reporteMat.itAsigMenos}" style="width: 500px; margin-top: -10px;" />
+							
+							<p:outputPanel />
+							<p:outputPanel style="font-weight: bold; color: #8f3b4f; padding: 5px">
+								¿Como reaccionan sus padres ante las notas?
+							</p:outputPanel>									
+							<p:outputPanel />
+							<p:outputLabel value="#{reporteMat.itReaccionPadres}" style="width: 500px; margin-top: -10px;" />
+							
+							<p:outputPanel />
+							<p:outputPanel style="padding: 5px; display: inline-flex"> 
+								<span style="font-weight: bold; color: #8f3b4f;">¿Crees que cumples con lo que ellos esperan de ti?</span>
+								<h:selectOneRadio value="#{reporteMat.snCumples}" style="margin-top: -4px;">                
+						            <f:selectItem itemLabel="Si" itemValue="S" />
+						            <f:selectItem itemLabel="No" itemValue="N" />
+						        </h:selectOneRadio> 
+							</p:outputPanel>									
+					        
+					        <p:outputPanel />								
+					        <p:outputPanel style="font-weight: bold; color: #8f3b4f; padding: 5px; margin-top: -10px;">
+								¿Por qué lo crees así?
+							</p:outputPanel>
+							<p:outputPanel />
+							<p:outputLabel value="#{reporteMat.itCumples}" style="width: 500px; margin-top: -10px;" />								
+						</h:panelGrid>					
+			
+						<br />
+						<span style="font-weight: bold; font-size: 13px;">Datos Médicos:</span> <br />
+						<h:panelGrid id="pnlMedicos1" columns="2" cellpadding="0">							
+							<p:outputPanel />
+							<p:outputPanel style="font-weight: bold; color: #8f3b4f; padding: 5px">
+								<span title="Oído, vista, enfermedades respiratorias,...">
+								¿Padece alguna enfermedad o existe alguna condición física que le afecte?</span>
+							</p:outputPanel>
+							<p:outputPanel />
+							<h:selectOneRadio value="#{reporteMat.opEnfermedad}" style="margin-top: -8px; width: 500px;">            					            
+					            <f:selectItem itemLabel="Asma" itemValue="BU" />
+					            <f:selectItem itemLabel="Epilepsia" itemValue="BU" />
+					            <f:selectItem itemLabel="Diabetes" itemValue="RE" />
+					            <f:selectItem itemLabel="Migraña" itemValue="MA" />
+					            <f:selectItem itemLabel="Arritmia cardiaca" itemValue="BU" />
+					            <f:selectItem itemLabel="Hemofilia" itemValue="MA" />					            					            
+					        </h:selectOneRadio>
+							
+							<p:outputPanel />
+							<p:outputPanel style="font-weight: bold; color: #8f3b4f; padding: 5px"> 
+								¿Es alérgico a algún medicamento? 
+							</p:outputPanel>
+							<p:outputPanel />							
+							<p:outputPanel style="display: inline-flex;">
+								<h:selectOneRadio value="#{reporteMat.snAlergiaMed}">
+						            <f:selectItem itemLabel="Si" itemValue="S" />
+						            <f:selectItem itemLabel="No" itemValue="N" />
+						        </h:selectOneRadio>
+								
+								<p:outputPanel>¿Cuál?</p:outputPanel>
+								<p:outputLabel value="#{reporteMat.itAlergiaMed}" style="width: 200px;" />
+							</p:outputPanel>
+							
+							<p:outputPanel />
+							<p:outputPanel style="font-weight: bold; color: #8f3b4f; padding: 5px"> 
+								¿Es alérgico a la picadura de algún insecto? 
+							</p:outputPanel>
+							<p:outputPanel />							
+							<p:outputPanel style="display: inline-flex;">
+								<h:selectOneRadio value="#{reporteMat.snAlergiaIns}">
+						            <f:selectItem itemLabel="Si" itemValue="S" />
+						            <f:selectItem itemLabel="No" itemValue="N" />
+						        </h:selectOneRadio>
+								
+								<p:outputPanel>¿Cuál?</p:outputPanel>
+								<p:outputLabel value="#{reporteMat.itAlergiaIns}" style="width: 200px;" />
+							</p:outputPanel>												
+							
+							<p:outputPanel />
+							<p:outputPanel style="font-weight: bold; color: #8f3b4f; padding: 5px"> 
+								¿Es alérgico a algún alimento?  
+							</p:outputPanel>
+							<p:outputPanel />							
+							<p:outputPanel style="display: inline-flex;">
+								<h:selectOneRadio value="#{reporteMat.snAlergiaAli}">
+						            <f:selectItem itemLabel="Si" itemValue="S" />
+						            <f:selectItem itemLabel="No" itemValue="N" />
+						        </h:selectOneRadio>
+								
+								<p:outputPanel>¿Cuál?</p:outputPanel>
+								<p:outputLabel value="#{reporteMat.itAlergiaAli}" style="width: 200px;" />
+							</p:outputPanel>
+							
+							<p:outputPanel />
+							<p:outputPanel style="display: inline-flex; margin-top: 5px;">
+								<p:outputPanel style="font-weight: bold; color: #8f3b4f; padding: 5px"> 
+									Otras: 
+								</p:outputPanel>
+								<p:outputLabel value="#{reporteMat.itAlergOtras}" />
+							</p:outputPanel>
+						</h:panelGrid>		
+					
+						<h:panelGrid id="pnlMedicos2" columns="2" cellpadding="0">
+							<p:outputPanel />
+							<p:outputPanel style="display: inline-flex;">
+								<p:outputPanel style="font-weight: bold; color: #8f3b4f; padding: 5px"> 
+									Actualmente ¿Recibe algún tratamiento médico o psicológico?  
+								</p:outputPanel>
+								
+								<h:selectOneRadio value="#{reporteMat.snTratamientoAct}">            
+						            <f:selectItem itemLabel="Si" itemValue="S" />
+						            <f:selectItem itemLabel="No" itemValue="N" />
+						        </h:selectOneRadio>
+							</p:outputPanel>
+							
+							<p:outputPanel />
+							<p:outputPanel style="display: inline-flex;">
+								<p:outputPanel style="font-weight: bold; color: #8f3b4f; padding: 5px"> 
+									¿Lo ha recibido alguna vez? 
+								</p:outputPanel>
+								
+								<h:selectOneRadio value="#{reporteMat.snTratamientoAnt}">            
+						            <f:selectItem itemLabel="Si" itemValue="S" />
+						            <f:selectItem itemLabel="No" itemValue="N" />
+						        </h:selectOneRadio>
+							</p:outputPanel>
+							
+							<p:outputPanel />
+							<p:outputPanel style="font-weight: bold; color: #8f3b4f; padding: 5px"> 
+								¿Ha estado alguna vez hospitalizado?  
+							</p:outputPanel>
+							<p:outputPanel />							
+							<p:outputPanel style="display: inline-flex;">
+								<h:selectOneRadio value="#{reporteMat.snHospital}">
+						            <f:selectItem itemLabel="Si" itemValue="S" />
+						            <f:selectItem itemLabel="No" itemValue="N" />
+						        </h:selectOneRadio>
+								
+								<p:outputPanel>Motivo:</p:outputPanel>
+								<p:outputLabel value="#{reporteMat.itHospital}" style="width: 250px;" />
+							</p:outputPanel>
+							
+							<p:outputPanel />
+							<p:outputPanel style="font-weight: bold; color: #8f3b4f; padding: 5px"> 
+								¿Estás operado(a) de algo?  
+							</p:outputPanel>
+							<p:outputPanel />							
+							<p:outputPanel style="display: inline-flex;">
+								<h:selectOneRadio value="#{reporteMat.snOperado}">
+						            <f:selectItem itemLabel="Si" itemValue="S" />
+						            <f:selectItem itemLabel="No" itemValue="N" />
+						        </h:selectOneRadio>
+								
+								<p:outputPanel>¿De qué?</p:outputPanel>
+								<p:outputLabel value="#{reporteMat.itOperado}" style="width: 250px;" />
+							</p:outputPanel>
+							
+							<p:outputPanel />
+							<p:outputPanel style="display: inline-flex;">
+								<p:outputPanel style="font-weight: bold; color: #8f3b4f; padding: 5px"> 
+									¿Padece alguna minusvalía? Indique el motivo y grado  
+								</p:outputPanel>
+								<h:selectOneRadio value="#{reporteMat.snMinusvalia}">
+						            <f:selectItem itemLabel="Si" itemValue="S" />
+						            <f:selectItem itemLabel="No" itemValue="N" />
+						        </h:selectOneRadio>
+						    </p:outputPanel>
+							
+							<p:outputPanel />							
+							<p:outputPanel style="display: inline-flex;">
+								<p:outputPanel>Motivo:</p:outputPanel>
+								<p:outputLabel value="#{reporteMat.itMinusvalia}" style="width: 200px;" />
+								
+								<p:outputPanel>Grado:</p:outputPanel>
+								<p:outputLabel value="#{reporteMat.soGradoMinusvalia}" />											
+							</p:outputPanel>
+						</h:panelGrid>		
+						
+						<br />
+						<p:outputPanel>Observaciónes:</p:outputPanel>
+						<p:outputLabel value="#{reporteMat.itObservacion}" rows="3" style="width: 90%" />												
+					</p:outputPanel>
+				        
+			    </p:tab>
+			    
+			    <p:tab title="Listado de Matrículas">
+			        
+			    </p:tab>
+			    
+			    <p:tab title="Gráfica">
+			        
+			    </p:tab>		      
+			</p:tabView>							
 						
 	   	</h:form>
 	</ui:define>		

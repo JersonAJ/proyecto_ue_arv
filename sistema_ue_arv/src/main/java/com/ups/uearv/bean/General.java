@@ -96,16 +96,23 @@ public class General implements Serializable {
 
 	// OBTENER ESTADO
 	public boolean getEstado(String estado) {
-		boolean ban = true;
-		if (estado.equals("IC"))
-			ban = false;
+		boolean ban = false;
+		if (estado.equals("AC"))
+			ban = true;
 		return ban;
 	}
 
 	public boolean getAprobado(String estado) {
-		boolean ban = true;
-		if (estado.equals("N"))
-			ban = false;
+		boolean ban = false;
+		if (estado.equals("S"))
+			ban = true;
+		return ban;
+	}
+	
+	public boolean getSINO(String estado) {
+		boolean ban = false;
+		if (estado.equals("SI"))
+			ban = true;
 		return ban;
 	}
 

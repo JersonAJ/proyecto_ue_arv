@@ -222,8 +222,8 @@ public class MatEstudiante implements Serializable {
 	@Column(name="sn_trat_recibido")
 	private String snTratRecibido;
 
-	@Column(name="sn_tratamineto")
-	private String snTratamineto;
+	@Column(name="sn_tratamiento")
+	private String snTratamiento;
 
 	private String telefono;
 
@@ -827,12 +827,12 @@ public class MatEstudiante implements Serializable {
 		this.snTratRecibido = snTratRecibido;
 	}
 
-	public String getSnTratamineto() {
-		return this.snTratamineto;
+	public String getSnTratamiento() {
+		return this.snTratamiento;
 	}
 
-	public void setSnTratamineto(String snTratamineto) {
-		this.snTratamineto = snTratamineto;
+	public void setSnTratamiento(String snTratamiento) {
+		this.snTratamiento = snTratamiento;
 	}
 
 	public String getTelefono() {

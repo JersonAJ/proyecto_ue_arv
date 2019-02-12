@@ -33,9 +33,9 @@ import com.ups.uearv.servicios.Util;
  * @version 1.0
  */
 
-@ManagedBean(name = "reporte")
+@ManagedBean(name = "reporteCal")
 @ViewScoped
-public class Reporte implements Serializable {
+public class ReporteCal implements Serializable {
 
 	private static EntityManagerFactory emf = Persistence.createEntityManagerFactory("sismacc");
 	private static EntityManager em = emf.createEntityManager();	
@@ -193,6 +193,8 @@ public class Reporte implements Serializable {
 			olComportamiento = obj[6].toString();
 			olProyectos = obj[7].toString();
 			olParalelo = obj[8].toString();	
+			olJornada = obj[9].toString();
+			olPeriodo = obj[10].toString();
 		} else {
 			limpiarLibreta();
 			mensaje = "Debe completar los datos del control parcial";

@@ -15,47 +15,49 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 				
 			<p:growl id="growl" for="growl" showDetail="true" closable="true" />
 			
+			<!-- FILTROS BUSQ -->
 			<p:outputPanel style="background-color: white; padding: 5px;">
-				<p:selectOneMenu id="soPeriodo" value="#{reporte.soPeriodoCal}" style="width: 130px">
+				<p:selectOneMenu id="soPeriodo" value="#{reporteCal.soPeriodoCal}" style="width: 130px">
 					<f:selectItem itemLabel="Seleccione Período" itemValue="NA" />
-					<f:selectItems value="#{reporte.listPeriodoCal}" />		
-					<p:ajax listener="#{reporte.onChangePeriodoCal()}" update="soOferta"/>								
+					<f:selectItems value="#{reporteCal.listPeriodoCal}" />		
+					<p:ajax listener="#{reporteCal.onChangePeriodoCal()}" update="soOferta"/>								
 				</p:selectOneMenu>	
 				<p:spacer width="10px" />
-				<p:selectOneMenu id="soOferta" value="#{reporte.soOfertaCal}" style="width: 190px">
+				<p:selectOneMenu id="soOferta" value="#{reporteCal.soOfertaCal}" style="width: 190px">
 					<f:selectItem itemLabel="Seleccione Oferta" itemValue="NA" />
-					<f:selectItems value="#{reporte.listOfertaCal}" />
-					<p:ajax listener="#{reporte.onChangeOfertaCal()}" update="soEstudiante"/>
+					<f:selectItems value="#{reporteCal.listOfertaCal}" />
+					<p:ajax listener="#{reporteCal.onChangeOfertaCal()}" update="soEstudiante"/>
 				</p:selectOneMenu>			
 				<p:spacer width="10px" />
-				<p:selectOneMenu id="soEstudiante" value="#{reporte.soEstudianteCal}" effect="fade" widgetVar="t" filter="true" filterMatchMode="contains">
+				<p:selectOneMenu id="soEstudiante" value="#{reporteCal.soEstudianteCal}" effect="fade" widgetVar="t" filter="true" filterMatchMode="contains">
 					<f:selectItem itemLabel="Seleccione Estudiante" itemValue="NA" />
-					<f:selectItems value="#{reporte.listEstudianteCal}" />	
+					<f:selectItems value="#{reporteCal.listEstudianteCal}" />	
 				    <p:column>
 		                <h:outputText value="#{t}" />
 		            </p:column>		            
 		        </p:selectOneMenu>
 		        <p:spacer width="10px" />
-		        <p:selectOneMenu id="soDocente" value="#{reporte.soDocenteCal}">
+		        <p:selectOneMenu id="soDocente" value="#{reporteCal.soDocenteCal}">
 					<f:selectItem itemLabel="Seleccione Docente" itemValue="NA" />
-					<f:selectItems value="#{reporte.listDocenteCal}" />		
-					<p:ajax listener="#{reporte.onChangeDocenteCal()}" update="tab"/>								
+					<f:selectItems value="#{reporteCal.listDocenteCal}" />		
+					<p:ajax listener="#{reporteCal.onChangeDocenteCal()}" update="tab"/>								
 				</p:selectOneMenu>
 		        <p:spacer width="5px" />					
 			</p:outputPanel> 
 			<br />
+			
 			<!-- CONSULTA -->							
 			<p:tabView id="tab">
 				<p:tab title="Libreta de calificaciones">
 					<p:outputPanel style="background-color: white; padding: 5px; display: inline-flex; margin-top: -5px;">
 						<p:outputPanel style="padding: 5px">Quimestre:</p:outputPanel>
-						<p:selectOneMenu id="soQuimestre" value="#{reporte.soQuimestre}" style="width: 40px">
+						<p:selectOneMenu id="soQuimestre" value="#{reporteCal.soQuimestre}" style="width: 40px">
 				            <f:selectItem itemLabel="Q1" itemValue="1" /> 
 				            <f:selectItem itemLabel="Q2" itemValue="2" />				            
 				        </p:selectOneMenu>
 				        <p:spacer width="10px" />	
 				        <p:outputPanel style="padding: 5px">Registro:</p:outputPanel>
-						<p:selectOneMenu id="soParcial" value="#{reporte.soParcial}" style="width: 40px">
+						<p:selectOneMenu id="soParcial" value="#{reporteCal.soParcial}" style="width: 40px">
 				            <f:selectItem itemLabel="P1" itemValue="1" /> 
 				            <f:selectItem itemLabel="P2" itemValue="2" />		
 				            <f:selectItem itemLabel="P3" itemValue="3" />			            
@@ -63,7 +65,7 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 				        
 				        <p:spacer width="20px" />
 				        <p:commandButton id="btnVer" value="Ver" style="font-size: 12px !important;" 
-				        	actionListener="#{reporte.verLibretaCalifinaciones}" update="opLibreta :form:growl" />
+				        	actionListener="#{reporteCal.verLibretaCalifinaciones}" update="opLibreta :form:growl" />
 				        
 				        <p:spacer width="20px" />
 				        <p:commandButton type="button" icon="fa fa-print" title="Imprimir" style="margin-right: 50px;">
@@ -73,7 +75,7 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 					
 					<p:separator style="border: 0.6px solid #8f3b4f;" />
 					
-					<p:outputPanel id="opLibreta">					
+					<p:outputPanel id="opLibreta">
 						<style type="text/css">
 							.tg  { border-collapse: collapse; border-spacing: 0; }
 							.tg td{ font-family: Arial, sans-serif; font-size: 11px; padding: 1px; overflow: hidden; word-break: normal; }
@@ -121,31 +123,31 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 							  <td class="tg-cudy">LIBRETA DE CALIFICACIONES</td>
 							</tr>
 							<tr>
-							  <td class="tg-mjfx">AÑO LECTIVO 2018-2019</td>
+							  <td class="tg-mjfx">AÑO LECTIVO #{reporteCal.olPeriodo}</td>
 							</tr>
 							<tr>
-							  <td class="tg-mjfx">JORNADA MATUTINA</td>
+							  <td class="tg-mjfx">JORNADA #{reporteCal.olJornada}</td>
 							</tr>
 							<tr>
 							  <td class="tg-0lax" colspan="2">ESTUDIANTE:
-							  <h:outputText value="#{reporte.olEstudiante}" style="font-weight: normal;"/>	
+							  <h:outputText value="#{reporteCal.olEstudiante}" style="font-weight: normal;"/>	
 							  </td>
-							  <td class="tg-0lax"><h:outputText value="#{reporte.olGrado}" /> </td>
+							  <td class="tg-0lax"><h:outputText value="#{reporteCal.olGrado}" /> </td>
 							</tr>
 							<tr>
 							  <td class="tg-0lax" colspan="2">DOCENTE: 
-							  	<h:outputText value="#{reporte.olDocente}" style="font-weight: normal;"/> 
+							  	<h:outputText value="#{reporteCal.olDocente}" style="font-weight: normal;"/> 
 							  </td>
-							  <td class="tg-0lax">PARALELO: <h:outputText value=" “#{reporte.olParalelo}” " style="font-weight: normal;"/> </td>
+							  <td class="tg-0lax">PARALELO: <h:outputText value=" “#{reporteCal.olParalelo}” " style="font-weight: normal;"/> </td>
 							</tr>
 						</table>
 						
-						<p:dataTable var="dtlibreta" emptyMessage="--" value="#{reporte.libretaList}"
+						<p:dataTable var="dtlibreta" emptyMessage="--" value="#{reporteCal.libretaList}"
 							tableStyle="width: auto; min-width: 550px; margin-top: 5px; font-size: 10px;">												
 							<p:columnGroup type="header">
 					            <p:row>
 					                <p:column rowspan="2" headerText="ÁREAS" width="130" />
-					                <p:column colspan="7" headerText="#{reporte.olParcial} DEL #{reporte.olQuimestre}" />
+					                <p:column colspan="7" headerText="#{reporteCal.olParcial} DEL #{reporteCal.olQuimestre}" />
 					            </p:row>		         
 					            <p:row>
 					                <p:column headerText="TAREAS" style="padding: 0px; width: 20px; height: 72px; transform: rotate(-90deg); text-align: center; background: transparent;" />
@@ -182,14 +184,14 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 							<tr>
 								<td style="border: 1px solid black; text-align: center; width: 134px;">COMPORTAMIENTO</td>
 								<td style="border: 1px solid black; text-align: center; width: 43px;">
-									<h:outputText value="#{reporte.olComportamiento}" style="font-weight: normal;"/>
+									<h:outputText value="#{reporteCal.olComportamiento}" style="font-weight: normal;"/>
 								</td>
 								  
 								<td></td>
 								  
 								<td style="border: 1px solid black; text-align: center; width: 184px;">PROMEDIO FINAL</td>
-								<td style="border: 1px solid black; text-align: center; width: 53px;">#{reporte.olPromedioFinal}</td>
-								<td style="border: 1px solid black; text-align: center; width: 63px;">#{reporte.olPromedioEscala}</td>
+								<td style="border: 1px solid black; text-align: center; width: 53px;">#{reporteCal.olPromedioFinal}</td>
+								<td style="border: 1px solid black; text-align: center; width: 63px;">#{reporteCal.olPromedioEscala}</td>
 							</tr>
 						</table>
 						<br />
@@ -208,34 +210,34 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 								<tr>
 									<td style="border: 1px solid black;">DÍAS ASISTIDOS</td>
 									<td style="border: 1px solid black; text-align: center;">
-										<h:outputText value="#{reporte.olAistencias}" style="font-weight: normal;"/>
+										<h:outputText value="#{reporteCal.olAistencias}" style="font-weight: normal;"/>
 									</td>								  
 									<td></td>								  							
 								</tr>
 								<tr>
 									<td style="border: 1px solid black;">FALTAS JUTIFICADAS</td>
 									<td style="border: 1px solid black; text-align: center;">
-										<h:outputText value="#{reporte.olFaltasJustif}" style="font-weight: normal;"/>
+										<h:outputText value="#{reporteCal.olFaltasJustif}" style="font-weight: normal;"/>
 									</td>								  
 									<td></td>								  							
 								</tr>
 								<tr>
 									<td style="border: 1px solid black;">FALTAS INJUTIFICADAS</td>
 									<td style="border: 1px solid black; text-align: center;">
-										<h:outputText value="#{reporte.olFaltas}" style="font-weight: normal;"/>
+										<h:outputText value="#{reporteCal.olFaltas}" style="font-weight: normal;"/>
 									</td>			  
 									<td></td>								  							
 								</tr>
 								<tr>
 									<td style="border: 1px solid black;">ATRASOS</td>
 									<td style="border: 1px solid black; text-align: center;">
-										<h:outputText value="#{reporte.olAtrasos}" style="font-weight: normal;"/>
+										<h:outputText value="#{reporteCal.olAtrasos}" style="font-weight: normal;"/>
 									</td>								  
 									<td></td>								  							
 								</tr>
 							</table>
 							
-							<p:dataTable id="dtCom" var="dtCom" value="#{reporte.comportamientoList}" tableStyle="width: 310px; min-width: 310px; margin-top: 2px; font-size: 6px; padding: 0px;">
+							<p:dataTable id="dtCom" var="dtCom" value="#{reporteCal.comportamientoList}" tableStyle="width: 310px; min-width: 310px; margin-top: 2px; font-size: 6px; padding: 0px;">
 								<f:facet name="header">EVALUACIÓN DEL COMPORTAMIENTO</f:facet>
 								<p:column style="width: 5px; text-align: center;"> <h:outputText value="#{dtCom.abreviatura}" /> </p:column> 
 							    <p:column style="text-align: center"> <h:outputText value="#{dtCom.descripcion}" /> </p:column>				        
@@ -257,33 +259,33 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 								<tr>
 									<td style="border: 1px solid black;">EX: EXCELENTE</td>
 									<td style="border: 1px solid black; text-align: center;">
-										<h:outputText value="#{reporte.olProyectos}" style="font-weight: normal; display: #{reporte.olProyectos eq 'EX' ? '':'none' }" />
+										<h:outputText value="#{reporteCal.olProyectos}" style="font-weight: normal; display: #{reporteCal.olProyectos eq 'EX' ? '':'none' }" />
 									</td>								  
 									<td></td>								  							
 								</tr>
 								<tr>
 									<td style="border: 1px solid black;">MB: MUY BUENO</td>
 									<td style="border: 1px solid black; text-align: center;">
-										<h:outputText value="#{reporte.olProyectos}" style="font-weight: normal; display: #{reporte.olProyectos eq 'MB' ? '':'none' }" />
+										<h:outputText value="#{reporteCal.olProyectos}" style="font-weight: normal; display: #{reporteCal.olProyectos eq 'MB' ? '':'none' }" />
 									</td>
 									<td></td>								  							
 								</tr>
 								<tr>
 									<td style="border: 1px solid black;">B: BUENO</td>
 									<td style="border: 1px solid black; text-align: center;">
-										<h:outputText value="#{reporte.olProyectos}" style="font-weight: normal; display: #{reporte.olProyectos eq 'B' ? '':'none' }" />
+										<h:outputText value="#{reporteCal.olProyectos}" style="font-weight: normal; display: #{reporteCal.olProyectos eq 'B' ? '':'none' }" />
 									</td>								  
 									<td></td>								  							
 								</tr>
 								<tr>
 									<td style="border: 1px solid black;">R: REGULAR</td>
 									<td style="border: 1px solid black; text-align: center;">
-										<h:outputText value="#{reporte.olProyectos}" style="font-weight: normal; display: #{reporte.olProyectos eq 'R' ? '':'none' }" />
-									</td>								  
+										<h:outputText value="#{reporteCal.olProyectos}" style="font-weight: normal; display: #{reporteCal.olProyectos eq 'R' ? '':'none' }" />
+									</td>					  
 									<td></td>								  							
 								</tr>
 							</table>
-							<p:dataTable id="dtEsc" var="dtEsc" value="#{reporte.escalaList}" tableStyle="width: 310px; min-width: 310px; margin-top: 2px; font-size: 6px; padding: 0px;">
+							<p:dataTable id="dtEsc" var="dtEsc" value="#{reporteCal.escalaList}" tableStyle="width: 310px; min-width: 310px; margin-top: 2px; font-size: 6px; padding: 0px;">
 								<f:facet name="header">CALIFICACIÓN CUALITATIVA</f:facet>
 								<p:column style="width: 15px; text-align: center;"> <h:outputText value="#{dtEsc.cualitativa}" /> </p:column> 
 							    <p:column style="text-align: center"> <h:outputText value="#{dtEsc.descripcion}" /> </p:column>				        

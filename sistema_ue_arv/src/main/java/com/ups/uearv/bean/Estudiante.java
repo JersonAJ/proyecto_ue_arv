@@ -328,7 +328,7 @@ public class Estudiante {
 			ob.setSnAlergiaAli(snAlergiaAli);
 			ob.setDsAlergiaAli(itAlergiaAli);
 			ob.setAlergOtras(itAlergOtras);
-			ob.setSnTratamineto(snTratamientoAct);
+			ob.setSnTratamiento(snTratamientoAct);
 			ob.setSnTratRecibido(snTratamientoAnt);
 			ob.setSnHospital(snHospital);
 			ob.setDsHospital(itHospital);

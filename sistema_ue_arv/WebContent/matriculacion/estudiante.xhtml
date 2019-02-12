@@ -17,9 +17,19 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 			<p:growl id="growl" for="growl" showDetail="true" closable="true" />
 					
 			<p:outputPanel style="background-color: white; padding: 5px;">
-				<p:commandLink update=":form:tabView:pnlPersonales :form:tabView:pnlFoto" oncomplete="PF('dgl').show();">
+				<p:commandLink oncomplete="PF('dgl').show();"
+					update=":form:tabView:pnlPersonales 
+							:form:tabView:pnlFoto 
+							:form:tabView:pnlResidencia 
+							:form:tabView:accordionFam:pnlPadre 
+							:form:tabView:accordionFam:pnlMadre 
+							:form:tabView:accordionFam:pnlHermanos 
+							:form:tabView:accordionBio:pnlPsico1 
+							:form:tabView:accordionBio:pnlPsico2 
+							:form:tabView:accordionMed:pnlMedicos1 
+							:form:tabView:accordionMed:pnlMedicos2">
 					<i class="fa fa-plus-circle" />
-					<span>Agregar</span>				
+					<span>Agregar</span>
 					
 					<f:setPropertyActionListener value="" target="#{estudiante.itCedula}" />
 					<f:setPropertyActionListener value="" target="#{estudiante.itNombres}" />	
@@ -168,7 +178,17 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 			    <p:column headerText="Editar" width="20" exportable="false">
 			    	<p:outputPanel style="text-align: center">
 			    	<div style="background-color: white; border-radius: 2px; padding: 2px;">
-						<p:commandLink update=":form:tabView:pnlPersonales :form:tabView:pnlFoto" oncomplete="PF('dgl').show()">	
+						<p:commandLink oncomplete="PF('dgl').show()" 
+							update=":form:tabView:pnlPersonales 
+									:form:tabView:pnlFoto
+									:form:tabView:pnlResidencia
+									:form:tabView:accordionFam:pnlPadre 
+									:form:tabView:accordionFam:pnlMadre
+									:form:tabView:accordionFam:pnlHermanos
+									:form:tabView:accordionBio:pnlPsico1
+									:form:tabView:accordionBio:pnlPsico2
+									:form:tabView:accordionMed:pnlMedicos1 
+									:form:tabView:accordionMed:pnlMedicos2">
 							<i class="fa fa-pencil" />
 							
 							<f:setPropertyActionListener value="#{dtestudiante.idEstudiante}" target="#{estudiante.itCedula}" />
@@ -177,15 +197,79 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 							<f:setPropertyActionListener value="#{dtestudiante.fechaNac}" target="#{estudiante.cFechaNac}" />	
 							<f:setPropertyActionListener value="#{dtestudiante.genero}" target="#{estudiante.sorGenero}" />
 							<f:setPropertyActionListener value="#{dtestudiante.matRepresentante.idRepresentante}" target="#{estudiante.soRepresentante}" />
-							<f:setPropertyActionListener value="#{dtestudiante.tipoSangre}" target="#{estudiante.soTipoSangre}" />						
+							<f:setPropertyActionListener value="#{dtestudiante.tipoSangre}" target="#{estudiante.soTipoSangre}" />
+							<f:setPropertyActionListener value="#{dtestudiante.lugarNacimiento}" target="#{estudiante.itLugarNac}" />
+							<f:setPropertyActionListener value="#{dtestudiante.nacionalidad}" target="#{estudiante.itNacionalidad}" />
+							<f:setPropertyActionListener value="#{general.getSINO(dtestudiante.snDiscapacidad)}" target="#{estudiante.ckDiscapacidad}" />
 							<f:setPropertyActionListener value="#{general.getEstado(dtestudiante.estado)}" target="#{estudiante.ckEstado}" />
 							<f:setPropertyActionListener value="#{dtestudiante.observacion}" target="#{estudiante.itObservacion}" />							
 							<f:setPropertyActionListener value="#{dtestudiante.foto eq null? '/sistema_ue_arv/fotos/FOTO_DEFAULT.png' : dtestudiante.foto}" target="#{estudiante.itImagen}" />
-							
-							<f:setPropertyActionListener value="#{dtestudiante.telefono}" target="#{estudiante.itTelefono}" />						
+																			
+							<f:setPropertyActionListener value="#{dtestudiante.provincia}" target="#{estudiante.itProvincia}" />
+							<f:setPropertyActionListener value="#{dtestudiante.canton}" target="#{estudiante.itCanton}" />
+							<f:setPropertyActionListener value="#{dtestudiante.ciudad}" target="#{estudiante.itCiudad}" />
+							<f:setPropertyActionListener value="#{dtestudiante.parroquia}" target="#{estudiante.itParroquia}" />
+							<f:setPropertyActionListener value="#{dtestudiante.telefono}" target="#{estudiante.itTelefono}" />
 							<f:setPropertyActionListener value="#{dtestudiante.direccion}" target="#{estudiante.itDireccion}" />
+							<f:setPropertyActionListener value="#{dtestudiante.emergLlamar}" target="#{estudiante.itPersonaEmerg}" />
+							<f:setPropertyActionListener value="#{dtestudiante.emergTelefono}" target="#{estudiante.itTelefonoEmerg}" />
 							
+							<f:setPropertyActionListener value="#{dtestudiante.paNombre}" target="#{estudiante.itPaNombre}" />
+							<f:setPropertyActionListener value="#{dtestudiante.paCedula}" target="#{estudiante.itPaCedula}" />
+							<f:setPropertyActionListener value="#{dtestudiante.paEstadoCivil}" target="#{estudiante.soPaEstadoCivil}" />
+							<f:setPropertyActionListener value="#{dtestudiante.paEstudios}" target="#{estudiante.opPaEstudios}" />
+							<f:setPropertyActionListener value="#{dtestudiante.paProfesion}" target="#{estudiante.itPaProfesion}" />
+							<f:setPropertyActionListener value="#{dtestudiante.paOcupacion}" target="#{estudiante.opPaOcupacion}" />
+							<f:setPropertyActionListener value="#{dtestudiante.paInstitucion}" target="#{estudiante.itPaInstitucion}" />
+							<f:setPropertyActionListener value="#{dtestudiante.paPuesto}" target="#{estudiante.itPaPuesto}" />
+							<f:setPropertyActionListener value="#{dtestudiante.paTelefono}" target="#{estudiante.itPaTelefono}" />
+							<f:setPropertyActionListener value="#{dtestudiante.paCelular}" target="#{estudiante.itPaCelular}" />
+							<f:setPropertyActionListener value="#{dtestudiante.paCorreo}" target="#{estudiante.itPaCorreo}" />
+							<f:setPropertyActionListener value="#{dtestudiante.maNombre}" target="#{estudiante.itMaNombre}" />
+							<f:setPropertyActionListener value="#{dtestudiante.maCedula}" target="#{estudiante.itMaCedula}" />
+							<f:setPropertyActionListener value="#{dtestudiante.maEstadoCivil}" target="#{estudiante.soMaEstadoCivil}" />
+							<f:setPropertyActionListener value="#{dtestudiante.maEstudios}" target="#{estudiante.opMaEstudios}" />
+							<f:setPropertyActionListener value="#{dtestudiante.maProfesion}" target="#{estudiante.itMaProfesion}" />
+							<f:setPropertyActionListener value="#{dtestudiante.maOcupacion}" target="#{estudiante.opMaOcupacion}" />
+							<f:setPropertyActionListener value="#{dtestudiante.maInstitucion}" target="#{estudiante.itMaInstitucion}" />
+							<f:setPropertyActionListener value="#{dtestudiante.maPuesto}" target="#{estudiante.itMaPuesto}" />
+							<f:setPropertyActionListener value="#{dtestudiante.maTelefono}" target="#{estudiante.itMaTelefono}" />
+							<f:setPropertyActionListener value="#{dtestudiante.maCelular}" target="#{estudiante.itMaCelular}" />
+							<f:setPropertyActionListener value="#{dtestudiante.maCorreo}" target="#{estudiante.itMaCorreo}" />
+							<f:setPropertyActionListener value="#{dtestudiante.snHermanos}" target="#{estudiante.snHermanos}" />
+							<f:setPropertyActionListener value="#{dtestudiante.dsHermanos}" target="#{estudiante.itHermanos}" />
+							
+							<f:setPropertyActionListener value="#{dtestudiante.viveCon}" target="#{estudiante.opViveCon}" />
+							<f:setPropertyActionListener value="#{dtestudiante.situacionFamiliar}" target="#{estudiante.itSituacionFam}" />
+							<f:setPropertyActionListener value="#{dtestudiante.relacionPadres}" target="#{estudiante.opRelacionPadres}" />
+							<f:setPropertyActionListener value="#{dtestudiante.snClasesPart}" target="#{estudiante.snClasesPart}" />
+							<f:setPropertyActionListener value="#{dtestudiante.dsClasesPart}" target="#{estudiante.itClasesPart}" />
+							<f:setPropertyActionListener value="#{dtestudiante.snEstudiosFuera}" target="#{estudiante.snEstudiosFuera}" />
+							<f:setPropertyActionListener value="#{dtestudiante.dsEstudiosFuera}" target="#{estudiante.itEstudiosFuera}" />
+							<f:setPropertyActionListener value="#{dtestudiante.rendimiento}" target="#{estudiante.opRendimiento}" />
+							<f:setPropertyActionListener value="#{dtestudiante.asigMas}" target="#{estudiante.itAsigMas}" />
+							<f:setPropertyActionListener value="#{dtestudiante.asigMenos}" target="#{estudiante.itAsigMenos}" />
+							<f:setPropertyActionListener value="#{dtestudiante.reaccionPadres}" target="#{estudiante.itReaccionPadres}" />
+							<f:setPropertyActionListener value="#{dtestudiante.snCumples}" target="#{estudiante.snCumples}" />
+							<f:setPropertyActionListener value="#{dtestudiante.dsCumples}" target="#{estudiante.itCumples}" />
+												
+							<f:setPropertyActionListener value="#{dtestudiante.enfermedad}" target="#{estudiante.opEnfermedad}" />
+							<f:setPropertyActionListener value="#{dtestudiante.snAlergiaMed}" target="#{estudiante.snAlergiaMed}" />
+							<f:setPropertyActionListener value="#{dtestudiante.dsAlergiaMed}" target="#{estudiante.itAlergiaMed}" />
+							<f:setPropertyActionListener value="#{dtestudiante.snAlergiaIns}" target="#{estudiante.snAlergiaIns}" />
+							<f:setPropertyActionListener value="#{dtestudiante.dsAlergiaIns}" target="#{estudiante.itAlergiaIns}" />
+							<f:setPropertyActionListener value="#{dtestudiante.snAlergiaAli}" target="#{estudiante.snAlergiaAli}" />
+							<f:setPropertyActionListener value="#{dtestudiante.dsAlergiaAli}" target="#{estudiante.itAlergiaAli}" />
 							<f:setPropertyActionListener value="#{dtestudiante.alergOtras}" target="#{estudiante.itAlergOtras}" />
+							<f:setPropertyActionListener value="#{dtestudiante.snTratamiento}" target="#{estudiante.snTratamientoAct}" />
+							<f:setPropertyActionListener value="#{dtestudiante.snTratRecibido}" target="#{estudiante.snTratamientoAnt}" />
+							<f:setPropertyActionListener value="#{dtestudiante.snHospital}" target="#{estudiante.snHospital}" />
+							<f:setPropertyActionListener value="#{dtestudiante.dsHospital}" target="#{estudiante.itHospital}" />
+							<f:setPropertyActionListener value="#{dtestudiante.snOperado}" target="#{estudiante.snOperado}" />
+							<f:setPropertyActionListener value="#{dtestudiante.dsOperado}" target="#{estudiante.itOperado}" />
+							<f:setPropertyActionListener value="#{dtestudiante.snMinusvalia}" target="#{estudiante.snMinusvalia}" />
+							<f:setPropertyActionListener value="#{dtestudiante.dsMinusvalia}" target="#{estudiante.itMinusvalia}" />
+							<f:setPropertyActionListener value="#{dtestudiante.gdMinusvalia}" target="#{estudiante.soGradoMinusvalia}" />
 							
 							<f:setPropertyActionListener value="1" target="#{estudiante.accion}" />
 																																												
@@ -233,8 +317,8 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 			
 				<p:ajax event="close" update="form" listener="#{estudiante.closeDialogo}" />
 					
-				<p:tabView id="tabView" style="margin-top: -10px;">					
-					<p:tab title="Personales">					
+				<p:tabView id="tabView" style="margin-top: -10px;" activeIndex="0">					
+					<p:tab title="Personales">
 						<p:outputPanel  style="display: inline-flex; width: 100%">		
 							<h:panelGrid id="pnlPersonales" columns="2" cellpadding="0" style="width: 60%" columnClasses="ui-grid-col-4,ui-grid-col-8">										
 								<p:outputPanel style="text-align: end; padding: 5px">Cédula:</p:outputPanel>
@@ -310,7 +394,33 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 					<p:tab title="Residencia">
 						<h:panelGrid id="pnlResidencia" columns="2" cellpadding="0" style="width: 100%" columnClasses="ui-grid-col-2,ui-grid-col-10">
 							<p:outputPanel style="text-align: end; padding: 5px">Provincia:</p:outputPanel>					
-							<p:inputText value="#{estudiante.itProvincia}" style="width: 200px" />
+							<p:selectOneMenu value="#{estudiante.itProvincia}">
+								<f:selectItem itemValue="" itemLabel="Seleccione" />
+								<f:selectItem itemValue="Azuay" itemLabel="Azuay" />
+								<f:selectItem itemValue="Bolívar" itemLabel="Bolívar" />
+								<f:selectItem itemValue="Cañar" itemLabel="Cañar" />
+								<f:selectItem itemValue="Carchi" itemLabel="Carchi" />
+								<f:selectItem itemValue="Chimborazo" itemLabel="Chimborazo" />
+								<f:selectItem itemValue="Cotopaxi" itemLabel="Cotopaxi" />
+								<f:selectItem itemValue="El Oro" itemLabel="El Oro" />
+								<f:selectItem itemValue="Esmeraldas" itemLabel="Esmeraldas" />
+								<f:selectItem itemValue="Galápagos" itemLabel="Galápagos" />
+								<f:selectItem itemValue="Guayas" itemLabel="Guayas" />
+								<f:selectItem itemValue="Imbabura" itemLabel="Imbabura" />
+								<f:selectItem itemValue="Loja" itemLabel="Loja" />
+								<f:selectItem itemValue="Los Ríos" itemLabel="Los Ríos" />
+								<f:selectItem itemValue="Manabí" itemLabel="Manabí" />
+								<f:selectItem itemValue="Morona Santiago" itemLabel="Morona Santiago" />
+								<f:selectItem itemValue="Napo" itemLabel="Napo" />
+								<f:selectItem itemValue="Orellana" itemLabel="Orellana" />
+								<f:selectItem itemValue="Pastaza" itemLabel="Pastaza" />
+								<f:selectItem itemValue="Pichincha" itemLabel="Pichincha" />
+								<f:selectItem itemValue="Santa Elena" itemLabel="Santa Elena" />
+								<f:selectItem itemValue="Santo Domingo de los Tsáchilas" itemLabel="Santo Domingo de los Tsáchilas" />
+								<f:selectItem itemValue="Sucumbíos" itemLabel="Sucumbíos" />
+								<f:selectItem itemValue="Tungurahua" itemLabel="Tungurahua" />
+								<f:selectItem itemValue="Zamora Chinchipe" itemLabel="Zamora Chinchipe" />
+							</p:selectOneMenu>							
 							
 							<p:outputPanel style="text-align: end; padding: 5px">Cantón:</p:outputPanel>					
 							<p:inputText value="#{estudiante.itCanton}" style="width: 200px" />
@@ -338,9 +448,9 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 						</h:panelGrid>
 					
 					</p:tab>				
-					
+
 					<p:tab title="Familiares">
-						<p:accordionPanel>
+						<p:accordionPanel id="accordionFam">
 							<p:tab title="Padre">
 								<h:panelGrid id="pnlPadre" columns="2" cellpadding="0" style="width: 100%" columnClasses="ui-grid-col-2,ui-grid-col-10">
 									<p:outputPanel style="text-align: end; padding: 5px">Nombre:</p:outputPanel>
@@ -352,6 +462,7 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 										
 										<p:outputPanel style="text-align: end; padding: 5px">Estado civil:</p:outputPanel>
 										<p:selectOneMenu value="#{estudiante.soPaEstadoCivil}">
+											<f:selectItem itemValue="" itemLabel="Seleccione" />
 											<f:selectItems value="#{estudiante.listEstadoCivil}" />		
 										</p:selectOneMenu>
 									</p:outputPanel>
@@ -406,6 +517,7 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 										
 										<p:outputPanel style="text-align: end; padding: 5px">Estado civil:</p:outputPanel>
 										<p:selectOneMenu value="#{estudiante.soMaEstadoCivil}">
+											<f:selectItem itemValue="" itemLabel="Seleccione" />
 											<f:selectItems value="#{estudiante.listEstadoCivil}" />		
 										</p:selectOneMenu>
 									</p:outputPanel>
@@ -470,7 +582,7 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 					</p:tab>
 					
 					<p:tab title="Bio-Psico-Sociales">
-						<p:accordionPanel>
+						<p:accordionPanel id="accordionBio">
 							<p:tab title="Sección 1">
 								<h:panelGrid id="pnlPsico1" columns="2" cellpadding="0" style="width: 100%" columnClasses="ui-grid-col-2,ui-grid-col-10">
 									<p:outputPanel />
@@ -587,8 +699,8 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 						</p:accordionPanel>       
 					</p:tab>
 					
-					<p:tab title="Médicos">					
-						<p:accordionPanel>
+					<p:tab title="Médicos">
+						<p:accordionPanel id="accordionMed">
 							<p:tab title="Sección 1">
 								<h:panelGrid id="pnlMedicos1" columns="2" cellpadding="0" style="width: 100%" columnClasses="ui-grid-col-2,ui-grid-col-10">							
 									<p:outputPanel />
