@@ -305,6 +305,7 @@ public class ReporteMat implements Serializable {
 		itApellidos = "___________________";
 		soRepresentante = "______________________________________";
 		itImagen = "/sistema_ue_arv/fotos/FOTO_DEFAULT.png";
+		soTipoSangre = "__________";
 
 		itLugarNac = "_________________";
 		itNacionalidad = "_________________";
@@ -318,7 +319,7 @@ public class ReporteMat implements Serializable {
 		itParroquia = "_________________";
 		itTelefono = "_____________";
 		itDireccion = "______________________________________";
-		itPersonaEmerg = "______________________________________";
+		itPersonaEmerg = "__________________________";
 		itTelefonoEmerg = "_____________";
 
 		itPaNombre = "______________________________________";
