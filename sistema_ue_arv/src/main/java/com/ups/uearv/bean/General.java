@@ -5,7 +5,6 @@
  */
 package com.ups.uearv.bean;
 
-import java.io.InputStream;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -22,8 +21,6 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
 import org.primefaces.context.RequestContext;
-import org.primefaces.model.DefaultStreamedContent;
-import org.primefaces.model.StreamedContent;
 
 import com.ups.uearv.entidades.CatalogoDet;
 import com.ups.uearv.entidades.SegUsuario;
@@ -50,21 +47,8 @@ public class General implements Serializable {
 	public void init() {	
 		validaMenuSistema();
 		mostrarCambioClave();
-		cargaFichas();
 	}
-
-	// DESCARGA FICHAS
-	private StreamedContent fichaAtencion;
-
-	public void cargaFichas() {        
-		InputStream stream = FacesContext.getCurrentInstance().getExternalContext().getResourceAsStream("/recursos/fichas/FICHA_ATENCION.pdf");
-		fichaAtencion = new DefaultStreamedContent(stream, "application/octet-stream", "FICHA_ATENCION.pdf");
-	}
-
-	public StreamedContent getFichaAtencion() {
-		return fichaAtencion;
-	}
-
+	
 	// VALIDAR SESION
 	public String validaSesion() {		 
 		if (Session.getUserName() == null) 

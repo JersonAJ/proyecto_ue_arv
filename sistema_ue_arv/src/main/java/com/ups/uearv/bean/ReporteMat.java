@@ -317,7 +317,7 @@ public class ReporteMat implements Serializable {
 
 		itLugarNac = "_________________";
 		itNacionalidad = "_________________";
-		itFechaNac = "_______________________________";
+		itFechaNac = "_______________________";
 		itEdad = "_________";
 		itObservacion = "____________________________________________________________________________";
 

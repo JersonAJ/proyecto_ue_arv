@@ -110,20 +110,17 @@
 			<p:sidebar id="sbFichas" widgetVar="fichas" position="right" baseZIndex="10000" style="width: 400px">
 			    <h1 style="font-weight:normal">Fichas</h1>
 			    <p:separator /> <br />
-			    <h:form>
-				    <p:commandLink ajax="false" style="font-size: 15px" title="Descargar">
-			        	<i class="fa fa-file-pdf-o" />
-			        	Ficha de atención a padres de familia
-			        	<p:fileDownload value="#{general.fichaAtencion}" />
-			        </p:commandLink>
-			        <br /> <br />
-			        <p:commandLink ajax="false" style="font-size: 15px" title="Descargar">
-			        	<i class="fa fa-file-pdf-o" />
-			        	Ficha de atención a padres de familia
-			        	<p:fileDownload value="#{general.fichaAtencion}" />
-			        </p:commandLink>
+				    <a href="#{request.contextPath}/recursos/fichas/FICHA_ATENCION.pdf" target="_blank"> 
+				        <i class="fa fa-file-pdf-o" />
+				        Ficha de atención a padres de familia 
+			        </a>		
 			        
-		        </h:form>
+			        <br /> <br />
+			        
+			        <a href="#{request.contextPath}/recursos/fichas/FORMATO_GENERAL.pdf" target="_blank">
+				        <i class="fa fa-file-pdf-o" />
+				        Formato general 
+			        </a>			        
 			</p:sidebar>		
 
 			<div class="layout-main-content">

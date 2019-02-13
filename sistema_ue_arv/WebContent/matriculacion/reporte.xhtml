@@ -86,10 +86,10 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 						<span style="font-weight: bold; font-size: 13px;">Datos Personales:</span> <br />
 						<h:panelGrid id="pnlPersonales" columns="2" cellpadding="0" >										
 							<p:outputPanel style="font-size: 12px">Cédula:</p:outputPanel>
-							<p:outputLabel value="#{reporteMat.itCedula}" style="width: 45%" />
+							<p:outputLabel value="#{reporteMat.itCedula}" style="width: 80px; font-size: 12px" />
 							
 							<p:outputPanel style="font-size: 12px">Nombre Completo:</p:outputPanel>
-							<p:outputLabel value="#{reporteMat.itApellidos} #{reporteMat.itNombres}" style="width: 90%" />
+							<p:outputLabel value="#{reporteMat.itApellidos} #{reporteMat.itNombres}" style="width: 250px; font-size: 12px" />
 																						
 							<p:outputPanel style="font-size: 12px">Representante:</p:outputPanel>
 						    <p:outputLabel value="#{reporteMat.soRepresentante}" />			        
@@ -101,26 +101,26 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 					        </h:selectOneRadio>
 					        
 					        <p:outputPanel style="font-size: 12px">Tipo de sangre:</p:outputPanel>
-							<p:outputLabel value="#{general.getDesCatalogoDet(reporteMat.soTipoSangre)}" style="width: 50px" />
+							<p:outputLabel value="#{general.getDesCatalogoDet(reporteMat.soTipoSangre)}" style="width: 50px; font-size: 12px" />
 														
 							<p:outputPanel style="font-size: 12px">Lugar Nac.:</p:outputPanel>
 							<p:outputPanel style="display: inline-flex;">					
-								<p:outputLabel value="#{reporteMat.itLugarNac}" style="width: 150px" />
+								<p:outputLabel value="#{reporteMat.itLugarNac}" style="width: 150px; font-size: 12px" />
 								
 								<p:outputPanel style="font-size: 12px">Nacionalidad:</p:outputPanel>					
-								<p:outputLabel value="#{reporteMat.itNacionalidad}" style="width: 150px" />
+								<p:outputLabel value="#{reporteMat.itNacionalidad}" style="width: 150px; font-size: 12px" />
 							</p:outputPanel>		
 											
 							<p:outputPanel style="font-size: 12px">Fecha Nac.:</p:outputPanel>
 							<p:outputPanel style="display: inline-flex;">
-						        <p:outputLabel value="#{reporteMat.itFechaNac}" style="width: 250px" />
+						        <p:outputLabel value="#{reporteMat.itFechaNac}" style="width: 230px; font-size: 12px" />
 						        
 						        <p:outputPanel style="font-size: 12px">Edad:</p:outputPanel>					
-								<p:outputLabel value="#{reporteMat.itEdad}" style="width: 50px" />
+								<p:outputLabel value="#{reporteMat.itEdad}" style="width: 50px; font-size: 12px" />
 							</p:outputPanel>			
 					        
 					        <p:outputPanel style="font-size: 12px">Discapacidad:</p:outputPanel>
-							<h:selectBooleanCheckbox disabled="true" value="#{reporteMat.ckDiscapacidad}" style="margin-top: 6px" />
+							<h:selectBooleanCheckbox disabled="true" value="#{reporteMat.ckDiscapacidad}" style="margin-top: 6px; font-size: 12px" />
 						</h:panelGrid>										
 							
 						<br />				
@@ -128,24 +128,24 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 						<h:panelGrid id="pnlResidencia" columns="2" cellpadding="0">
 							<p:outputPanel style="font-size: 12px">Provincia:</p:outputPanel>
 							<p:outputPanel style="display: inline-flex;">
-								<p:outputLabel value="#{reporteMat.itProvincia}" style="width: 150px" />															
+								<p:outputLabel value="#{reporteMat.itProvincia}" style="width: 150px; font-size: 12px" />															
 								
 								<p:outputPanel style="font-size: 12px">Cantón:</p:outputPanel>					
-								<p:outputLabel value="#{reporteMat.itCanton}" style="width: 150px" />
+								<p:outputLabel value="#{reporteMat.itCanton}" style="width: 150px; font-size: 12px" />
 								
 								<p:outputPanel style="font-size: 12px">Ciudad:</p:outputPanel>					
-								<p:outputLabel value="#{reporteMat.itCiudad}" style="width: 150px" />
+								<p:outputLabel value="#{reporteMat.itCiudad}" style="width: 150px; font-size: 12px" />
 							</p:outputPanel>
 							
 							<p:outputPanel style="font-size: 12px">Parroquia:</p:outputPanel>					
-							<p:outputLabel value="#{reporteMat.itParroquia}" style="width: 200px" />
+							<p:outputLabel value="#{reporteMat.itParroquia}" style="width: 200px; font-size: 12px" />
 							
 							<p:outputPanel style="font-size: 12px">Teléfono:</p:outputPanel>
 							<p:outputPanel style="display: inline-flex;">
-								<p:outputLabel value="#{reporteMat.itTelefono}" style="width: 150px" />
+								<p:outputLabel value="#{reporteMat.itTelefono}" style="width: 150px; font-size: 12px" />
 																	
 								<p:outputPanel style="font-size: 12px">Dirección:</p:outputPanel>
-								<p:outputLabel value="#{reporteMat.itDireccion}" rows="2" style="width: 300px" />
+								<p:outputLabel value="#{reporteMat.itDireccion}" rows="2" style="width: 300px; font-size: 12px" />
 							</p:outputPanel>
 							
 							<p:outputPanel />
@@ -153,10 +153,10 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 							
 							<p:outputPanel style="font-size: 12px">LLamar a:</p:outputPanel>
 							<p:outputPanel style="display: inline-flex;">
-								<p:outputLabel value="#{reporteMat.itPersonaEmerg}" style="width: 250px" />
+								<p:outputLabel value="#{reporteMat.itPersonaEmerg}" style="width: 250px; font-size: 12px" />
 								
 								<p:outputPanel style="font-size: 12px">Teléfono:</p:outputPanel>
-								<p:outputLabel value="#{reporteMat.itTelefonoEmerg}" style="width: 80px" />
+								<p:outputLabel value="#{reporteMat.itTelefonoEmerg}" style="width: 80px; font-size: 12px" />
 							</p:outputPanel>
 						</h:panelGrid>					
 					
@@ -165,10 +165,10 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 						<span style="font-weight: bold;">Padre</span> <br />
 						<h:panelGrid id="pnlPadre" columns="2" cellpadding="0">
 							<p:outputPanel style="font-size: 12px">Nombre:</p:outputPanel>
-							<p:outputLabel value="#{reporteMat.itPaNombre}" style="width: 300px" />
+							<p:outputLabel value="#{reporteMat.itPaNombre}" style="width: 300px; font-size: 12px" />
 							
 							<p:outputPanel style="font-size: 12px">Cédula:</p:outputPanel>
-							<p:outputLabel value="#{reporteMat.itPaCedula}" style="width: 80px" />
+							<p:outputLabel value="#{reporteMat.itPaCedula}" style="width: 80px; font-size: 12px" />
 							
 							<p:outputPanel style="font-size: 12px">Estado civil:</p:outputPanel>
 							<p:outputLabel value="#{general.getDesCatalogoDet(reporteMat.soPaEstadoCivil)}" />
@@ -194,33 +194,33 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 					        </h:selectOneRadio>
 					        
 					        <p:outputPanel style="font-size: 12px">Institución:</p:outputPanel>
-							<p:outputLabel value="#{reporteMat.itPaInstitucion}" style="width: 300px" />
+							<p:outputLabel value="#{reporteMat.itPaInstitucion}" style="width: 300px; font-size: 12px" />
 							
 							<p:outputPanel style="font-size: 12px">Puesto:</p:outputPanel>
-							<p:outputLabel value="#{reporteMat.itPaPuesto}" style="width: 150px" />
+							<p:outputLabel value="#{reporteMat.itPaPuesto}" style="width: 150px; font-size: 12px" />
 							
 							<p:outputPanel style="font-size: 12px">Teléfono:</p:outputPanel>
 							<p:outputPanel style="display: inline-flex;">
-								<p:outputLabel value="#{reporteMat.itPaTelefono}" style="width: 150px" />
+								<p:outputLabel value="#{reporteMat.itPaTelefono}" style="width: 150px; font-size: 12px" />
 								
 								<p:outputPanel style="font-size: 12px">Celular:</p:outputPanel>
-								<p:outputLabel value="#{reporteMat.itPaCelular}" style="width: 150px" />
+								<p:outputLabel value="#{reporteMat.itPaCelular}" style="width: 150px; font-size: 12px" />
 							</p:outputPanel>
 								
 							<p:outputPanel style="font-size: 12px">Correo:</p:outputPanel>
-							<p:outputLabel value="#{reporteMat.itPaCorreo}" style="width: 300px" />							
+							<p:outputLabel value="#{reporteMat.itPaCorreo}" style="width: 300px; font-size: 12px" />							
 						</h:panelGrid>
 						
 						<span style="font-weight: bold;">Madre</span> <br />						
 						<h:panelGrid id="pnlMadre" columns="2" cellpadding="0">
 							<p:outputPanel style="font-size: 12px">Nombre:</p:outputPanel>
-							<p:outputLabel value="#{reporteMat.itMaNombre}" style="width: 300px" />
+							<p:outputLabel value="#{reporteMat.itMaNombre}" style="width: 300px; font-size: 12px" />
 													
 							<p:outputPanel style="font-size: 12px">Cédula:</p:outputPanel>
-							<p:outputLabel value="#{reporteMat.itMaCedula}" style="width: 80px" />
+							<p:outputLabel value="#{reporteMat.itMaCedula}" style="width: 80px; font-size: 12px" />
 								
 							<p:outputPanel style="font-size: 12px">Estado civil:</p:outputPanel>
-							<p:outputLabel value="#{general.getDesCatalogoDet(reporteMat.soMaEstadoCivil)}" />											
+							<p:outputLabel value="#{general.getDesCatalogoDet(reporteMat.soMaEstadoCivil)}" style="font-size: 12px" />											
 														
 							<p:outputPanel style="font-size: 12px">Estudios:</p:outputPanel>
 							<h:selectOneRadio disabled="true" style="font-size: 12px" value="#{reporteMat.opMaEstudios}">
@@ -232,7 +232,7 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 					        </h:selectOneRadio>					
 					        
 					        <p:outputPanel style="font-size: 12px">Profesión:</p:outputPanel>
-							<p:outputLabel value="#{reporteMat.itMaProfesion}" style="width: 150px" />
+							<p:outputLabel value="#{reporteMat.itMaProfesion}" style="width: 150px; font-size: 12px" />
 							
 							<p:outputPanel style="font-size: 12px">Ocupación:</p:outputPanel>
 							<h:selectOneRadio disabled="true" style="font-size: 12px" value="#{reporteMat.opMaOcupacion}">
@@ -243,21 +243,21 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 					        </h:selectOneRadio>
 					        
 					        <p:outputPanel style="font-size: 12px">Institución:</p:outputPanel>
-							<p:outputLabel value="#{reporteMat.itMaInstitucion}" style="width: 300px" />
+							<p:outputLabel value="#{reporteMat.itMaInstitucion}" style="width: 300px; font-size: 12px" />
 							
 							<p:outputPanel style="font-size: 12px">Puesto:</p:outputPanel>
-							<p:outputLabel value="#{reporteMat.itMaPuesto}" style="width: 150px" />
+							<p:outputLabel value="#{reporteMat.itMaPuesto}" style="width: 150px; font-size: 12px" />
 							
 							<p:outputPanel style="font-size: 12px">Teléfono:</p:outputPanel>
 							<p:outputPanel style="display: inline-flex;">
-								<p:outputLabel value="#{reporteMat.itMaTelefono}" style="width: 150px" />
+								<p:outputLabel value="#{reporteMat.itMaTelefono}" style="width: 150px; font-size: 12px" />
 								
 								<p:outputPanel style="font-size: 12px">Celular:</p:outputPanel>
-								<p:outputLabel value="#{reporteMat.itMaCelular}" style="width: 150px" />
+								<p:outputLabel value="#{reporteMat.itMaCelular}" style="width: 150px; font-size: 12px" />
 							</p:outputPanel>
 								
 							<p:outputPanel style="font-size: 12px">Correo:</p:outputPanel>
-							<p:outputLabel value="#{reporteMat.itMaCorreo}" style="width: 300px" />							
+							<p:outputLabel value="#{reporteMat.itMaCorreo}" style="width: 300px; font-size: 12px" />							
 						</h:panelGrid>
 						
 						<span style="font-weight: bold;">Hermanos</span> <br />							
@@ -273,7 +273,7 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 													
 							<p:outputPanel style="font-size: 12px">Nombre de sus hermanos(as):</p:outputPanel>
 							<p:outputPanel />
-							<p:outputLabel value="#{reporteMat.itHermanos}" />
+							<p:outputLabel value="#{reporteMat.itHermanos}" style="font-size: 12px" />
 						</h:panelGrid>
 						
 						<br />
@@ -296,7 +296,7 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 								<span title="Fallecimiento o separación de los padres, desempleo" >¿Hay algo de situación familiar que se pueda considerar especial?</span>
 							</p:outputPanel>									
 							<p:outputPanel />
-							<p:outputLabel value="#{reporteMat.itSituacionFam}" style="width: 500px; margin-top: -10px;" />
+							<p:outputLabel value="#{reporteMat.itSituacionFam}" style="width: 500px; margin-top: -10px; font-size: 12px" />
 							
 							<p:outputPanel />
 							<p:outputPanel style="font-weight: bold; font-size: 12px; color: #8f3b4f; padding: 5px">¿Como es su relación con sus padres?</p:outputPanel>
@@ -319,7 +319,7 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 						        </h:selectOneRadio>
 								
 								<p:outputPanel style="font-size: 12px">¿Por qué?</p:outputPanel>
-								<p:outputLabel value="#{reporteMat.itClasesPart}" style="width: 300px;" />
+								<p:outputLabel value="#{reporteMat.itClasesPart}" style="width: 300px; font-size: 12px" />
 							</p:outputPanel>
 							
 							<p:outputPanel />
@@ -334,7 +334,7 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 						        </h:selectOneRadio>
 								
 								<p:outputPanel style="font-size: 12px">¿Cuál?</p:outputPanel>
-								<p:outputLabel value="#{reporteMat.itEstudiosFuera}" style="width: 300px;" />
+								<p:outputLabel value="#{reporteMat.itEstudiosFuera}" style="width: 300px; font-size: 12px;" />
 							</p:outputPanel>									
 						</h:panelGrid>
 					
@@ -355,21 +355,21 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 								Las asignaturas que más le han gustado en los últimos grados han sido:
 							</p:outputPanel>									
 							<p:outputPanel />
-							<p:outputLabel value="#{reporteMat.itAsigMas}" style="width: 500px; margin-top: -10px;" />
+							<p:outputLabel value="#{reporteMat.itAsigMas}" style="width: 500px; margin-top: -10px; font-size: 12px;" />
 							
 							<p:outputPanel />
 							<p:outputPanel style="font-weight: bold; font-size: 12px; color: #8f3b4f; padding: 5px">
 								Las asignaturas que menos le han interesado en los últimos grados han sido:
 							</p:outputPanel>									
 							<p:outputPanel />
-							<p:outputLabel value="#{reporteMat.itAsigMenos}" style="width: 500px; margin-top: -10px;" />
+							<p:outputLabel value="#{reporteMat.itAsigMenos}" style="width: 500px; margin-top: -10px; font-size: 12px;" />
 							
 							<p:outputPanel />
 							<p:outputPanel style="font-weight: bold; font-size: 12px; color: #8f3b4f; padding: 5px">
 								¿Como reaccionan sus padres ante las notas?
 							</p:outputPanel>									
 							<p:outputPanel />
-							<p:outputLabel value="#{reporteMat.itReaccionPadres}" style="width: 500px; margin-top: -10px;" />
+							<p:outputLabel value="#{reporteMat.itReaccionPadres}" style="width: 500px; margin-top: -10px; font-size: 12px;" />
 							
 							<p:outputPanel />
 							<p:outputPanel style="padding: 5px; display: inline-flex"> 
@@ -417,7 +417,7 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 						        </h:selectOneRadio>
 								
 								<p:outputPanel style="font-size: 12px">¿Cuál?</p:outputPanel>
-								<p:outputLabel value="#{reporteMat.itAlergiaMed}" style="width: 200px;" />
+								<p:outputLabel value="#{reporteMat.itAlergiaMed}" style="width: 200p; font-size: 12pxx;" />
 							</p:outputPanel>
 							
 							<p:outputPanel />
@@ -432,7 +432,7 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 						        </h:selectOneRadio>
 								
 								<p:outputPanel style="font-size: 12px">¿Cuál?</p:outputPanel>
-								<p:outputLabel value="#{reporteMat.itAlergiaIns}" style="width: 200px;" />
+								<p:outputLabel value="#{reporteMat.itAlergiaIns}" style="width: 200px; font-size: 12px;" />
 							</p:outputPanel>												
 							
 							<p:outputPanel />
@@ -447,7 +447,7 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 						        </h:selectOneRadio>
 								
 								<p:outputPanel style="font-size: 12px">¿Cuál?</p:outputPanel>
-								<p:outputLabel value="#{reporteMat.itAlergiaAli}" style="width: 200px;" />
+								<p:outputLabel value="#{reporteMat.itAlergiaAli}" style="width: 200px; font-size: 12px;" />
 							</p:outputPanel>
 							
 							<p:outputPanel />
@@ -496,7 +496,7 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 						        </h:selectOneRadio>
 								
 								<p:outputPanel style="font-size: 12px">Motivo:</p:outputPanel>
-								<p:outputLabel value="#{reporteMat.itHospital}" style="width: 250px;" />
+								<p:outputLabel value="#{reporteMat.itHospital}" style="width: 250px; font-size: 12px;" />
 							</p:outputPanel>
 							
 							<p:outputPanel />
@@ -511,7 +511,7 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 						        </h:selectOneRadio>
 								
 								<p:outputPanel style="font-size: 12px">¿De qué?</p:outputPanel>
-								<p:outputLabel value="#{reporteMat.itOperado}" style="width: 250px;" />
+								<p:outputLabel value="#{reporteMat.itOperado}" style="width: 250px; font-size: 12px;" />
 							</p:outputPanel>
 							
 							<p:outputPanel />
@@ -528,16 +528,16 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 							<p:outputPanel />
 							<p:outputPanel style="display: inline-flex;">
 								<p:outputPanel style="font-size: 12px">Motivo:</p:outputPanel>
-								<p:outputLabel value="#{reporteMat.itMinusvalia}" style="width: 250px;" />
+								<p:outputLabel value="#{reporteMat.itMinusvalia}" style="width: 250px; font-size: 12px;" />
 								
 								<p:outputPanel style="font-size: 12px">Grado:</p:outputPanel>
-								<p:outputLabel value="#{reporteMat.soGradoMinusvalia}" />
+								<p:outputLabel value="#{reporteMat.soGradoMinusvalia}" style="font-size: 12px" />
 							</p:outputPanel>
 						</h:panelGrid>		
 						
 						<br />
-						<p:outputPanel style="font-size: 12px">Observaciónes:</p:outputPanel>
-						<p:outputLabel value="#{reporteMat.itObservacion}" rows="3" style="width: 90%" />												
+						<span style="font-weight: bold; font-size: 13px;">Observaciónes:</span> <br />
+						<p:outputLabel value="#{reporteMat.itObservacion}" rows="3" style="width: 300px; font-size: 12px" />												
 					</p:outputPanel>
 				        
 			    </p:tab>
