@@ -27,6 +27,7 @@ import javax.persistence.Persistence;
 import javax.persistence.Query;
 
 import com.ups.uearv.entidades.MatEstudiante;
+import com.ups.uearv.entidades.MatOferta;
 import com.ups.uearv.servicios.DAO;
 import com.ups.uearv.servicios.Util;
 
@@ -192,91 +193,98 @@ public class ReporteMat implements Serializable {
 		}
 
 		// DETALLE
+		jpql = "from MatOferta e where e.idOferta = '" + soOferta + "'";		
+		MatOferta o = (MatOferta) DAO.buscarObject(new MatOferta(), jpql);
+		if (o != null) {
+			try { olGrado = o.getMatCurso().getDescripcion(); } catch (Exception ex) {}
+			try { olParalelo = o.getMatParalelo().getDescripcion(); } catch (Exception ex) {}
+		}
+		
 		jpql = "from MatEstudiante e where e.idEstudiante = '" + soEstudiante + "'";		
 		MatEstudiante e = (MatEstudiante) DAO.buscarObject(new MatEstudiante(), jpql);
 		if (e != null) {
-			itCedula = e.getIdEstudiante();
-			itNombres = e.getNombres();
-			itApellidos = e.getApellidos();
-			soRepresentante = e.getMatRepresentante().getApellidos().trim() + " " + e.getMatRepresentante().getNombres().trim();
-			sorGenero = e.getGenero();
-			soTipoSangre = e.getTipoSangre();
-			itLugarNac = e.getLugarNacimiento();
-			itNacionalidad = e.getNacionalidad();
-			cFechaNac = e.getFechaNac();
+			try { itCedula = e.getIdEstudiante(); } catch (Exception ex) {}
+			try { itNombres = e.getNombres(); } catch (Exception ex) {}
+			try { itApellidos = e.getApellidos(); } catch (Exception ex) {}
+			try { soRepresentante = e.getMatRepresentante().getApellidos().trim() + " " + e.getMatRepresentante().getNombres().trim(); } catch (Exception ex) {}
+			try { sorGenero = e.getGenero(); } catch (Exception ex) {}
+			try { soTipoSangre = e.getTipoSangre(); } catch (Exception ex) {}
+			try { itLugarNac = e.getLugarNacimiento(); } catch (Exception ex) {}
+			try { itNacionalidad = e.getNacionalidad(); } catch (Exception ex) {}
+			try { cFechaNac = e.getFechaNac();
 			SimpleDateFormat formatter = new SimpleDateFormat("dd MMMM yyyy");
-			String strDate = formatter.format(cFechaNac);
-			itFechaNac = strDate;
-			itEdad = String.valueOf(calculateAge(cFechaNac, new Date()));
-			ckDiscapacidad = (e.getSnDiscapacidad().equals("S") ? true : false);
-			itObservacion = e.getObservacion();
-			itImagen = (e.getFoto() == null ? "/sistema_ue_arv/fotos/FOTO_DEFAULT.png" : e.getFoto());
+			String strDate = formatter.format(cFechaNac); 
+			itFechaNac = strDate; 
+			itEdad = String.valueOf(calculateAge(cFechaNac, new Date())); } catch (Exception ex) {}
+			try { ckDiscapacidad = (e.getSnDiscapacidad().equals("S") ? true : false); } catch (Exception ex) {}
+			try { itObservacion = e.getObservacion(); } catch (Exception ex) {}
+			try { itImagen = (e.getFoto() == null ? "/sistema_ue_arv/fotos/FOTO_DEFAULT.png" : e.getFoto()); } catch (Exception ex) {}
 
-			itProvincia = e.getProvincia();
-			itCanton = e.getCanton();
-			itCiudad = e.getCiudad();
-			itParroquia = e.getParroquia();
-			itTelefono = e.getTelefono();
-			itDireccion = e.getDireccion();
-			itPersonaEmerg = e.getEmergLlamar();
-			itTelefonoEmerg = e.getEmergTelefono();
+			try { itProvincia = e.getProvincia(); } catch (Exception ex) {}
+			try { itCanton = e.getCanton(); } catch (Exception ex) {}
+			try { itCiudad = e.getCiudad(); } catch (Exception ex) {}
+			try { itParroquia = e.getParroquia(); } catch (Exception ex) {}
+			try { itTelefono = e.getTelefono(); } catch (Exception ex) {}
+			try { itDireccion = e.getDireccion(); } catch (Exception ex) {}
+			try { itPersonaEmerg = e.getEmergLlamar(); } catch (Exception ex) {}
+			try { itTelefonoEmerg = e.getEmergTelefono(); } catch (Exception ex) {}
 
-			itPaNombre = e.getPaNombre();
-			itPaCedula = e.getPaCedula();
-			soPaEstadoCivil = e.getPaEstadoCivil();
-			opPaEstudios = e.getPaEstudios();
-			itPaProfesion = e.getPaProfesion();
-			opPaOcupacion = e.getPaOcupacion();
-			itPaInstitucion = e.getPaInstitucion();
-			itPaPuesto = e.getPaPuesto();
-			itPaTelefono = e.getPaTelefono();
-			itPaCelular = e.getPaCelular();
-			itPaCorreo = e.getPaCorreo();
-			itMaNombre = e.getMaNombre();
-			itMaCedula = e.getMaCedula();
-			soMaEstadoCivil = e.getMaEstadoCivil();
-			opMaEstudios = e.getMaEstudios();
-			itMaProfesion = e.getMaProfesion();
-			opMaOcupacion = e.getMaOcupacion();
-			itMaInstitucion = e.getMaInstitucion();
-			itMaPuesto = e.getMaPuesto();
-			itMaTelefono = e.getMaTelefono();
-			itMaCelular = e.getMaCelular();
-			itMaCorreo = e.getMaCorreo();
-			snHermanos = e.getSnHermanos();
-			itHermanos = e.getDsHermanos();
+			try { itPaNombre = e.getPaNombre(); } catch (Exception ex) {}
+			try { itPaCedula = e.getPaCedula(); } catch (Exception ex) {}
+			try { soPaEstadoCivil = e.getPaEstadoCivil(); } catch (Exception ex) {}
+			try { opPaEstudios = e.getPaEstudios(); } catch (Exception ex) {}
+			try { itPaProfesion = e.getPaProfesion(); } catch (Exception ex) {}
+			try { opPaOcupacion = e.getPaOcupacion(); } catch (Exception ex) {}
+			try { itPaInstitucion = e.getPaInstitucion(); } catch (Exception ex) {}
+			try { itPaPuesto = e.getPaPuesto(); } catch (Exception ex) {}
+			try { itPaTelefono = e.getPaTelefono(); } catch (Exception ex) {}
+			try { itPaCelular = e.getPaCelular(); } catch (Exception ex) {}
+			try { itPaCorreo = e.getPaCorreo(); } catch (Exception ex) {}
+			try { itMaNombre = e.getMaNombre(); } catch (Exception ex) {}
+			try { itMaCedula = e.getMaCedula(); } catch (Exception ex) {}
+			try { soMaEstadoCivil = e.getMaEstadoCivil(); } catch (Exception ex) {}
+			try { opMaEstudios = e.getMaEstudios(); } catch (Exception ex) {}
+			try { itMaProfesion = e.getMaProfesion(); } catch (Exception ex) {}
+			try { opMaOcupacion = e.getMaOcupacion(); } catch (Exception ex) {}
+			try { itMaInstitucion = e.getMaInstitucion(); } catch (Exception ex) {}
+			try { itMaPuesto = e.getMaPuesto(); } catch (Exception ex) {}
+			try { itMaTelefono = e.getMaTelefono(); } catch (Exception ex) {}
+			try { itMaCelular = e.getMaCelular(); } catch (Exception ex) {}
+			try { itMaCorreo = e.getMaCorreo(); } catch (Exception ex) {}
+			try { snHermanos = e.getSnHermanos(); } catch (Exception ex) {}
+			try { itHermanos = e.getDsHermanos(); } catch (Exception ex) {}
 
-			opViveCon = e.getViveCon();
-			itSituacionFam = e.getSituacionFamiliar();
-			opRelacionPadres = e.getRelacionPadres();
-			snClasesPart = e.getSnClasesPart();
-			itClasesPart = e.getDsClasesPart();
-			snEstudiosFuera = e.getSnEstudiosFuera();
-			itEstudiosFuera = e.getDsEstudiosFuera();
-			opRendimiento = e.getRendimiento();
-			itAsigMas = e.getAsigMas();
-			itAsigMenos = e.getAsigMenos();
-			itReaccionPadres = e.getReaccionPadres();
-			snCumples = e.getSnCumples();
-			itCumples = e.getDsCumples();
+			try { opViveCon = e.getViveCon(); } catch (Exception ex) {}
+			try { itSituacionFam = e.getSituacionFamiliar(); } catch (Exception ex) {}
+			try { opRelacionPadres = e.getRelacionPadres(); } catch (Exception ex) {}
+			try { snClasesPart = e.getSnClasesPart(); } catch (Exception ex) {}
+			try { itClasesPart = e.getDsClasesPart(); } catch (Exception ex) {}
+			try { snEstudiosFuera = e.getSnEstudiosFuera(); } catch (Exception ex) {}
+			try { itEstudiosFuera = e.getDsEstudiosFuera(); } catch (Exception ex) {}
+			try { opRendimiento = e.getRendimiento(); } catch (Exception ex) {}
+			try { itAsigMas = e.getAsigMas(); } catch (Exception ex) {}
+			try { itAsigMenos = e.getAsigMenos(); } catch (Exception ex) {}
+			try { itReaccionPadres = e.getReaccionPadres(); } catch (Exception ex) {}
+			try { snCumples = e.getSnCumples(); } catch (Exception ex) {}
+			try { itCumples = e.getDsCumples(); } catch (Exception ex) {}
 
-			opEnfermedad = e.getEnfermedad();
-			snAlergiaMed = e.getSnAlergiaMed();
-			itAlergiaMed = e.getDsAlergiaMed();
-			snAlergiaIns = e.getSnAlergiaIns();
-			itAlergiaIns = e.getDsAlergiaIns();
-			snAlergiaAli = e.getSnAlergiaAli();
-			itAlergiaAli = e.getDsAlergiaAli();
-			itAlergOtras = e.getAlergOtras();
-			snTratamientoAct = e.getSnTratamiento();
-			snTratamientoAnt = e.getSnTratRecibido();
-			snHospital = e.getSnHospital();
-			itHospital = e.getDsHospital();
-			snOperado = e.getSnOperado();
-			itOperado = e.getDsOperado();
-			snMinusvalia = e.getSnMinusvalia();
-			itMinusvalia = e.getDsMinusvalia();
-			soGradoMinusvalia = e.getGdMinusvalia();
+			try { opEnfermedad = e.getEnfermedad(); } catch (Exception ex) {}
+			try { snAlergiaMed = e.getSnAlergiaMed(); } catch (Exception ex) {}
+			try { itAlergiaMed = e.getDsAlergiaMed(); } catch (Exception ex) {}
+			try { snAlergiaIns = e.getSnAlergiaIns(); } catch (Exception ex) {}
+			try { itAlergiaIns = e.getDsAlergiaIns(); } catch (Exception ex) {}
+			try { snAlergiaAli = e.getSnAlergiaAli(); } catch (Exception ex) {}
+			try { itAlergiaAli = e.getDsAlergiaAli(); } catch (Exception ex) {}
+			try { itAlergOtras = e.getAlergOtras(); } catch (Exception ex) {}
+			try { snTratamientoAct = e.getSnTratamiento(); } catch (Exception ex) {}
+			try { snTratamientoAnt = e.getSnTratRecibido(); } catch (Exception ex) {}
+			try { snHospital = e.getSnHospital(); } catch (Exception ex) {}
+			try { itHospital = e.getDsHospital(); } catch (Exception ex) {}
+			try { snOperado = e.getSnOperado(); } catch (Exception ex) {}
+			try { itOperado = e.getDsOperado(); } catch (Exception ex) {}
+			try { snMinusvalia = e.getSnMinusvalia(); } catch (Exception ex) {}
+			try { itMinusvalia = e.getDsMinusvalia(); } catch (Exception ex) {}
+			try { soGradoMinusvalia = e.getGdMinusvalia(); } catch (Exception ex) {}
 		} else {
 			limpiarFicha();
 			mensaje = "No existen datos del estudiante";

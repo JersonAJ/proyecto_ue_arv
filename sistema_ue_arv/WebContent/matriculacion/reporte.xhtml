@@ -77,7 +77,7 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 							</div>					
 							<div style="width: 25%;" align="right">		
 								<div class="circle">
-									<img class="profile-pic" src="#{reporteMat.itImagen}" />					
+									<img width="110px" height="130px" class="profile-pic" src="#{reporteMat.itImagen}" />					
 								</div>
 							</div>
 						</div>
@@ -95,13 +95,13 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 						    <p:outputLabel value="#{reporteMat.soRepresentante}" />			        
 					       					
 							<p:outputPanel style="font-size: 12px">Género:</p:outputPanel>
-							<h:selectOneRadio style="font-size: 12px" value="#{reporteMat.sorGenero}">            
+							<h:selectOneRadio disabled="true" style="font-size: 12px" value="#{reporteMat.sorGenero}">            
 					            <f:selectItem itemLabel="Masculino" itemValue="M" />
 					            <f:selectItem itemLabel="Femenino" itemValue="F" />
 					        </h:selectOneRadio>
 					        
 					        <p:outputPanel style="font-size: 12px">Tipo de sangre:</p:outputPanel>
-							<p:outputLabel value="#{reporteMat.soTipoSangre}" style="width: 50px" />
+							<p:outputLabel value="#{general.getDesCatalogoDet(reporteMat.soTipoSangre)}" style="width: 50px" />
 														
 							<p:outputPanel style="font-size: 12px">Lugar Nac.:</p:outputPanel>
 							<p:outputPanel style="display: inline-flex;">					
@@ -120,7 +120,7 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 							</p:outputPanel>			
 					        
 					        <p:outputPanel style="font-size: 12px">Discapacidad:</p:outputPanel>
-							<h:selectBooleanCheckbox value="#{reporteMat.ckDiscapacidad}" style="margin-top: 6px" />
+							<h:selectBooleanCheckbox disabled="true" value="#{reporteMat.ckDiscapacidad}" style="margin-top: 6px" />
 						</h:panelGrid>										
 							
 						<br />				
@@ -171,10 +171,10 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 							<p:outputLabel value="#{reporteMat.itPaCedula}" style="width: 80px" />
 							
 							<p:outputPanel style="font-size: 12px">Estado civil:</p:outputPanel>
-							<p:outputLabel value="#{reporteMat.soPaEstadoCivil}" />
+							<p:outputLabel value="#{general.getDesCatalogoDet(reporteMat.soPaEstadoCivil)}" />
 							
 							<p:outputPanel style="font-size: 12px">Estudios:</p:outputPanel>
-							<h:selectOneRadio style="font-size: 12px" value="#{reporteMat.opPaEstudios}">
+							<h:selectOneRadio disabled="true" style="font-size: 12px" value="#{reporteMat.opPaEstudios}">
 					            <f:selectItem itemLabel="Estudiante" itemValue="ES" />
 					            <f:selectItem itemLabel="Básica" itemValue="BA" />
 					            <f:selectItem itemLabel="Bachillerato" itemValue="BC" />
@@ -186,7 +186,7 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 							<p:outputLabel value="#{reporteMat.itPaProfesion}" style="width: 150px" />
 							
 							<p:outputPanel style="font-size: 12px">Ocupación:</p:outputPanel>
-							<h:selectOneRadio style="font-size: 12px" value="#{reporteMat.opPaOcupacion}">
+							<h:selectOneRadio disabled="true" style="font-size: 12px" value="#{reporteMat.opPaOcupacion}">
 					            <f:selectItem itemLabel="Empleado Público" itemValue="PU" />
 					            <f:selectItem itemLabel="Empleado Privado" itemValue="PR" />
 					            <f:selectItem itemLabel="Independiente" itemValue="IN" />
@@ -220,10 +220,10 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 							<p:outputLabel value="#{reporteMat.itMaCedula}" style="width: 80px" />
 								
 							<p:outputPanel style="font-size: 12px">Estado civil:</p:outputPanel>
-							<p:outputLabel value="#{reporteMat.soMaEstadoCivil}" />											
+							<p:outputLabel value="#{general.getDesCatalogoDet(reporteMat.soMaEstadoCivil)}" />											
 														
 							<p:outputPanel style="font-size: 12px">Estudios:</p:outputPanel>
-							<h:selectOneRadio style="font-size: 12px" value="#{reporteMat.opMaEstudios}">
+							<h:selectOneRadio disabled="true" style="font-size: 12px" value="#{reporteMat.opMaEstudios}">
 					            <f:selectItem itemLabel="Estudiante" itemValue="ES" />
 					            <f:selectItem itemLabel="Básica" itemValue="BA" />
 					            <f:selectItem itemLabel="Bachillerato" itemValue="BC" />
@@ -235,7 +235,7 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 							<p:outputLabel value="#{reporteMat.itMaProfesion}" style="width: 150px" />
 							
 							<p:outputPanel style="font-size: 12px">Ocupación:</p:outputPanel>
-							<h:selectOneRadio style="font-size: 12px" value="#{reporteMat.opMaOcupacion}">
+							<h:selectOneRadio disabled="true" style="font-size: 12px" value="#{reporteMat.opMaOcupacion}">
 					            <f:selectItem itemLabel="Empleada Pública" itemValue="PU" />
 					            <f:selectItem itemLabel="Empleada Privada" itemValue="PR" />
 					            <f:selectItem itemLabel="Independiente" itemValue="IN" />
@@ -265,7 +265,7 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 							<p:outputPanel style="font-weight: bold; font-size: 12px; color: #8f3b4f; padding: 5px">Tiene hermanos(as) estudiante en esta institución</p:outputPanel>
 							<p:outputPanel />
 							
-							<h:selectOneRadio style="font-size: 12px; margin-top: -5px" value="#{reporteMat.snHermanos}">            
+							<h:selectOneRadio disabled="true" style="font-size: 12px; margin-top: -5px" value="#{reporteMat.snHermanos}">            
 					           	<f:selectItem itemLabel="Si" itemValue="S" />
 				          		<f:selectItem itemLabel="No" itemValue="N" />
 					        </h:selectOneRadio>
@@ -282,7 +282,7 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 							<p:outputPanel />
 							<p:outputPanel style="font-weight: bold; font-size: 12px; color: #8f3b4f; padding: 5px">Actualmente vive con:</p:outputPanel>
 							<p:outputPanel />
-							<h:selectOneRadio style="font-size: 12px; margin-top: -5px" value="#{reporteMat.opViveCon}">
+							<h:selectOneRadio disabled="true" style="font-size: 12px; margin-top: -5px" value="#{reporteMat.opViveCon}">
 					            <f:selectItem itemLabel="Padre" itemValue="PA" />
 					            <f:selectItem itemLabel="Madre" itemValue="MA" />
 					            <f:selectItem itemLabel="Ambos Padres" itemValue="AP" />
@@ -301,7 +301,7 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 							<p:outputPanel />
 							<p:outputPanel style="font-weight: bold; font-size: 12px; color: #8f3b4f; padding: 5px">¿Como es su relación con sus padres?</p:outputPanel>
 							<p:outputPanel />
-							<h:selectOneRadio style="font-size: 12px; margin-top: -5px" value="#{reporteMat.opRelacionPadres}">            					            
+							<h:selectOneRadio disabled="true" style="font-size: 12px; margin-top: -5px" value="#{reporteMat.opRelacionPadres}">            					            
 					            <f:selectItem itemLabel="Muy Buena" itemValue="MB" />
 					            <f:selectItem itemLabel="Buena" itemValue="BU" />
 					            <f:selectItem itemLabel="Regular" itemValue="RE" />
@@ -313,7 +313,7 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 							<p:outputPanel style="font-weight: bold; font-size: 12px; color: #8f3b4f; padding: 5px">¿Recibe clases particulares o control de tareas?</p:outputPanel>
 							<p:outputPanel />							
 							<p:outputPanel style="display: inline-flex;">
-								<h:selectOneRadio style="font-size: 12px" value="#{reporteMat.snClasesPart}">            
+								<h:selectOneRadio disabled="true" style="font-size: 12px" value="#{reporteMat.snClasesPart}">            
 						            <f:selectItem itemLabel="Si" itemValue="S" />
 						            <f:selectItem itemLabel="No" itemValue="N" />
 						        </h:selectOneRadio>
@@ -328,7 +328,7 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 							</p:outputPanel>
 							<p:outputPanel />							
 							<p:outputPanel style="display: inline-flex;">
-								<h:selectOneRadio style="font-size: 12px" value="#{reporteMat.snEstudiosFuera}">
+								<h:selectOneRadio disabled="true" style="font-size: 12px" value="#{reporteMat.snEstudiosFuera}">
 						            <f:selectItem itemLabel="Si" itemValue="S" />
 						            <f:selectItem itemLabel="No" itemValue="N" />
 						        </h:selectOneRadio>
@@ -342,7 +342,7 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 							<p:outputPanel />
 							<p:outputPanel style="font-weight: bold; font-size: 12px; color: #8f3b4f; padding: 5px">¿Como piensa que ha sido su rendimiento hasta ahora?</p:outputPanel>
 							<p:outputPanel />
-							<h:selectOneRadio style="font-size: 12px; margin-top: -5px" value="#{reporteMat.opRendimiento}">            					            
+							<h:selectOneRadio disabled="true" style="font-size: 12px; margin-top: -5px" value="#{reporteMat.opRendimiento}">            					            
 					            <f:selectItem itemLabel="Muy Bueno" itemValue="MB" />
 					            <f:selectItem itemLabel="Bueno" itemValue="BU" />
 					            <f:selectItem itemLabel="Regular" itemValue="RE" />
@@ -374,7 +374,7 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 							<p:outputPanel />
 							<p:outputPanel style="padding: 5px; display: inline-flex"> 
 								<span style="font-weight: bold; font-size: 12px; color: #8f3b4f;">¿Crees que cumples con lo que ellos esperan de ti?</span>
-								<h:selectOneRadio style="font-size: 12px; margin-top: -5px" value="#{reporteMat.snCumples}">                
+								<h:selectOneRadio disabled="true" style="font-size: 12px; margin-top: -5px" value="#{reporteMat.snCumples}">                
 						            <f:selectItem itemLabel="Si" itemValue="S" />
 						            <f:selectItem itemLabel="No" itemValue="N" />
 						        </h:selectOneRadio> 
@@ -396,7 +396,7 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 								¿Padece alguna enfermedad o existe alguna condición física que le afecte?
 							</p:outputPanel>
 							<p:outputPanel />
-							<h:selectOneRadio style="font-size: 12px; margin-top: -5px; width: 500px;" value="#{reporteMat.opEnfermedad}">            					            
+							<h:selectOneRadio disabled="true" style="font-size: 12px; margin-top: -5px; width: 500px;" value="#{reporteMat.opEnfermedad}">            					            
 					            <f:selectItem itemLabel="Asma" itemValue="BU" />
 					            <f:selectItem itemLabel="Epilepsia" itemValue="BU" />
 					            <f:selectItem itemLabel="Diabetes" itemValue="RE" />
@@ -411,7 +411,7 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 							</p:outputPanel>
 							<p:outputPanel />							
 							<p:outputPanel style="display: inline-flex;">
-								<h:selectOneRadio style="font-size: 12px" value="#{reporteMat.snAlergiaMed}">
+								<h:selectOneRadio disabled="true" style="font-size: 12px" value="#{reporteMat.snAlergiaMed}">
 						            <f:selectItem itemLabel="Si" itemValue="S" />
 						            <f:selectItem itemLabel="No" itemValue="N" />
 						        </h:selectOneRadio>
@@ -426,7 +426,7 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 							</p:outputPanel>
 							<p:outputPanel />							
 							<p:outputPanel style="display: inline-flex;">
-								<h:selectOneRadio style="font-size: 12px" value="#{reporteMat.snAlergiaIns}">
+								<h:selectOneRadio disabled="true" style="font-size: 12px" value="#{reporteMat.snAlergiaIns}">
 						            <f:selectItem itemLabel="Si" itemValue="S" />
 						            <f:selectItem itemLabel="No" itemValue="N" />
 						        </h:selectOneRadio>
@@ -441,7 +441,7 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 							</p:outputPanel>
 							<p:outputPanel />							
 							<p:outputPanel style="display: inline-flex;">
-								<h:selectOneRadio style="font-size: 12px" value="#{reporteMat.snAlergiaAli}">
+								<h:selectOneRadio disabled="true" style="font-size: 12px" value="#{reporteMat.snAlergiaAli}">
 						            <f:selectItem itemLabel="Si" itemValue="S" />
 						            <f:selectItem itemLabel="No" itemValue="N" />
 						        </h:selectOneRadio>
@@ -466,7 +466,7 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 									Actualmente ¿Recibe algún tratamiento médico o psicológico?  
 								</p:outputPanel>
 								
-								<h:selectOneRadio style="font-size: 12px" value="#{reporteMat.snTratamientoAct}">            
+								<h:selectOneRadio disabled="true" style="font-size: 12px" value="#{reporteMat.snTratamientoAct}">            
 						            <f:selectItem itemLabel="Si" itemValue="S" />
 						            <f:selectItem itemLabel="No" itemValue="N" />
 						        </h:selectOneRadio>
@@ -478,7 +478,7 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 									¿Lo ha recibido alguna vez? 
 								</p:outputPanel>
 								
-								<h:selectOneRadio style="font-size: 12px" value="#{reporteMat.snTratamientoAnt}">            
+								<h:selectOneRadio disabled="true" style="font-size: 12px" value="#{reporteMat.snTratamientoAnt}">            
 						            <f:selectItem itemLabel="Si" itemValue="S" />
 						            <f:selectItem itemLabel="No" itemValue="N" />
 						        </h:selectOneRadio>
@@ -490,7 +490,7 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 							</p:outputPanel>
 							<p:outputPanel />							
 							<p:outputPanel style="display: inline-flex;">
-								<h:selectOneRadio style="font-size: 12px" value="#{reporteMat.snHospital}">
+								<h:selectOneRadio disabled="true" style="font-size: 12px" value="#{reporteMat.snHospital}">
 						            <f:selectItem itemLabel="Si" itemValue="S" />
 						            <f:selectItem itemLabel="No" itemValue="N" />
 						        </h:selectOneRadio>
@@ -505,7 +505,7 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 							</p:outputPanel>
 							<p:outputPanel />							
 							<p:outputPanel style="display: inline-flex;">
-								<h:selectOneRadio style="font-size: 12px" value="#{reporteMat.snOperado}">
+								<h:selectOneRadio disabled="true" style="font-size: 12px" value="#{reporteMat.snOperado}">
 						            <f:selectItem itemLabel="Si" itemValue="S" />
 						            <f:selectItem itemLabel="No" itemValue="N" />
 						        </h:selectOneRadio>
@@ -519,7 +519,7 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 								<p:outputPanel style="font-weight: bold; font-size: 12px; color: #8f3b4f; padding: 5px"> 
 									¿Padece alguna minusvalía? Indique el motivo y grado  
 								</p:outputPanel>
-								<h:selectOneRadio style="font-size: 12px" value="#{reporteMat.snMinusvalia}">
+								<h:selectOneRadio disabled="true" style="font-size: 12px" value="#{reporteMat.snMinusvalia}">
 						            <f:selectItem itemLabel="Si" itemValue="S" />
 						            <f:selectItem itemLabel="No" itemValue="N" />
 						        </h:selectOneRadio>

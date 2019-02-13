@@ -118,10 +118,14 @@ public class General implements Serializable {
 
 	// OBTENER DESCRIPCION DEL CATALOGO DETALLE 
 	public String getDesCatalogoDet(String cod) {
-		CatalogoDet ob = new CatalogoDet();
-		ob = (CatalogoDet) DAO.buscarObject(new CatalogoDet(), "from CatalogoDet c where c.codigoDet = '" + cod + "'");
+		try {
+			CatalogoDet ob = new CatalogoDet();
+			ob = (CatalogoDet) DAO.buscarObject(new CatalogoDet(), "from CatalogoDet c where c.codigoDet = '" + cod + "'");
 
-		return ob.getDescripcion().trim();
+			return ob.getDescripcion().trim();	
+		} catch (Exception e) {
+			return "";
+		}		
 	}
 
 	// OBTENER FECHA EN FORMATO
