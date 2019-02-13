@@ -26,14 +26,13 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 			</p:outputPanel> 				
 			<br />
 			
-			<style>
-				.profile-pic { width: 110px; height: 130px; display: block; }
-				.circle { border-radius: 20px; overflow: hidden; width: 110px; height: 130px; border: 2px solid #8f3b4f; }
-			</style>
-			
 			<!-- CONSULTA -->			
 			<p:tabView id="tab">
 				<p:tab title="Ficha del estudiante">
+					<style>
+						.profile-pic { width: 110px; height: 130px; display: block; }
+						.circle { border-radius: 20px; overflow: hidden; width: 110px; height: 130px; border: 2px solid #8f3b4f; }
+					</style>
 					<p:outputPanel style="background-color: white; padding: 5px; display: inline-flex; margin-top: -5px;">
 						<p:selectOneMenu id="soOferta" value="#{reporteMat.soOferta}" style="width: 190px">
 							<f:selectItem itemLabel="Seleccione Oferta" itemValue="NA" />
@@ -65,7 +64,7 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 					<p:outputPanel id="opFicha" style="font-size: 12px">
 						<div style="display: inline-flex; width: 100%;">
 							<div style="width: 25%;">
-								<img src="/sistema_ue_arv/recursos/images/ESCUELA_ARV2.png" height="100" style="padding-top: 15px;" />
+								<img src="/sistema_ue_arv/recursos/images/ESCUELA_ARV2.png" height="100" />
 							</div>
 							<div style="width: 50%;" align="center">		
 								<span style="font-weight: bold;">ESCUELA PARTICULAR MIXTA No. 387</span> <br />
@@ -543,11 +542,108 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 			    </p:tab>
 			    
 			    <p:tab title="Listado de Matrículas">
-			        
+			        <style>
+						.ui-paginator .ui-paginator-pages .ui-paginator-page { height: 14px; }
+						.ui-datatable th.ui-state-default { background: #dadada; border-color: #6d6d6d; }
+						.ui-datatable tbody>tr.ui-widget-content { border-color: #4e4e4e; }				
+					</style>
+					
+					<p:outputPanel style="background-color: white; padding: 5px; display: inline-flex; margin-top: -5px;">
+						<p:commandButton value="Ver" style="font-size: 12px !important;" 
+							actionListener="#{reporteMat.listarMatriculas}" update="opListMat :form:growl" />
+						  
+						<p:spacer width="20px" />
+						<p:commandButton type="button" icon="fa fa-print" title="Imprimir" style="margin-right: 50px;">
+							<p:printer target="opListMat" />
+						</p:commandButton>
+					</p:outputPanel>				
+				
+					<p:separator style="border: 0.6px solid #8f3b4f;" />
+					
+					<p:outputPanel id="opListMat" style="font-size: 12px">
+						<div style="display: inline-flex; width: 100%;">
+							<div style="width: 25%;">
+								<img src="/sistema_ue_arv/recursos/images/ESCUELA_ARV2.png" height="100" />
+							</div>
+							<div style="width: 50%;" align="center">		
+								<span style="font-weight: bold;">ESCUELA PARTICULAR MIXTA No. 387</span> <br />
+								<span style="font-size: 20px;">“  Dr. Aquiles Rodríguez V. ”</span> <br />
+								<span style="font-size: 12px;">Fundada 1970</span> <br />
+								<span style="font-size: 12px;">Guayaquil - Ecuador</span> <br /> <br />
+								<span style="font-weight: bold; font-size: 16px;">Listado de Matrículas</span> <br />								
+							</div>
+						</div>
+						<p:separator />
+												
+						<div style="font-weight: bold; border: 1px solid #6d6d6d; margin-bottom: 5px; padding: 2px;">
+							Cantidad de matrículas: #{reporteMat.matriculaList.size()}
+							| Activas :	#{reporteMat.olCantAC}								
+							| Inactivas : #{reporteMat.olCantIC}  
+						</div>
+						
+						<p:dataTable id="dt" var="mat" value="#{reporteMat.matriculaList}" 
+							tableStyle="width: auto; min-width: 100%; font-size: 12px" emptyMessage="No existen datos a mostrar">
+							
+							<p:column headerText="[Período] [Oferta] [Paralelo]" groupRow="true">
+						    	<h:outputText value="#{mat.matOferta.descripcion}" />
+						    </p:column>
+						    
+						    <p:column headerText="Código" style="text-align: center">
+						    	<h:outputText value="#{mat.idMatricula}">
+						    		<f:convertNumber pattern="00000" />
+						    	</h:outputText>
+						    </p:column>
+						    
+						    <p:column headerText="Cédula" style="text-align: center">
+						    	<h:outputText value="#{mat.matEstudiante.idEstudiante}" />
+						    </p:column>
+						    
+						    <p:column headerText="Estudiante">
+						    	<h:outputText value="#{mat.matEstudiante.apellidos} #{mat.matEstudiante.nombres}" />
+						    </p:column>
+						    
+						    <p:column headerText="Estado">
+						    	<h:outputText value="#{mat.estado eq 'AC' ? 'ACTIVA' : 'INACTIVA' }" />
+						    </p:column>
+						    
+						    <p:column headerText="Observación">
+						    	<h:outputText value="#{mat.observaciones}" />
+						    </p:column>
+						    						
+						</p:dataTable>	
+					</p:outputPanel>					
 			    </p:tab>
 			    
 			    <p:tab title="Gráfica">
-			        
+			    
+			   		<p:outputPanel style="background-color: white; padding: 5px; display: inline-flex; margin-top: -5px;">
+						<p:commandButton value="Ver" style="font-size: 12px !important;" 
+							actionListener="#{reporteMat.listarMatriculas}" update="opGraMat :form:growl" />
+						  
+						<p:spacer width="20px" />
+						<p:commandButton type="button" icon="fa fa-print" title="Imprimir" style="margin-right: 50px;">
+							<p:printer target="opListMat" />
+						</p:commandButton>
+					</p:outputPanel>				
+				
+					<p:separator style="border: 0.6px solid #8f3b4f;" />
+					
+					<p:outputPanel id="opGraMat" style="font-size: 12px">
+						<div style="display: inline-flex; width: 100%;">
+							<div style="width: 25%;">
+								<img src="/sistema_ue_arv/recursos/images/ESCUELA_ARV2.png" height="100" />
+							</div>
+							<div style="width: 50%;" align="center">		
+								<span style="font-weight: bold;">ESCUELA PARTICULAR MIXTA No. 387</span> <br />
+								<span style="font-size: 20px;">“  Dr. Aquiles Rodríguez V. ”</span> <br />
+								<span style="font-size: 12px;">Fundada 1970</span> <br />
+								<span style="font-size: 12px;">Guayaquil - Ecuador</span> <br /> <br />
+								<span style="font-weight: bold; font-size: 16px;">Gráfica de Matrículas Activas</span> <br />								
+							</div>
+						</div>
+						<p:separator />
+						
+			        </p:outputPanel>
 			    </p:tab>		      
 			</p:tabView>							
 						

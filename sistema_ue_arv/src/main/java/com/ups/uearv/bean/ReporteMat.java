@@ -27,6 +27,7 @@ import javax.persistence.Persistence;
 import javax.persistence.Query;
 
 import com.ups.uearv.entidades.MatEstudiante;
+import com.ups.uearv.entidades.MatMatricula;
 import com.ups.uearv.entidades.MatOferta;
 import com.ups.uearv.servicios.DAO;
 import com.ups.uearv.servicios.Util;
@@ -146,7 +147,12 @@ public class ReporteMat implements Serializable {
 	String snMinusvalia = "";
 	String itMinusvalia = "";
 	String soGradoMinusvalia = "";	
-
+	
+	// LISTADO
+	private List<Object> matriculaList = new ArrayList<Object>();
+	String olCantAC = "0";
+	String olCantIC = "0";	
+	
 	@PostConstruct
 	public void init() {		
 		listPeriodo = (ArrayList<SelectItem>) llenaComboPeriodo();
@@ -172,8 +178,45 @@ public class ReporteMat implements Serializable {
 		listEstudiante = (ArrayList<SelectItem>) llenaComboEstudiante();
 		soEstudiante = "NA";
 	}
+	
+	public void listarMatriculas() {
+		matriculaList.clear();
+		
+		if (soPeriodo.equals("NA")) {
+			mensaje = "Debe seleccionarel período";
+			FacesContext.getCurrentInstance().addMessage("growl", new FacesMessage(FacesMessage.SEVERITY_ERROR, mensajeTitulo, mensaje));
+			return;
+		}
+		
+		if(!soPeriodo.equals("NA")) {
+			jpql = 
+			"SELECT * \r\n" + 
+			"FROM mat_matricula \r\n" + 
+			"WHERE id_periodo = " + soPeriodo + " AND sn_aprobado = 'S' ORDER BY id_oferta, estado ";
+		
+			List<Object> l = DAO.nqObject(new MatMatricula(), jpql);
+			if (!l.isEmpty()) {
+				for (Object in : l)
+					matriculaList.add(in);	
+			}	
+			
+			jpql = 
+			"SELECT * FROM mat_matricula \r\n" + 
+			"WHERE id_periodo = " + soPeriodo + " AND sn_aprobado = 'S' AND estado = 'AC' ";
+			List<Object> l_AC = DAO.nqObject(new MatMatricula(), jpql);
+			if (!l_AC.isEmpty()) 				
+				olCantAC = String.valueOf(l_AC.size());
+			
+			jpql = 
+			"SELECT * FROM mat_matricula \r\n" + 
+			"WHERE id_periodo = " + soPeriodo + " AND sn_aprobado = 'S' AND estado = 'IC' ";
+			List<Object> l_IC = DAO.nqObject(new MatMatricula(), jpql);
+			if (!l_IC.isEmpty()) 
+				olCantIC = String.valueOf(l_IC.size());		
+		}	
+	}
 
-	public void verFichaEstudiante() {	
+	public void verFichaEstudiante() {
 		limpiarFicha();
 
 		if (soPeriodo.equals("NA")) {
@@ -304,7 +347,7 @@ public class ReporteMat implements Serializable {
 		}
 	}
 
-	public void limpiarFicha() {		
+	public void limpiarFicha() {
 		olGrado = "_____________";		
 		olParalelo = "____";
 		
@@ -974,5 +1017,23 @@ public class ReporteMat implements Serializable {
 	}
 	public void setOlParalelo(String olParalelo) {
 		this.olParalelo = olParalelo;
+	}
+	public List<Object> getMatriculaList() {
+		return matriculaList;
+	}
+	public void setMatriculaList(List<Object> matriculaList) {
+		this.matriculaList = matriculaList;
+	}
+	public String getOlCantAC() {
+		return olCantAC;
+	}
+	public void setOlCantAC(String olCantAC) {
+		this.olCantAC = olCantAC;
+	}
+	public String getOlCantIC() {
+		return olCantIC;
+	}
+	public void setOlCantIC(String olCantIC) {
+		this.olCantIC = olCantIC;
 	}	
 }

@@ -389,7 +389,7 @@ public class Matricula implements Serializable {
 			for (Object mat : listMat) {	
 				((MatMatricula) mat).setUsuarioAct(Session.getUserName());
 				((MatMatricula) mat).setFechaAct(fecha);	
-				((MatMatricula) mat).setObservaciones(itaObservacion);
+				((MatMatricula) mat).setObservaciones("Anulada: " + itaObservacion);
 				((MatMatricula) mat).setEstado("IC");
 				if (!DAO.saveOrUpdate(mat, 1, em)) {
 					em.getTransaction().rollback();
