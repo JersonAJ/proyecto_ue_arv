@@ -29,6 +29,7 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 					<f:setPropertyActionListener value="0" target="#{periodo.inValorPension}" />					
 					
 					<f:setPropertyActionListener value="true" target="#{periodo.ckEstado}" />
+					<f:setPropertyActionListener value="false" target="#{periodo.ckCerrado}" />
 					<f:setPropertyActionListener value="0" target="#{periodo.accion}" />	
 															
 				</p:commandLink>					
@@ -66,6 +67,7 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 		                <p:column colspan="2" headerText="Fecha" />
 		                <p:column colspan="2" headerText="Valor" />	
 		                <p:column rowspan="2" headerText="Cant. Pensiones" width="50" />	                
+		                <p:column rowspan="2" headerText="Cerrado" width="80" />
 		                <p:column rowspan="2" headerText="Activo" width="80" />
 		                <p:column rowspan="2" headerText="Editar" width="80" />
 		                
@@ -106,6 +108,10 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 			        <h:outputText value="#{dtperiodo.cantPensiones}" />
 			    </p:column>
 			    
+			    <p:column headerText="Cerrado" width="20" style="text-align: center" exportable="false">
+			    	<h:selectBooleanCheckbox value="#{dtperiodo.snCerrado eq 'SI'? true:false}" disabled="true" />			        
+			    </p:column>
+			    
 			    <p:column headerText="Activo" width="20" style="text-align: center" exportable="false">
 			    	<h:selectBooleanCheckbox value="#{dtperiodo.estado eq 'AC'? true:false}" disabled="true" />			        
 			    </p:column>
@@ -125,6 +131,7 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 							<f:setPropertyActionListener value="#{dtperiodo.precioPension}" target="#{periodo.inValorPension}" />		
 							
 							<f:setPropertyActionListener value="#{general.getEstado(dtperiodo.estado)}" target="#{periodo.ckEstado}" />
+							<f:setPropertyActionListener value="#{general.getSINO(dtperiodo.snCerrado)}" target="#{periodo.ckCerrado}" />
 							<f:setPropertyActionListener value="1" target="#{periodo.accion}" />
 																																						
 						</p:commandLink>							
@@ -179,6 +186,9 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 			            <span class="ui-inputgroup-addon">$</span>
 			            <p:inputNumber value="#{periodo.inValorPension}" decimalPlaces="2" inputStyle="width: 40px; text-align: end" />			            
 			        </p:outputPanel>
+			        
+			        <p:outputPanel style="text-align: end; padding: 5px">Cerrado:</p:outputPanel>
+					<h:selectBooleanCheckbox value="#{periodo.ckCerrado}" style="margin-top: 6px" />
 				   			        			     		        										
 					<p:outputPanel style="text-align: end; padding: 5px">Activo:</p:outputPanel>
 					<h:selectBooleanCheckbox value="#{periodo.ckEstado}" style="margin-top: 6px" />

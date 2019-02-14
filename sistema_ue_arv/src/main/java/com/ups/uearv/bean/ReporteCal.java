@@ -219,7 +219,7 @@ public class ReporteCal implements Serializable {
 	}
 
 	public List<SelectItem> llenaComboPeriodo() {
-		return Util.llenaCombo(DAO.getPeriodos(), 2);
+		return Util.llenaCombo(DAO.getPeriodosRep(), 2);
 	}
 
 	public List<SelectItem> llenaComboOferta() {

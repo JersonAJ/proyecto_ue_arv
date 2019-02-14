@@ -54,9 +54,11 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 							actionListener="#{reporteMat.verFichaEstudiante}" update="opFicha :form:growl" />
 						  
 						<p:spacer width="20px" />
-						<p:commandButton type="button" icon="fa fa-print" title="Imprimir" style="margin-right: 50px;">
+						<p:commandLink type="button" style="padding-top: 5px;">
+							<span class="fa fa-print" ></span>
+							Imprimir
 							<p:printer target="opFicha" />
-						</p:commandButton>
+						</p:commandLink>
 					</p:outputPanel>				
 				
 					<p:separator style="border: 0.6px solid #8f3b4f;" />
@@ -553,9 +555,11 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 							actionListener="#{reporteMat.listarMatriculas}" update="opListMat :form:growl" />
 						  
 						<p:spacer width="20px" />
-						<p:commandButton type="button" icon="fa fa-print" title="Imprimir" style="margin-right: 50px;">
+						<p:commandLink type="button" style="padding-top: 5px;">
+							<span class="fa fa-print" ></span>
+							Imprimir
 							<p:printer target="opListMat" />
-						</p:commandButton>
+						</p:commandLink>
 					</p:outputPanel>				
 				
 					<p:separator style="border: 0.6px solid #8f3b4f;" />
@@ -638,11 +642,11 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 						} 
 					</script>
 					<style>
-						.jqplot-target {
+					    .jqplot-target {
 						    position: relative;
-						    color: #666;
-						    font-family: "Trebuchet MS",Arial,Helvetica,sans-serif;
-						    font-size: 12px;
+						    color: #000;
+						    font-family: "Source Sans Pro", Arial, sans-serif;
+						    font-size: 12px;						    
 						}
 						table.jqplot-table-legend, table.jqplot-cursor-legend {
 						    background-color: rgba(255,255,255,0.6);
@@ -662,9 +666,9 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 						}
 						.jqplot-highlighter-tooltip, .jqplot-canvasOverlay-tooltip {
 						    border: 1px solid #ccc;
-						    font-size: 12px;
+						    font-size: 13px;
 						    white-space: nowrap;
-						    background: rgba(0, 0, 0, 0.5);
+						    background: rgba(0, 0, 0, 0.8);
 						    padding: 3px;
 						    z-index: 1;
 						    color: white;
@@ -672,13 +676,8 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 					</style>
 			   		<p:outputPanel style="background-color: white; padding: 5px; display: inline-flex; margin-top: -5px;">
 						<p:commandButton value="Ver" style="font-size: 12px !important;" 
-							actionListener="#{reporteMat.createPieDepartamento}" update="opGraMat :form:growl" />
-						  
-						<p:spacer width="20px" />
-						<p:commandButton type="button" icon="fa fa-print" title="Imprimir" style="margin-right: 50px;">
-							<p:printer target="opGraMat" />
-						</p:commandButton>
-					</p:outputPanel>				
+							actionListener="#{reporteMat.createPiePeriodo}" update="opGraMat :form:growl" />
+					</p:outputPanel>		
 				
 					<p:separator style="border: 0.6px solid #8f3b4f;" />
 					
@@ -697,9 +696,8 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 						</div>
 						<p:separator />
 						<div align="center">
-							<p:chart id="gr1" type="pie" model="#{reporteMat.porPeriodo}" style="width: 500px; height: 300px" />
-						</div>
-						
+							<p:chart type="pie" model="#{reporteMat.porPeriodo}" style="width: 500px" />
+						</div>						
 			        </p:outputPanel>
 			    </p:tab>		      
 			</p:tabView>							

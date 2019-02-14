@@ -23,6 +23,9 @@ public class MatPeriodo implements Serializable {
 
 	@Column(name="cant_pensiones")
 	private int cantPensiones;
+	
+	@Column(name="sn_cerrado")
+	private String snCerrado;
 
 	private String descripcion;
 
@@ -79,6 +82,14 @@ public class MatPeriodo implements Serializable {
 
 	public void setCantPensiones(int cantPensiones) {
 		this.cantPensiones = cantPensiones;
+	}
+
+	public String getSnCerrado() {
+		return snCerrado;
+	}
+
+	public void setSnCerrado(String snCerrado) {
+		this.snCerrado = snCerrado;
 	}
 
 	public String getDescripcion() {

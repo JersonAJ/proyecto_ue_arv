@@ -49,6 +49,7 @@ public class Periodo implements Serializable {
 	BigDecimal inValorPension = new BigDecimal(0);
 
 	boolean ckEstado = false;
+	boolean ckCerrado = false;
 
 	String itBuscar = "";
 	boolean ckMostrarIC = false;
@@ -150,8 +151,13 @@ public class Periodo implements Serializable {
 
 			String estado = "IC";
 			if (ckEstado) estado = "AC";	
+			
+			String cerrado = "NO";
+			if (ckCerrado) cerrado = "SI";
 
 			ob.setEstado(estado);
+			ob.setSnCerrado(cerrado);
+			
 			if (accion == 0) {
 				ob.setUsuarioIng(Session.getUserName());			
 				ob.setFechaIng(fecha);				
@@ -280,5 +286,11 @@ public class Periodo implements Serializable {
 	}
 	public void setListJornada(ArrayList<SelectItem> listJornada) {
 		this.listJornada = listJornada;
+	}
+	public boolean isCkCerrado() {
+		return ckCerrado;
+	}
+	public void setCkCerrado(boolean ckCerrado) {
+		this.ckCerrado = ckCerrado;
 	}	
 }

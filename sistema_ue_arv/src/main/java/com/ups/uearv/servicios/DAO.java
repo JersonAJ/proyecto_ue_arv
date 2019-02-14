@@ -217,9 +217,15 @@ public class DAO {
 		return query;
 	}		
 	
-	public static Query getPeriodos() {
+	public static Query getPeriodosRep() {
 		Query query = em.createNativeQuery(
 				" SELECT id_periodo, descripcion FROM mat_periodo WHERE estado = 'AC' ORDER BY descripcion ");
+		return query;
+	}
+	
+	public static Query getPeriodos() {
+		Query query = em.createNativeQuery(
+				" SELECT id_periodo, descripcion FROM mat_periodo WHERE sn_cerrado = 'NO' AND estado = 'AC' ORDER BY descripcion ");
 		return query;
 	}
 	

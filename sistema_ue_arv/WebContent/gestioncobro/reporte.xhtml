@@ -15,18 +15,134 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 				
 			<p:growl id="growl" for="growl" showDetail="true" closable="true" />
 			
+			<!-- FILTROS BUSQ -->
 			<p:outputPanel style="background-color: white; padding: 5px;">
-			
-			</p:outputPanel> 			
+				<p:selectOneMenu id="soPeriodo" value="#{reporteGes.soPeriodo}" style="width: 130px">
+					<f:selectItem itemLabel="Seleccione Período" itemValue="NA" />
+					<f:selectItems value="#{reporteGes.listPeriodo}" />		
+					<p:ajax listener="#{reporteGes.onChangePeriodo()}" update=":form:tab:soOferta"/>								
+				</p:selectOneMenu>	
+				<p:spacer width="5px" />					
+			</p:outputPanel> 				
 			<br />
+			
 			<!-- CONSULTA -->			
-			<p:tabView>
-		       <p:tab title="Estado de Cuenta">
-		           
+			<p:tabView id="tab">
+		       	<p:tab title="Estado de Cuenta">
+		       		<p:outputPanel style="background-color: white; padding: 5px; display: inline-flex; margin-top: -5px;">
+						<p:selectOneMenu id="soOferta" value="#{reporteGes.soOferta}" style="width: 190px">
+							<f:selectItem itemLabel="Seleccione Oferta" itemValue="NA" />
+							<f:selectItems value="#{reporteGes.listOferta}" />							
+						</p:selectOneMenu>
+						
+						<p:spacer width="10px" />
+						  
+						<p:commandButton id="btnVerFicha" value="Ver" style="font-size: 12px !important;" 
+							actionListener="#{reporteGes.verEstadoCuentas}" update="opEstado :form:growl" />
+						  
+						<p:spacer width="20px" />
+						<p:commandLink type="button" style="padding-top: 5px;">
+							<span class="fa fa-print" ></span>
+							Imprimir
+							<p:printer target="opEstado" />
+						</p:commandLink>
+					</p:outputPanel>		
+					
+					<p:separator style="border: 0.6px solid #8f3b4f;" />
+					
+					<p:outputPanel id="opEstado" style="font-size: 12px">
+						<div style="display: inline-flex; width: 100%;">
+							<div style="width: 25%;">
+								<img src="/sistema_ue_arv/recursos/images/ESCUELA_ARV2.png" height="100" />
+							</div>
+							<div style="width: 50%;" align="center">		
+								<span style="font-weight: bold;">ESCUELA PARTICULAR MIXTA No. 387</span> <br />
+								<span style="font-size: 20px;">“  Dr. Aquiles Rodríguez V. ”</span> <br />
+								<span style="font-size: 12px;">Fundada 1970</span> <br />
+								<span style="font-size: 12px;">Guayaquil - Ecuador</span> <br /> <br />
+								<span style="font-weight: bold; font-size: 16px;">Estado de Cuentas</span> <br />								
+							</div>
+						</div>
+						<p:separator />
+						
+						
+					</p:outputPanel>		           
 		       </p:tab>
 		       
 		       <p:tab title="Gráfica">
-		           
+		        	<script type="text/javascript">
+			        	function extChart2() {
+							this.cfg.grid = {
+								drawBorder: false, 
+								background : 'white',
+								shadow : true,
+								gridLineColor : '#9E9E9E',
+							};	
+							this.cfg.highlighter = {
+					            show: true,
+					            tooltipLocation: 'c',			            
+					            formatString: 'Sem %s Cant %d'
+					        };
+						}
+					</script>
+					<style>
+					    .jqplot-target {
+						    position: relative;
+						    color: #000;
+						    font-family: "Source Sans Pro", Arial, sans-serif;
+						    font-size: 12px;						    
+						}
+						table.jqplot-table-legend, table.jqplot-cursor-legend {
+						    background-color: rgba(255,255,255,0.6);
+						    border: 1px solid #666;
+						    position: absolute;
+						    font-size: 10.5px;
+						}
+						.jqplot-point-label {
+						    font-size: 11.5px;
+						    z-index: 2;
+						}
+						.ui-panelgrid .ui-panelgrid-cell {
+						    border-width: 1px;
+						    border-style: solid;
+						    border-color: #666666;
+						    padding: 4px 10px;
+						}
+						.jqplot-highlighter-tooltip, .jqplot-canvasOverlay-tooltip {
+						    border: 1px solid #ccc;
+						    font-size: 13px;
+						    white-space: nowrap;
+						    background: rgba(0, 0, 0, 0.8);
+						    padding: 3px;
+						    z-index: 1;
+						    color: white;
+						}
+					</style>
+			   		<p:outputPanel style="background-color: white; padding: 5px; display: inline-flex; margin-top: -5px;">
+						<p:commandButton value="Ver" style="font-size: 12px !important;" 
+							actionListener="#{reporteGes.createBarEstadoCuentas}" update="opGraGes :form:growl" />
+					</p:outputPanel>		
+				
+					<p:separator style="border: 0.6px solid #8f3b4f;" />
+					
+					<p:outputPanel id="opGraGes" style="font-size: 12px">
+						<div style="display: inline-flex; width: 100%;">
+							<div style="width: 25%;">
+								<img src="/sistema_ue_arv/recursos/images/ESCUELA_ARV2.png" height="100" />
+							</div>
+							<div style="width: 50%;" align="center">		
+								<span style="font-weight: bold;">ESCUELA PARTICULAR MIXTA No. 387</span> <br />
+								<span style="font-size: 20px;">“  Dr. Aquiles Rodríguez V. ”</span> <br />
+								<span style="font-size: 12px;">Fundada 1970</span> <br />
+								<span style="font-size: 12px;">Guayaquil - Ecuador</span> <br /> <br />
+								<span style="font-weight: bold; font-size: 16px;">Gráfica de Cuentas por Oferta/Período</span> <br />								
+							</div>
+						</div>
+						<p:separator />
+						<div align="center">
+							
+						</div>						
+			        </p:outputPanel>   
 		       </p:tab>		       
 		   </p:tabView>					
 	   	</h:form>

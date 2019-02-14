@@ -157,7 +157,7 @@ public class ReporteMat implements Serializable {
 	String olCantIC = "0";	
 	
 	// GRAFICA	
-	PieChartModel porPeriodo = new PieChartModel();;
+	PieChartModel porPeriodo = new PieChartModel();
 	
 	@PostConstruct
 	public void init() {		
@@ -342,15 +342,14 @@ public class ReporteMat implements Serializable {
 		}
 	}
 	
-	public void createPieDepartamento() {
-		porPeriodo = new PieChartModel();
-		porPeriodo.set("No hay datos", 0);
-		
+	public void createPiePeriodo() {
 		if (soPeriodo.equals("NA")) {
 			mensaje = "Debe seleccionarel período";
 			FacesContext.getCurrentInstance().addMessage("growl", new FacesMessage(FacesMessage.SEVERITY_ERROR, mensajeTitulo, mensaje));
 			return;
 		}
+		
+		porPeriodo = new PieChartModel();
 		
 		List<Object> result = (List<Object>) DAO.getGraficaDepartamento(soPeriodo);
 		Iterator<Object> itr = result.iterator();
@@ -360,14 +359,16 @@ public class ReporteMat implements Serializable {
 			for (int k = 0; k < result.size(); k++) {
 				Object[] obj = (Object[]) itr.next();
 				int cant = Integer.parseInt(obj[1].toString());				
-				porPeriodo.set(obj[0].toString() + " (" + cant + ")", cant);
+				porPeriodo.set(obj[0].toString(), cant);
 				total += cant; 
 			}
-		}
+		} else
+			porPeriodo.set("No hay datos", 0);
 		
-		porPeriodo.setTitle("Matrículas Activas (" + total + ")");	
+		porPeriodo.setTitle("Cantidad (" + total + ")");	
 		porPeriodo.setLegendPosition("w");
 		porPeriodo.setExtender("extChart");
+		porPeriodo.setSeriesColors("657df9,FF9800,f77070,00bcd4,fb7444,da6fec,64b832,2196f3,ffeb3b,ff6c9e,b9f3bc,4caf50");
 	}
 	
 	public static int calculateAge(Date nac, Date act) {
@@ -445,7 +446,7 @@ public class ReporteMat implements Serializable {
 	}
 
 	public List<SelectItem> llenaComboPeriodo() {
-		return Util.llenaCombo(DAO.getPeriodos(), 2);
+		return Util.llenaCombo(DAO.getPeriodosRep(), 2);
 	}
 
 	public List<SelectItem> llenaComboOferta() {
@@ -454,10 +455,6 @@ public class ReporteMat implements Serializable {
 
 	public List<SelectItem> llenaComboEstudiante() {
 		return Util.llenaCombo(getEstudiantesOferta(), 2);
-	}
-
-	public List<SelectItem> llenaComboDocente() {
-		return Util.llenaCombo(DAO.getDocentes(), 2);
 	}
 
 	public Query getEstudiantesOferta() {		
