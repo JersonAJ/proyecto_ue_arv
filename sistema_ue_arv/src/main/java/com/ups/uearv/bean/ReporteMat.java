@@ -13,6 +13,7 @@ import java.time.Period;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -25,6 +26,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
+
+import org.primefaces.model.chart.PieChartModel;
 
 import com.ups.uearv.entidades.MatEstudiante;
 import com.ups.uearv.entidades.MatMatricula;
@@ -152,6 +155,9 @@ public class ReporteMat implements Serializable {
 	private List<Object> matriculaList = new ArrayList<Object>();
 	String olCantAC = "0";
 	String olCantIC = "0";	
+	
+	// GRAFICA	
+	PieChartModel porPeriodo = new PieChartModel();;
 	
 	@PostConstruct
 	public void init() {		
@@ -335,7 +341,35 @@ public class ReporteMat implements Serializable {
 			return;
 		}
 	}
-
+	
+	public void createPieDepartamento() {
+		porPeriodo = new PieChartModel();
+		porPeriodo.set("No hay datos", 0);
+		
+		if (soPeriodo.equals("NA")) {
+			mensaje = "Debe seleccionarel período";
+			FacesContext.getCurrentInstance().addMessage("growl", new FacesMessage(FacesMessage.SEVERITY_ERROR, mensajeTitulo, mensaje));
+			return;
+		}
+		
+		List<Object> result = (List<Object>) DAO.getGraficaDepartamento(soPeriodo);
+		Iterator<Object> itr = result.iterator();
+		int total = 0;
+		if (!result.isEmpty()) {		
+			porPeriodo = new PieChartModel();
+			for (int k = 0; k < result.size(); k++) {
+				Object[] obj = (Object[]) itr.next();
+				int cant = Integer.parseInt(obj[1].toString());				
+				porPeriodo.set(obj[0].toString() + " (" + cant + ")", cant);
+				total += cant; 
+			}
+		}
+		
+		porPeriodo.setTitle("Matrículas Activas (" + total + ")");	
+		porPeriodo.setLegendPosition("w");
+		porPeriodo.setExtender("extChart");
+	}
+	
 	public static int calculateAge(Date nac, Date act) {
 		LocalDate birthDate = nac.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 		LocalDate currentDate = act.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
@@ -1035,5 +1069,11 @@ public class ReporteMat implements Serializable {
 	}
 	public void setOlCantIC(String olCantIC) {
 		this.olCantIC = olCantIC;
+	}
+	public PieChartModel getPorPeriodo() {
+		return porPeriodo;
+	}
+	public void setPorPeriodo(PieChartModel porPeriodo) {
+		this.porPeriodo = porPeriodo;
 	}	
 }

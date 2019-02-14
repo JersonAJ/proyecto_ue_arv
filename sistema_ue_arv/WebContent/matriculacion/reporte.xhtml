@@ -615,14 +615,68 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 			    </p:tab>
 			    
 			    <p:tab title="Gráfica">
-			    
+		   			<script type="text/javascript">
+						function extChart() {
+							this.cfg.grid = {
+								drawBorder: false, 
+						        drawGridlines: false,
+								background : 'white',
+								shadow : false,
+								gridLineColor : '#9E9E9E',
+							};
+							this.cfg.seriesDefaults.rendererOptions = {						
+								showDataLabels: true,
+						        padding: 10,
+						        sliceMargin: 6,
+						        shadow: true
+							};							
+							this.cfg.highlighter = {
+								show: true,
+						      	useAxesFormatters: false,
+						      	tooltipFormatString: '%s'
+							};
+						} 
+					</script>
+					<style>
+						.jqplot-target {
+						    position: relative;
+						    color: #666;
+						    font-family: "Trebuchet MS",Arial,Helvetica,sans-serif;
+						    font-size: 12px;
+						}
+						table.jqplot-table-legend, table.jqplot-cursor-legend {
+						    background-color: rgba(255,255,255,0.6);
+						    border: 1px solid #666;
+						    position: absolute;
+						    font-size: 10.5px;
+						}
+						.jqplot-point-label {
+						    font-size: 11.5px;
+						    z-index: 2;
+						}
+						.ui-panelgrid .ui-panelgrid-cell {
+						    border-width: 1px;
+						    border-style: solid;
+						    border-color: #666666;
+						    padding: 4px 10px;
+						}
+						.jqplot-highlighter-tooltip, .jqplot-canvasOverlay-tooltip {
+						    border: 1px solid #ccc;
+						    font-size: 12px;
+						    white-space: nowrap;
+						    background: rgba(0, 0, 0, 0.5);
+						    padding: 3px;
+						    z-index: 1;
+						    color: white;
+						}
+					</style>
 			   		<p:outputPanel style="background-color: white; padding: 5px; display: inline-flex; margin-top: -5px;">
 						<p:commandButton value="Ver" style="font-size: 12px !important;" 
-							actionListener="#{reporteMat.listarMatriculas}" update="opGraMat :form:growl" />
+							actionListener="#{reporteMat.createPieDepartamento}" update="opGraMat :form:growl" />
 						  
 						<p:spacer width="20px" />
 						<p:commandButton type="button" icon="fa fa-print" title="Imprimir" style="margin-right: 50px;">
-							<p:printer target="opListMat" />
+							<p:printer target="opGraMat" />
 						</p:commandButton>
 					</p:outputPanel>				
 				
@@ -642,6 +696,9 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 							</div>
 						</div>
 						<p:separator />
+						<div align="center">
+							<p:chart id="gr1" type="pie" model="#{reporteMat.porPeriodo}" style="width: 500px; height: 300px" />
+						</div>
 						
 			        </p:outputPanel>
 			    </p:tab>		      

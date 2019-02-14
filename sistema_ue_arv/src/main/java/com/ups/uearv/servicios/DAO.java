@@ -149,6 +149,30 @@ public class DAO {
 		return nombre;
 	}	
 	
+	// GRAFICA
+	public static List<Object> getGraficaDepartamento(String idPeriodo) {
+		Query query = em.createNativeQuery("CALL grafico_matriculas (" + idPeriodo + ") ");
+		return query.getResultList();
+	}
+	
+	public static String getEstMatricula(String matricula) {
+		
+		String jpql = 
+		"SELECT CONCAT(IFNULL(apellidos, ''), ' ', IFNULL(nombres, '')) nombre \r\n" + 
+		"FROM mat_estudiante e \r\n" + 
+		"	INNER JOIN mat_matricula m ON m.id_estudiante = e.id_estudiante \r\n" + 
+		"WHERE m.id_matricula = '" + matricula + "' \r\n" +
+		"AND e.estado = 'AC' AND m.sn_aprobado = 'S'";
+		
+		Query query = em.createNativeQuery(jpql);
+		List<Object> result = query.getResultList();
+		Iterator<Object> itr = result.iterator();
+		Object obj = (Object) itr.next();
+		String nombre = String.valueOf(obj);
+
+		return nombre;
+	}
+	
 	public static Query getDocentes() {
 		Query query = em.createNativeQuery(
 				" SELECT id_docente, CONCAT(IFNULL(SUBSTRING_INDEX(nombres, ' ', 1), ''), ' ', IFNULL(SUBSTRING_INDEX(apellidos, ' ', 1), '')) nombre FROM mat_docente WHERE estado = 'AC' order by 2 ");
@@ -227,24 +251,6 @@ public class DAO {
 		Query query = em.createNativeQuery(
 				" SELECT codigo_det, descripcion FROM catalogo_det WHERE codigo_cab = '" + cab + "' AND estado = 'AC' ORDER BY descripcion ");
 		return query;
-	}
-	
-	public static String getEstMatricula(String matricula) {
-		
-		String jpql = 
-		"SELECT CONCAT(IFNULL(apellidos, ''), ' ', IFNULL(nombres, '')) nombre \r\n" + 
-		"FROM mat_estudiante e \r\n" + 
-		"	INNER JOIN mat_matricula m ON m.id_estudiante = e.id_estudiante \r\n" + 
-		"WHERE m.id_matricula = '" + matricula + "' \r\n" +
-		"AND e.estado = 'AC' AND m.sn_aprobado = 'S'";
-		
-		Query query = em.createNativeQuery(jpql);
-		List<Object> result = query.getResultList();
-		Iterator<Object> itr = result.iterator();
-		Object obj = (Object) itr.next();
-		String nombre = String.valueOf(obj);
-
-		return nombre;
 	}	
 	
 	/**********************************
