@@ -18,7 +18,7 @@ public class Navegacion implements Serializable {
 	private static final long serialVersionUID = 1520318172495977648L;
 
 	public String redirectToLogin() {
-		return "/login.xhtml?faces-redirect=true";
+		return "/login.jsf?faces-redirect=true";
 	}
 	
 	public String toLogin() {
@@ -30,6 +30,6 @@ public class Navegacion implements Serializable {
 	}
 
 	public String redirectToInicio() {
-		return "/inicio.xhtml?faces-redirect=true";
+		return "/inicio.jsf?faces-redirect=true";
 	}
 }

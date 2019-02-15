@@ -618,7 +618,7 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 					</p:outputPanel>					
 			    </p:tab>
 			    
-			    <p:tab title="Gráfica">
+			    <p:tab title="Gráfica" id="grafica">
 		   			<script type="text/javascript">
 						function extChart() {
 							this.cfg.grid = {
@@ -692,7 +692,7 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 						</div>
 						<p:separator />
 						<div align="center">
-							<p:chart type="pie" model="#{reporteMat.porPeriodo}" style="width: 500px;" />
+							<p:chart id="chart" type="pie" model="#{reporteMat.porPeriodo}" style="width: 500px;" />
 						</div>						
 			        </p:outputPanel>
 			    </p:tab>		      

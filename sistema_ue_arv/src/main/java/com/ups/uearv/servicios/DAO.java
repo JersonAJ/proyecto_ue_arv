@@ -155,6 +155,11 @@ public class DAO {
 		return query.getResultList();
 	}
 	
+	public static List<Object> getGraficaEstadoCuentas(String idPeriodo) {
+		Query query = em.createNativeQuery("CALL grafico_estado_cuentas (" + idPeriodo + ") ");
+		return query.getResultList();
+	}
+	
 	public static String getEstMatricula(String matricula) {
 		
 		String jpql = 

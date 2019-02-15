@@ -165,6 +165,7 @@ public class ReporteMat implements Serializable {
 		onChangePeriodo();
 
 		limpiarFicha();
+		limpiarGrafica();		
 	}
 
 	// CONSULTA	
@@ -349,12 +350,10 @@ public class ReporteMat implements Serializable {
 			return;
 		}
 		
-		porPeriodo = new PieChartModel();
-		
 		List<Object> result = (List<Object>) DAO.getGraficaDepartamento(soPeriodo);
 		Iterator<Object> itr = result.iterator();
 		int total = 0;
-		if (!result.isEmpty()) {		
+		if (!result.isEmpty()) {			
 			porPeriodo = new PieChartModel();
 			for (int k = 0; k < result.size(); k++) {
 				Object[] obj = (Object[]) itr.next();
@@ -362,13 +361,12 @@ public class ReporteMat implements Serializable {
 				porPeriodo.set(obj[0].toString(), cant);
 				total += cant; 
 			}
+			porPeriodo.setTitle("Cantidad (" + total + ")");	
+			porPeriodo.setLegendPosition("w");
+			porPeriodo.setExtender("extChart");
+			porPeriodo.setSeriesColors("657df9,FF9800,f77070,00bcd4,fb7444,da6fec,64b832,2196f3,ffeb3b,ff6c9e,b9f3bc,4caf50");
 		} else
-			porPeriodo.set("No hay datos", 0);
-		
-		porPeriodo.setTitle("Cantidad (" + total + ")");	
-		porPeriodo.setLegendPosition("w");
-		porPeriodo.setExtender("extChart");
-		porPeriodo.setSeriesColors("657df9,FF9800,f77070,00bcd4,fb7444,da6fec,64b832,2196f3,ffeb3b,ff6c9e,b9f3bc,4caf50");
+			limpiarGrafica();
 	}
 	
 	public static int calculateAge(Date nac, Date act) {
@@ -380,6 +378,16 @@ public class ReporteMat implements Serializable {
 		} else {
 			return 0;
 		}
+	}
+	
+	public void limpiarGrafica() {
+		porPeriodo = new PieChartModel();
+		porPeriodo.set("No hay datos", 0);
+		
+		porPeriodo.setTitle("Cantidad (0)");	
+		porPeriodo.setLegendPosition("w");
+		porPeriodo.setExtender("extChart");
+		porPeriodo.setSeriesColors("657df9,FF9800,f77070,00bcd4,fb7444,da6fec,64b832,2196f3,ffeb3b,ff6c9e,b9f3bc,4caf50");
 	}
 
 	public void limpiarFicha() {

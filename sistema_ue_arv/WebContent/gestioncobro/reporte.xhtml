@@ -19,8 +19,7 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 			<p:outputPanel style="background-color: white; padding: 5px;">
 				<p:selectOneMenu id="soPeriodo" value="#{reporteGes.soPeriodo}" style="width: 130px">
 					<f:selectItem itemLabel="Seleccione Período" itemValue="NA" />
-					<f:selectItems value="#{reporteGes.listPeriodo}" />		
-					<p:ajax listener="#{reporteGes.onChangePeriodo()}" update=":form:tab:soOferta"/>								
+					<f:selectItems value="#{reporteGes.listPeriodo}" />
 				</p:selectOneMenu>	
 				<p:spacer width="5px" />					
 			</p:outputPanel> 				
@@ -30,13 +29,6 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 			<p:tabView id="tab">
 		       	<p:tab title="Estado de Cuenta">
 		       		<p:outputPanel style="background-color: white; padding: 5px; display: inline-flex; margin-top: -5px;">
-						<p:selectOneMenu id="soOferta" value="#{reporteGes.soOferta}" style="width: 190px">
-							<f:selectItem itemLabel="Seleccione Oferta" itemValue="NA" />
-							<f:selectItems value="#{reporteGes.listOferta}" />							
-						</p:selectOneMenu>
-						
-						<p:spacer width="10px" />
-						  
 						<p:commandButton id="btnVerFicha" value="Ver" style="font-size: 12px !important;" 
 							actionListener="#{reporteGes.verEstadoCuentas}" update="opEstado :form:growl" />
 						  
@@ -65,36 +57,83 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 						</div>
 						<p:separator />
 						
-						<p:dataTable var="team" value="#{reporteGes.estadoCuentaList}">
-					        <p:columnGroup type="header">
+						<style>
+							.ui-paginator .ui-paginator-pages .ui-paginator-page { height: 14px; }
+							.ui-datatable th.ui-state-default { background: #dadada; border-color: #6d6d6d; }
+							.ui-datatable tbody>tr.ui-widget-content { border-color: #e6e6e6; }
+														
+							table .ui-widget-header { color: #000000; background: #fdf7c0; border: 1px solid #6d6d6d; }
+							body .ui-datatable .ui-datatable-data tr td { padding: 3px; }													
+						</style>
+												
+						<div style="font-weight: bold; border: 1px solid #6d6d6d; margin-bottom: 5px; padding: 5px; background: #eaffd2;">
+							<p:outputPanel style="font-size: 12.5px">
+						        <h:outputText value="Total: $ " />
+						        <h:outputText value="#{reporteGes.estadoCuentaList.stream().map(cab->cab.sumTotal).sum()}">
+						        	<f:convertNumber  pattern="###,###.00" locale="en_US" type="currency" />
+						        </h:outputText>						        
+						        <p:spacer width="10" />						        
+						        <h:outputText value="Pagado: $ " />
+						        <h:outputText value="#{reporteGes.estadoCuentaList.stream().map(cab->cab.sumPagado).sum()}">
+						        	<f:convertNumber  pattern="###,###.00" locale="en_US" type="currency" />
+						        </h:outputText>						        
+						        <p:spacer width="10" />						        
+						        <h:outputText value="Saldo: $ " />
+						        <h:outputText value="#{reporteGes.estadoCuentaList.stream().map(cab->cab.sumSaldo).sum()}">
+						        	<f:convertNumber  pattern="###,###.00" locale="en_US" type="currency" />
+						        </h:outputText>						        
+					        </p:outputPanel>  
+						</div>									
+																
+						<p:dataTable var="cab" value="#{reporteGes.estadoCuentaList}" widgetVar="cabTable"
+							tableStyle="width: auto; min-width: 100%; font-size: 12px" emptyMessage="No existen datos a mostrar">
+							
+							<p:columnGroup type="header">
 					            <p:row>
-					                <p:column rowspan="2" headerText="Estudiante" />
-					                <p:column colspan="2" headerText="Detalle" />
+					                <p:column rowspan="2" headerText="Concepto" />
+					                <p:column colspan="5" headerText="Valores" />
 					            </p:row>
 					            <p:row>
-					                <p:column headerText="--" />
-					                <p:column headerText="--" />
+					                <p:column headerText="Precio" width="70" />
+					                <p:column headerText="Descuento" width="70" />
+					                <p:column headerText="Total" width="70" />
+					                <p:column headerText="Pagado" width="70" />
+					                <p:column headerText="Saldo" width="70" />
 					            </p:row>
 					        </p:columnGroup>
 					 
-					        <p:subTable var="stats" value="#{team.detalleList}">
+					        <p:subTable var="det" value="#{cab.detalleList}">
 					            <f:facet name="header">
-					                <h:outputText value="#{team.estudiante}" />
+					                <h:outputText value="#{cab.oferta} | #{cab.cedula} - #{cab.estudiante}" />
 					            </f:facet>
 					            <p:column>
-					                <h:outputText value="#{stats.concepto}" />
+					                <h:outputText value="#{det.concepto} #{det.nomDescuento}" />
 					            </p:column>
-					            <p:column>
-					                <h:outputText value="5" />
+					            <p:column style="text-align: right">
+					                <h:outputText value="#{det.precio}" />
 					            </p:column>
-					            <p:column>
-					                <h:outputText value="4" />
+					            <p:column style="text-align: center">
+					                <h:outputText value="#{det.descuento}">
+					                	<f:convertNumber  pattern="##" locale="en_US" type="currency" />
+					                </h:outputText>%
+					            </p:column>
+					            <p:column style="text-align: right">
+					                <h:outputText value="#{det.total}" />
+					            </p:column>
+					            <p:column style="text-align: right">
+					                <h:outputText value="#{det.pagado}" />
+					            </p:column>
+					            <p:column style="text-align: right">
+					                <h:outputText value="#{det.saldo}"  />
 					            </p:column>
 					            <p:columnGroup type="footer">
 					                <p:row>
-					                    <p:column footerText="Totals: " style="text-align:right"/>
-					                    <p:column footerText="8" />
-					                    <p:column footerText="7" />
+					                    <p:column footerText="TOTALES: " style="text-align: right; font-weight: bold; color: #000000"/>
+					                    <p:column footerText="$ #{cab.sumPrecio}" style="text-align: right; font-weight: bold; color: #000000"/>
+					                    <p:column footerText="--" style="text-align: center; font-weight: bold; color: #000000"/>
+					                    <p:column footerText="$ #{cab.sumTotal}" style="text-align: right; font-weight: bold; color: #000000"/>
+					                    <p:column footerText="$ #{cab.sumPagado}" style="text-align: right; font-weight: bold; color: #000000"/>
+					                    <p:column footerText="$ #{cab.sumSaldo}" style="text-align: right; font-weight: bold; color: #000000"/>
 					                </p:row>
 					            </p:columnGroup>
 					        </p:subTable>
@@ -115,10 +154,10 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 							this.cfg.highlighter = {
 					            show: true,
 					            tooltipLocation: 'c',			            
-					            formatString: 'Sem %s Cant %d'
+					            formatString: 'Pos. %s Val. %d'
 					        };
 						}
-					</script>
+			        </script>
 					<style>
 					    .jqplot-target {
 						    position: relative;
@@ -154,7 +193,7 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 					</style>
 			   		<p:outputPanel style="background-color: white; padding: 5px; display: inline-flex; margin-top: -5px;">
 						<p:commandButton value="Ver" style="font-size: 12px !important;" 
-							actionListener="#{reporteGes.createBarEstadoCuentas}" update="opGraGes :form:growl" />
+							actionListener="#{reporteGes.createLineModels()}" update="opGraGes :form:growl" />
 					</p:outputPanel>		
 				
 					<p:separator style="border: 0.6px solid #8f3b4f;" />
@@ -174,11 +213,13 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 						</div>
 						<p:separator />
 						<div align="center">
+						
+						<p:chart type="line" model="#{reporteGes.lineModel}" style="width: 600px; height: 400px" />				
 							
 						</div>						
 			        </p:outputPanel>   
 		       </p:tab>		       
-		   </p:tabView>					
+		   </p:tabView>		 
 	   	</h:form>
 	</ui:define>		
 	

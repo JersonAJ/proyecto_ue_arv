@@ -1,144 +1,143 @@
-<pretty-config
-	xmlns="http://ocpsoft.org/schema/rewrite-config-prettyfaces"
+<pretty-config xmlns="http://ocpsoft.org/schema/rewrite-config-prettyfaces"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://ocpsoft.org/xml/ns/prettyfaces/rewrite-config-prettyfaces.xsd">
 
 	<!-- LOGIN -->
 	<url-mapping id="login">
 		<pattern value="/login" />
-		<view-id value="/login.xhtml" />
+		<view-id value="/login.jsf" />
 	</url-mapping>
 
 	<!-- INICIO -->
 	<url-mapping id="inicio">
 		<pattern value="/inicio" />
-		<view-id value="/inicio.xhtml" />
+		<view-id value="/inicio.jsf" />
 	</url-mapping>
 
 	<!-- SEGURIDAD -->
 	<url-mapping id="usuario">
 		<pattern value="/seg/usuario" />
-		<view-id value="/seguridad/usuario.xhtml" />
+		<view-id value="/seguridad/usuario.jsf" />
 	</url-mapping>
 
 	<url-mapping id="perfil">
 		<pattern value="/seg/perfil" />
-		<view-id value="/seguridad/perfil.xhtml" />
+		<view-id value="/seguridad/perfil.jsf" />
 	</url-mapping>
 
 	<!-- MANTENIMIENTOS -->
 	<url-mapping id="catalogo">
 		<pattern value="/man/catalog" />
-		<view-id value="/mantenimientos/catalogo.xhtml" />
+		<view-id value="/mantenimientos/catalogo.jsf" />
 	</url-mapping>
 
 	<url-mapping id="curso">
 		<pattern value="/man/curso" />
-		<view-id value="/mantenimientos/curso.xhtml" />
+		<view-id value="/mantenimientos/curso.jsf" />
 	</url-mapping>
 
 	<url-mapping id="docente">
 		<pattern value="/man/docente" />
-		<view-id value="/mantenimientos/docente.xhtml" />
+		<view-id value="/mantenimientos/docente.jsf" />
 	</url-mapping>
 
 	<url-mapping id="asignatura">
 		<pattern value="/man/asignatura" />
-		<view-id value="/mantenimientos/asignatura.xhtml" />
+		<view-id value="/mantenimientos/asignatura.jsf" />
 	</url-mapping>
 
 	<url-mapping id="escala">
 		<pattern value="/man/escala" />
-		<view-id value="/mantenimientos/escala.xhtml" />
+		<view-id value="/mantenimientos/escala.jsf" />
 	</url-mapping>
 
 	<url-mapping id="reparto">
 		<pattern value="/man/reparto" />
-		<view-id value="/mantenimientos/reparto.xhtml" />
+		<view-id value="/mantenimientos/reparto.jsf" />
 	</url-mapping>
 
 	<url-mapping id="comportamiento">
 		<pattern value="/man/comportamiento" />
-		<view-id value="/mantenimientos/comportamiento.xhtml" />
+		<view-id value="/mantenimientos/comportamiento.jsf" />
 	</url-mapping>
 
 	<url-mapping id="paralelo">
 		<pattern value="/man/paralelo" />
-		<view-id value="/mantenimientos/paralelo.xhtml" />
+		<view-id value="/mantenimientos/paralelo.jsf" />
 	</url-mapping>
 
 	<!-- MATRICULACION -->
 	<url-mapping id="representante">
 		<pattern value="/mat/representante" />
-		<view-id value="/matriculacion/representante.xhtml" />
+		<view-id value="/matriculacion/representante.jsf" />
 	</url-mapping>
 
 	<url-mapping id="estudiante">
 		<pattern value="/mat/estudiante" />
-		<view-id value="/matriculacion/estudiante.xhtml" />
+		<view-id value="/matriculacion/estudiante.jsf" />
 	</url-mapping>
 
 	<url-mapping id="periodo">
 		<pattern value="/mat/periodo" />
-		<view-id value="/matriculacion/periodo.xhtml" />
+		<view-id value="/matriculacion/periodo.jsf" />
 	</url-mapping>
 
 	<url-mapping id="oferta">
 		<pattern value="/mat/oferta" />
-		<view-id value="/matriculacion/oferta.xhtml" />
+		<view-id value="/matriculacion/oferta.jsf" />
 	</url-mapping>
 
 	<url-mapping id="matricula">
 		<pattern value="/mat/matricula" />
-		<view-id value="/matriculacion/matricula.xhtml" />
+		<view-id value="/matriculacion/matricula.jsf" />
 	</url-mapping>
 
 	<url-mapping id="reportem">
 		<pattern value="/mat/reporte" />
-		<view-id value="/matriculacion/reporte.xhtml" />
+		<view-id value="/matriculacion/reporte.jsf" />
 	</url-mapping>
 
 	<!-- GESTION DE COBROS -->
 	<url-mapping id="descuento">
 		<pattern value="/ges/descuento" />
-		<view-id value="/gestioncobro/descuento.xhtml" />
+		<view-id value="/gestioncobro/descuento.jsf" />
 	</url-mapping>
 
 	<url-mapping id="pension">
 		<pattern value="/ges/pension" />
-		<view-id value="/gestioncobro/pension.xhtml" />
+		<view-id value="/gestioncobro/pension.jsf" />
 	</url-mapping>
 
 	<url-mapping id="reporteg">
 		<pattern value="/ges/reporte" />
-		<view-id value="/gestioncobro/reporte.xhtml" />
+		<view-id value="/gestioncobro/reporte.jsf" />
 	</url-mapping>
 
 	<!-- CALIFICACIONES -->
 	<url-mapping id="asistencia">
 		<pattern value="/cal/asistencia" />
-		<view-id value="/calificaciones/asistencia.xhtml" />
+		<view-id value="/calificaciones/asistencia.jsf" />
 	</url-mapping>
 
 	<url-mapping id="controlparcial">
 		<pattern value="/cal/controlparcial" />
-		<view-id value="/calificaciones/controlparcial.xhtml" />
+		<view-id value="/calificaciones/controlparcial.jsf" />
 	</url-mapping>
 	
 	<url-mapping id="reportec">
 		<pattern value="/cal/reporte" />
-		<view-id value="/calificaciones/reporte.xhtml" />
+		<view-id value="/calificaciones/reporte.jsf" />
 	</url-mapping>
 	
 	<!-- ERRORES -->
 	<url-mapping id="error">
 		<pattern value="/err/sesion" />
-		<view-id value="/errores/error_sesion.xhtml" />
+		<view-id value="/errores/error_sesion.jsf" />
 	</url-mapping>
 
 	<url-mapping id="error404">
 		<pattern value="/err/nopag" />
-		<view-id value="/errores/error_no_pag.xhtml" />
+		<view-id value="/errores/error_no_pag.jsf" />
 	</url-mapping>
 
 </pretty-config>
