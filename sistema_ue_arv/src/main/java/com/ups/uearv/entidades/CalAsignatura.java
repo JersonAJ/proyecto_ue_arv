@@ -46,10 +46,6 @@ public class CalAsignatura implements Serializable {
 	@Column(name="usuario_ing")
 	private String usuarioIng;
 
-	//bi-directional many-to-one association to CalCalificacion
-	@OneToMany(mappedBy="calAsignatura")
-	private List<CalCalificacion> calCalificacions;
-
 	//bi-directional many-to-one association to CalControl
 	@OneToMany(mappedBy="calAsignatura")
 	private List<CalControl> calControls;
@@ -148,29 +144,7 @@ public class CalAsignatura implements Serializable {
 	public void setUsuarioIng(String usuarioIng) {
 		this.usuarioIng = usuarioIng;
 	}
-
-	public List<CalCalificacion> getCalCalificacions() {
-		return this.calCalificacions;
-	}
-
-	public void setCalCalificacions(List<CalCalificacion> calCalificacions) {
-		this.calCalificacions = calCalificacions;
-	}
-
-	public CalCalificacion addCalCalificacion(CalCalificacion calCalificacion) {
-		getCalCalificacions().add(calCalificacion);
-		calCalificacion.setCalAsignatura(this);
-
-		return calCalificacion;
-	}
-
-	public CalCalificacion removeCalCalificacion(CalCalificacion calCalificacion) {
-		getCalCalificacions().remove(calCalificacion);
-		calCalificacion.setCalAsignatura(null);
-
-		return calCalificacion;
-	}
-
+	
 	public List<CalControl> getCalControls() {
 		return this.calControls;
 	}

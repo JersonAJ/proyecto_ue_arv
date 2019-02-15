@@ -81,7 +81,7 @@ public class ReporteCal implements Serializable {
 	private List<Object> escalaList = new ArrayList<Object>();
 
 	@PostConstruct
-	public void init() {		
+	public void init() {
 		listPeriodoCal = (ArrayList<SelectItem>) llenaComboPeriodo();
 		soPeriodoCal = "NA";
 		onChangePeriodoCal();
@@ -265,8 +265,8 @@ public class ReporteCal implements Serializable {
 		for (Object in : l)
 			escalaList.add(in);
 	}
-	// SUBCLASES
 
+	// SUBCLASES
 	public class LibretaCal implements Serializable {
 
 		private static final long serialVersionUID = 1L;

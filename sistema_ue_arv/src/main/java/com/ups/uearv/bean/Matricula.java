@@ -31,7 +31,6 @@ import org.primefaces.extensions.event.SheetEvent;
 import org.primefaces.extensions.model.sheet.SheetUpdate;
 
 import com.ups.uearv.entidades.CalAsistencia;
-import com.ups.uearv.entidades.CalCalificacion;
 import com.ups.uearv.entidades.CalControl;
 import com.ups.uearv.entidades.GesPension;
 import com.ups.uearv.entidades.MatEstudiante;
@@ -431,19 +430,7 @@ public class Matricula implements Serializable {
 					em.getTransaction().rollback();
 					return;
 				}		
-			}
-			
-			jpql = "SELECT ca.* FROM cal_calificacion ca WHERE ca.id_matricula = '" + soMatricula + "' ";
-			List<Object> listCal = DAO.nqObject(new CalCalificacion(), jpql);						
-			for (Object cal : listCal) {
-				((CalCalificacion) cal).setUsuarioAct(Session.getUserName());
-				((CalCalificacion) cal).setFechaAct(fecha);	
-				((CalCalificacion) cal).setEstado("IC");
-				if (!DAO.saveOrUpdate(cal, 1, em)) {
-					em.getTransaction().rollback();
-					return;
-				}		
-			}
+			}					
 			
 			em.getTransaction().commit();
 			mensaje = "Anulación exitosa";

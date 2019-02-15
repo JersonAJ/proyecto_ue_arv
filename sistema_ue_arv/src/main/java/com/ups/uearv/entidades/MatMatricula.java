@@ -45,10 +45,6 @@ public class MatMatricula implements Serializable {
 	@OneToMany(mappedBy="matMatricula")
 	private List<CalAsistencia> calAsistencias;
 
-	//bi-directional many-to-one association to CalCalificacion
-	@OneToMany(mappedBy="matMatricula")
-	private List<CalCalificacion> calCalificacions;
-
 	//bi-directional many-to-one association to CalControl
 	@OneToMany(mappedBy="matMatricula")
 	private List<CalControl> calControls;
@@ -159,28 +155,6 @@ public class MatMatricula implements Serializable {
 		calAsistencia.setMatMatricula(null);
 
 		return calAsistencia;
-	}
-
-	public List<CalCalificacion> getCalCalificacions() {
-		return this.calCalificacions;
-	}
-
-	public void setCalCalificacions(List<CalCalificacion> calCalificacions) {
-		this.calCalificacions = calCalificacions;
-	}
-
-	public CalCalificacion addCalCalificacion(CalCalificacion calCalificacion) {
-		getCalCalificacions().add(calCalificacion);
-		calCalificacion.setMatMatricula(this);
-
-		return calCalificacion;
-	}
-
-	public CalCalificacion removeCalCalificacion(CalCalificacion calCalificacion) {
-		getCalCalificacions().remove(calCalificacion);
-		calCalificacion.setMatMatricula(null);
-
-		return calCalificacion;
 	}
 
 	public List<CalControl> getCalControls() {

@@ -232,7 +232,7 @@ public class Pension implements Serializable {
 
 	public Query getEstudiantesOferta() {		
 		jpql = 
-		"SELECT e.id_estudiante, CONCAT(IFNULL(SUBSTRING_INDEX(e.apellidos, ' ', 1), ''), ' ', IFNULL(SUBSTRING_INDEX(e.nombres, ' ', 1), '')) nombre \r\n" + 
+		"SELECT e.id_estudiante, CONCAT(IFNULL(e.apellidos, ''), ' ', IFNULL(e.nombres, '')) nombre \r\n" + 
 		"FROM mat_estudiante e \r\n" + 
 		"	INNER JOIN mat_matricula m ON m.id_estudiante = e.id_estudiante \r\n" + 
 		"WHERE m.id_periodo = '" + soPeriodo + "' \r\n";		
