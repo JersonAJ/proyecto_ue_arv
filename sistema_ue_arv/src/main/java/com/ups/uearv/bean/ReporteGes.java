@@ -8,6 +8,7 @@ package com.ups.uearv.bean;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -17,6 +18,7 @@ import javax.faces.model.SelectItem;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.persistence.Query;
 
 import com.ups.uearv.servicios.DAO;
 import com.ups.uearv.servicios.Util;
@@ -47,6 +49,7 @@ public class ReporteGes implements Serializable {
 	ArrayList<SelectItem> listPeriodo = new ArrayList<SelectItem>();
 	ArrayList<SelectItem> listOferta = new ArrayList<SelectItem>();		
 			
+	private List<EstacoCuentaCab> estadoCuentaList = new ArrayList<EstacoCuentaCab>();
 	
 	@PostConstruct
 	public void init() {		
@@ -66,7 +69,28 @@ public class ReporteGes implements Serializable {
 	}
 	
 	public void verEstadoCuentas() {
-		
+		List<Object> result1 = getEstadoCuentaCab(soPeriodo);
+		Iterator<Object> itr1 = result1.iterator();
+		for (int k1 = 0; k1 < result1.size(); k1++) {
+			Object[] cab = (Object[]) itr1.next();
+
+			EstacoCuentaCab ec = new EstacoCuentaCab();
+			ec.setOferta(cab[0].toString());
+			ec.setEstudiante(cab[1].toString());
+			
+			String idEstudiante = cab[2].toString();						
+			List<Object> result2 = getEstadoCuentaDet(soPeriodo, idEstudiante);
+			Iterator<Object> itr2 = result2.iterator();
+			for (int k2 = 0; k2 < result2.size(); k2++) {
+				Object[] det = (Object[]) itr2.next();			
+				EstacoCuentaDet ed = new EstacoCuentaDet();
+				ed.setOferta(det[0].toString());
+				ed.setEstudiante(det[1].toString());
+				ed.setConcepto(det[2].toString());
+				ec.detalleList.add(ed);
+			}
+			estadoCuentaList.add(ec);
+		}		
 	}
 	
 	public void createBarEstadoCuentas() {
@@ -81,76 +105,107 @@ public class ReporteGes implements Serializable {
 		return Util.llenaCombo(DAO.getOfertas(soPeriodo), 2);
 	}
 	
+	// ESTADO DE CUENTAS
+	@SuppressWarnings("unchecked")
+	public static List<Object> getEstadoCuentaCab(String idPeriodo) {
+		Query query = em.createNativeQuery(" CALL consulta_estado_cuenta_cab (" + idPeriodo + ") ");
+		return query.getResultList();
+	}
+	
+	@SuppressWarnings("unchecked")
+	public static List<Object> getEstadoCuentaDet(String idPeriodo, String idEstudiante) {
+		Query query = em.createNativeQuery(" CALL consulta_estado_cuenta_det (" + idPeriodo +", '" + idEstudiante +"') ");
+		return query.getResultList();
+	}
 
 	// SUBCLASES
-	public class LibretaCal implements Serializable {
+	public class EstacoCuentaCab implements Serializable {
 
 		private static final long serialVersionUID = 1L;
 
-		public String idAsignatura;
-		public String asignatura;
-		public BigDecimal tarea;
-		public BigDecimal actIndividual;
-		public BigDecimal actGrupal;
-		public BigDecimal leccion;
-		public BigDecimal evaluacion;
-		public BigDecimal promedio;
-		public String escala;
+		public String oferta;
+		public String estudiante;
+		public List<EstacoCuentaDet> detalleList = new ArrayList<EstacoCuentaDet>();;
+		
+		public String getOferta() {
+			return oferta;
+		}
+		public void setOferta(String oferta) {
+			this.oferta = oferta;
+		}
+		public String getEstudiante() {
+			return estudiante;
+		}
+		public void setEstudiante(String estudiante) {
+			this.estudiante = estudiante;
+		}
+		public List<EstacoCuentaDet> getDetalleList() {
+			return detalleList;
+		}
+		public void setDetalleList(List<EstacoCuentaDet> detalleList) {
+			this.detalleList = detalleList;
+		}
+	}
+	
+	public class EstacoCuentaDet implements Serializable {
 
+		private static final long serialVersionUID = 1L;
 
-		public String getIdAsignatura() {
-			return idAsignatura;
+		public String oferta;
+		public String estudiante;
+		public String concepto;
+		public BigDecimal precio;
+		public BigDecimal descuento;
+		public BigDecimal total;
+		public BigDecimal saldo;
+		public BigDecimal pagado;
+		public String getOferta() {
+			return oferta;
 		}
-		public void setIdAsignatura(String idAsignatura) {
-			this.idAsignatura = idAsignatura;
+		public void setOferta(String oferta) {
+			this.oferta = oferta;
 		}
-		public String getAsignatura() {
-			return asignatura;
+		public String getEstudiante() {
+			return estudiante;
 		}
-		public void setAsignatura(String asignatura) {
-			this.asignatura = asignatura;
+		public void setEstudiante(String estudiante) {
+			this.estudiante = estudiante;
 		}
-		public BigDecimal getTarea() {
-			return tarea;
+		public String getConcepto() {
+			return concepto;
 		}
-		public void setTarea(BigDecimal tarea) {
-			this.tarea = tarea;
+		public void setConcepto(String concepto) {
+			this.concepto = concepto;
 		}
-		public BigDecimal getActIndividual() {
-			return actIndividual;
+		public BigDecimal getPrecio() {
+			return precio;
 		}
-		public void setActIndividual(BigDecimal actIndividual) {
-			this.actIndividual = actIndividual;
+		public void setPrecio(BigDecimal precio) {
+			this.precio = precio;
 		}
-		public BigDecimal getActGrupal() {
-			return actGrupal;
+		public BigDecimal getDescuento() {
+			return descuento;
 		}
-		public void setActGrupal(BigDecimal actGrupal) {
-			this.actGrupal = actGrupal;
+		public void setDescuento(BigDecimal descuento) {
+			this.descuento = descuento;
 		}
-		public BigDecimal getLeccion() {
-			return leccion;
+		public BigDecimal getTotal() {
+			return total;
 		}
-		public void setLeccion(BigDecimal leccion) {
-			this.leccion = leccion;
+		public void setTotal(BigDecimal total) {
+			this.total = total;
 		}
-		public BigDecimal getEvaluacion() {
-			return evaluacion;
+		public BigDecimal getSaldo() {
+			return saldo;
 		}
-		public void setEvaluacion(BigDecimal evaluacion) {
-			this.evaluacion = evaluacion;
+		public void setSaldo(BigDecimal saldo) {
+			this.saldo = saldo;
 		}
-		public BigDecimal getPromedio() {
-			return promedio;
+		public BigDecimal getPagado() {
+			return pagado;
 		}
-		public void setPromedio(BigDecimal promedio) {
-			this.promedio = promedio;
-		}
-		public String getEscala() {
-			return escala;
-		}
-		public void setEscala(String escala) {
-			this.escala = escala;
+		public void setPagado(BigDecimal pagado) {
+			this.pagado = pagado;
 		}
 	}
 
@@ -184,5 +239,12 @@ public class ReporteGes implements Serializable {
 	}
 	public void setListOferta(ArrayList<SelectItem> listOferta) {
 		this.listOferta = listOferta;
+	}
+
+	public List<EstacoCuentaCab> getEstadoCuentaList() {
+		return estadoCuentaList;
+	}
+	public void setEstadoCuentaList(List<EstacoCuentaCab> estadoCuentaList) {
+		this.estadoCuentaList = estadoCuentaList;
 	}
 }

@@ -65,6 +65,40 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 						</div>
 						<p:separator />
 						
+						<p:dataTable var="team" value="#{reporteGes.estadoCuentaList}">
+					        <p:columnGroup type="header">
+					            <p:row>
+					                <p:column rowspan="2" headerText="Estudiante" />
+					                <p:column colspan="2" headerText="Detalle" />
+					            </p:row>
+					            <p:row>
+					                <p:column headerText="--" />
+					                <p:column headerText="--" />
+					            </p:row>
+					        </p:columnGroup>
+					 
+					        <p:subTable var="stats" value="#{team.detalleList}">
+					            <f:facet name="header">
+					                <h:outputText value="#{team.estudiante}" />
+					            </f:facet>
+					            <p:column>
+					                <h:outputText value="#{stats.concepto}" />
+					            </p:column>
+					            <p:column>
+					                <h:outputText value="5" />
+					            </p:column>
+					            <p:column>
+					                <h:outputText value="4" />
+					            </p:column>
+					            <p:columnGroup type="footer">
+					                <p:row>
+					                    <p:column footerText="Totals: " style="text-align:right"/>
+					                    <p:column footerText="8" />
+					                    <p:column footerText="7" />
+					                </p:row>
+					            </p:columnGroup>
+					        </p:subTable>
+					    </p:dataTable>
 						
 					</p:outputPanel>		           
 		       </p:tab>

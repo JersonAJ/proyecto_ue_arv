@@ -6,7 +6,6 @@
 package com.ups.uearv.bean;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.Period;
@@ -196,9 +195,10 @@ public class ReporteMat implements Serializable {
 		
 		if(!soPeriodo.equals("NA")) {
 			jpql = 
-			"SELECT * \r\n" + 
-			"FROM mat_matricula \r\n" + 
-			"WHERE id_periodo = " + soPeriodo + " AND sn_aprobado = 'S' ORDER BY id_oferta, estado ";
+			"SELECT m.* \r\n" + 
+			"FROM mat_matricula m \r\n" + 
+			"	INNER JOIN mat_estudiante e ON e.id_estudiante = m.id_estudiante \r\n" +
+			"WHERE m.id_periodo = " + soPeriodo + " AND m.sn_aprobado = 'S' ORDER BY m.id_oferta, m.estado, e.apellidos ";
 		
 			List<Object> l = DAO.nqObject(new MatMatricula(), jpql);
 			if (!l.isEmpty()) {
@@ -469,78 +469,6 @@ public class ReporteMat implements Serializable {
 
 		Query query = em.createNativeQuery(jpql);
 		return query;
-	}
-
-	// SUBCLASES
-	public class LibretaCal implements Serializable {
-
-		private static final long serialVersionUID = 1L;
-
-		public String idAsignatura;
-		public String asignatura;
-		public BigDecimal tarea;
-		public BigDecimal actIndividual;
-		public BigDecimal actGrupal;
-		public BigDecimal leccion;
-		public BigDecimal evaluacion;
-		public BigDecimal promedio;
-		public String escala;
-
-
-		public String getIdAsignatura() {
-			return idAsignatura;
-		}
-		public void setIdAsignatura(String idAsignatura) {
-			this.idAsignatura = idAsignatura;
-		}
-		public String getAsignatura() {
-			return asignatura;
-		}
-		public void setAsignatura(String asignatura) {
-			this.asignatura = asignatura;
-		}
-		public BigDecimal getTarea() {
-			return tarea;
-		}
-		public void setTarea(BigDecimal tarea) {
-			this.tarea = tarea;
-		}
-		public BigDecimal getActIndividual() {
-			return actIndividual;
-		}
-		public void setActIndividual(BigDecimal actIndividual) {
-			this.actIndividual = actIndividual;
-		}
-		public BigDecimal getActGrupal() {
-			return actGrupal;
-		}
-		public void setActGrupal(BigDecimal actGrupal) {
-			this.actGrupal = actGrupal;
-		}
-		public BigDecimal getLeccion() {
-			return leccion;
-		}
-		public void setLeccion(BigDecimal leccion) {
-			this.leccion = leccion;
-		}
-		public BigDecimal getEvaluacion() {
-			return evaluacion;
-		}
-		public void setEvaluacion(BigDecimal evaluacion) {
-			this.evaluacion = evaluacion;
-		}
-		public BigDecimal getPromedio() {
-			return promedio;
-		}
-		public void setPromedio(BigDecimal promedio) {
-			this.promedio = promedio;
-		}
-		public String getEscala() {
-			return escala;
-		}
-		public void setEscala(String escala) {
-			this.escala = escala;
-		}
 	}
 
 	// GETTERS AND SETTERS

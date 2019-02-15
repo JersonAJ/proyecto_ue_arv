@@ -190,21 +190,23 @@ public class Estudiante {
 	// INGRESO - ACTUALIZACION		
 	public void guardar() throws IOException {
 		// VALICADIONES FOTO
-		String base64 = itImagen;
-		base64 = base64.replace("data:image/jpeg;base64,", "");
-		base64 = base64.replace("data:image/jpg;base64,", "");
-		BufferedImage foto = Util.decodeToImage(base64);
-		
-		if (foto == null) {
-			mensaje = "Debe seleccionar un archivo válido (imagen tipo JPG o JPEG)";
-			FacesContext.getCurrentInstance().addMessage("growl", new FacesMessage(FacesMessage.SEVERITY_ERROR, mensajeTitulo, mensaje));
-			return;
-		}			
-		if (foto.getWidth() > 200 && foto.getHeight() > 250) {
-			mensaje = "Las dimensiones de la imagen no deben ser mayor a 200(ancho) y 250(alto)";
-			FacesContext.getCurrentInstance().addMessage("growl", new FacesMessage(FacesMessage.SEVERITY_ERROR, mensajeTitulo, mensaje));
-			return;
-		}		
+		if (!itImagen.equals("/sistema_ue_arv/fotos/FOTO_DEFAULT.png")) {
+			String base64 = itImagen;
+			base64 = base64.replace("data:image/jpeg;base64,", "");
+			base64 = base64.replace("data:image/jpg;base64,", "");
+			BufferedImage foto = Util.decodeToImage(base64);
+			
+			if (foto == null) {
+				mensaje = "Debe seleccionar un archivo válido (imagen tipo JPG o JPEG)";
+				FacesContext.getCurrentInstance().addMessage("growl", new FacesMessage(FacesMessage.SEVERITY_ERROR, mensajeTitulo, mensaje));
+				return;
+			}			
+			if (foto.getWidth() > 200 && foto.getHeight() > 250) {
+				mensaje = "Las dimensiones de la imagen no deben ser mayor a 200(ancho) y 250(alto)";
+				FacesContext.getCurrentInstance().addMessage("growl", new FacesMessage(FacesMessage.SEVERITY_ERROR, mensajeTitulo, mensaje));
+				return;
+			}		
+		}
 	
 		// VALIDACIONES	
 		if (itCedula.trim().equals("")) {
@@ -225,7 +227,7 @@ public class Estudiante {
 				FacesContext.getCurrentInstance().addMessage("growl", new FacesMessage(FacesMessage.SEVERITY_ERROR, mensajeTitulo, mensaje));
 				return;
 			}
-		}		
+		}
 		if (itNombres.trim().equals("")) {
 			mensaje = "Debe ingresar al menos un nombre";
 			FacesContext.getCurrentInstance().addMessage("growl", new FacesMessage(FacesMessage.SEVERITY_ERROR, mensajeTitulo, mensaje));
