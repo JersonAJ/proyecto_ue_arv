@@ -150,7 +150,7 @@ public class ReporteCal implements Serializable {
 		if (soQuimestre.equals("2")) { olQuimestre = "SEGUNDO QUIMESTRE"; }
 
 		// DETALLE
-		jpql = "CALL consulta_libreta_detalle (" + soPeriodoCal + "," + soOfertaCal + ",'" + soEstudianteCal + "'," + soQuimestre + "," + soParcial + ")";
+		jpql = "CALL consulta_libreta_det (" + soPeriodoCal + "," + soOfertaCal + ",'" + soEstudianteCal + "'," + soQuimestre + "," + soParcial + ")";
 		List<Object> result1 = em.createNativeQuery(jpql).getResultList();
 		if (!result1.isEmpty()) {
 			Iterator<Object> itr1 = result1.iterator();
@@ -179,7 +179,7 @@ public class ReporteCal implements Serializable {
 		}
 
 		// CABECERA
-		jpql = "CALL consulta_libreta_cabecera (" + soPeriodoCal + "," + soOfertaCal + ",'" + soEstudianteCal + "'," + soQuimestre + "," + soParcial + ")";
+		jpql = "CALL consulta_libreta_cab (" + soPeriodoCal + "," + soOfertaCal + ",'" + soEstudianteCal + "'," + soQuimestre + "," + soParcial + ")";
 		List<Object> result2 = em.createNativeQuery(jpql).getResultList();
 		if (!result2.isEmpty()) {
 			Iterator<Object> itr2 = result2.iterator();
