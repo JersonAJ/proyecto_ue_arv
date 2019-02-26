@@ -76,9 +76,10 @@ public class ReporteCal implements Serializable {
 	String olAtrasos = "";
 	String olFaltas = "";
 	String olFaltasJustif = "";
-	String olProyectos = "";
-	private List<Object> comportamientoList = new ArrayList<Object>();
-	private List<Object> escalaList = new ArrayList<Object>();
+	String olProyectos = "";	
+	
+	// VARIABLES INFORME FINAL
+	private List<Object> informeFinalList = new ArrayList<Object>();
 
 	@PostConstruct
 	public void init() {
@@ -96,6 +97,10 @@ public class ReporteCal implements Serializable {
 		llenarListaComportamiento();
 		llenarListaEscala();
 	}
+	
+	// VARIABLES GENERALES
+	private List<Object> comportamientoList = new ArrayList<Object>();
+	private List<Object> escalaList = new ArrayList<Object>();
 
 	// CONSULTA	
 	public void closeDialogo() {
@@ -218,6 +223,46 @@ public class ReporteCal implements Serializable {
 		olParalelo = "";
 	}
 
+	@SuppressWarnings("unchecked")
+	public void verInformeFinal() {	
+		limpiarInformeFinal();
+		
+		if (soPeriodoCal.equals("NA")) {
+			mensaje = "Debe seleccionarel período";
+			FacesContext.getCurrentInstance().addMessage("growl", new FacesMessage(FacesMessage.SEVERITY_ERROR, mensajeTitulo, mensaje));
+			return;
+		}
+		if (soOfertaCal.equals("NA")) {
+			mensaje = "Debe seleccionar una oferta";
+			FacesContext.getCurrentInstance().addMessage("growl", new FacesMessage(FacesMessage.SEVERITY_ERROR, mensajeTitulo, mensaje));
+			return;
+		}
+		if (soEstudianteCal.equals("NA")) {
+			mensaje = "Debe seleccionar el estudiante";
+			FacesContext.getCurrentInstance().addMessage("growl", new FacesMessage(FacesMessage.SEVERITY_ERROR, mensajeTitulo, mensaje));
+			return;
+		}
+
+		// DETALLE
+		jpql = "CALL consulta_informe_final_det (" + soPeriodoCal + "," + soOfertaCal + ",'" + soEstudianteCal + "')";
+		List<Object> result1 = em.createNativeQuery(jpql).getResultList();
+		if (!result1.isEmpty()) {
+			Iterator<Object> itr1 = result1.iterator();
+			for (int k = 0; k < result1.size(); k++) {
+				Object[] obj = (Object[]) itr1.next();					
+				InformeFinal e = new InformeFinal();
+				e.setIdAsignatura(obj[0].toString());
+				e.setAsignatura(obj[1].toString());
+				
+				informeFinalList.add(e);
+			}
+		} 
+	}
+	
+	public void limpiarInformeFinal() {
+		informeFinalList.clear();
+	}
+	
 	public List<SelectItem> llenaComboPeriodo() {
 		return Util.llenaCombo(DAO.getPeriodosRep(), 2);
 	}
@@ -281,7 +326,6 @@ public class ReporteCal implements Serializable {
 		public BigDecimal promedio;
 		public String escala;
 
-
 		public String getIdAsignatura() {
 			return idAsignatura;
 		}
@@ -338,6 +382,185 @@ public class ReporteCal implements Serializable {
 		}
 	}
 
+	public class InformeFinal implements Serializable {
+
+		private static final long serialVersionUID = 1L;
+
+		public String idAsignatura;
+		public String asignatura;
+		
+		public BigDecimal q1p1;
+		public BigDecimal q1p2;
+		public BigDecimal q1p3;
+		public BigDecimal q180;
+		public BigDecimal q1ex;
+		public BigDecimal q120;
+		public BigDecimal q1pr;
+		public BigDecimal q1Escala;
+		
+		public BigDecimal q2p1;
+		public BigDecimal q2p2;
+		public BigDecimal q2p3;
+		public BigDecimal q280;
+		public BigDecimal q2ex;
+		public BigDecimal q220;
+		public BigDecimal q2pr;
+		public BigDecimal q2Escala;
+		
+		public BigDecimal notaq1;
+		public BigDecimal notaq2;
+		
+		public BigDecimal promedio;
+		public String escala;
+		public BigDecimal promedioFinal;
+		public String escalaFinal;
+		
+		public String getIdAsignatura() {
+			return idAsignatura;
+		}
+		public void setIdAsignatura(String idAsignatura) {
+			this.idAsignatura = idAsignatura;
+		}
+		public String getAsignatura() {
+			return asignatura;
+		}
+		public void setAsignatura(String asignatura) {
+			this.asignatura = asignatura;
+		}
+		public BigDecimal getQ1p1() {
+			return q1p1;
+		}
+		public void setQ1p1(BigDecimal q1p1) {
+			this.q1p1 = q1p1;
+		}
+		public BigDecimal getQ1p2() {
+			return q1p2;
+		}
+		public void setQ1p2(BigDecimal q1p2) {
+			this.q1p2 = q1p2;
+		}
+		public BigDecimal getQ1p3() {
+			return q1p3;
+		}
+		public void setQ1p3(BigDecimal q1p3) {
+			this.q1p3 = q1p3;
+		}
+		public BigDecimal getQ180() {
+			return q180;
+		}
+		public void setQ180(BigDecimal q180) {
+			this.q180 = q180;
+		}
+		public BigDecimal getQ1ex() {
+			return q1ex;
+		}
+		public void setQ1ex(BigDecimal q1ex) {
+			this.q1ex = q1ex;
+		}
+		public BigDecimal getQ120() {
+			return q120;
+		}
+		public void setQ120(BigDecimal q120) {
+			this.q120 = q120;
+		}
+		public BigDecimal getQ1pr() {
+			return q1pr;
+		}
+		public void setQ1pr(BigDecimal q1pr) {
+			this.q1pr = q1pr;
+		}
+		public BigDecimal getQ1Escala() {
+			return q1Escala;
+		}
+		public void setQ1Escala(BigDecimal q1Escala) {
+			this.q1Escala = q1Escala;
+		}
+		public BigDecimal getQ2p1() {
+			return q2p1;
+		}
+		public void setQ2p1(BigDecimal q2p1) {
+			this.q2p1 = q2p1;
+		}
+		public BigDecimal getQ2p2() {
+			return q2p2;
+		}
+		public void setQ2p2(BigDecimal q2p2) {
+			this.q2p2 = q2p2;
+		}
+		public BigDecimal getQ2p3() {
+			return q2p3;
+		}
+		public void setQ2p3(BigDecimal q2p3) {
+			this.q2p3 = q2p3;
+		}
+		public BigDecimal getQ280() {
+			return q280;
+		}
+		public void setQ280(BigDecimal q280) {
+			this.q280 = q280;
+		}
+		public BigDecimal getQ2ex() {
+			return q2ex;
+		}
+		public void setQ2ex(BigDecimal q2ex) {
+			this.q2ex = q2ex;
+		}
+		public BigDecimal getQ220() {
+			return q220;
+		}
+		public void setQ220(BigDecimal q220) {
+			this.q220 = q220;
+		}
+		public BigDecimal getQ2pr() {
+			return q2pr;
+		}
+		public void setQ2pr(BigDecimal q2pr) {
+			this.q2pr = q2pr;
+		}
+		public BigDecimal getQ2Escala() {
+			return q2Escala;
+		}
+		public void setQ2Escala(BigDecimal q2Escala) {
+			this.q2Escala = q2Escala;
+		}
+		public BigDecimal getNotaq1() {
+			return notaq1;
+		}
+		public void setNotaq1(BigDecimal notaq1) {
+			this.notaq1 = notaq1;
+		}
+		public BigDecimal getNotaq2() {
+			return notaq2;
+		}
+		public void setNotaq2(BigDecimal notaq2) {
+			this.notaq2 = notaq2;
+		}
+		public BigDecimal getPromedio() {
+			return promedio;
+		}
+		public void setPromedio(BigDecimal promedio) {
+			this.promedio = promedio;
+		}
+		public String getEscala() {
+			return escala;
+		}
+		public void setEscala(String escala) {
+			this.escala = escala;
+		}
+		public BigDecimal getPromedioFinal() {
+			return promedioFinal;
+		}
+		public void setPromedioFinal(BigDecimal promedioFinal) {
+			this.promedioFinal = promedioFinal;
+		}
+		public String getEscalaFinal() {
+			return escalaFinal;
+		}
+		public void setEscalaFinal(String escalaFinal) {
+			this.escalaFinal = escalaFinal;
+		}		
+	}
+	
 	// GETTERS AND SETTERS
 	public String getSoPeriodoCal() {
 		return soPeriodoCal;
@@ -512,5 +735,11 @@ public class ReporteCal implements Serializable {
 	}
 	public void setListDocenteCal(ArrayList<SelectItem> listDocenteCal) {
 		this.listDocenteCal = listDocenteCal;
+	}
+	public List<Object> getInformeFinalList() {
+		return informeFinalList;
+	}
+	public void setInformeFinalList(List<Object> informeFinalList) {
+		this.informeFinalList = informeFinalList;
 	}
 }

@@ -322,7 +322,112 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 					</p:outputPanel>		           
 		       	</p:tab>
 		       	<p:tab title="Informe de Rendimiento Académico">
-		           
+		        
+		        	<p:outputPanel style="background-color: white; padding: 5px; display: inline-flex; margin-top: -5px;">
+						<p:commandButton id="btnVerInforme" value="Ver" style="font-size: 12px !important;" 
+				        	actionListener="#{reporteCal.verInformeFinal}" update="opInformeFinal :form:growl" />
+				        
+				        <p:spacer width="20px" />
+				        <p:commandLink type="button" style="padding-top: 5px;">
+							<span class="fa fa-print" ></span>
+							Imprimir
+							<p:printer target="opInformeFinal" />
+						</p:commandLink>
+					</p:outputPanel>				
+					
+					<p:separator style="border: 0.6px solid #8f3b4f;" />
+					
+					<p:outputPanel id="opInformeFinal">					
+						<style type="text/css">					
+							.ui-datatable th.ui-state-default, .ui-datatable tfoot td.ui-state-default { background: #ffffff; border-color: #000000; }
+							.ui-datatable-tablewrapper { overflow: auto; margin-top: -3px; }
+							.ui-datatable tbody td { border-color: black; }
+							
+							body .ui-datatable thead th { 
+								background-color: #ffffff; padding: 2px;  border-color: #000000; color: #212121 !important; font-size: 10px; font-weight: bold !important; }
+							body .ui-datatable .ui-datatable-footer, body .ui-datatable .ui-datatable-header {
+	   							text-align: center; font-weight: 700; font-size: 8px; color: #212121; background: white;  border: 1px solid black; padding: 0px; }	   							
+	   					
+    					</style>
+					
+				        <p:dataTable var="dtinforme" emptyMessage="--" value="#{reporteCal.informeFinalList}"
+							tableStyle="width: auto; min-width: 100%; margin-top: 5px; font-size: 9px;">												
+							<p:columnGroup type="header">
+					            <p:row>
+					                <p:column rowspan="2" headerText="ÁREAS" width="130" />
+					                <p:column colspan="9" headerText="PRIMER QUIMESTRE" />
+					                <p:column colspan="9" headerText="SEGUNDO QUIMESTRE" />
+					                <p:column colspan="4" headerText="PROMEDIOS FINALES" />
+					            </p:row>		         
+					            <p:row>
+					                <p:column headerText="P1" style="padding: 0px; width: 30px; height: 72px; text-align: center; background: transparent;" />
+					                <p:column headerText="P2" style="padding: 0px; width: 30px; height: 72px; text-align: center; background: transparent;" />
+					                <p:column headerText="P3" style="padding: 0px; width: 30px; height: 72px; text-align: center; background: transparent;" />
+					                <p:column headerText="PROMEDIO PARCIALES" style="padding: 0px; width: 20px; height: 72px; transform: rotate(-90deg); text-align: center; background: transparent;" />
+					                <p:column headerText="80%" style="padding: 0px; width: 30px; height: 72px; text-align: center; background: transparent;" />
+					                <p:column headerText="EXAMEN" style="padding: 0px; width: 20px; height: 72px; transform: rotate(-90deg); text-align: center; background: transparent;" />
+					                <p:column headerText="20%" style="padding: 0px; width: 30px; height: 72px; text-align: center; background: transparent;" />
+					                <p:column headerText="PROMEDIO PRIMER QUIMESTRE" style="padding: 0px; width: 20px; height: 72px; transform: rotate(-90deg); text-align: center; background: transparent;" />
+					                <p:column headerText="CUALITATIVA" style="padding: 0px; width: 20px; height: 72px; transform: rotate(-90deg); text-align: center; background: transparent;" />
+					                
+					                <p:column headerText="P1" style="padding: 0px; width: 30px; height: 72px; text-align: center; background: transparent;" />
+					                <p:column headerText="P2" style="padding: 0px; width: 30px; height: 72px; text-align: center; background: transparent;" />
+					                <p:column headerText="P3" style="padding: 0px; width: 30px; height: 72px; text-align: center; background: transparent;" />
+					                <p:column headerText="PROMEDIO PARCIALES" style="padding: 0px; width: 20px; height: 72px; transform: rotate(-90deg); text-align: center; background: transparent;" />
+					                <p:column headerText="80%" style="padding: 0px; width: 30px; height: 72px; text-align: center; background: transparent;" />
+					                <p:column headerText="EXAMEN" style="padding: 0px; width: 20px; height: 72px; transform: rotate(-90deg); text-align: center; background: transparent;" />
+					                <p:column headerText="20%" style="padding: 0px; width: 30px; height: 72px; text-align: center; background: transparent;" />
+					                <p:column headerText="PROMEDIO SEGUNDO QUIMESTRE" style="padding: 0px; width: 20px; height: 72px; transform: rotate(-90deg); text-align: center; background: transparent;" />
+					                <p:column headerText="CUALITATIVA" style="padding: 0px; width: 20px; height: 72px; transform: rotate(-90deg); text-align: center; background: transparent;" />
+					                
+					                <p:column headerText="I QUIMESTRE" style="padding: 0px; width: 20px; height: 72px; transform: rotate(-90deg); text-align: center; background: transparent;" />
+					                <p:column headerText="II QUIMESTRE" style="padding: 0px; width: 20px; height: 72px; transform: rotate(-90deg); text-align: center; background: transparent;" />
+					                <p:column headerText="PROMEDIO FINAL" style="padding: 0px; width: 20px; height: 72px; transform: rotate(-90deg); text-align: center; background: transparent;" />
+					                <p:column headerText="ESCALA CUALITATIVA" style="padding: 0px; width: 20px; height: 72px; transform: rotate(-90deg); text-align: center; background: transparent;" />
+					            </p:row>				           
+					        </p:columnGroup>	
+					        
+					        <p:column headerText="ÁREAS" style="font-weight: bold;">
+						        <h:outputText value="#{dtinforme.asignatura}" />
+						    </p:column>			 						    
+						    <p:column headerText="P1">
+						    	<div style="text-align: center"><h:outputText value="" /></div></p:column>						    	
+						    <p:column headerText="P2">
+						    	<div style="text-align: center"><h:outputText value="" /></div></p:column>
+						    	
+						    <p:columnGroup type="footer">
+					            <p:row />
+					            <p:row>
+					            	<p:column colspan="19" />
+					            	<p:column colspan="2" footerText="SUMA TOTAL" style="font-size: 10px;" />
+					            	<p:column footerText="" />
+					            	<p:column footerText="" />
+					            </p:row>
+					             <p:row>
+					            	<p:column footerText="COMPORTAMIENTO" style="font-size: 10px;" />
+					            	<p:column footerText="" />
+					            	<p:column footerText="" />
+					            	<p:column footerText="" />
+					            	
+					                <p:column colspan="4" footerText="PROMEDIO FINAL" style="font-size: 10px;" />				                
+					                <p:column footerText="" />				 
+					                <p:column footerText="" />
+					                
+					                <p:column footerText="" />
+					            	<p:column footerText="" />
+					            	<p:column footerText="" />
+					            	
+					            	<p:column colspan="4" footerText="PROMEDIO FINAL" style="font-size: 10px;" />				                
+					                <p:column footerText="" />				 
+					                <p:column footerText="" />
+					                
+					                <p:column colspan="2" footerText="PROMEDIO FINAL" style="font-size: 10px;" />				                
+					                <p:column footerText="" />				 
+					                <p:column footerText="" />				                
+					            </p:row>
+					        </p:columnGroup>
+				        </p:dataTable>
+			        </p:outputPanel>
 		       	</p:tab>
 		   </p:tabView>	       			
 	   	</h:form>
