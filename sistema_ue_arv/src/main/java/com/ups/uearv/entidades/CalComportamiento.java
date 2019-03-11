@@ -25,6 +25,8 @@ public class CalComportamiento implements Serializable {
 	private String descripcion;
 
 	private String estado;
+	
+	private int equivalencia;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="fecha_act")
@@ -131,6 +133,14 @@ public class CalComportamiento implements Serializable {
 		calControl.setCalComportamiento(null);
 
 		return calControl;
+	}
+
+	public int getEquivalencia() {
+		return equivalencia;
+	}
+
+	public void setEquivalencia(int equivalencia) {
+		this.equivalencia = equivalencia;
 	}
 
 }

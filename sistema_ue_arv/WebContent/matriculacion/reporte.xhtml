@@ -20,7 +20,7 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 				<p:selectOneMenu id="soPeriodo" value="#{reporteMat.soPeriodo}" style="width: 130px">
 					<f:selectItem itemLabel="Seleccione Período" itemValue="NA" />
 					<f:selectItems value="#{reporteMat.listPeriodo}" />		
-					<p:ajax listener="#{reporteMat.onChangePeriodo()}" update=":form:tab:soOferta"/>								
+					<p:ajax listener="#{reporteMat.onChangePeriodo()}" update=":form:tab:soOferta :form:tab:soEstudiante"/>								
 				</p:selectOneMenu>	
 				<p:spacer width="5px" />					
 			</p:outputPanel> 				

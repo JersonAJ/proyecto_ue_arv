@@ -21,7 +21,8 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 					<span>Agregar</span>	
 					
 					<f:setPropertyActionListener value="" target="#{comportamiento.itAbreviatura}" />
-					<f:setPropertyActionListener value="" target="#{comportamiento.itDescripcion}" />					
+					<f:setPropertyActionListener value="" target="#{comportamiento.itDescripcion}" />
+					<f:setPropertyActionListener value="0" target="#{comportamiento.inEquivalencia}" />					
 					<f:setPropertyActionListener value="true" target="#{comportamiento.ckEstado}" />
 					<f:setPropertyActionListener value="0" target="#{comportamiento.accion}" />				
 															
@@ -61,6 +62,10 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 			    <p:column headerText="Comportamiento">
 			        <h:outputText value="#{dtcomportamiento.descripcion}" />
 			    </p:column>
+			    
+			    <p:column headerText="Equivalencia" style="text-align: center">
+			        <h:outputText value="#{dtcomportamiento.equivalencia}" />
+			    </p:column>
 			    		    
 			    <p:column headerText="Activo" width="20" style="text-align: center" exportable="false">
 			    	<h:selectBooleanCheckbox value="#{dtcomportamiento.estado eq 'AC'? true:false}" disabled="true" />			        
@@ -74,6 +79,7 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 							<f:setPropertyActionListener value="#{dtcomportamiento.idComportamiento}" target="#{comportamiento.idComportamiento}" />
 							<f:setPropertyActionListener value="#{dtcomportamiento.abreviatura}" target="#{comportamiento.itAbreviatura}" />
 							<f:setPropertyActionListener value="#{dtcomportamiento.descripcion}" target="#{comportamiento.itDescripcion}" />							
+							<f:setPropertyActionListener value="#{dtcomportamiento.equivalencia}" target="#{comportamiento.inEquivalencia}" />
 							<f:setPropertyActionListener value="#{general.getEstado(dtcomportamiento.estado)}" target="#{comportamiento.ckEstado}" />
 							<f:setPropertyActionListener value="1" target="#{comportamiento.accion}" />
 																																						
@@ -101,6 +107,9 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 										
 					<p:outputPanel style="text-align: end; padding: 5px">Comportamiento:</p:outputPanel>
 					<p:inputTextarea value="#{comportamiento.itDescripcion}" style="width: 90%" rows="2" />
+					
+					<p:outputPanel style="text-align: end; padding: 5px">Equivalencia:</p:outputPanel>
+					<p:inputNumber value="#{comportamiento.inEquivalencia}" decimalPlaces="0" inputStyle="width: 50px" />
 										
 					<p:outputPanel style="text-align: end; padding: 5px">Activo:</p:outputPanel>
 					<h:selectBooleanCheckbox value="#{comportamiento.ckEstado}" style="margin-top: 6px" />

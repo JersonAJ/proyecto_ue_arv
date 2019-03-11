@@ -188,11 +188,11 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 					            </p:row>
 					            <p:row>
 					            	<p:column footerText="COMPORTAMIENTO" style="font-size: 9px; color: #000" />
-					            	<p:column footerText="#{reporteCal.olComportamiento}" style="font-size: 9px; color: #000" />
+					            	<p:column footerText="#{reporteCal.olLibComportamiento}" style="font-size: 9px; color: #000" />
 					            	<p:column style="border-top: none; border-bottom: none;" />
 					            	<p:column colspan="3" footerText="PROMEDIO FINAL" style="font-size: 9px; color: #000" />
-					            	<p:column footerText="#{reporteCal.olPromedioFinal}" style="font-size: 9px; color: #000" />
-					            	<p:column footerText="#{reporteCal.olPromedioEscala}" style="font-size: 9px; color: #000" />
+					            	<p:column footerText="#{reporteCal.olLibPromedioFinal}" style="font-size: 9px; color: #000" />
+					            	<p:column footerText="#{reporteCal.olLibEscalaFinal}" style="font-size: 9px; color: #000" />
 					            </p:row>
 					        </p:columnGroup>
 						    
@@ -215,28 +215,28 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 								<tr>
 									<td style="border: 1px solid black;">DÍAS ASISTIDOS</td>
 									<td style="border: 1px solid black; text-align: center;">
-										<h:outputText value="#{reporteCal.olAistencias}" style="font-weight: normal;"/>
+										<h:outputText value="#{reporteCal.olLibAistencias}" style="font-weight: normal;"/>
 									</td>								  
 									<td></td>								  							
 								</tr>
 								<tr>
 									<td style="border: 1px solid black;">FALTAS JUTIFICADAS</td>
 									<td style="border: 1px solid black; text-align: center;">
-										<h:outputText value="#{reporteCal.olFaltasJustif}" style="font-weight: normal;"/>
+										<h:outputText value="#{reporteCal.olLibFaltasJustif}" style="font-weight: normal;"/>
 									</td>								  
 									<td></td>								  							
 								</tr>
 								<tr>
 									<td style="border: 1px solid black;">FALTAS INJUTIFICADAS</td>
 									<td style="border: 1px solid black; text-align: center;">
-										<h:outputText value="#{reporteCal.olFaltas}" style="font-weight: normal;"/>
+										<h:outputText value="#{reporteCal.olLibFaltas}" style="font-weight: normal;"/>
 									</td>			  
 									<td></td>								  							
 								</tr>
 								<tr>
 									<td style="border: 1px solid black;">ATRASOS</td>
 									<td style="border: 1px solid black; text-align: center;">
-										<h:outputText value="#{reporteCal.olAtrasos}" style="font-weight: normal;"/>
+										<h:outputText value="#{reporteCal.olLibAtrasos}" style="font-weight: normal;"/>
 									</td>								  
 									<td></td>								  							
 								</tr>
@@ -264,28 +264,28 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 								<tr>
 									<td style="border: 1px solid black;">EX: EXCELENTE</td>
 									<td style="border: 1px solid black; text-align: center;">
-										<h:outputText value="#{reporteCal.olProyectos}" style="font-weight: normal; display: #{reporteCal.olProyectos eq 'EX' ? '':'none' }" />
+										<h:outputText value="#{reporteCal.olLibProyectos}" style="font-weight: normal; display: #{reporteCal.olLibProyectos eq 'EX' ? '':'none' }" />
 									</td>								  
 									<td></td>								  							
 								</tr>
 								<tr>
 									<td style="border: 1px solid black;">MB: MUY BUENO</td>
 									<td style="border: 1px solid black; text-align: center;">
-										<h:outputText value="#{reporteCal.olProyectos}" style="font-weight: normal; display: #{reporteCal.olProyectos eq 'MB' ? '':'none' }" />
+										<h:outputText value="#{reporteCal.olLibProyectos}" style="font-weight: normal; display: #{reporteCal.olLibProyectos eq 'MB' ? '':'none' }" />
 									</td>
 									<td></td>								  							
 								</tr>
 								<tr>
 									<td style="border: 1px solid black;">B: BUENO</td>
 									<td style="border: 1px solid black; text-align: center;">
-										<h:outputText value="#{reporteCal.olProyectos}" style="font-weight: normal; display: #{reporteCal.olProyectos eq 'B' ? '':'none' }" />
+										<h:outputText value="#{reporteCal.olLibProyectos}" style="font-weight: normal; display: #{reporteCal.olLibProyectos eq 'B' ? '':'none' }" />
 									</td>								  
 									<td></td>								  							
 								</tr>
 								<tr>
 									<td style="border: 1px solid black;">R: REGULAR</td>
 									<td style="border: 1px solid black; text-align: center;">
-										<h:outputText value="#{reporteCal.olProyectos}" style="font-weight: normal; display: #{reporteCal.olProyectos eq 'R' ? '':'none' }" />
+										<h:outputText value="#{reporteCal.olLibProyectos}" style="font-weight: normal; display: #{reporteCal.olLibProyectos eq 'R' ? '':'none' }" />
 									</td>					  
 									<td></td>								  							
 								</tr>
@@ -585,7 +585,7 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 							  <td class="xl101"></td>
 							  <td class="xl101"></td>
 							  <td class="xl101"></td>
-							  <td colspan="4" class="xl109" width="456" style="width:344pt">DOCENTE:</td>
+							  <td colspan="4" class="xl109" width="456" style="width:344pt">DOCENTE: #{reporteCal.olDocente}</td>
 							  <td class="xl117"></td>
 							 </tr>
 							 <tr height="20" style="height:17.0pt">
@@ -760,83 +760,80 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 								        <h:outputText value="#{dtinforme.asignatura}" />
 								    </p:column>			 						    
 								    <p:column headerText="P1">
-								    	<div style="text-align: center"><h:outputText value="" /></div></p:column>						    	
+								    	<div style="text-align: center"><h:outputText value="#{dtinforme.q1p1}" /></div></p:column>						    	
 								    <p:column headerText="P2">
-								    	<div style="text-align: center"><h:outputText value="" /></div></p:column>
+								    	<div style="text-align: center"><h:outputText value="#{dtinforme.q1p2}" /></div></p:column>
 								    <p:column headerText="P3">
-								    	<div style="text-align: center"><h:outputText value="" /></div></p:column>
+								    	<div style="text-align: center"><h:outputText value="#{dtinforme.q1p3}" /></div></p:column>
 								    <p:column headerText="PROMEDIO PARCIALES">
-								    	<div style="text-align: center"><h:outputText value="" /></div></p:column>
+								    	<div style="text-align: center"><h:outputText value="#{dtinforme.q1pp}" /></div></p:column>
 								    <p:column headerText="80%">
-								    	<div style="text-align: center"><h:outputText value="" /></div></p:column>
+								    	<div style="text-align: center"><h:outputText value="#{dtinforme.q180}" /></div></p:column>
 								    <p:column headerText="EXAMEN">
-								    	<div style="text-align: center"><h:outputText value="" /></div></p:column>
+								    	<div style="text-align: center"><h:outputText value="#{dtinforme.q1ex}" /></div></p:column>
 								    <p:column headerText="20%">
-								    	<div style="text-align: center"><h:outputText value="" /></div></p:column>
+								    	<div style="text-align: center"><h:outputText value="#{dtinforme.q120}" /></div></p:column>
 								    <p:column headerText="PROMEDIO PRIMER QUIMESTRE">
-								    	<div style="text-align: center"><h:outputText value="" /></div></p:column>
+								    	<div style="text-align: center"><h:outputText value="#{dtinforme.q1pp}" /></div></p:column>
 								    <p:column headerText="CUALITATIVA">
-								    	<div style="text-align: center"><h:outputText value="" /></div></p:column>
+								    	<div style="text-align: center"><h:outputText value="#{dtinforme.q1Escala}" /></div></p:column>
 								   
-								   <p:column headerText="P1">
-								    	<div style="text-align: center"><h:outputText value="" /></div></p:column>						    	
+								    <p:column headerText="P1">
+								    	<div style="text-align: center"><h:outputText value="#{dtinforme.q2p1}" /></div></p:column>						    	
 								    <p:column headerText="P2">
-								    	<div style="text-align: center"><h:outputText value="" /></div></p:column>
+								    	<div style="text-align: center"><h:outputText value="#{dtinforme.q2p2}" /></div></p:column>
 								    <p:column headerText="P3">
-								    	<div style="text-align: center"><h:outputText value="" /></div></p:column>
+								    	<div style="text-align: center"><h:outputText value="#{dtinforme.q2p3}" /></div></p:column>
 								    <p:column headerText="PROMEDIO PARCIALES">
-								    	<div style="text-align: center"><h:outputText value="" /></div></p:column>
+								    	<div style="text-align: center"><h:outputText value="#{dtinforme.q2pp}" /></div></p:column>
 								    <p:column headerText="80%">
-								    	<div style="text-align: center"><h:outputText value="" /></div></p:column>
+								    	<div style="text-align: center"><h:outputText value="#{dtinforme.q280}" /></div></p:column>
 								    <p:column headerText="EXAMEN">
-								    	<div style="text-align: center"><h:outputText value="" /></div></p:column>
+								    	<div style="text-align: center"><h:outputText value="#{dtinforme.q2ex}" /></div></p:column>
 								    <p:column headerText="20%">
-								    	<div style="text-align: center"><h:outputText value="" /></div></p:column>
+								    	<div style="text-align: center"><h:outputText value="#{dtinforme.q220}" /></div></p:column>
 								    <p:column headerText="PROMEDIO SEGUNDO QUIMESTRE">
-								    	<div style="text-align: center"><h:outputText value="" /></div></p:column>
+								    	<div style="text-align: center"><h:outputText value="#{dtinforme.q2pp}" /></div></p:column>
 								    <p:column headerText="CUALITATIVA">
-								    	<div style="text-align: center"><h:outputText value="" /></div></p:column>
+								    	<div style="text-align: center"><h:outputText value="#{dtinforme.q2Escala}" /></div></p:column>
 								    	
 								     <p:column headerText="I QUIMESTRE">
-								    	<div style="text-align: center"><h:outputText value="" /></div></p:column>
+								    	<div style="text-align: center"><h:outputText value="#{dtinforme.notaq1}" /></div></p:column>
 								     <p:column headerText="II QUIMESTRE">
-								    	<div style="text-align: center"><h:outputText value="" /></div></p:column>
+								    	<div style="text-align: center"><h:outputText value="#{dtinforme.notaq2}" /></div></p:column>
 								     <p:column headerText="PROMEDIO FINAL">
-								    	<div style="text-align: center"><h:outputText value="" /></div></p:column>
+								    	<div style="text-align: center"><h:outputText value="#{dtinforme.promedio}" /></div></p:column>
 								     <p:column headerText="ESCALA CUALITATIVA">
-								    	<div style="text-align: center"><h:outputText value="" /></div></p:column>
+								    	<div style="text-align: center"><h:outputText value="#{dtinforme.escala}" /></div></p:column>
 								    	
 								    <p:columnGroup type="footer">
 							            <p:row>
-							           		<p:column style="border-left: none; border-right: none;" />
-							            </p:row>
-							            <p:row>
-							            	<p:column colspan="19" />
+							            	<p:column colspan="19" style="border-left: none;" />
 							            	<p:column colspan="2" footerText="SUMA TOTAL" style="font-size: 9px; color: #000" />
-							            	<p:column footerText="" />
-							            	<p:column footerText="" />
+							            	<p:column footerText="#{reporteCal.olSumaTotal}" style="font-size: 9px; color: #000" />
+							            	<p:column footerText="" style="border-right: none;" />
 							            </p:row>
 							             <p:row>
 							            	<p:column footerText="COMPORTAMIENTO" style="font-size: 9px; color: #000" />
-							            	<p:column footerText="" />
-							            	<p:column footerText="" />
-							            	<p:column footerText="" />
+							            	<p:column footerText="" style="font-size: 9px; color: #000" />
+							            	<p:column footerText="" style="font-size: 9px; color: #000" />
+							            	<p:column footerText="" style="font-size: 9px; color: #000" />
 							            	
 							                <p:column colspan="4" footerText="PROMEDIO FINAL" style="font-size: 9px; color: #000" />				                
-							                <p:column footerText="" />				 
-							                <p:column footerText="" />
+							                <p:column footerText="" style="font-size: 9px; color: #000" />				 
+							                <p:column footerText="" style="font-size: 9px; color: #000" />
 							                
-							                <p:column footerText="" />
-							            	<p:column footerText="" />
-							            	<p:column footerText="" />
+							                <p:column footerText="" style="font-size: 9px; color: #000" />
+							            	<p:column footerText="" style="font-size: 9px; color: #000" />
+							            	<p:column footerText="" style="font-size: 9px; color: #000" />
 							            	
 							            	<p:column colspan="4" footerText="PROMEDIO FINAL" style="font-size: 9px; color: #000" />				                
-							                <p:column footerText="" />				 
-							                <p:column footerText="" />
+							                <p:column footerText="" style="font-size: 9px; color: #000" />
+							                <p:column footerText="" style="font-size: 9px; color: #000" />
 							                
-							                <p:column colspan="2" footerText="PROMEDIO FINAL" style="font-size: 9px; color: #000" />				                
-							                <p:column footerText="" />				 
-							                <p:column footerText="" />				                
+							                <p:column colspan="2" footerText="PROMEDIO FINAL" style="font-size: 9px; color: #000; font-weight: bold" />				                
+							                <p:column footerText="#{reporteCal.olInfPromedioFinal}" style="font-size: 10px; color: #000; font-weight: bold" />
+							                <p:column footerText="#{reporteCal.olInfEscalaFinal}" style="font-size: 10px; color: #000; font-weight: bold" />
 							            </p:row>
 							        </p:columnGroup>
 						        </p:dataTable>

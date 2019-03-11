@@ -39,6 +39,7 @@ public class Comportamiento implements Serializable {
 	String itAbreviatura = "";
 	String itDescripcion = "";	
 	boolean ckEstado = false;
+	int inEquivalencia = 0;
 
 	String itBuscar = "";
 	boolean ckMostrarIC = false;
@@ -111,7 +112,8 @@ public class Comportamiento implements Serializable {
 			if (ckEstado) estado = "AC";
 
 			ob.setDescripcion(itDescripcion);
-			ob.setAbreviatura(itAbreviatura);;
+			ob.setAbreviatura(itAbreviatura);
+			ob.setEquivalencia(inEquivalencia);
 			ob.setEstado(estado);
 			if (accion == 0) {
 				ob.setUsuarioIng(Session.getUserName());			
@@ -192,5 +194,11 @@ public class Comportamiento implements Serializable {
 	}
 	public void setAccion(int accion) {
 		this.accion = accion;
+	}
+	public int getInEquivalencia() {
+		return inEquivalencia;
+	}
+	public void setInEquivalencia(int inEquivalencia) {
+		this.inEquivalencia = inEquivalencia;
 	}	
 }

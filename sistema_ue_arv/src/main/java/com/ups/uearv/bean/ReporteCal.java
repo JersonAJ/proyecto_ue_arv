@@ -69,17 +69,74 @@ public class ReporteCal implements Serializable {
 	String olGrado = "";
 	String olParalelo = "";
 	private List<Object> libretaList = new ArrayList<Object>();
-	String olComportamiento = "";
-	String olPromedioFinal = "";
-	String olPromedioEscala = "";
-	String olAistencias = "";
-	String olAtrasos = "";
-	String olFaltas = "";
-	String olFaltasJustif = "";
-	String olProyectos = "";	
+	String olLibComportamiento = "";
+	String olLibPromedioFinal = "";
+	String olLibEscalaFinal = "";
+	String olLibAistencias = "";
+	String olLibAtrasos = "";
+	String olLibFaltas = "";
+	String olLibFaltasJustif = "";
+	String olLibProyectos = "";	
 	
 	// VARIABLES INFORME FINAL
 	private List<Object> informeFinalList = new ArrayList<Object>();
+	String olQ1PromedioFinal = "";
+	String olQ1EscalaFinal = "";
+	
+	String olQ1p1Comportamiento = "";
+	String olQ1p2Comportamiento = "";
+	String olQ1p3Comportamiento = "";
+			
+	String olQ1p1Aistencias = "";
+	String olQ1p2Aistencias = "";
+	String olQ1p3Aistencias = "";
+	
+	String olQ1p1Atrasos = "";
+	String olQ1p2Atrasos = "";
+	String olQ1p3Atrasos = "";
+	
+	String olQ1p1Faltas = "";
+	String olQ1p2Faltas = "";
+	String olQ1p3Faltas = "";
+	
+	String olQ1p1FaltasJustif = "";
+	String olQ1p2FaltasJustif = "";
+	String olQ1p3FaltasJustif = "";
+	
+	String olQ1p1Proyectos = "";	
+	String olQ1p2Proyectos = "";
+	String olQ1p3Proyectos = "";
+	
+	String olQ2PromedioFinal = "";
+	String olQ2EscalaFinal = "";
+	
+	String olQ2p1Comportamiento = "";
+	String olQ2p2Comportamiento = "";
+	String olQ2p3Comportamiento = "";
+			
+	String olQ2p1Aistencias = "";
+	String olQ2p2Aistencias = "";
+	String olQ2p3Aistencias = "";
+	
+	String olQ2p1Atrasos = "";
+	String olQ2p2Atrasos = "";
+	String olQ2p3Atrasos = "";
+	
+	String olQ2p1Faltas = "";
+	String olQ2p2Faltas = "";
+	String olQ2p3Faltas = "";
+	
+	String olQ2p1FaltasJustif = "";
+	String olQ2p2FaltasJustif = "";
+	String olQ2p3FaltasJustif = "";
+	
+	String olQ2p1Proyectos = "";	
+	String olQ2p2Proyectos = "";
+	String olQ2p3Proyectos = "";
+	
+	String olSumaTotal = "";
+	String olInfPromedioFinal = "";
+	String olInfEscalaFinal = "";
 
 	@PostConstruct
 	public void init() {
@@ -173,8 +230,8 @@ public class ReporteCal implements Serializable {
 				e.setEscala(obj[8].toString());
 				libretaList.add(e);
 				
-				olPromedioFinal = obj[9].toString();
-				olPromedioEscala = obj[10].toString();
+				olLibPromedioFinal = obj[9].toString();
+				olLibEscalaFinal = obj[10].toString();
 			}
 		} else {
 			limpiarLibreta();
@@ -191,12 +248,12 @@ public class ReporteCal implements Serializable {
 			Object[] obj = (Object[]) itr2.next();
 			olEstudiante = obj[0].toString();
 			olGrado = obj[1].toString();
-			olAistencias = obj[2].toString();
-			olAtrasos = obj[3].toString();
-			olFaltas = obj[4].toString();
-			olFaltasJustif = obj[5].toString();
-			olComportamiento = obj[6].toString();
-			olProyectos = obj[7].toString();
+			olLibAistencias = obj[2].toString();
+			olLibAtrasos = obj[3].toString();
+			olLibFaltas = obj[4].toString();
+			olLibFaltasJustif = obj[5].toString();
+			olLibComportamiento = obj[6].toString();
+			olLibProyectos = obj[7].toString();
 			olParalelo = obj[8].toString();	
 			olJornada = obj[9].toString();
 			olPeriodo = obj[10].toString();
@@ -210,16 +267,16 @@ public class ReporteCal implements Serializable {
 	
 	public void limpiarLibreta() {
 		libretaList.clear();
-		olPromedioFinal = "";
-		olPromedioEscala = "";
+		olLibPromedioFinal = "";
+		olLibEscalaFinal = "";
 		olEstudiante = "";
 		olGrado = "";
-		olAistencias = "";
-		olAtrasos = "";
-		olFaltas = "";
-		olFaltasJustif = "";
-		olComportamiento = "";
-		olProyectos = "";
+		olLibAistencias = "";
+		olLibAtrasos = "";
+		olLibFaltas = "";
+		olLibFaltasJustif = "";
+		olLibComportamiento = "";
+		olLibProyectos = "";
 		olParalelo = "";
 	}
 
@@ -251,8 +308,39 @@ public class ReporteCal implements Serializable {
 			for (int k = 0; k < result1.size(); k++) {
 				Object[] obj = (Object[]) itr1.next();					
 				InformeFinal e = new InformeFinal();
-				e.setIdAsignatura(obj[0].toString());
-				e.setAsignatura(obj[1].toString());
+				
+				e.setIdAsignatura(obj[0] == null ? "" : obj[0].toString());
+				e.setAsignatura(obj[1] == null ? "" : obj[1].toString());
+				
+				e.setQ1p1(obj[2] == null ? "" : obj[2].toString());
+				e.setQ1p2(obj[3] == null ? "" : obj[3].toString());
+				e.setQ1p3(obj[4] == null ? "" : obj[4].toString());
+				e.setQ1pp(obj[5] == null ? "" : obj[5].toString());				
+				e.setQ180(obj[6] == null ? "" : obj[6].toString());
+				e.setQ1ex(obj[7] == null ? "" : obj[7].toString());
+				e.setQ120(obj[8] == null ? "" : obj[7].toString());
+				e.setQ1pr(obj[9] == null ? "" : obj[8].toString());
+				e.setQ1Escala(obj[10] == null ? "" : obj[10].toString());
+				
+				e.setQ2p1(obj[11] == null ? "" : obj[11].toString());
+				e.setQ2p2(obj[12] == null ? "" : obj[12].toString());
+				e.setQ2p3(obj[13] == null ? "" : obj[13].toString());
+				e.setQ2pp(obj[14] == null ? "" : obj[14].toString());				
+				e.setQ280(obj[15] == null ? "" : obj[15].toString());
+				e.setQ2ex(obj[16] == null ? "" : obj[16].toString());
+				e.setQ220(obj[17] == null ? "" : obj[17].toString());
+				e.setQ2pr(obj[18] == null ? "" : obj[18].toString());
+				e.setQ2Escala(obj[19] == null ? "" : obj[19].toString());
+				
+				e.setNotaq1(obj[20] == null ? "" : obj[20].toString());
+				e.setNotaq2(obj[21] == null ? "" : obj[21].toString());
+				
+				e.setPromedio(obj[22] == null ? "" : obj[22].toString());
+				e.setEscala(obj[23] == null ? "" : obj[23].toString());
+								
+				olSumaTotal = obj[24] == null ? "" : obj[24].toString();
+				olInfPromedioFinal = obj[25] == null ? "" : obj[25].toString();
+				olInfEscalaFinal = obj[26] == null ? "" : obj[26].toString();
 				
 				informeFinalList.add(e);
 			}
@@ -389,31 +477,31 @@ public class ReporteCal implements Serializable {
 		public String idAsignatura;
 		public String asignatura;
 		
-		public BigDecimal q1p1;
-		public BigDecimal q1p2;
-		public BigDecimal q1p3;
-		public BigDecimal q180;
-		public BigDecimal q1ex;
-		public BigDecimal q120;
-		public BigDecimal q1pr;
-		public BigDecimal q1Escala;
+		public String q1p1;
+		public String q1p2;
+		public String q1p3;
+		public String q1pp;
+		public String q180;
+		public String q1ex;
+		public String q120;
+		public String q1pr;
+		public String q1Escala;
 		
-		public BigDecimal q2p1;
-		public BigDecimal q2p2;
-		public BigDecimal q2p3;
-		public BigDecimal q280;
-		public BigDecimal q2ex;
-		public BigDecimal q220;
-		public BigDecimal q2pr;
-		public BigDecimal q2Escala;
+		public String q2p1;
+		public String q2p2;
+		public String q2p3;
+		public String q2pp;
+		public String q280;
+		public String q2ex;
+		public String q220;
+		public String q2pr;
+		public String q2Escala;
 		
-		public BigDecimal notaq1;
-		public BigDecimal notaq2;
+		public String notaq1;
+		public String notaq2;
 		
-		public BigDecimal promedio;
+		public String promedio;
 		public String escala;
-		public BigDecimal promedioFinal;
-		public String escalaFinal;
 		
 		public String getIdAsignatura() {
 			return idAsignatura;
@@ -427,118 +515,130 @@ public class ReporteCal implements Serializable {
 		public void setAsignatura(String asignatura) {
 			this.asignatura = asignatura;
 		}
-		public BigDecimal getQ1p1() {
+		public String getQ1p1() {
 			return q1p1;
 		}
-		public void setQ1p1(BigDecimal q1p1) {
+		public void setQ1p1(String q1p1) {
 			this.q1p1 = q1p1;
 		}
-		public BigDecimal getQ1p2() {
+		public String getQ1p2() {
 			return q1p2;
 		}
-		public void setQ1p2(BigDecimal q1p2) {
+		public void setQ1p2(String q1p2) {
 			this.q1p2 = q1p2;
 		}
-		public BigDecimal getQ1p3() {
+		public String getQ1p3() {
 			return q1p3;
 		}
-		public void setQ1p3(BigDecimal q1p3) {
+		public void setQ1p3(String q1p3) {
 			this.q1p3 = q1p3;
 		}
-		public BigDecimal getQ180() {
+		public String getQ1pp() {
+			return q1pp;
+		}
+		public void setQ1pp(String q1pp) {
+			this.q1pp = q1pp;
+		}
+		public String getQ180() {
 			return q180;
 		}
-		public void setQ180(BigDecimal q180) {
+		public void setQ180(String q180) {
 			this.q180 = q180;
 		}
-		public BigDecimal getQ1ex() {
+		public String getQ1ex() {
 			return q1ex;
 		}
-		public void setQ1ex(BigDecimal q1ex) {
+		public void setQ1ex(String q1ex) {
 			this.q1ex = q1ex;
 		}
-		public BigDecimal getQ120() {
+		public String getQ120() {
 			return q120;
 		}
-		public void setQ120(BigDecimal q120) {
+		public void setQ120(String q120) {
 			this.q120 = q120;
 		}
-		public BigDecimal getQ1pr() {
+		public String getQ1pr() {
 			return q1pr;
 		}
-		public void setQ1pr(BigDecimal q1pr) {
+		public void setQ1pr(String q1pr) {
 			this.q1pr = q1pr;
 		}
-		public BigDecimal getQ1Escala() {
+		public String getQ1Escala() {
 			return q1Escala;
 		}
-		public void setQ1Escala(BigDecimal q1Escala) {
+		public void setQ1Escala(String q1Escala) {
 			this.q1Escala = q1Escala;
 		}
-		public BigDecimal getQ2p1() {
+		public String getQ2p1() {
 			return q2p1;
 		}
-		public void setQ2p1(BigDecimal q2p1) {
+		public void setQ2p1(String q2p1) {
 			this.q2p1 = q2p1;
 		}
-		public BigDecimal getQ2p2() {
+		public String getQ2p2() {
 			return q2p2;
 		}
-		public void setQ2p2(BigDecimal q2p2) {
+		public void setQ2p2(String q2p2) {
 			this.q2p2 = q2p2;
 		}
-		public BigDecimal getQ2p3() {
+		public String getQ2p3() {
 			return q2p3;
 		}
-		public void setQ2p3(BigDecimal q2p3) {
+		public void setQ2p3(String q2p3) {
 			this.q2p3 = q2p3;
 		}
-		public BigDecimal getQ280() {
+		public String getQ2pp() {
+			return q2pp;
+		}
+		public void setQ2pp(String q2pp) {
+			this.q2pp = q2pp;
+		}
+		public String getQ280() {
 			return q280;
 		}
-		public void setQ280(BigDecimal q280) {
+		public void setQ280(String q280) {
 			this.q280 = q280;
 		}
-		public BigDecimal getQ2ex() {
+		public String getQ2ex() {
 			return q2ex;
 		}
-		public void setQ2ex(BigDecimal q2ex) {
+		public void setQ2ex(String q2ex) {
 			this.q2ex = q2ex;
 		}
-		public BigDecimal getQ220() {
+		public String getQ220() {
 			return q220;
 		}
-		public void setQ220(BigDecimal q220) {
+		public void setQ220(String q220) {
 			this.q220 = q220;
 		}
-		public BigDecimal getQ2pr() {
+		public String getQ2pr() {
 			return q2pr;
 		}
-		public void setQ2pr(BigDecimal q2pr) {
+		public void setQ2pr(String q2pr) {
 			this.q2pr = q2pr;
 		}
-		public BigDecimal getQ2Escala() {
+		public String getQ2Escala() {
 			return q2Escala;
 		}
-		public void setQ2Escala(BigDecimal q2Escala) {
+		public void setQ2Escala(String q2Escala) {
 			this.q2Escala = q2Escala;
 		}
-		public BigDecimal getNotaq1() {
+		public String getNotaq1() {
 			return notaq1;
 		}
-		public void setNotaq1(BigDecimal notaq1) {
+		public void setNotaq1(String notaq1) {
 			this.notaq1 = notaq1;
 		}
-		public BigDecimal getNotaq2() {
+		public String getNotaq2() {
 			return notaq2;
 		}
-		public void setNotaq2(BigDecimal notaq2) {
+		public void setNotaq2(String notaq2) {
 			this.notaq2 = notaq2;
 		}
-		public BigDecimal getPromedio() {
+		public String getPromedio() {
 			return promedio;
 		}
-		public void setPromedio(BigDecimal promedio) {
+		public void setPromedio(String promedio) {
 			this.promedio = promedio;
 		}
 		public String getEscala() {
@@ -546,19 +646,7 @@ public class ReporteCal implements Serializable {
 		}
 		public void setEscala(String escala) {
 			this.escala = escala;
-		}
-		public BigDecimal getPromedioFinal() {
-			return promedioFinal;
-		}
-		public void setPromedioFinal(BigDecimal promedioFinal) {
-			this.promedioFinal = promedioFinal;
-		}
-		public String getEscalaFinal() {
-			return escalaFinal;
-		}
-		public void setEscalaFinal(String escalaFinal) {
-			this.escalaFinal = escalaFinal;
-		}		
+		}	
 	}
 	
 	// GETTERS AND SETTERS
@@ -664,53 +752,53 @@ public class ReporteCal implements Serializable {
 	public void setLibretaList(List<Object> libretaList) {
 		this.libretaList = libretaList;
 	}
-	public String getOlComportamiento() {
-		return olComportamiento;
+	public String getOlLibComportamiento() {
+		return olLibComportamiento;
 	}
-	public void setOlComportamiento(String olComportamiento) {
-		this.olComportamiento = olComportamiento;
+	public void setOlLibComportamiento(String olLibComportamiento) {
+		this.olLibComportamiento = olLibComportamiento;
 	}
-	public String getOlPromedioFinal() {
-		return olPromedioFinal;
+	public String getOlLibPromedioFinal() {
+		return olLibPromedioFinal;
 	}
-	public void setOlPromedioFinal(String olPromedioFinal) {
-		this.olPromedioFinal = olPromedioFinal;
+	public void setOlLibPromedioFinal(String olLibPromedioFinal) {
+		this.olLibPromedioFinal = olLibPromedioFinal;
 	}
-	public String getOlPromedioEscala() {
-		return olPromedioEscala;
+	public String getOlLibEscalaFinal() {
+		return olLibEscalaFinal;
 	}
-	public void setOlPromedioEscala(String olPromedioEscala) {
-		this.olPromedioEscala = olPromedioEscala;
+	public void setOlLibEscalaFinal(String olLibEscalaFinal) {
+		this.olLibEscalaFinal = olLibEscalaFinal;
 	}
-	public String getOlAistencias() {
-		return olAistencias;
+	public String getOlLibAistencias() {
+		return olLibAistencias;
 	}
-	public void setOlAistencias(String olAistencias) {
-		this.olAistencias = olAistencias;
+	public void setOlLibAistencias(String olLibAistencias) {
+		this.olLibAistencias = olLibAistencias;
 	}
-	public String getOlAtrasos() {
-		return olAtrasos;
+	public String getOlLibAtrasos() {
+		return olLibAtrasos;
 	}
-	public void setOlAtrasos(String olAtrasos) {
-		this.olAtrasos = olAtrasos;
+	public void setOlLibAtrasos(String olLibAtrasos) {
+		this.olLibAtrasos = olLibAtrasos;
 	}
-	public String getOlFaltas() {
-		return olFaltas;
+	public String getOlLibFaltas() {
+		return olLibFaltas;
 	}
-	public void setOlFaltas(String olFaltas) {
-		this.olFaltas = olFaltas;
+	public void setOlLibFaltas(String olLibFaltas) {
+		this.olLibFaltas = olLibFaltas;
 	}
-	public String getOlFaltasJustif() {
-		return olFaltasJustif;
+	public String getOlLibFaltasJustif() {
+		return olLibFaltasJustif;
 	}
-	public void setOlFaltasJustif(String olFaltasJustif) {
-		this.olFaltasJustif = olFaltasJustif;
+	public void setOlLibFaltasJustif(String olLibFaltasJustif) {
+		this.olLibFaltasJustif = olLibFaltasJustif;
 	}
-	public String getOlProyectos() {
-		return olProyectos;
+	public String getOlLibProyectos() {
+		return olLibProyectos;
 	}
-	public void setOlProyectos(String olProyectos) {
-		this.olProyectos = olProyectos;
+	public void setOlLibProyectos(String olLibProyectos) {
+		this.olLibProyectos = olLibProyectos;
 	}
 	public List<Object> getComportamientoList() {
 		return comportamientoList;
@@ -742,4 +830,262 @@ public class ReporteCal implements Serializable {
 	public void setInformeFinalList(List<Object> informeFinalList) {
 		this.informeFinalList = informeFinalList;
 	}
+	public String getOlQ1PromedioFinal() {
+		return olQ1PromedioFinal;
+	}
+	public void setOlQ1PromedioFinal(String olQ1PromedioFinal) {
+		this.olQ1PromedioFinal = olQ1PromedioFinal;
+	}
+	public String getOlQ1EscalaFinal() {
+		return olQ1EscalaFinal;
+	}
+	public void setOlQ1EscalaFinal(String olQ1EscalaFinal) {
+		this.olQ1EscalaFinal = olQ1EscalaFinal;
+	}
+	public String getOlQ1p1Comportamiento() {
+		return olQ1p1Comportamiento;
+	}
+	public void setOlQ1p1Comportamiento(String olQ1p1Comportamiento) {
+		this.olQ1p1Comportamiento = olQ1p1Comportamiento;
+	}
+	public String getOlQ1p2Comportamiento() {
+		return olQ1p2Comportamiento;
+	}
+	public void setOlQ1p2Comportamiento(String olQ1p2Comportamiento) {
+		this.olQ1p2Comportamiento = olQ1p2Comportamiento;
+	}
+	public String getOlQ1p3Comportamiento() {
+		return olQ1p3Comportamiento;
+	}
+	public void setOlQ1p3Comportamiento(String olQ1p3Comportamiento) {
+		this.olQ1p3Comportamiento = olQ1p3Comportamiento;
+	}
+	public String getOlQ1p1Aistencias() {
+		return olQ1p1Aistencias;
+	}
+	public void setOlQ1p1Aistencias(String olQ1p1Aistencias) {
+		this.olQ1p1Aistencias = olQ1p1Aistencias;
+	}
+	public String getOlQ1p2Aistencias() {
+		return olQ1p2Aistencias;
+	}
+	public void setOlQ1p2Aistencias(String olQ1p2Aistencias) {
+		this.olQ1p2Aistencias = olQ1p2Aistencias;
+	}
+	public String getOlQ1p3Aistencias() {
+		return olQ1p3Aistencias;
+	}
+	public void setOlQ1p3Aistencias(String olQ1p3Aistencias) {
+		this.olQ1p3Aistencias = olQ1p3Aistencias;
+	}
+	public String getOlQ1p1Atrasos() {
+		return olQ1p1Atrasos;
+	}
+	public void setOlQ1p1Atrasos(String olQ1p1Atrasos) {
+		this.olQ1p1Atrasos = olQ1p1Atrasos;
+	}
+	public String getOlQ1p2Atrasos() {
+		return olQ1p2Atrasos;
+	}
+	public void setOlQ1p2Atrasos(String olQ1p2Atrasos) {
+		this.olQ1p2Atrasos = olQ1p2Atrasos;
+	}
+	public String getOlQ1p3Atrasos() {
+		return olQ1p3Atrasos;
+	}
+	public void setOlQ1p3Atrasos(String olQ1p3Atrasos) {
+		this.olQ1p3Atrasos = olQ1p3Atrasos;
+	}
+	public String getOlQ1p1Faltas() {
+		return olQ1p1Faltas;
+	}
+	public void setOlQ1p1Faltas(String olQ1p1Faltas) {
+		this.olQ1p1Faltas = olQ1p1Faltas;
+	}
+	public String getOlQ1p2Faltas() {
+		return olQ1p2Faltas;
+	}
+	public void setOlQ1p2Faltas(String olQ1p2Faltas) {
+		this.olQ1p2Faltas = olQ1p2Faltas;
+	}
+	public String getOlQ1p3Faltas() {
+		return olQ1p3Faltas;
+	}
+	public void setOlQ1p3Faltas(String olQ1p3Faltas) {
+		this.olQ1p3Faltas = olQ1p3Faltas;
+	}
+	public String getOlQ1p1FaltasJustif() {
+		return olQ1p1FaltasJustif;
+	}
+	public void setOlQ1p1FaltasJustif(String olQ1p1FaltasJustif) {
+		this.olQ1p1FaltasJustif = olQ1p1FaltasJustif;
+	}
+	public String getOlQ1p2FaltasJustif() {
+		return olQ1p2FaltasJustif;
+	}
+	public void setOlQ1p2FaltasJustif(String olQ1p2FaltasJustif) {
+		this.olQ1p2FaltasJustif = olQ1p2FaltasJustif;
+	}
+	public String getOlQ1p3FaltasJustif() {
+		return olQ1p3FaltasJustif;
+	}
+	public void setOlQ1p3FaltasJustif(String olQ1p3FaltasJustif) {
+		this.olQ1p3FaltasJustif = olQ1p3FaltasJustif;
+	}
+	public String getOlQ1p1Proyectos() {
+		return olQ1p1Proyectos;
+	}
+	public void setOlQ1p1Proyectos(String olQ1p1Proyectos) {
+		this.olQ1p1Proyectos = olQ1p1Proyectos;
+	}
+	public String getOlQ1p2Proyectos() {
+		return olQ1p2Proyectos;
+	}
+	public void setOlQ1p2Proyectos(String olQ1p2Proyectos) {
+		this.olQ1p2Proyectos = olQ1p2Proyectos;
+	}
+	public String getOlQ1p3Proyectos() {
+		return olQ1p3Proyectos;
+	}
+	public void setOlQ1p3Proyectos(String olQ1p3Proyectos) {
+		this.olQ1p3Proyectos = olQ1p3Proyectos;
+	}
+	public String getOlQ2PromedioFinal() {
+		return olQ2PromedioFinal;
+	}
+	public void setOlQ2PromedioFinal(String olQ2PromedioFinal) {
+		this.olQ2PromedioFinal = olQ2PromedioFinal;
+	}
+	public String getOlQ2EscalaFinal() {
+		return olQ2EscalaFinal;
+	}
+	public void setOlQ2EscalaFinal(String olQ2EscalaFinal) {
+		this.olQ2EscalaFinal = olQ2EscalaFinal;
+	}
+	public String getOlQ2p1Comportamiento() {
+		return olQ2p1Comportamiento;
+	}
+	public void setOlQ2p1Comportamiento(String olQ2p1Comportamiento) {
+		this.olQ2p1Comportamiento = olQ2p1Comportamiento;
+	}
+	public String getOlQ2p2Comportamiento() {
+		return olQ2p2Comportamiento;
+	}
+	public void setOlQ2p2Comportamiento(String olQ2p2Comportamiento) {
+		this.olQ2p2Comportamiento = olQ2p2Comportamiento;
+	}
+	public String getOlQ2p3Comportamiento() {
+		return olQ2p3Comportamiento;
+	}
+	public void setOlQ2p3Comportamiento(String olQ2p3Comportamiento) {
+		this.olQ2p3Comportamiento = olQ2p3Comportamiento;
+	}
+	public String getOlQ2p1Aistencias() {
+		return olQ2p1Aistencias;
+	}
+	public void setOlQ2p1Aistencias(String olQ2p1Aistencias) {
+		this.olQ2p1Aistencias = olQ2p1Aistencias;
+	}
+	public String getOlQ2p2Aistencias() {
+		return olQ2p2Aistencias;
+	}
+	public void setOlQ2p2Aistencias(String olQ2p2Aistencias) {
+		this.olQ2p2Aistencias = olQ2p2Aistencias;
+	}
+	public String getOlQ2p3Aistencias() {
+		return olQ2p3Aistencias;
+	}
+	public void setOlQ2p3Aistencias(String olQ2p3Aistencias) {
+		this.olQ2p3Aistencias = olQ2p3Aistencias;
+	}
+	public String getOlQ2p1Atrasos() {
+		return olQ2p1Atrasos;
+	}
+	public void setOlQ2p1Atrasos(String olQ2p1Atrasos) {
+		this.olQ2p1Atrasos = olQ2p1Atrasos;
+	}
+	public String getOlQ2p2Atrasos() {
+		return olQ2p2Atrasos;
+	}
+	public void setOlQ2p2Atrasos(String olQ2p2Atrasos) {
+		this.olQ2p2Atrasos = olQ2p2Atrasos;
+	}
+	public String getOlQ2p3Atrasos() {
+		return olQ2p3Atrasos;
+	}
+	public void setOlQ2p3Atrasos(String olQ2p3Atrasos) {
+		this.olQ2p3Atrasos = olQ2p3Atrasos;
+	}
+	public String getOlQ2p1Faltas() {
+		return olQ2p1Faltas;
+	}
+	public void setOlQ2p1Faltas(String olQ2p1Faltas) {
+		this.olQ2p1Faltas = olQ2p1Faltas;
+	}
+	public String getOlQ2p2Faltas() {
+		return olQ2p2Faltas;
+	}
+	public void setOlQ2p2Faltas(String olQ2p2Faltas) {
+		this.olQ2p2Faltas = olQ2p2Faltas;
+	}
+	public String getOlQ2p3Faltas() {
+		return olQ2p3Faltas;
+	}
+	public void setOlQ2p3Faltas(String olQ2p3Faltas) {
+		this.olQ2p3Faltas = olQ2p3Faltas;
+	}
+	public String getOlQ2p1FaltasJustif() {
+		return olQ2p1FaltasJustif;
+	}
+	public void setOlQ2p1FaltasJustif(String olQ2p1FaltasJustif) {
+		this.olQ2p1FaltasJustif = olQ2p1FaltasJustif;
+	}
+	public String getOlQ2p2FaltasJustif() {
+		return olQ2p2FaltasJustif;
+	}
+	public void setOlQ2p2FaltasJustif(String olQ2p2FaltasJustif) {
+		this.olQ2p2FaltasJustif = olQ2p2FaltasJustif;
+	}
+	public String getOlQ2p3FaltasJustif() {
+		return olQ2p3FaltasJustif;
+	}
+	public void setOlQ2p3FaltasJustif(String olQ2p3FaltasJustif) {
+		this.olQ2p3FaltasJustif = olQ2p3FaltasJustif;
+	}
+	public String getOlQ2p1Proyectos() {
+		return olQ2p1Proyectos;
+	}
+	public void setOlQ2p1Proyectos(String olQ2p1Proyectos) {
+		this.olQ2p1Proyectos = olQ2p1Proyectos;
+	}
+	public String getOlQ2p2Proyectos() {
+		return olQ2p2Proyectos;
+	}
+	public void setOlQ2p2Proyectos(String olQ2p2Proyectos) {
+		this.olQ2p2Proyectos = olQ2p2Proyectos;
+	}
+	public String getOlQ2p3Proyectos() {
+		return olQ2p3Proyectos;
+	}
+	public void setOlQ2p3Proyectos(String olQ2p3Proyectos) {
+		this.olQ2p3Proyectos = olQ2p3Proyectos;
+	}
+	public String getOlSumaTotal() {
+		return olSumaTotal;
+	}
+	public void setOlSumaTotal(String olSumaTotal) {
+		this.olSumaTotal = olSumaTotal;
+	}
+	public String getOlInfPromedioFinal() {
+		return olInfPromedioFinal;
+	}
+	public void setOlInfPromedioFinal(String olInfPromedioFinal) {
+		this.olInfPromedioFinal = olInfPromedioFinal;
+	}
+	public String getOlInfEscalaFinal() {
+		return olInfEscalaFinal;
+	}
+	public void setOlInfEscalaFinal(String olInfEscalaFinal) {
+		this.olInfEscalaFinal = olInfEscalaFinal;
+	}	
 }
