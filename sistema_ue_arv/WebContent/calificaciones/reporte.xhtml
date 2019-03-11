@@ -79,6 +79,19 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 					
 					<p:outputPanel id="opLibreta">
 						<style type="text/css">
+							.ui-datatable th.ui-state-default, .ui-datatable tfoot td.ui-state-default { background: #ffffff; border-color: #000; }
+							.ui-datatable-tablewrapper { overflow: auto; margin-top: -3px; }
+							.ui-datatable tbody td { border-color: black; }
+							
+							body .ui-datatable thead th { background-color: #ffffff; padding: 2px;  border-color: #000; color: #212121 !important; font-size: 8px; font-weight: bold !important; }
+							body .ui-datatable .ui-datatable-footer, body .ui-datatable .ui-datatable-header { text-align: center; font-weight: 700; font-size: 9px; color: #212121; background: white;  border: 1px solid black; padding: 1px; }
+    						body .ui-datatable .ui-datatable-data tr.ui-datatable-even { background-color: white; }
+    						body .ui-datatable tfoot td { padding: 5px; }
+    						body .ui-datatable .ui-datatable-data tr td { padding: 3px 10px; }
+    							
+    						div[id="form:tab:dtCom"] thead { display:none; }
+							div[id="form:tab:dtEsc"] thead { display:none; }
+							
 							.tg { border-collapse: collapse; border-spacing: 0; }
 							.tg td { font-family: Arial, sans-serif; font-size: 11px; padding: 1px; overflow: hidden; word-break: normal; }
 							.tg th { font-family: Arial, sans-serif; font-size: 11px; font-weight: normal; padding: 2px; overflow: hidden; word-break: normal; }
@@ -88,20 +101,10 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 							.tg .tg-757w { font-size: 13px; font-family: "Times New Roman", Times, serif !important; text-align: center; vertical-align: top }
 							.tg .tg-mjfx { font-weight: bold; font-family: "Times New Roman", Times, serif !important; text-align: center; vertical-align: top }
 							.tg .tg-0lax { text-align: left; vertical-align: top; font-weight: bold; }
-							
-							.ui-datatable th.ui-state-default, .ui-datatable tfoot td.ui-state-default { background: #ffffff; border-color: #000; }
-							.ui-datatable-tablewrapper { overflow: auto; margin-top: -3px; }
-							.ui-datatable tbody td { border-color: black; }
-							
-							body .ui-datatable thead th { background-color: #ffffff; padding: 2px;  border-color: #000; color: #212121 !important; font-size: 10px; font-weight: bold !important; }
-							body .ui-datatable .ui-datatable-footer, body .ui-datatable .ui-datatable-header { text-align: center; font-weight: 700; font-size: 8px; color: #212121; background: white; border: 1px solid black; padding: 0px; }
-    							
-    						div[id="form:tab:dtCom"] thead { display:none; }
-							div[id="form:tab:dtEsc"] thead { display:none; }
     					</style>
 						
 						<div align="left" style="width: 100%">
-						<table class="tg" style="table-layout: fixed; width: 500px">
+						<table class="tg" style="table-layout: fixed; width: 550px">
 							<colgroup>
 								<col style="width: 150px" />
 								<col style="width: 300px" />
@@ -143,7 +146,7 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 						</table>
 						
 						<p:dataTable var="dtlibreta" emptyMessage="--" value="#{reporteCal.libretaList}"
-							tableStyle="width: 550px; table-layout: fixed; margin-top: 5px; font-size: 10px;">												
+							tableStyle="width: 550px; table-layout: fixed; margin-top: 8px; font-size: 10px;">												
 							<p:columnGroup type="header">
 					            <p:row>
 					                <p:column rowspan="2" headerText="ÁREAS" width="130" />
@@ -177,29 +180,31 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 						    	<div style="text-align: center"><h:outputText value="#{dtlibreta.promedio}" /></div></p:column>						    
 						    <p:column headerText="ESCALA" style="text-align: center">
 						        <h:outputText value="#{dtlibreta.escala}" />
-						    </p:column>					        
+						    </p:column>		
+						    
+						     <p:columnGroup type="footer">
+					            <p:row>
+					           		<p:column style="border-left: none; border-right: none;" />
+					            </p:row>
+					            <p:row>
+					            	<p:column footerText="COMPORTAMIENTO" style="font-size: 9px; color: #000" />
+					            	<p:column footerText="#{reporteCal.olComportamiento}" style="font-size: 9px; color: #000" />
+					            	<p:column style="border-top: none; border-bottom: none;" />
+					            	<p:column colspan="3" footerText="PROMEDIO FINAL" style="font-size: 9px; color: #000" />
+					            	<p:column footerText="#{reporteCal.olPromedioFinal}" style="font-size: 9px; color: #000" />
+					            	<p:column footerText="#{reporteCal.olPromedioEscala}" style="font-size: 9px; color: #000" />
+					            </p:row>
+					        </p:columnGroup>
+						    
+						    			        
 					    </p:dataTable> 	
-						<br />
-						<table style="table-layout: fixed; width: 550px; font-size: 10px; border-collapse: collapse;">
-							<tr>
-								<td style="border: 1px solid black; text-align: center; width: 134px;">COMPORTAMIENTO</td>
-								<td style="border: 1px solid black; text-align: center; width: 43px;">
-									<h:outputText value="#{reporteCal.olComportamiento}" style="font-weight: normal;"/>
-								</td>
-								  
-								<td></td>
-								  
-								<td style="border: 1px solid black; text-align: center; width: 184px;">PROMEDIO FINAL</td>
-								<td style="border: 1px solid black; text-align: center; width: 53px;">#{reporteCal.olPromedioFinal}</td>
-								<td style="border: 1px solid black; text-align: center; width: 63px;">#{reporteCal.olPromedioEscala}</td>
-							</tr>
-						</table>
+												
 						<br />
 						<div style="display: inline-flex;">
 							<table style="table-layout: fixed; width: 183px; font-size: 10px; border-collapse: collapse;">
 								<colgroup>
-									<col style="width: 138px" />
-									<col style="width: 44px" />								
+									<col style="width: 136px" />
+									<col style="width: 59px" />								
 									<col style="width: 58px" />
 								</colgroup>
 								<tr>
@@ -237,7 +242,7 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 								</tr>
 							</table>
 							
-							<p:dataTable id="dtCom" var="dtCom" value="#{reporteCal.comportamientoList}" tableStyle="width: 310px; min-width: 310px; margin-top: 2px; font-size: 8px; padding: 0px;">
+							<p:dataTable id="dtCom" var="dtCom" value="#{reporteCal.comportamientoList}" tableStyle="width: 297px; min-width: 297px; margin-top: 2px; font-size: 8px; padding: 0px;">
 								<f:facet name="header">EVALUACIÓN DEL COMPORTAMIENTO</f:facet>
 								<p:column style="width: 5px; text-align: center;"> <h:outputText value="#{dtCom.abreviatura}" /> </p:column> 
 							    <p:column style="text-align: center"> <h:outputText value="#{dtCom.descripcion}" /> </p:column>				        
@@ -247,8 +252,8 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 						<div style="display: inline-flex;">
 							<table style="table-layout: fixed; width: 183px; font-size: 10px; border-collapse: collapse;">
 								<colgroup>
-									<col style="width: 138px" />
-									<col style="width: 44px" />								
+									<col style="width: 136px" />
+									<col style="width: 59px" />								
 									<col style="width: 58px" />
 								</colgroup>
 								<tr>
@@ -285,7 +290,7 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 									<td></td>								  							
 								</tr>
 							</table>
-							<p:dataTable id="dtEsc" var="dtEsc" value="#{reporteCal.escalaList}" tableStyle="width: 310px; min-width: 310px; margin-top: 2px; font-size: 8px; padding: 0px;">
+							<p:dataTable id="dtEsc" var="dtEsc" value="#{reporteCal.escalaList}" tableStyle="width: 297px; min-width: 297px; margin-top: 2px; font-size: 8px; padding: 0px;">
 								<f:facet name="header">CALIFICACIÓN CUALITATIVA</f:facet>
 								<p:column style="width: 15px; text-align: center;"> <h:outputText value="#{dtEsc.cualitativa}" /> </p:column> 
 							    <p:column style="text-align: center"> <h:outputText value="#{dtEsc.descripcion}" /> </p:column>				        
@@ -319,8 +324,9 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 						</div>	
 					</p:outputPanel>
 		       	</p:tab>
+		       	
 		       	<p:tab title="Informe de Rendimiento Académico">
-		        
+		       			       			        
 		        	<p:outputPanel style="background-color: white; padding: 5px; display: inline-flex; margin-top: -5px;">
 						<p:commandButton id="btnVerInforme" value="Ver" style="font-size: 12px !important;" 
 				        	actionListener="#{reporteCal.verInformeFinal}" update="opInformeFinal :form:growl" />
@@ -334,7 +340,8 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 					</p:outputPanel>				
 					
 					<p:separator style="border: 0.6px solid #8f3b4f;" />
-					
+									
+					<div style="width: 100%; overflow-x: auto;">
 					<p:outputPanel id="opInformeFinal">
 						<style type="text/css">
 							.ui-datatable th.ui-state-default, .ui-datatable tfoot td.ui-state-default { background: #ffffff; border-color: #000; }
@@ -342,108 +349,85 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 							.ui-datatable tbody td { border-color: black; }
 							
 							body .ui-datatable thead th { background-color: #ffffff; padding: 2px;  border-color: #000; color: #212121 !important; font-size: 8px; font-weight: bold !important; }
-							body .ui-datatable .ui-datatable-footer, body .ui-datatable .ui-datatable-header { text-align: center; font-weight: 700; font-size: 8px; color: #212121; background: white;  border: 1px solid black; padding: 0px; }	   							
-	   					
+							body .ui-datatable .ui-datatable-footer, body .ui-datatable .ui-datatable-header { text-align: center; font-weight: 700; font-size: 9px; color: #212121; background: white;  border: 1px solid black; padding: 1px; }	   							
+	   						body .ui-datatable .ui-datatable-data tr.ui-datatable-even { background-color: white; }
+	   						body .ui-datatable tfoot td { padding: 5px; }
+	   						body .ui-datatable .ui-datatable-data tr td { padding: 3px 10px; }
+	   							   					
+		   					div[id="form:tab:dtComIF"] { margin-top: -1px }
+		   					div[id="form:tab:dtEscIF"] { margin-top: -1px }
 		   					div[id="form:tab:dtComIF"] thead { display:none; }
 							div[id="form:tab:dtEscIF"] thead { display:none; }
 																				
 							.xl65 { text-align:center; vertical-align:middle; border-top:1.0pt solid windowtext; border-right:none; border-bottom:1.0pt solid windowtext; border-left:1.0pt solid windowtext; }
 							.xl66 { text-align:center; vertical-align:middle; border-top:1.0pt solid windowtext; border-right:none; border-bottom:1.0pt solid windowtext; border-left:none; }
 							.xl67 { text-align:center; vertical-align:middle; border-top:1.0pt solid windowtext; border-right:1.0pt solid windowtext; border-bottom:1.0pt solid windowtext; border-left:none; }
-							.xl68 { color:#222222; font-size:8.0pt; font-weight:700; font-family:"Source Sans Pro", sans-serif; 
-								text-align:center; vertical-align:middle; border-top:1.0pt solid black; border-right:1.0pt solid black; border-bottom:none; border-left:1.0pt solid black; white-space:normal; }
-							.xl69 { color:#222222; font-size:8.0pt; font-weight:700; font-family:"Source Sans Pro", sans-serif; 
-								text-align:center; vertical-align:middle; border-top:1.0pt solid black; border-right:none; border-bottom:1.0pt solid black; border-left:1.0pt solid black; white-space:normal; }
-							.xl70 { color:#222222; font-size:8.0pt; font-weight:700; font-family:"Source Sans Pro", sans-serif; 
-								text-align:center; vertical-align:middle; border-top:1.0pt solid black; border-right:none; border-bottom:1.0pt solid black; border-left:none; white-space:normal; }
-							.xl71 { color:#222222; font-size:8.0pt; font-weight:700; font-family:"Source Sans Pro", sans-serif; 
-								text-align:center; vertical-align:middle; border-top:1.0pt solid black; border-right:1.0pt solid windowtext; border-bottom:1.0pt solid black; border-left:none; white-space:normal; }
-							.xl72 { color:#222222; font-size:8.0pt; font-weight:700; font-family:"Source Sans Pro", sans-serif; 
-								text-align:center; vertical-align:middle; border-top:1.0pt solid windowtext; border-right:none; border-bottom:1.0pt solid black; border-left:1.0pt solid windowtext; white-space:normal; }
-							.xl73 { color:#222222; font-size:8.0pt; font-weight:700; font-family:"Source Sans Pro", sans-serif; 
-								text-align:center; vertical-align:middle; border-top:1.0pt solid windowtext; border-right:none; border-bottom:1.0pt solid black; border-left:none; white-space:normal; }
-							.xl74 { color:#222222; font-size:8.0pt; font-weight:700; font-family:"Source Sans Pro", sans-serif; 
-								text-align:center; vertical-align:middle; border-top:1.0pt solid windowtext; border-right:1.0pt solid black; border-bottom:1.0pt solid black; border-left:none; white-space:normal; }
-							.xl75 { color:#222222; font-size:8.0pt; font-weight:700; font-family:"Source Sans Pro", sans-serif; 
-								text-align:center; vertical-align:middle; border-top:1.0pt solid black; border-right:1.0pt solid black; border-bottom:none; border-left:none; white-space:normal; }
+							.xl68 { color:#222222; font-size:8.0pt; font-weight:700; font-family:"Source Sans Pro", sans-serif; text-align:center; vertical-align:middle; border-top:1.0pt solid black; border-right:1.0pt solid black; border-bottom:none; border-left:1.0pt solid black; white-space:normal; }
+							.xl69 { color:#222222; font-size:8.0pt; font-weight:700; font-family:"Source Sans Pro", sans-serif; text-align:center; vertical-align:middle; border-top:1.0pt solid black; border-right:none; border-bottom:1.0pt solid black; border-left:1.0pt solid black; white-space:normal; }
+							.xl70 { color:#222222; font-size:8.0pt; font-weight:700; font-family:"Source Sans Pro", sans-serif; text-align:center; vertical-align:middle; border-top:1.0pt solid black; border-right:none; border-bottom:1.0pt solid black; border-left:none; white-space:normal; }
+							.xl71 { color:#222222; font-size:8.0pt; font-weight:700; font-family:"Source Sans Pro", sans-serif; text-align:center; vertical-align:middle; border-top:1.0pt solid black; border-right:1.0pt solid windowtext; border-bottom:1.0pt solid black; border-left:none; white-space:normal; }
+							.xl72 { color:#222222; font-size:8.0pt; font-weight:700; font-family:"Source Sans Pro", sans-serif; text-align:center; vertical-align:middle; border-top:1.0pt solid windowtext; border-right:none; border-bottom:1.0pt solid black; border-left:1.0pt solid windowtext; white-space:normal; }
+							.xl73 { color:#222222; font-size:8.0pt; font-weight:700; font-family:"Source Sans Pro", sans-serif; text-align:center; vertical-align:middle; border-top:1.0pt solid windowtext; border-right:none; border-bottom:1.0pt solid black; border-left:none; white-space:normal; }
+							.xl74 { color:#222222; font-size:8.0pt; font-weight:700; font-family:"Source Sans Pro", sans-serif; text-align:center; vertical-align:middle; border-top:1.0pt solid windowtext; border-right:1.0pt solid black; border-bottom:1.0pt solid black; border-left:none; white-space:normal; }
+							.xl75 { color:#222222; font-size:8.0pt; font-weight:700; font-family:"Source Sans Pro", sans-serif; text-align:center; vertical-align:middle; border-top:1.0pt solid black; border-right:1.0pt solid black; border-bottom:none; border-left:none; white-space:normal; }
 							.xl76 { text-align:center; vertical-align:top; border-top:none; border-right:none; border-bottom:none; border-left:1.0pt solid windowtext; }
-							.xl77 { color:#222222; font-size:8.0pt; font-weight:700; font-family:"Source Sans Pro", sans-serif; 
-								text-align:center; vertical-align:middle; border-top:none; border-right:1.0pt solid black; border-bottom:1.0pt solid black; border-left:1.0pt solid black; white-space:normal; }
-							.xl78 { color:#222222; font-size:8.0pt; font-weight:700; font-family:"Source Sans Pro", sans-serif; 
-								text-align:center; vertical-align:middle; border-top:none; border-right:1.0pt solid black; border-bottom:1.0pt solid black; border-left:none; white-space:normal; }
-							.xl79 { color:#222222; font-size:8.0pt; font-weight:700; font-family:"Source Sans Pro", sans-serif; 
-								text-align:center; vertical-align:middle; border-top:none; border-right:none; border-bottom:1.0pt solid black; border-left:none; white-space:normal; }
+							.xl77 { color:#222222; font-size:8.0pt; font-weight:700; font-family:"Source Sans Pro", sans-serif; text-align:center; vertical-align:middle; border-top:none; border-right:1.0pt solid black; border-bottom:1.0pt solid black; border-left:1.0pt solid black; white-space:normal; }
+							.xl78 { color:#222222; font-size:8.0pt; font-weight:700; font-family:"Source Sans Pro", sans-serif; text-align:center; vertical-align:middle; border-top:none; border-right:1.0pt solid black; border-bottom:1.0pt solid black; border-left:none; white-space:normal; }
+							.xl79 { color:#222222; font-size:8.0pt; font-weight:700; font-family:"Source Sans Pro", sans-serif; text-align:center; vertical-align:middle; border-top:none; border-right:none; border-bottom:1.0pt solid black; border-left:none; white-space:normal; }
 							.xl80 { text-align:center; border-top:1.0pt solid black; border-right:none; border-bottom:none; border-left:1.0pt solid windowtext; }
 							.xl81 { text-align:center; border-top:1.0pt solid black; border-right:1.0pt solid windowtext; border-bottom:none; border-left:none; }
 							.xl82 { text-align:center; border-top:1.0pt solid black; border-right:none; border-bottom:none; border-left:none; }
 							.xl83 { text-align:center; vertical-align:middle; border-top:none; border-right:1.0pt solid windowtext; border-bottom:none; border-left:1.0pt solid windowtext; }
-							.xl84 { color:#222222; font-size:8.0pt; font-family:"Source Sans Pro", sans-serif; 
-								text-align:center; vertical-align:middle; border-top:none; border-right:1.0pt solid black; border-bottom:1.0pt solid black; border-left:1.0pt solid black; white-space:normal; }
-							.xl85 { color:#222222; font-size:8.0pt; font-family:"Source Sans Pro", sans-serif; 
-								text-align:center; vertical-align:middle; border-top:none; border-right:1.0pt solid black; border-bottom:1.0pt solid black; border-left:none; }
-							.xl86 { color:#222222; font-size:8.0pt; font-family:"Source Sans Pro", sans-serif; 
-								text-align:center; vertical-align:middle; border-top:none; border-right:none; border-bottom:1.0pt solid black; border-left:none; }
+							.xl84 { color:#222222; font-size:8.0pt; font-family:"Source Sans Pro", sans-serif; text-align:center; vertical-align:middle; border-top:none; border-right:1.0pt solid black; border-bottom:1.0pt solid black; border-left:1.0pt solid black; white-space:normal; }
+							.xl85 { color:#222222; font-size:8.0pt; font-family:"Source Sans Pro", sans-serif; text-align:center; vertical-align:middle; border-top:none; border-right:1.0pt solid black; border-bottom:1.0pt solid black; border-left:none; }
+							.xl86 { color:#222222; font-size:8.0pt; font-family:"Source Sans Pro", sans-serif; text-align:center; vertical-align:middle; border-top:none; border-right:none; border-bottom:1.0pt solid black; border-left:none; }
 							.xl87 { text-align:center; border-top:none; border-right:none; border-bottom:none; border-left:1.0pt solid windowtext; }
 							.xl88 { text-align:center; border-top:none; border-right:1.0pt solid windowtext; border-bottom:none; border-left:none; }
-							.xl89 { color:#222222; font-size:8.0pt; font-family:"Source Sans Pro", sans-serif; 
-								text-align:center; vertical-align:middle; border-top:none; border-right:1.0pt solid black; border-bottom:1.0pt solid black; border-left:none; white-space:normal; }
+							.xl89 { color:#222222; font-size:8.0pt; font-family:"Source Sans Pro", sans-serif; text-align:center; vertical-align:middle; border-top:none; border-right:1.0pt solid black; border-bottom:1.0pt solid black; border-left:none; white-space:normal; }
 							.xl90 { text-align:center; }
-							.xl91 { color:#222222; font-size:8.0pt; font-family:"Source Sans Pro", sans-serif; 
-								text-align:center; vertical-align:top; white-space:normal; }
+							.xl91 { color:#222222; font-size:9px; font-family:"Source Sans Pro", sans-serif; text-align:center; vertical-align:top; white-space:normal; }
 							.xl92 { text-align:center; vertical-align:middle; border-top:none; border-right:1.0pt solid windowtext; border-bottom:1.0pt solid windowtext; border-left:1.0pt solid windowtext; }
-							.xl93 { color:#222222; font-size:8.0pt; font-weight:700; font-family:"Source Sans Pro", sans-serif; 
-								text-align:center; vertical-align:middle; border-top:1.0pt solid black; border-right:none; border-bottom:1.0pt solid black; border-left:1.0pt solid windowtext; white-space:normal; }
-							.xl94 { color:#222222; font-size:8.0pt; font-family:"Source Sans Pro", sans-serif; 
-								text-align:center; vertical-align:middle; border-top:none; border-right:none; border-bottom:1.0pt solid black; border-left:none; white-space:normal; }
-							.xl95 { color:#222222; font-size:8.0pt; font-family:"Source Sans Pro", sans-serif; 
-								text-align:center; vertical-align:middle; white-space:normal; }
+							.xl93 { color:#222222; font-size:8.0pt; font-weight:700; font-family:"Source Sans Pro", sans-serif; text-align:center; vertical-align:middle; border-top:1.0pt solid black; border-right:none; border-bottom:1.0pt solid black; border-left:1.0pt solid windowtext; white-space:normal; }
+							.xl94 { color:#222222; font-size:8.0pt; font-family:"Source Sans Pro", sans-serif; text-align:center; vertical-align:middle; border-top:none; border-right:none; border-bottom:1.0pt solid black; border-left:none; white-space:normal; }
+							.xl95 { color:#222222; font-size:8.0pt; font-family:"Source Sans Pro", sans-serif; text-align:center; vertical-align:middle; white-space:normal; }
 							.xl96 { text-align:center; border-top:none; border-right:none; border-bottom:1.0pt solid black; border-left:1.0pt solid windowtext; }
-							.xl97 { color:#222222; font-size:8.0pt; font-family:"Source Sans Pro", sans-serif; 
-								text-align:center; vertical-align:top; border-top:none; border-right:none; border-bottom:1.0pt solid windowtext; border-left:none; white-space:normal; }
+							.xl97 { color:#222222; font-size:9px; font-family:"Source Sans Pro", sans-serif; text-align:center; vertical-align:top; border-top:none; border-right:none; border-bottom:1.0pt solid windowtext; border-left:none; white-space:normal; }
 							.xl98 { text-align:center; border-top:none; border-right:1.0pt solid windowtext; border-bottom:1.0pt solid black; border-left:none; }
 							.xl99 { border-top:none; border-right:none; border-bottom:.5pt solid windowtext; border-left:none; }
 							.xl100 { font-family:"Source Sans Pro", sans-serif; }
-							.xl101 { font-family:"Source Sans Pro", sans-serif; 
-								background:white; }
-							.xl102 { color:#222222; font-size:8.0pt; font-weight:700; font-family:"Source Sans Pro", sans-serif; 
-								text-align:center; vertical-align:middle; border-top:1.0pt solid windowtext; border-right:1.0pt solid windowtext; border-bottom:none; border-left:1.0pt solid windowtext; background:white; 
-								white-space:normal; }
-							.xl103 { color:#222222; font-size:8.0pt; font-weight:700; font-family:"Source Sans Pro", sans-serif; 
-								text-align:left; vertical-align:middle; border-top:1.0pt solid windowtext; border-right:none; border-bottom:1.0pt solid windowtext; border-left:1.0pt solid windowtext; background:white; 
-								white-space:normal; }
-							.xl104 { font-family:"Source Sans Pro", sans-serif; 
-								border:1.0pt solid windowtext; background:white; }
-							.xl105 { color:#222222; font-size:8.0pt; font-weight:700; font-family:"Source Sans Pro", sans-serif; 
-								text-align:left; vertical-align:middle; border-top:none; border-right:none; border-bottom:1.0pt solid black; border-left:1.0pt solid black; background:white; 
-								white-space:normal; }
+							.xl101 { font-family:"Source Sans Pro", sans-serif; background:white; }
+							.xl102 { color:#222222; font-size:8.0pt; font-weight:700; font-family:"Source Sans Pro", sans-serif; text-align:center; vertical-align:middle; border-top:1.0pt solid windowtext; border-right:1.0pt solid windowtext; border-bottom:none; border-left:1.0pt solid windowtext; background:white; white-space:normal; }
+							.xl103 { color:#222222; font-size:8.0pt; font-weight:700; font-family:"Source Sans Pro", sans-serif; text-align:left; vertical-align:middle; border-top:1.0pt solid windowtext; border-right:none; border-bottom:1.0pt solid windowtext; border-left:1.0pt solid windowtext; background:white; white-space:normal; }
+							.xl104 { font-family:"Source Sans Pro", sans-serif; border:1.0pt solid windowtext; background:white; }
+							.xl105 { color:#222222; font-size:8.0pt; font-weight:700; font-family:"Source Sans Pro", sans-serif; text-align:left; vertical-align:middle; border-top:none; border-right:none; border-bottom:1.0pt solid black; border-left:1.0pt solid black; background:white;white-space:normal; }
 							.xl106 { color:#222222; font-size:8.0pt; font-weight:700; font-family:"Source Sans Pro", sans-serif; text-align:left; vertical-align:middle; background:white; white-space:normal; }
 							.xl107 { font-family:"Source Sans Pro", sans-serif; text-align:center; background:white; }
 							.xl108 { color:#222222; font-size:8.0pt; font-family:"Source Sans Pro", sans-serif; text-align:center; vertical-align:top; background:white; white-space:normal; }
-							.xl109 { color:#222222; font-size:9.0pt; font-weight:700; font-family:"Source Sans Pro", sans-serif; text-align:left; vertical-align:middle; background:white; white-space:normal; }
-							.xl110 { color:#222222; font-size:9.0pt; font-weight:700; font-family:"Source Sans Pro", sans-serif; text-align:center; vertical-align:middle; background:white; white-space:normal; }
-							.xl111 { color:#222222; font-size:9.0pt; font-weight:700; font-family:"Source Sans Pro", sans-serif; text-align:center; vertical-align:top; background:white; white-space:normal; }
-							.xl112 { font-family:"Source Sans Pro", sans-serif; border-top:1.0pt solid windowtext; border-right:none; border-bottom:none; border-left:1.0pt solid windowtext; background:white; }
-							.xl113 { font-family:"Source Sans Pro", sans-serif; border-top:1.0pt solid windowtext; border-right:none; border-bottom:none; border-left:none; background:white; }
-							.xl114 { font-family:"Source Sans Pro", sans-serif; border-top:1.0pt solid windowtext; border-right:1.0pt solid windowtext; border-bottom:none; border-left:none; background:white; }
-							.xl115 { font-family:"Source Sans Pro", sans-serif; border-top:none; border-right:none; border-bottom:none; border-left:1.0pt solid windowtext; background:white; }
-							.xl116 { font-weight:700; font-family:"Source Sans Pro", sans-serif; text-align:center; background:white; }
-							.xl117 { font-family:"Source Sans Pro", sans-serif; border-top:none; border-right:1.0pt solid windowtext; border-bottom:none; border-left:none; background:white; }
-							.xl118 { font-size:14.0pt; font-weight:700; font-family:"Source Sans Pro", sans-serif; text-align:center; background:white; }
+							.xl109 { color:#222222; font-size:10.0pt; font-weight:700; font-family:"Source Sans Pro", sans-serif; text-align:left; vertical-align:middle; background:white; white-space:normal; }
+							.xl110 { color:#222222; font-size:10.0pt; font-weight:700; font-family:"Source Sans Pro", sans-serif; text-align:center; vertical-align:middle; background:white; white-space:normal; }
+							.xl111 { color:#222222; font-size:10.0pt; font-weight:700; font-family:"Source Sans Pro", sans-serif; text-align:center; vertical-align:top; background:white; white-space:normal; }
+							.xl112 { font-family:"Source Sans Pro", sans-serif; border-right:none; border-bottom:none; background:white; }
+							.xl113 { font-family:"Source Sans Pro", sans-serif; border-right:none; border-bottom:none; border-left:none; background:white; }
+							.xl114 { font-family:"Source Sans Pro", sans-serif; border-bottom:none; border-left:none; background:white; }
+							.xl115 { font-family:"Source Sans Pro", sans-serif; border-top:none; border-right:none; border-bottom:none; background:white; }
+							.xl116 { font-weight:700; font-family:"Source Sans Pro", sans-serif; text-align:center; background:white; font-size: 18px; }
+							.xl117 { font-family:"Source Sans Pro", sans-serif; border-top:none; border-bottom:none; border-left:none; background:white; }
+							.xl118 { font-size:18.0pt; font-weight:700; font-family:"Source Sans Pro", sans-serif; text-align:center; background:white; }
 							.xl119 { font-family:"Source Sans Pro", sans-serif; text-align:center; vertical-align:middle; background:white; }
 							.xl120 { font-size:16.0pt; font-family:"Source Sans Pro", sans-serif; text-align:center; background:white; }
 							.xl121 { font-weight:700; font-style:italic; font-family:"Source Sans Pro", sans-serif; text-align:left; background:white; white-space:normal; }
 							.xl122 { font-family:"Source Sans Pro", sans-serif; text-align:left; vertical-align:middle; background:white; }
 							.xl123 { font-family:"Source Sans Pro", sans-serif; text-align:right; background:white; }
-							.xl124 { font-family:"Source Sans Pro", sans-serif; border-top:none; border-right:none; border-bottom:1.0pt solid windowtext; border-left:1.0pt solid windowtext; background:white; }
-							.xl125 { font-family:"Source Sans Pro", sans-serif; border-top:none; border-right:none; border-bottom:1.0pt solid windowtext; border-left:none; background:white; }
-							.xl126 { font-family:"Source Sans Pro", sans-serif; border-top:none; border-right:1.0pt solid windowtext; border-bottom:1.0pt solid windowtext; border-left:none; background:white; }
+							.xl124 { font-family:"Source Sans Pro", sans-serif; border-top:none; border-right:none; background:white; }
+							.xl125 { font-family:"Source Sans Pro", sans-serif; border-top:none; border-right:none; border-left:none; background:white; }
+							.xl126 { font-family:"Source Sans Pro", sans-serif; border-top:none; border-left:none; background:white; }
 							
 							.profile-pic { width: 110px; height: 130px; display: block; }
 						</style>
 						
-						<div align="center">														 
-				        	<!--[HOJA 1]-->
-							<table style="border-collapse:collapse;table-layout:fixed;width:950pt;page-break-after: right;">
+						<div align="center">
+				        	 <!--[HOJA 1]-->
+							 <table style="border-collapse:collapse;table-layout:fixed;width:950pt;page-break-after: right;">
 							 <colgroup>
 							 	 <col class="xl101" width="80" style="width:10pt"></col>
 								 <col class="xl100" width="138" style="width:104pt"></col>
@@ -453,8 +437,8 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 								 <col class="xl100" width="114" span="4" style="width:86pt"></col>
 								 <col class="xl100" width="80" style="width:10pt"></col>
 							 </colgroup><tbody>
-							 <tr height="50">
-							  <td height="50" class="xl112"></td>
+							 <tr height="80">
+							  <td height="80" class="xl112"></td>
 							  <td class="xl113"></td>
 							  <td class="xl113"></td>
 							  <td class="xl113"></td>
@@ -466,29 +450,29 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 							  <td class="xl113"></td>
 							  <td class="xl114"></td>
 							 </tr>
-							 <tr height="21" style="height:15.75pt">
+							 <tr height="21" style="height:16pt">
 							  <td height="21" class="xl115" style="height:32px"></td>
 							  <td class="xl101"></td>
 							  <td class="xl102" width="114" style="width:86pt">COMPORTAMIENTO</td>
 							  <td class="xl102" width="114" style="border-left:none;width:86pt">APROVECHAMIENTO</td>
 							  <td class="xl102" width="80" style="border-left:none;width:60pt">TOTAL</td>
 							  <td class="xl101"></td>
-							  <td colspan="4" class="xl116">ESCUELA DE EDUCACION BASICA PARTICULAR</td>
+							  <td colspan="4" class="xl116">ESCUELA DE EDUCACIÓN BÁSICA PARTICULAR</td>
 							  <td class="xl117"></td>
 							 </tr>
 							 <tr height="26" style="height:19.5pt">
 							  <td height="26" class="xl115" style="height:35px"></td>
-							  <td class="xl103" width="138" style="width:104pt">PRIMER QUIMESTRE</td>
+							  <td class="xl103" width="138" style="width:104pt"><p:spacer width="10px" />PRIMER QUIMESTRE</td>
 							  <td class="xl104"></td>
 							  <td class="xl104" style="border-left:none"></td>
 							  <td class="xl104" style="border-left:none"></td>
 							  <td class="xl101"></td>
-							  <td colspan="4" class="xl118">"DR. AQUILES RODRIGUEZ V."</td>
+							  <td colspan="4" class="xl118">"DR. AQUILES RODRÍGUEZ V."</td>
 							  <td class="xl117"></td>
 							 </tr>
-							 <tr height="21" style="height:15.75pt">
-							  <td height="21" class="xl115" style="height:15.75pt"></td>
-							  <td class="xl105" width="138" style="width:104pt">SEGUNDO QUIMESTRE</td>
+							 <tr height="21" style="height:16pt">
+							  <td height="21" class="xl115" style="height:16pt"></td>
+							  <td class="xl105" width="138" style="width:104pt"><p:spacer width="10px" />SEGUNDO QUIMESTRE</td>
 							  <td class="xl104" style="border-top:none"></td>
 							  <td class="xl104" style="border-top:none;border-left:none"></td>
 							  <td class="xl104" style="border-top:none;border-left:none"></td>
@@ -504,22 +488,23 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 							  </td>
 							  <td colspan="2" rowspan="6" class="xl119">
 							  	<div align="center">
-							  		<img width="110px" height="130px" class="profile-pic" src="#{request.contextPath}/fotos/FOTO_DEFAULT.png" />
+							  		<img width="110px" height="130px" class="profile-pic" src="#{request.contextPath}/fotos/FOTO_DEFAULT.png"
+							  			style="border: 2px solid black;" />
 							  	</div>
 							  </td>
 							  <td class="xl117"></td>
 							 </tr>
-							 <tr height="21" style="height:15.75pt">
-							  <td height="21" class="xl115" style="height:15.75pt"></td>
-							  <td class="xl105" width="138" style="width:104pt">PROMEDIO FINAL</td>
+							 <tr height="21" style="height:16pt">
+							  <td height="21" class="xl115" style="height:16pt"></td>
+							  <td class="xl105" width="138" style="width:104pt"><p:spacer width="20px" />PROMEDIO FINAL</td>
 							  <td class="xl104" style="border-top:none"></td>
 							  <td class="xl104" style="border-top:none;border-left:none"></td>
 							  <td class="xl104" style="border-top:none;border-left:none"></td>
 							  <td class="xl101"></td>
 							  <td class="xl117"></td>
 							 </tr>
-							 <tr height="20" style="height:15.0pt">
-							  <td height="20" class="xl115" style="height:15.0pt"></td>
+							 <tr height="20" style="height:17.0pt">
+							  <td height="20" class="xl115" style="height:17.0pt"></td>
 							  <td class="xl101"></td>
 							  <td class="xl101"></td>
 							  <td class="xl101"></td>
@@ -533,8 +518,8 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 							  <td class="xl101"></td>
 							  <td class="xl117"></td>
 							 </tr>
-							 <tr height="20" style="height:15.0pt">
-							  <td height="20" class="xl115" style="height:15.0pt"></td>
+							 <tr height="20" style="height:17.0pt">
+							  <td height="20" class="xl115" style="height:17.0pt"></td>
 							  <td class="xl101"></td>
 							  <td class="xl101"></td>
 							  <td class="xl101"></td>
@@ -542,15 +527,15 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 							  <td class="xl101"></td>
 							  <td class="xl117"></td>
 							 </tr>
-							 <tr height="42" style="height:31.5pt">
-							  <td height="42" class="xl115" style="height:31.5pt"></td>
-							  <td colspan="4" class="xl121" width="446" style="width:336pt">DURANTE EL PERIODO
+							 <tr height="42" style="height:30.0pt">
+							  <td height="42" class="xl115" style="height:30.0pt"></td>
+							  <td colspan="4" class="xl121" width="446" style="width:336pt">DURANTE EL PERÍODO
 							  LECTIVO 2019-2020 HA OBTENIDO LAS SIGUIENTES CALIFICACIONES:</td>
 							  <td class="xl101"></td>
 							  <td class="xl117"></td>
 							 </tr>
-							 <tr height="20" style="height:15.0pt">
-							  <td height="20" class="xl115" style="height:15.0pt"></td>
+							 <tr height="20" style="height:17.0pt">
+							  <td height="20" class="xl115" style="height:17.0pt"></td>
 							  <td class="xl101"></td>
 							  <td class="xl101"></td>
 							  <td class="xl101"></td>
@@ -562,15 +547,15 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 							  <td class="xl101"></td>
 							  <td class="xl117"></td>
 							 </tr>
-							 <tr height="20" style="height:15.0pt">
-							  <td height="20" class="xl115" style="height:15.0pt"></td>
+							 <tr height="20" style="height:17.0pt">
+							  <td height="20" class="xl115" style="height:17.0pt"></td>
 							  <td colspan="4" class="xl106" width="446" style="width:336pt">COMPORATAMIENTO:</td>
 							  <td class="xl101"></td>
 							  <td colspan="4" class="xl116">INFORME DE RENDIMIENTO ACADEMICO</td>
 							  <td class="xl117"></td>
 							 </tr>
-							 <tr height="20" style="height:15.0pt">
-							  <td height="20" class="xl115" style="height:15.0pt"></td>
+							 <tr height="20" style="height:17.0pt">
+							  <td height="20" class="xl115" style="height:17.0pt"></td>
 							  <td colspan="4" class="xl106" width="446" style="width:336pt">APROVECHAMIENTO:</td>
 							  <td class="xl101"></td>
 							  <td class="xl101"></td>
@@ -579,22 +564,22 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 							  <td class="xl101"></td>
 							  <td class="xl117"></td>
 							 </tr>
-							 <tr height="20" style="height:15.0pt">
-							  <td height="20" class="xl115" style="height:15.0pt"></td>
-							  <td colspan="4" class="xl106" width="446" style="width:336pt">EN CONSECUENCIA: ____________________________________________________</td>
+							 <tr height="20" style="height:17.0pt">
+							  <td height="20" class="xl115" style="height:17.0pt"></td>
+							  <td colspan="4" class="xl106" width="446" style="width:336pt">EN CONSECUENCIA: _______________________________________________________________________</td>
 							  <td class="xl101"></td>
 							  <td colspan="4" class="xl109" width="456" style="width:344pt">ESTUDIANTE:</td>
 							  <td class="xl117"></td>
 							 </tr>
-							 <tr height="20" style="height:15.0pt">
-							  <td height="20" class="xl115" style="height:15.0pt"></td>
+							 <tr height="20" style="height:17.0pt">
+							  <td height="20" class="xl115" style="height:17.0pt"></td>
 							  <td colspan="4" class="xl122"></td>
 							  <td class="xl101"></td>
-							  <td colspan="4" class="xl109" width="456" style="width:344pt">AÑO BASICO:</td>
+							  <td colspan="4" class="xl109" width="456" style="width:344pt">AÑO BÁSICO:</td>
 							  <td class="xl117"></td>
 							 </tr>
-							 <tr height="20" style="height:15.0pt">
-							  <td height="20" class="xl115" style="height:15.0pt"></td>
+							 <tr height="20" style="height:17.0pt">
+							  <td height="20" class="xl115" style="height:17.0pt"></td>
 							  <td class="xl101"></td>
 							  <td class="xl101"></td>
 							  <td class="xl101"></td>
@@ -603,8 +588,8 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 							  <td colspan="4" class="xl109" width="456" style="width:344pt">DOCENTE:</td>
 							  <td class="xl117"></td>
 							 </tr>
-							 <tr height="20" style="height:15.0pt">
-							  <td height="20" class="xl115" style="height:15.0pt"></td>
+							 <tr height="20" style="height:17.0pt">
+							  <td height="20" class="xl115" style="height:17.0pt"></td>
 							  <td class="xl101"></td>
 							  <td colspan="3" class="xl123">Guayaquil, 7 de marzo del 2019</td>
 							  <td class="xl101"></td>
@@ -612,8 +597,8 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 							  <td colspan="2" class="xl109" width="228" style="width:172pt">CANTON: GUAYAQUIL</td>
 							  <td class="xl117"></td>
 							 </tr>
-							 <tr height="20" style="height:15.0pt">
-							  <td height="20" class="xl115" style="height:15.0pt"></td>
+							 <tr height="20" style="height:17.0pt">
+							  <td height="20" class="xl115" style="height:17.0pt"></td>
 							  <td class="xl101"></td>
 							  <td class="xl101"></td>
 							  <td class="xl101"></td>
@@ -623,8 +608,8 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 							  CORDERO</td>
 							  <td class="xl117"></td>
 							 </tr>
-							 <tr height="20" style="height:15.0pt">
-							  <td height="20" class="xl115" style="height:15.0pt"></td>
+							 <tr height="20" style="height:17.0pt">
+							  <td height="20" class="xl115" style="height:17.0pt"></td>
 							  <td class="xl101"></td>
 							  <td class="xl101"></td>
 							  <td class="xl101"></td>
@@ -634,8 +619,8 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 							  MARLIS SANCLEMENTE J.</td>
 							  <td class="xl117"></td>
 							 </tr>
-							 <tr height="20" style="height:15.0pt">
-							  <td height="20" class="xl115" style="height:15.0pt"></td>
+							 <tr height="20" style="height:17.0pt">
+							  <td height="20" class="xl115" style="height:17.0pt"></td>
 							  <td class="xl101"></td>
 							  <td class="xl101"></td>
 							  <td class="xl101"></td>
@@ -644,16 +629,16 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 							  <td colspan="4" class="xl109" width="456" style="width:344pt">DIRECCION:</td>
 							  <td class="xl117"></td>
 							 </tr>
-							 <tr height="20" style="height:15.0pt">
-							  <td height="20" class="xl115" style="height:15.0pt"></td>
+							 <tr height="20" style="height:17.0pt">
+							  <td height="20" class="xl115" style="height:17.0pt"></td>
 							  <td colspan="2" class="xl107"></td>
 							  <td colspan="2" class="xl107"></td>
 							  <td class="xl101"></td>
 							  <td colspan="4" class="xl109" width="456" style="width:344pt"></td>
 							  <td class="xl117"></td>
 							 </tr>
-							 <tr height="20" style="height:15.0pt">
-							  <td height="20" class="xl115" style="height:15.0pt"></td>
+							 <tr height="20" style="height:17.0pt">
+							  <td height="20" class="xl115" style="height:17.0pt"></td>
 							  <td colspan="2" rowspan="2" class="xl108" width="252" style="width:190pt">_____________________________<br />
 							    DRA. MARLIS SANCLEMENTE J.<br />
 							    DIRECTORA
@@ -662,7 +647,7 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 							    DOCENTE</td>
 							  <td class="xl101"></td>
 							  <td class="xl101"></td>
-							  <td colspan="2" class="xl110" width="228" style="width:172pt">PERIODO LECTIVO</td>
+							  <td colspan="2" class="xl110" width="228" style="width:172pt">PERÍODO LECTIVO</td>
 							  <td class="xl101"></td>
 							  <td class="xl117"></td>
 							 </tr>
@@ -674,7 +659,7 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 							  <td class="xl101"></td>
 							  <td class="xl117"></td>
 							 </tr>
-							 <tr height="50">
+							 <tr height="80">
 							  <td class="xl124"></td>
 							  <td class="xl125"></td>
 							  <td class="xl125"></td>
@@ -703,7 +688,7 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 							 </tbody></table>
 							 												 
 							 <!--[HOJA 2]-->
-							 <table style="border-collapse:collapse;width:950pt;page-break-after: right">
+							 <table style="border-collapse:collapse;width:950pt;page-break-after: right;background-color: white;">
 							 <colgroup><col width="149" style="width:112pt"></col>
 							 <col width="40" span="3" style="width:30pt"></col>
 							 <col width="18" style="width:14pt"></col>
@@ -715,8 +700,8 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 							 <col width="146" style="width:110pt"></col>
 							 <col width="18" style="width:14pt"></col>
 							 <col width="293" style="width:220pt"></col>
-							 </colgroup><tbody><tr height="21" style="height:15.75pt">
-							  <td height="21" width="149" style="height:15.75pt;width:112pt"></td>
+							 </colgroup><tbody><tr height="21" style="height:16pt">
+							  <td height="21" width="149" style="height:17.0pt;width:112pt"></td>
 							  <td width="40" style="width:30pt"></td>
 							  <td width="40" style="width:30pt"></td>
 							  <td width="40" style="width:30pt"></td>
@@ -732,8 +717,8 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 							  <td width="18" style="width:14pt"></td>
 							  <td width="293" style="width:220pt"></td>
 							 </tr>
-							 <tr height="21" style="height:15.75pt">
-							  <td colspan="15" height="21" class="xl65" style="border:none; height:15.75pt">
+							 <tr height="21" style="height:16pt">
+							  <td colspan="15" height="21" class="xl65" style="border:none; height:16pt">
 							  <div align="center">	
 								  <p:dataTable var="dtinforme" emptyMessage="--" value="#{reporteCal.informeFinalList}"
 									tableStyle="min-width: 700px; margin-top: 5px; font-size: 9px;" style="overflow-x: hidden;">												
@@ -782,9 +767,49 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 								    	<div style="text-align: center"><h:outputText value="" /></div></p:column>
 								    <p:column headerText="PROMEDIO PARCIALES">
 								    	<div style="text-align: center"><h:outputText value="" /></div></p:column>
+								    <p:column headerText="80%">
+								    	<div style="text-align: center"><h:outputText value="" /></div></p:column>
+								    <p:column headerText="EXAMEN">
+								    	<div style="text-align: center"><h:outputText value="" /></div></p:column>
+								    <p:column headerText="20%">
+								    	<div style="text-align: center"><h:outputText value="" /></div></p:column>
+								    <p:column headerText="PROMEDIO PRIMER QUIMESTRE">
+								    	<div style="text-align: center"><h:outputText value="" /></div></p:column>
+								    <p:column headerText="CUALITATIVA">
+								    	<div style="text-align: center"><h:outputText value="" /></div></p:column>
+								   
+								   <p:column headerText="P1">
+								    	<div style="text-align: center"><h:outputText value="" /></div></p:column>						    	
+								    <p:column headerText="P2">
+								    	<div style="text-align: center"><h:outputText value="" /></div></p:column>
+								    <p:column headerText="P3">
+								    	<div style="text-align: center"><h:outputText value="" /></div></p:column>
+								    <p:column headerText="PROMEDIO PARCIALES">
+								    	<div style="text-align: center"><h:outputText value="" /></div></p:column>
+								    <p:column headerText="80%">
+								    	<div style="text-align: center"><h:outputText value="" /></div></p:column>
+								    <p:column headerText="EXAMEN">
+								    	<div style="text-align: center"><h:outputText value="" /></div></p:column>
+								    <p:column headerText="20%">
+								    	<div style="text-align: center"><h:outputText value="" /></div></p:column>
+								    <p:column headerText="PROMEDIO SEGUNDO QUIMESTRE">
+								    	<div style="text-align: center"><h:outputText value="" /></div></p:column>
+								    <p:column headerText="CUALITATIVA">
+								    	<div style="text-align: center"><h:outputText value="" /></div></p:column>
+								    	
+								     <p:column headerText="I QUIMESTRE">
+								    	<div style="text-align: center"><h:outputText value="" /></div></p:column>
+								     <p:column headerText="II QUIMESTRE">
+								    	<div style="text-align: center"><h:outputText value="" /></div></p:column>
+								     <p:column headerText="PROMEDIO FINAL">
+								    	<div style="text-align: center"><h:outputText value="" /></div></p:column>
+								     <p:column headerText="ESCALA CUALITATIVA">
+								    	<div style="text-align: center"><h:outputText value="" /></div></p:column>
 								    	
 								    <p:columnGroup type="footer">
-							            <p:row />
+							            <p:row>
+							           		<p:column style="border-left: none; border-right: none;" />
+							            </p:row>
 							            <p:row>
 							            	<p:column colspan="19" />
 							            	<p:column colspan="2" footerText="SUMA TOTAL" style="font-size: 9px; color: #000" />
@@ -818,8 +843,8 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 							  </div>
 							  </td>
 							 </tr>
-							 <tr height="21" style="height:15.75pt">
-							  <td height="21" style="height:15.75pt"></td>
+							 <tr height="21" style="height:16pt">
+							  <td height="21" style="height:16pt"></td>
 							  <td></td>
 							  <td></td>
 							  <td></td>
@@ -835,17 +860,12 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 							  <td></td>
 							  <td></td>
 							 </tr>
-							 <tr height="21" style="height:15.75pt">
-							  <td rowspan="2" height="42" class="xl68" width="149" style="border-bottom:1.0pt solid black;
-							  height:31.5pt;width:112pt">ASISTENCIA DEL ESTUDIANTE</td>
-							  <td colspan="3" class="xl69" width="120" style="border-right:1.0pt solid black;
-							  border-left:none;width:90pt">PRIMER QUIMESTRE</td>
-							  <td colspan="3" class="xl72" width="182" style="border-right:1.0pt solid black;
-							  border-left:none;width:138pt">FIRMAS</td>
-							  <td rowspan="2" class="xl75" width="149" style="border-bottom:1.0pt solid black;
-							  width:112pt">ASISTENCIA DEL ESTUDIANTE</td>
-							  <td colspan="3" class="xl69" width="120" style="border-right:1.0pt solid black;
-							  border-left:none;width:90pt">SEGUNDO QUIMESTRE</td>
+							 <tr height="21" style="height:16pt">
+							  <td rowspan="2" height="42" class="xl68" width="149" style="border-bottom:1.0pt solid black; height:30.0pt;width:112pt">ASISTENCIA DEL ESTUDIANTE</td>
+							  <td colspan="3" class="xl69" width="120" style="border-right:1.0pt solid black; border-left:none;width:90pt">PRIMER QUIMESTRE</td>
+							  <td colspan="3" class="xl72" width="182" style="border-right:1.0pt solid black; border-left:none;width:138pt">FIRMAS</td>
+							  <td rowspan="2" class="xl75" width="149" style="border-bottom:1.0pt solid black; width:112pt">ASISTENCIA DEL ESTUDIANTE</td>
+							  <td colspan="3" class="xl69" width="120" style="border-right:1.0pt solid black; border-left:none;width:90pt">SEGUNDO QUIMESTRE</td>
 							  <td colspan="3" class="xl72" width="182" style="border-left:none;width:138pt">FIRMAS</td>
 							  <td rowspan="6" class="xl76">
 							
@@ -857,27 +877,22 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 							
 							</td>
 							 </tr>
-							 <tr height="21" style="height:15.75pt">
-							  <td height="21" class="xl78" width="40" style="height:15.75pt;width:30pt">P1</td>
+							 <tr height="21" style="height:16pt">
+							  <td height="21" class="xl78" width="40" style="height:17.0pt;width:30pt">P1</td>
 							  <td class="xl78" width="40" style="width:30pt">P2</td>
 							  <td class="xl79" width="40" style="width:30pt">P3</td>
-							  <td rowspan="10" class="xl80" style="border-bottom:1.0pt solid black;border-top:
-							  none"></td>
+							  <td rowspan="10" class="xl80" style="border-bottom:1.0pt solid black;border-top: none"></td>
 							  <td></td>
-							  <td rowspan="10" class="xl81" style="border-bottom:1.0pt solid black;border-top:
-							  none"></td>
+							  <td rowspan="10" class="xl81" style="border-bottom:1.0pt solid black;border-top: none"></td>
 							  <td class="xl78" width="40" style="width:30pt">P1</td>
 							  <td class="xl78" width="40" style="width:30pt">P2</td>
 							  <td class="xl79" width="40" style="width:30pt">P3</td>
-							  <td rowspan="10" class="xl80" style="border-bottom:1.0pt solid black;border-top:
-							  none"></td>
+							  <td rowspan="10" class="xl80" style="border-bottom:1.0pt solid black;border-top: none"></td>
 							  <td></td>
-							  <td rowspan="10" class="xl82" style="border-right:1.0pt solid black;border-bottom:
-							  1.0pt solid black;border-top:none"></td>
+							  <td rowspan="10" class="xl82" style="border-right:1.0pt solid black;border-bottom: 1.0pt solid black;border-top:none"></td>
 							 </tr>
-							 <tr height="21" style="height:15.75pt">
-							  <td height="21" class="xl84" width="149" style="height:15.75pt;width:112pt">DÍAS
-							  ASISTIDOS</td>
+							 <tr height="21" style="height:16pt">
+							  <td height="21" class="xl84" width="149" style="height:17.0pt;width:112pt">DÍAS ASISTIDOS</td>
 							  <td class="xl85"></td>
 							  <td class="xl85"></td>
 							  <td class="xl86"></td>
@@ -888,9 +903,8 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 							  <td class="xl86"></td>
 							  <td></td>
 							 </tr>
-							 <tr height="21" style="height:15.75pt">
-							  <td height="21" class="xl84" width="149" style="height:15.75pt;width:112pt">FALTAS
-							  JUTIFICADAS</td>
+							 <tr height="21" style="height:16pt">
+							  <td height="21" class="xl84" width="149" style="height:17.0pt;width:112pt">FALTAS JUTIFICADAS</td>
 							  <td class="xl85"></td>
 							  <td class="xl85"></td>
 							  <td class="xl86"></td>
@@ -901,23 +915,20 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 							  <td class="xl86"></td>
 							  <td class="xl99"></td>
 							 </tr>
-							 <tr height="20" style="height:15.0pt">
-							  <td height="20" class="xl84" width="149" style="height:15.0pt;width:112pt">FALTAS
-							  INJUTIFICADAS</td>
+							 <tr height="20" style="height:17.0pt">
+							  <td height="20" class="xl84" width="149" style="height:17.0pt;width:112pt">FALTAS INJUTIFICADAS</td>
 							  <td class="xl85"></td>
 							  <td class="xl85"></td>
 							  <td class="xl86"></td>
-							  <td rowspan="2" class="xl91" width="146" style="width:110pt">DRA. MARLIS
-							  SANCLEMENTE J. DIRECTORA</td>
+							  <td rowspan="2" class="xl91" width="146" style="width:110pt">DRA. MARLIS SANCLEMENTE J. DIRECTORA</td>
 							  <td class="xl89" width="149" style="width:112pt">FALTAS INJUTIFICADAS</td>
 							  <td class="xl85"></td>
 							  <td class="xl85"></td>
 							  <td class="xl86"></td>
-							  <td rowspan="2" class="xl91" width="146" style="width:110pt">DRA. MARLIS
-							  SANCLEMENTE J. DIRECTORA</td>
+							  <td rowspan="2" class="xl91" width="146" style="width:110pt">DRA. MARLIS SANCLEMENTE J. DIRECTORA</td>
 							 </tr>
-							 <tr height="21" style="height:15.75pt">
-							  <td height="21" class="xl84" width="149" style="height:15.75pt;width:112pt">ATRASOS</td>
+							 <tr height="21" style="height:16pt">
+							  <td height="21" class="xl84" width="149" style="height:17.0pt;width:112pt">ATRASOS</td>
 							  <td class="xl85"></td>
 							  <td class="xl85"></td>
 							  <td class="xl86"></td>
@@ -927,11 +938,9 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 							  <td class="xl86"></td>
 							 </tr>
 							 <tr height="37" style="height:27.75pt">
-							  <td colspan="4" height="37" class="xl69" width="269" style="border-right:1.0pt solid black;
-							  height:27.75pt;width:202pt">PROYECTOS ESCOLARES</td>
+							  <td colspan="4" height="37" class="xl69" width="269" style="border-right:1.0pt solid black; height:27.75pt;width:202pt">PROYECTOS ESCOLARES</td>
 							  <td class="xl99"></td>
-							  <td colspan="4" class="xl93" width="269" style="border-right:1.0pt solid black;
-							  border-left:none;width:202pt">PROYECTOS ESCOLARES</td>
+							  <td colspan="4" class="xl93" width="269" style="border-right:1.0pt solid black; border-left:none;width:202pt">PROYECTOS ESCOLARES</td>
 							  <td class="xl99"></td>
 							  <td rowspan="5" class="xl76">
 							  
@@ -943,9 +952,8 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 							  
 							  </td>
 							 </tr>
-							 <tr height="21" style="height:15.75pt">
-							  <td height="21" class="xl84" width="149" style="height:15.75pt;width:112pt">EX:
-							  EXCELENTE</td>
+							 <tr height="21" style="height:16pt">
+							  <td height="21" class="xl84" width="149" style="height:17.0pt;width:112pt">EX: EXCELENTE</td>
 							  <td class="xl89" width="40" style="width:30pt"></td>
 							  <td class="xl89" width="40" style="width:30pt"></td>
 							  <td class="xl94" width="40" style="width:30pt"></td>
@@ -956,9 +964,8 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 							  <td class="xl86"></td>
 							  <td class="xl91" width="146" style="width:110pt">DOCENTE</td>
 							 </tr>
-							 <tr height="21" style="height:15.75pt">
-							  <td height="21" class="xl84" width="149" style="height:15.75pt;width:112pt">MB: MUY
-							  BUENO</td>
+							 <tr height="21" style="height:16pt">
+							  <td height="21" class="xl84" width="149" style="height:17.0pt;width:112pt">MB: MUY BUENO</td>
 							  <td class="xl89" width="40" style="width:30pt"></td>
 							  <td class="xl89" width="40" style="width:30pt"></td>
 							  <td class="xl94" width="40" style="width:30pt"></td>
@@ -969,9 +976,8 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 							  <td class="xl86"></td>
 							  <td class="xl95" width="146" style="width:110pt"></td>
 							 </tr>
-							 <tr height="21" style="height:15.75pt">
-							  <td height="21" class="xl84" width="149" style="height:15.75pt;width:112pt">B:
-							  BUENO</td>
+							 <tr height="21" style="height:16pt">
+							  <td height="21" class="xl84" width="149" style="height:17.0pt;width:112pt">B: BUENO</td>
 							  <td class="xl89" width="40" style="width:30pt"></td>
 							  <td class="xl89" width="40" style="width:30pt"></td>
 							  <td class="xl94" width="40" style="width:30pt"></td>
@@ -982,9 +988,8 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 							  <td class="xl86"></td>
 							  <td class="xl99"></td>
 							 </tr>
-							 <tr height="21" style="height:15.75pt">
-							  <td height="21" class="xl84" width="149" style="height:15.75pt;width:112pt">R:
-							  REGULAR</td>
+							 <tr height="21" style="height:16pt">
+							  <td height="21" class="xl84" width="149" style="height:17.0pt;width:112pt">R: REGULAR</td>
 							  <td class="xl89" width="40" style="width:30pt"></td>
 							  <td class="xl89" width="40" style="width:30pt"></td>
 							  <td class="xl94" width="40" style="width:30pt"></td>
@@ -1015,6 +1020,7 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 							 </tbody></table>
 				        </div>
 			        </p:outputPanel>
+			        </div>
 		       	</p:tab>
 		   </p:tabView>	       			
 	   	</h:form>

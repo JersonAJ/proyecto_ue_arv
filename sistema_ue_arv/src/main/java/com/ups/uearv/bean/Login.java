@@ -41,10 +41,25 @@ public class Login implements Serializable {
 
 	@ManagedProperty(value = "#{navegacion}")
 	private Navegacion navegacion;
-	
+
 	public String ingresar() {
 		try {
+			if (usuario.equals("")) {
+				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error de acceso:", "Debe ingresar el usuario"));
+				return navegacion.toLogin();
+			}
+			if (password.equals("")) {
+				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error de acceso:", "Debe ingresar la contraseña"));
+				return navegacion.toLogin();
+			}
+
 			SegUsuario u = (SegUsuario) DAO.buscarObject(new SegUsuario(),"from SegUsuario c where c.idUsuario = '" + usuario + "'");
+
+			if (u == null) {
+				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error de acceso:", "El usuario no existe"));
+				usuario = null;
+				return navegacion.toLogin();	
+			}
 
 			String pass = u.getClave();
 			String bloq = u.getSnBloqueado();
@@ -54,24 +69,23 @@ public class Login implements Serializable {
 				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error de acceso:", "El usuario se encuentra inactivo"));
 				usuario = null;
 				return navegacion.toLogin();
-			}			
+			}
 			if (bloq.equals("S")) {
 				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error de acceso:", "El usuario se encuentra bloqueado"));
 				usuario = null;
 				return navegacion.toLogin();
-			}			
-			if (pass != null) {
-				password = Util.generaSHA256(password);
-				if (password.equals(pass)) {
-					HttpSession httpSession = Session.getSession();
-					httpSession.setAttribute("username", usuario);
+			}
 
-					return navegacion.redirectToInicio();
-				} 
-			}			
-			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error de acceso:", "Usuario o contraseña incorrecta"));
-			usuario = null;
-			return navegacion.toLogin();
+			password = Util.generaSHA256(password);
+			if (password.equals(pass)) {
+				HttpSession httpSession = Session.getSession();
+				httpSession.setAttribute("username", usuario);
+
+				return navegacion.redirectToInicio();
+			} else {
+				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error de acceso:", "Contraseña incorrecta"));
+				return navegacion.toLogin();	
+			}
 
 		} catch (Exception e) {
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error de acceso:", "Contacte al administrador"));
@@ -86,7 +100,7 @@ public class Login implements Serializable {
 		loggedIn = false;
 		return navegacion.redirectToLogin();
 	}
-	
+
 	public String getIniciales() {
 		try {
 			return usuario.substring(0, 2).toUpperCase();	
@@ -94,7 +108,7 @@ public class Login implements Serializable {
 			return "";
 		}	
 	}
-	
+
 	public String getPerfil() {
 		try {						
 			return WordUtils.capitalizeFully(DAO.getPerfil(usuario));	
@@ -102,7 +116,7 @@ public class Login implements Serializable {
 			return "";
 		}	
 	}
-	
+
 	public String getNombre() {
 		try {						
 			return WordUtils.capitalizeFully(DAO.getNombre(usuario));	
@@ -110,7 +124,7 @@ public class Login implements Serializable {
 			return "";
 		}	
 	}
-	
+
 	// GETTERS AND SETTERS
 	public String getUsuario() {
 		return usuario;
