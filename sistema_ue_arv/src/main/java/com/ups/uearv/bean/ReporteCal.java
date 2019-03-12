@@ -82,6 +82,7 @@ public class ReporteCal implements Serializable {
 	
 	// VARIABLES INFORME FINAL
 	private List<Object> informeFinalList = new ArrayList<Object>();
+	/*Q1*/
 	String olQ1PromedioFinal = "";
 	String olQ1EscalaFinal = "";
 	
@@ -108,7 +109,7 @@ public class ReporteCal implements Serializable {
 	String olQ1p1Proyectos = "";	
 	String olQ1p2Proyectos = "";
 	String olQ1p3Proyectos = "";
-	
+	/*Q2*/
 	String olQ2PromedioFinal = "";
 	String olQ2EscalaFinal = "";
 	
@@ -221,19 +222,19 @@ public class ReporteCal implements Serializable {
 			for (int k = 0; k < result1.size(); k++) {
 				Object[] obj = (Object[]) itr1.next();					
 				LibretaCal e = new LibretaCal();
-				e.setIdAsignatura(obj[0].toString());
-				e.setAsignatura(obj[1].toString());
-				e.setTarea(new BigDecimal(obj[2].toString()));
-				e.setActIndividual(new BigDecimal(obj[3].toString()));
-				e.setActGrupal(new BigDecimal(obj[4].toString()));
-				e.setLeccion(new BigDecimal(obj[5].toString()));
-				e.setEvaluacion(new BigDecimal(obj[6].toString()));
-				e.setPromedio(new BigDecimal(obj[7].toString()));
-				e.setEscala(obj[8].toString());
+				e.setIdAsignatura(obj[0] == null ? "" : obj[0].toString());
+				e.setAsignatura(obj[1] == null ? "" : obj[1].toString());
+				e.setTarea(obj[2] == null ? "" : obj[2].toString());
+				e.setActIndividual(obj[3] == null ? "" : obj[3].toString());
+				e.setActGrupal(obj[4] == null ? "" : obj[4].toString());
+				e.setLeccion(obj[5] == null ? "" : obj[5].toString());
+				e.setEvaluacion(obj[6] == null ? "" : obj[6].toString());
+				e.setPromedio(obj[7] == null ? "" : obj[7].toString());
+				e.setEscala(obj[8] == null ? "" : obj[8].toString());
 				libretaList.add(e);
 				
-				olLibPromedioFinal = obj[9].toString();
-				olLibEscalaFinal = obj[10].toString();
+				olLibPromedioFinal = obj[9] == null ? "" : obj[9].toString();
+				olLibEscalaFinal = obj[10] == null ? "" : obj[10].toString();
 			}
 		} else {
 			limpiarLibreta();
@@ -339,10 +340,16 @@ public class ReporteCal implements Serializable {
 				
 				e.setPromedio(obj[22] == null ? "" : obj[22].toString());
 				e.setEscala(obj[23] == null ? "" : obj[23].toString());
+				
+				olQ1PromedioFinal = obj[24] == null ? "" : obj[24].toString();
+				olQ1EscalaFinal = obj[25] == null ? "" : obj[25].toString();
+				
+				olQ2PromedioFinal = obj[26] == null ? "" : obj[26].toString();
+				olQ2EscalaFinal = obj[27] == null ? "" : obj[27].toString();
 								
-				olSumaTotal = obj[24] == null ? "" : obj[24].toString();
-				olInfPromedioFinal = obj[25] == null ? "" : obj[25].toString();
-				olInfEscalaFinal = obj[26] == null ? "" : obj[26].toString();
+				olSumaTotal = obj[28] == null ? "" : obj[28].toString();
+				olInfPromedioFinal = obj[29] == null ? "" : obj[29].toString();
+				olInfEscalaFinal = obj[30] == null ? "" : obj[30].toString();
 				
 				informeFinalList.add(e);
 			}
@@ -408,12 +415,12 @@ public class ReporteCal implements Serializable {
 
 		public String idAsignatura;
 		public String asignatura;
-		public BigDecimal tarea;
-		public BigDecimal actIndividual;
-		public BigDecimal actGrupal;
-		public BigDecimal leccion;
-		public BigDecimal evaluacion;
-		public BigDecimal promedio;
+		public String tarea;
+		public String actIndividual;
+		public String actGrupal;
+		public String leccion;
+		public String evaluacion;
+		public String promedio;
 		public String escala;
 
 		public String getIdAsignatura() {
@@ -427,41 +434,41 @@ public class ReporteCal implements Serializable {
 		}
 		public void setAsignatura(String asignatura) {
 			this.asignatura = asignatura;
-		}
-		public BigDecimal getTarea() {
+		}		
+		public String getTarea() {
 			return tarea;
 		}
-		public void setTarea(BigDecimal tarea) {
+		public void setTarea(String tarea) {
 			this.tarea = tarea;
 		}
-		public BigDecimal getActIndividual() {
+		public String getActIndividual() {
 			return actIndividual;
 		}
-		public void setActIndividual(BigDecimal actIndividual) {
+		public void setActIndividual(String actIndividual) {
 			this.actIndividual = actIndividual;
 		}
-		public BigDecimal getActGrupal() {
+		public String getActGrupal() {
 			return actGrupal;
 		}
-		public void setActGrupal(BigDecimal actGrupal) {
+		public void setActGrupal(String actGrupal) {
 			this.actGrupal = actGrupal;
 		}
-		public BigDecimal getLeccion() {
+		public String getLeccion() {
 			return leccion;
 		}
-		public void setLeccion(BigDecimal leccion) {
+		public void setLeccion(String leccion) {
 			this.leccion = leccion;
 		}
-		public BigDecimal getEvaluacion() {
+		public String getEvaluacion() {
 			return evaluacion;
 		}
-		public void setEvaluacion(BigDecimal evaluacion) {
+		public void setEvaluacion(String evaluacion) {
 			this.evaluacion = evaluacion;
 		}
-		public BigDecimal getPromedio() {
+		public String getPromedio() {
 			return promedio;
 		}
-		public void setPromedio(BigDecimal promedio) {
+		public void setPromedio(String promedio) {
 			this.promedio = promedio;
 		}
 		public String getEscala() {
