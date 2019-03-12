@@ -116,11 +116,11 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 								</th>
 							    <th class="tg-cudy">ESCUELA DE EDUCACIÓN BÁSICA PARTICULAR</th>
 							    <th class="tg-0pky" rowspan="5">
-							    	<img src="/sistema_ue_arv/recursos/images/ESCUELA_ARV2.png" height="80" />
+							    	<img src="#{general.logoEscuela}" height="80" />
 							    </th>
 							</tr>
 							<tr>
-							  <td class="tg-757w"><span style="font-weight:bold">" DR. AQUILES RODRÍGUEZ V. "</span></td>
+							  <td class="tg-757w"><span style="font-weight:bold">" #{general.infoEscuela(1)} "</span></td>
 							</tr>
 							<tr>
 							  <td class="tg-cudy">LIBRETA DE CALIFICACIONES</td>
@@ -306,7 +306,7 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 								<col style="width: 40px" />								
 							</colgroup>									
 							<tr>
-								<td style="text-align: center; border-top: 1px solid black;">DRA. MARLIS SANCLEMENTE J.</td>							  							
+								<td style="text-align: center; border-top: 1px solid black;">#{general.infoEscuela(2)}</td>							  							
 								<td style="text-align: center;"></td>
 								<td style="text-align: center; border-top: 1px solid black;">DOCENTE</td>
 								<td style="text-align: center;"></td>
@@ -467,7 +467,7 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 							  <td class="xl104" style="border-left:none"></td>
 							  <td class="xl104" style="border-left:none"></td>
 							  <td class="xl101"></td>
-							  <td colspan="4" class="xl118">"DR. AQUILES RODRÍGUEZ V."</td>
+							  <td colspan="4" class="xl118">"#{general.infoEscuela(1)}"</td>
 							  <td class="xl117"></td>
 							 </tr>
 							 <tr height="21" style="height:16pt">
@@ -481,7 +481,7 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 							  	<br />
 							  	<br />
 							  	<div align="center">
-							  		<img src="/sistema_ue_arv/recursos/images/ESCUELA_ARV2.png" style="filter: contrast(150%); opacity: 0.7;" />
+							  		<img src="#{general.logoEscuela}" style="filter: contrast(150%); opacity: 0.7;" />
 							  	</div>
 							  	<br />
 							  	<br />
@@ -593,8 +593,8 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 							  <td class="xl101"></td>
 							  <td colspan="3" class="xl123">Guayaquil, 7 de marzo del 2019</td>
 							  <td class="xl101"></td>
-							  <td colspan="2" class="xl109" width="228" style="width:172pt">PROVINCIA: GUAYAS</td>
-							  <td colspan="2" class="xl109" width="228" style="width:172pt">CANTON: GUAYAQUIL</td>
+							  <td colspan="2" class="xl109" width="228" style="width:172pt">PROVINCIA: #{general.infoEscuela(9)}</td>
+							  <td colspan="2" class="xl109" width="228" style="width:172pt">CANTON: #{general.infoEscuela(10)}</td>
 							  <td class="xl117"></td>
 							 </tr>
 							 <tr height="20" style="height:17.0pt">
@@ -604,8 +604,7 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 							  <td class="xl101"></td>
 							  <td class="xl101"></td>
 							  <td class="xl101"></td>
-							  <td colspan="4" class="xl109" width="456" style="width:344pt">PARROQUIA: FEBRES
-							  CORDERO</td>
+							  <td colspan="4" class="xl109" width="456" style="width:344pt">PARROQUIA: #{general.infoEscuela(11)}</td>
 							  <td class="xl117"></td>
 							 </tr>
 							 <tr height="20" style="height:17.0pt">
@@ -615,8 +614,7 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 							  <td class="xl101"></td>
 							  <td class="xl101"></td>
 							  <td class="xl101"></td>
-							  <td colspan="4" class="xl109" width="456" style="width:344pt">DIRECTORA: DRA.
-							  MARLIS SANCLEMENTE J.</td>
+							  <td colspan="4" class="xl109" width="456" style="width:344pt">DIRECTORA: #{general.infoEscuela(2)}</td>
 							  <td class="xl117"></td>
 							 </tr>
 							 <tr height="20" style="height:17.0pt">
@@ -626,7 +624,7 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 							  <td class="xl101"></td>
 							  <td class="xl101"></td>
 							  <td class="xl101"></td>
-							  <td colspan="4" class="xl109" width="456" style="width:344pt">DIRECCION:</td>
+							  <td colspan="4" class="xl109" width="456" style="width:344pt">DIRECCION: #{general.infoEscuela(3)}</td>
 							  <td class="xl117"></td>
 							 </tr>
 							 <tr height="20" style="height:17.0pt">
@@ -640,7 +638,7 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 							 <tr height="20" style="height:17.0pt">
 							  <td height="20" class="xl115" style="height:17.0pt"></td>
 							  <td colspan="2" rowspan="2" class="xl108" width="252" style="width:190pt">_____________________________<br />
-							    DRA. MARLIS SANCLEMENTE J.<br />
+							    #{general.infoEscuela(2)}<br />
 							    DIRECTORA
 							  </td>
 							  <td colspan="2" rowspan="2" class="xl108" width="194" style="width:146pt">____________________<br />
@@ -917,12 +915,12 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 							  <td class="xl85"></td>
 							  <td class="xl85"></td>
 							  <td class="xl86"></td>
-							  <td rowspan="2" class="xl91" width="146" style="width:110pt">DRA. MARLIS SANCLEMENTE J. DIRECTORA</td>
+							  <td rowspan="2" class="xl91" width="146" style="width:110pt">#{general.infoEscuela(2)} DIRECTORA</td>
 							  <td class="xl89" width="149" style="width:112pt">FALTAS INJUTIFICADAS</td>
 							  <td class="xl85"></td>
 							  <td class="xl85"></td>
 							  <td class="xl86"></td>
-							  <td rowspan="2" class="xl91" width="146" style="width:110pt">DRA. MARLIS SANCLEMENTE J. DIRECTORA</td>
+							  <td rowspan="2" class="xl91" width="146" style="width:110pt">#{general.infoEscuela(2)} DIRECTORA</td>
 							 </tr>
 							 <tr height="21" style="height:16pt">
 							  <td height="21" class="xl84" width="149" style="height:17.0pt;width:112pt">ATRASOS</td>

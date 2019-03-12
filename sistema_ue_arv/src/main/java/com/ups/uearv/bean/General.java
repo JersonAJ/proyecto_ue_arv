@@ -23,6 +23,7 @@ import javax.persistence.Persistence;
 import org.primefaces.context.RequestContext;
 
 import com.ups.uearv.entidades.CatalogoDet;
+import com.ups.uearv.entidades.InfoEscuela;
 import com.ups.uearv.entidades.SegUsuario;
 import com.ups.uearv.servicios.DAO;
 import com.ups.uearv.servicios.Session;
@@ -111,6 +112,25 @@ public class General implements Serializable {
 			return "";
 		}		
 	}
+	
+	// OBTENER LOGO ESCUELA
+	public String getLogoEscuela() {
+		try {
+			InfoEscuela ie = (InfoEscuela) DAO.buscarObject(new InfoEscuela(), "from InfoEscuela c where c.codigo = 6");
+			return ie.getValor().trim();	
+		} catch (Exception e) {
+			return "";
+		}		
+	}
+	
+	public String infoEscuela(int cod) {
+		try {
+			InfoEscuela ie = (InfoEscuela) DAO.buscarObject(new InfoEscuela(), "from InfoEscuela c where c.codigo = " + cod);
+			return ie.getValor().trim();	
+		} catch (Exception e) {
+			return "";
+		}		
+	}		
 
 	// OBTENER FECHA EN FORMATO
 	public String getFechaString(Date f) {

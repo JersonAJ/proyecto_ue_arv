@@ -4,14 +4,16 @@ import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
+import com.ups.uearv.entidades.InfoEscuela;
+
 import java.io.UnsupportedEncodingException;
 import java.util.Properties;
 
 public class EmailClient {
-	private static final String senderEmail = "info.medicita@gmail.com";// change with your sender email
-	private static final String senderPassword = "medicita.info";// change with your sender password
+	private static String senderEmail; // change with your sender email
+	private static String senderPassword; // change with your sender password
 
-	public static void sendAsHtml(String personal, String to, String title, String html) {
+	public static void sendAsHtml(String personal, String to, String title, String html) {		
 		System.out.println("Enviando correo a " + to);
 
 		javax.mail.Session session = createSession();
@@ -21,16 +23,16 @@ public class EmailClient {
 		try {
 			prepareEmailMessage(message, personal, to, title, html);
 		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
+			System.out.println("Error: " + e.getMessage() + " Causa: " + e.getCause());
 		} catch (MessagingException e) {
-			e.printStackTrace();
+			System.out.println("Error: " + e.getMessage() + " Causa: " + e.getCause());
 		}
 
 		// sending message
 		try {
 			Transport.send(message);
 		} catch (MessagingException e) {
-			e.printStackTrace();
+			System.out.println("Error: " + e.getMessage() + " Causa: " + e.getCause());
 		}
 		System.out.println("Listo");
 	}
@@ -44,6 +46,12 @@ public class EmailClient {
 	}
 
 	private static javax.mail.Session createSession() {
+		// OBTIENE CREDENCIALES GMAIL
+		InfoEscuela ie = (InfoEscuela) DAO.buscarObject(new InfoEscuela(), "from InfoEscuela c where c.codigo = 7");
+		senderEmail = ie.getValor();		
+		ie = (InfoEscuela) DAO.buscarObject(new InfoEscuela(), "from InfoEscuela c where c.codigo = 8");
+		senderPassword = ie.getValor();
+				
 		Properties props = new Properties();
 		props.put("mail.smtp.auth", "true");// Outgoing server requires authentication
 		props.put("mail.smtp.ssl.trust", "smtp.gmail.com");

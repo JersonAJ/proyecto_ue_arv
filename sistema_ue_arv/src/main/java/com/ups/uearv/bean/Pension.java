@@ -359,6 +359,8 @@ public class Pension implements Serializable {
 			String concepto = (pen.getSecuencia() == 0 ? "Pago de Matrícula" : "Pago de Pensión No. " + String.format("%02d", pen.getSecuencia()));
 			BigDecimal valor = pen.getTotalPagar();
 			
+			General gen = new General();
+			
 			String mensaje = 
 			"<div align='center' style='font-family: Arial, sans-serif'>\r\n" + 
 			"	<table style='width: 50%; border: 2px solid #8f3b4f; padding: 5px; font-size: 13px'>\r\n" + 
@@ -372,7 +374,7 @@ public class Pension implements Serializable {
 			"				<td>\r\n" + 
 			"					<br/>\r\n" + 
 			"					Buen día estimado(a) Sr(a). " + representante + ", reciba un cordial saludo\r\n" + 
-			"					de parte de la Escuela de Educación Básica Particular Dr. Aquiles Rodríguez V. \r\n" + 
+			"					de parte de la Escuela de Educación Básica Particular " + gen.infoEscuela(1) + " \r\n" + 
 			"					<br/>\r\n" + 
 			"					El motivo de este mensaje es para recordarle que tiene un valor pendiente <b>($ " + valor + ")</b> de\r\n" + 
 			"					cancelar por concepto de: <b>" + concepto + "</b> del estudiante\r\n" + 
@@ -380,7 +382,7 @@ public class Pension implements Serializable {
 			"					<br/><br/>\r\n" + 
 			"					Saludos,\r\n" + 
 			"					<br/>\r\n" + 
-			"					Escuela Dr. Aquiles Rodríguez Venegas.\r\n" + 
+			"					Escuela " + gen.infoEscuela(1) + ".\r\n" + 
 			"				</td>\r\n" + 
 			"			</tr>\r\n" + 
 			"		</tbody>\r\n" + 

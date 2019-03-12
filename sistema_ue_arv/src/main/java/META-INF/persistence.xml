@@ -29,6 +29,7 @@
 		<class>com.ups.uearv.entidades.SegUsuario</class>
 		<class>com.ups.uearv.entidades.SegPerfilMenu</class>
 		<class>com.ups.uearv.entidades.SegPerfilMenuPK</class>
+		<class>com.ups.uearv.entidades.InfoEscuela</class>		
 
 		 <properties>
 	         <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />

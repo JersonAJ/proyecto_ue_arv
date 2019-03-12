@@ -264,6 +264,7 @@ xmlns:pe="http://primefaces.org/ui/extensions">
 						<h:outputLabel value=" | " style="color: #222" />
 						<p:commandLink title="Imprimir comprobante de pago" disabled="#{dtpension.saldo eq '0.00'?false:true}"
 							onclick="printComprobante(
+								'#{general.logoEscuela}',
 								'#{dtpension.idPension}',
 								'#{dtpension.matMatricula.idMatricula}',
 								'#{dtpension.matMatricula.matEstudiante.apellidos} #{dtpension.matMatricula.matEstudiante.nombres}',
@@ -311,7 +312,7 @@ xmlns:pe="http://primefaces.org/ui/extensions">
 			<!-- IMPRIMIR -->
 			<script type="text/javascript">			
 				/* COMPROBANTE */	
-				function printComprobante(idPension, codMatricula, estudiante, formaPago, fechaPago, valor, concepto, descuento, totalPagar, valorPagado, saldo, usuario) {
+				function printComprobante(logoEscuela, idPension, codMatricula, estudiante, formaPago, fechaPago, valor, concepto, descuento, totalPagar, valorPagado, saldo, usuario) {
 				  var f = new Date()				 
 				  var dd = f.getDate()
 				  var mm = f.getMonth() + 1
@@ -340,7 +341,7 @@ xmlns:pe="http://primefaces.org/ui/extensions">
 				 	+'	<tbody>'
 				 	+'		<tr>'
 				 	+'			<td style="width: 20%">'
-				 	+'				<img src="/sistema_ue_arv/recursos/images/ESCUELA_ARV2.png" height="80" />'
+				 	+'				<img src="'+ logoEscuela +'" height="80" />'
 				 	+'			</td>'
 				 	+'			<td style="width: 80%" align="center">'
 				 	+'				<div id="nreporte">'
@@ -401,7 +402,7 @@ xmlns:pe="http://primefaces.org/ui/extensions">
 				}
 				
 				/* NOTIFICACION */				
-				function printNotificacion(representante, estudiante, valor, concepto) {
+				function printNotificacion(nombreEscuela, representante, estudiante, valor, concepto) {
 				  if (concepto == 0) { concepto = 'Pago de Matrícula' } else { concepto = 'Pago de Pensión No. '+ concepto.padStart(2,"0") }
 				  
 				  var newWin = window.open('','Print-Window');				  
@@ -419,7 +420,7 @@ xmlns:pe="http://primefaces.org/ui/extensions">
 					+'		<td>'
 					+'			<br/>'
 					+'			Buen día estimado(a) Sr(a). ' + representante + ', reciba un cordial saludo'
-					+'			de parte de la Escuela de Educación Básica Particular Dr. Aquiles Rodríguez V. '
+					+'			de parte de la Escuela de Educación Básica Particular ' + nombreEscuela
 					+'			<br/>'
 					+'			El motivo de este mensaje es para recordarle que tiene un valor pendiente <b>($ ' + valor + ')</b> de '
 					+'			cancelar por concepto de: <b>' + concepto + '</b> del estudiante '
@@ -427,7 +428,7 @@ xmlns:pe="http://primefaces.org/ui/extensions">
 					+'			<br/><br/>'
 					+'			Saludos, '
 					+'			<br/>'
-					+'			Escuela Dr. Aquiles Rodríguez Venegas.'
+					+'			Escuela ' + nombreEscuela + '.'
 					+'		</td>'
 					+'	</tr>'
 					+'</tbody>'
@@ -562,7 +563,7 @@ xmlns:pe="http://primefaces.org/ui/extensions">
 						<p:spacer width="10px" />
 						
 						<p:commandLink id="btnImp" title="Imprimir notificación" 
-							onclick="printNotificacion('#{pension.olRepresentante}','#{pension.inTotalPagar}','#{pension.olEstudiante}','#{pension.olSecuencia}')">	
+							onclick="printNotificacion('#{general.infoEscuela(1)}','#{pension.olRepresentante}','#{pension.inTotalPagar}','#{pension.olEstudiante}','#{pension.olSecuencia}')">	
 							<i class="fa fa-print" /> Imprimir							 
 						</p:commandLink>
 						<br /><br />	
@@ -578,7 +579,7 @@ xmlns:pe="http://primefaces.org/ui/extensions">
 									<br />
 										<p:outputPanel id="opText">
 											Buen día estimado(a) Sr(a). <p:outputLabel value="#{pension.olRepresentante}" />, reciba un cordial saludo
-											de parte de la Escuela de Educación Básica Particular Dr. Aquiles Rodríguez V. 
+											de parte de la Escuela de Educación Básica Particular #{general.infoEscuela(1)} 
 											<br/>
 											El motivo de este mensaje es para recordarle que tiene un valor pendiente <b>($ <p:outputLabel value="#{pension.inTotalPagar}" />)</b> de
 											cancelar por concepto de: 
@@ -592,7 +593,7 @@ xmlns:pe="http://primefaces.org/ui/extensions">
 											<br/><br/>
 											Saludos,
 											<br/>
-											Escuela Dr. Aquiles Rodríguez Venegas.
+											Escuela #{general.infoEscuela(1)}.
 										</p:outputPanel>
 									</td>
 								</tr>
