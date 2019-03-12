@@ -59,15 +59,17 @@ public class ReporteCal implements Serializable {
 	ArrayList<SelectItem> listEstudianteCal = new ArrayList<SelectItem>();
 	ArrayList<SelectItem> listDocenteCal = new ArrayList<SelectItem>();
 
-	// VARIABLES REPORTE LIBRETA CAL
 	String olPeriodo = "";
+	String olEstudiante = "";
+	String olDocente = "";
+	
+	// VARIABLES REPORTE LIBRETA CAL
 	String olJornada = "";
 	String olParcial = "";
 	String olQuimestre = "";
-	String olEstudiante = "";
-	String olDocente = "";
 	String olGrado = "";
 	String olParalelo = "";
+	
 	private List<Object> libretaList = new ArrayList<Object>();
 	String olLibComportamiento = "";
 	String olLibPromedioFinal = "";
