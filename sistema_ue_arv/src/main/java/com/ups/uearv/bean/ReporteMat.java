@@ -403,7 +403,7 @@ public class ReporteMat implements Serializable {
 		itCedula = "_____________";
 		itNombres = "___________________";
 		itApellidos = "___________________";
-		soRepresentante = "______________________________________";
+		soRepresentante = "_______________________________________";
 		itImagen = "/sistema_ue_arv/fotos/FOTO_DEFAULT.png";
 		soTipoSangre = "__________";
 
@@ -457,6 +457,8 @@ public class ReporteMat implements Serializable {
 		itMinusvalia = "_________________________";
 		soGradoMinusvalia = "_______";
 		
+		ckDiscapacidad = false;
+		sorGenero = "";
 		soPaEstadoCivil = "_________________";
 		opPaEstudios = "";	
 		opPaOcupacion = "";
