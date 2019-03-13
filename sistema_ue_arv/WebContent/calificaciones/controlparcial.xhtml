@@ -65,6 +65,13 @@ xmlns:pe="http://primefaces.org/ui/extensions">
 			    readOnly="false" sortBy="#{row.nomEstudiante}" sortOrder="ascending" emptyMessage="No existen datos a mostrar">
 			  
 				<p:ajax event="change" listener="#{asistencia.cellChangeEvent}" update="sheet1" />
+				
+				<f:facet name="header">  
+			        <div align="center" style="width: 100%; margin-top: 3px;">
+				        <h:outputText value="LAS NOTAS A INGRESAR PERTENECEN AL QUIMESTRE [ #{control.soQuimestre} ] - PARCIAL [ #{control.soParcial} ]" 
+				        	style="font-size: 13px; font-weight: bold; color: #183bff" />
+			        </div>
+			    </f:facet>
 			  			   			  
 			    <pe:sheetcolumn headerText="Estudiante" readonly="true" value="#{row.nomEstudiante}" sortBy="#{row.nomEstudiante}" />
 			    	

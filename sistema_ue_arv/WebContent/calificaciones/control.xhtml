@@ -229,7 +229,7 @@ xmlns:pe="http://primefaces.org/ui/extensions">
 			<style>
 				.handsontable .htDimmed { color: #595c5d; }
 				.handsontable.listbox .ht_master table { border: 1px solid #000; border-collapse: separate; }
-				.ui-handsontable .ui-datatable-header, .ui-handsontable .ui-datatable-footer { text-align: left; font-weight: 700; font-size: 12px; color: #212121; }
+				.ui-handsontable .ui-datatable-header, .ui-handsontable .ui-datatable-footer { text-align: left; font-weight: 700; font-size: 12px; color: #212121; height: 20px }
 				.handsontable .htAutocompleteArrow { float: right; font-size: 12px; color: #474a4b; cursor: default; width: 16px; text-align: center; }
 				.handsontable tbody th.ht__highlight, .handsontable thead th.ht__highlight { background-color: #dcdcdc; color: #8f3b4f; }
 				
@@ -244,6 +244,13 @@ xmlns:pe="http://primefaces.org/ui/extensions">
 				    readOnly="false" sortBy="#{row.nomEstudiante}" sortOrder="ascending" emptyMessage="No existen datos a mostrar" >
 				  
 					<p:ajax event="change" listener="#{control.cellChangeEvent}" update="sheet1" />
+					
+					<f:facet name="header">  
+				        <div align="center" style="width: 100%; margin-top: 3px;">
+					        <h:outputText value="LAS NOTAS A INGRESAR PERTENECEN AL QUIMESTRE [ #{control.soQuimestre} ] - PARCIAL [ #{control.soParcial} ]" 
+					        	style="font-size: 13px; font-weight: bold; color: #183bff" />
+				        </div>
+				    </f:facet>
 				  			   			  
 				    <pe:sheetcolumn headerText="Estudiante" readonly="true" value="#{row.nomEstudiante}" sortBy="#{row.nomEstudiante}" />
 				    	
@@ -312,7 +319,14 @@ xmlns:pe="http://primefaces.org/ui/extensions">
 				    height="350" rowKey="#{row.codMatricula}" showRowHeaders="true" resizableCols="true" resizableRows="true" 
 				    readOnly="false" sortBy="#{row.nomEstudiante}" sortOrder="ascending" emptyMessage="No existen datos a mostrar">   
 				  
-					<p:ajax event="change" listener="#{control.cellChangeEvent}" update="sheet2" />  
+					<p:ajax event="change" listener="#{control.cellChangeEvent}" update="sheet2" />
+					
+					<f:facet name="header">  
+				        <div align="center" style="width: 100%; margin-top: 3px;">
+					        <h:outputText value="LAS NOTAS A INGRESAR PERTENECEN AL QUIMESTRE [ #{control.soQuimestre} ] - EXAMEN" 
+					        	style="font-size: 13px; font-weight: bold; color: #183bff" />
+				        </div>
+				    </f:facet>  
 				  			   			  
 				    <pe:sheetcolumn headerText="Estudiante" readonly="true" value="#{row.nomEstudiante}" sortBy="#{row.nomEstudiante}" />
 				    	
