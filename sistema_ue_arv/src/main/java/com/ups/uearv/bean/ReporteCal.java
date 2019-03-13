@@ -197,7 +197,7 @@ public class ReporteCal implements Serializable {
 	}
 
 	@SuppressWarnings("unchecked")
-	public void verLibretaCalifinaciones() {	
+	public void verLibretaCalifinaciones() {
 		limpiarLibreta();
 		
 		if (soPeriodoCal.equals("NA")) {
