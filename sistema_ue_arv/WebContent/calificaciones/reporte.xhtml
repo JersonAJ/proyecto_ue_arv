@@ -20,7 +20,7 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 				<p:selectOneMenu id="soPeriodo" value="#{reporteCal.soPeriodoCal}" style="width: 130px">
 					<f:selectItem itemLabel="Seleccione Período" itemValue="NA" />
 					<f:selectItems value="#{reporteCal.listPeriodoCal}" />		
-					<p:ajax listener="#{reporteCal.onChangePeriodoCal()}" update="soOferta"/>								
+					<p:ajax listener="#{reporteCal.onChangePeriodoCal()}" update="soOferta soEstudiante"/>								
 				</p:selectOneMenu>	
 				<p:spacer width="10px" />
 				<p:selectOneMenu id="soOferta" value="#{reporteCal.soOfertaCal}" style="width: 190px">
@@ -325,7 +325,7 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 					</p:outputPanel>
 		       	</p:tab>
 		       	
-		       	<p:tab title="Informe de Rendimiento Académico">
+		       	<p:tab title="Informe Final y de Rendimiento Académico">
 		       			       			        
 		        	<p:outputPanel style="background-color: white; padding: 5px; display: inline-flex; margin-top: -5px;">
 						<p:commandButton id="btnVerInforme" value="Ver" style="font-size: 12px !important;" 
@@ -398,7 +398,7 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 							.xl101 { font-family:"Source Sans Pro", sans-serif; background:white; }
 							.xl102 { color:#222222; font-size:8.0pt; font-weight:700; font-family:"Source Sans Pro", sans-serif; text-align:center; vertical-align:middle; border-top:1.0pt solid windowtext; border-right:1.0pt solid windowtext; border-bottom:none; border-left:1.0pt solid windowtext; background:white; white-space:normal; }
 							.xl103 { color:#222222; font-size:8.0pt; font-weight:700; font-family:"Source Sans Pro", sans-serif; text-align:left; vertical-align:middle; border-top:1.0pt solid windowtext; border-right:none; border-bottom:1.0pt solid windowtext; border-left:1.0pt solid windowtext; background:white; white-space:normal; }
-							.xl104 { font-family:"Source Sans Pro", sans-serif; border:1.0pt solid windowtext; background:white; }
+							.xl104 { font-family:"Source Sans Pro", sans-serif; border:1.0pt solid windowtext; background:white; text-align:center; font-weight:bold; }
 							.xl105 { color:#222222; font-size:8.0pt; font-weight:700; font-family:"Source Sans Pro", sans-serif; text-align:left; vertical-align:middle; border-top:none; border-right:none; border-bottom:1.0pt solid black; border-left:1.0pt solid black; background:white;white-space:normal; }
 							.xl106 { color:#222222; font-size:8.0pt; font-weight:700; font-family:"Source Sans Pro", sans-serif; text-align:left; vertical-align:middle; background:white; white-space:normal; }
 							.xl107 { font-family:"Source Sans Pro", sans-serif; text-align:center; background:white; }
@@ -455,7 +455,7 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 							  <td class="xl101"></td>
 							  <td class="xl102" width="114" style="width:86pt">COMPORTAMIENTO</td>
 							  <td class="xl102" width="114" style="border-left:none;width:86pt">APROVECHAMIENTO</td>
-							  <td class="xl102" width="80" style="border-left:none;width:60pt">TOTAL</td>
+							  <td class="xl102" width="80" style="border-left:none;width:60pt">ESCALA</td>
 							  <td class="xl101"></td>
 							  <td colspan="4" class="xl116">ESCUELA DE EDUCACIÓN BÁSICA PARTICULAR</td>
 							  <td class="xl117"></td>
@@ -463,9 +463,9 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 							 <tr height="26" style="height:19.5pt">
 							  <td height="26" class="xl115" style="height:35px"></td>
 							  <td class="xl103" width="138" style="width:104pt"><p:spacer width="10px" />PRIMER QUIMESTRE</td>
-							  <td class="xl104"></td>
-							  <td class="xl104" style="border-left:none"></td>
-							  <td class="xl104" style="border-left:none"></td>
+							  <td class="xl104"> #{reporteCal.olQ1Comportamiento} </td>
+							  <td class="xl104" style="border-left:none"> #{reporteCal.olQ1PromedioFinal} </td>
+							  <td class="xl104" style="border-left:none"> #{reporteCal.olQ1EscalaFinal} </td>
 							  <td class="xl101"></td>
 							  <td colspan="4" class="xl118">"#{general.infoEscuela(1)}"</td>
 							  <td class="xl117"></td>
@@ -473,9 +473,9 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 							 <tr height="21" style="height:16pt">
 							  <td height="21" class="xl115" style="height:16pt"></td>
 							  <td class="xl105" width="138" style="width:104pt"><p:spacer width="10px" />SEGUNDO QUIMESTRE</td>
-							  <td class="xl104" style="border-top:none"></td>
-							  <td class="xl104" style="border-top:none;border-left:none"></td>
-							  <td class="xl104" style="border-top:none;border-left:none"></td>
+							  <td class="xl104"> #{reporteCal.olQ2Comportamiento} </td>
+							  <td class="xl104" style="border-left:none"> #{reporteCal.olQ2PromedioFinal} </td>
+							  <td class="xl104" style="border-left:none"> #{reporteCal.olQ2EscalaFinal} </td>
 							  <td class="xl101"></td>
 							  <td colspan="2" rowspan="6" class="xl119">
 							  	<br />
@@ -488,7 +488,7 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 							  </td>
 							  <td colspan="2" rowspan="6" class="xl119">
 							  	<div align="center">
-							  		<img width="110px" height="130px" class="profile-pic" src="#{request.contextPath}/fotos/FOTO_DEFAULT.png"
+							  		<img width="110px" height="130px" class="profile-pic" src="#{reporteCal.olFotoEst}"
 							  			style="border: 2px solid black;" />
 							  	</div>
 							  </td>
@@ -497,9 +497,9 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 							 <tr height="21" style="height:16pt">
 							  <td height="21" class="xl115" style="height:16pt"></td>
 							  <td class="xl105" width="138" style="width:104pt"><p:spacer width="20px" />PROMEDIO FINAL</td>
-							  <td class="xl104" style="border-top:none"></td>
-							  <td class="xl104" style="border-top:none;border-left:none"></td>
-							  <td class="xl104" style="border-top:none;border-left:none"></td>
+							  <td class="xl104" style="border-top:none"> #{reporteCal.olInfComportamiento} </td>
+							  <td class="xl104" style="border-top:none;border-left:none"> #{reporteCal.olInfPromedioFinal} </td>
+							  <td class="xl104" style="border-top:none;border-left:none"> #{reporteCal.olInfEscalaFinal} </td>
 							  <td class="xl101"></td>
 							  <td class="xl117"></td>
 							 </tr>
@@ -530,7 +530,7 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 							 <tr height="42" style="height:30.0pt">
 							  <td height="42" class="xl115" style="height:30.0pt"></td>
 							  <td colspan="4" class="xl121" width="446" style="width:336pt">DURANTE EL PERÍODO
-							  LECTIVO 2019-2020 HA OBTENIDO LAS SIGUIENTES CALIFICACIONES:</td>
+							  LECTIVO #{reporteCal.olInfPeriodo} HA OBTENIDO LAS SIGUIENTES CALIFICACIONES:</td>
 							  <td class="xl101"></td>
 							  <td class="xl117"></td>
 							 </tr>
@@ -549,14 +549,14 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 							 </tr>
 							 <tr height="20" style="height:17.0pt">
 							  <td height="20" class="xl115" style="height:17.0pt"></td>
-							  <td colspan="4" class="xl106" width="446" style="width:336pt">COMPORATAMIENTO:</td>
+							  <td colspan="4" class="xl106" width="446" style="width:336pt">COMPORATAMIENTO: #{reporteCal.olDesComportamiento}</td>
 							  <td class="xl101"></td>
-							  <td colspan="4" class="xl116">INFORME DE RENDIMIENTO ACADEMICO</td>
+							  <td colspan="4" class="xl116">INFORME DE RENDIMIENTO ACADÉMICO</td>
 							  <td class="xl117"></td>
 							 </tr>
 							 <tr height="20" style="height:17.0pt">
 							  <td height="20" class="xl115" style="height:17.0pt"></td>
-							  <td colspan="4" class="xl106" width="446" style="width:336pt">APROVECHAMIENTO:</td>
+							  <td colspan="4" class="xl106" width="446" style="width:336pt">APROVECHAMIENTO: #{reporteCal.olDesAprovechamiento}</td>
 							  <td class="xl101"></td>
 							  <td class="xl101"></td>
 							  <td class="xl101"></td>
@@ -568,14 +568,14 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 							  <td height="20" class="xl115" style="height:17.0pt"></td>
 							  <td colspan="4" class="xl106" width="446" style="width:336pt">EN CONSECUENCIA: _______________________________________________________________________</td>
 							  <td class="xl101"></td>
-							  <td colspan="4" class="xl109" width="456" style="width:344pt">ESTUDIANTE:</td>
+							  <td colspan="4" class="xl109" width="456" style="width:344pt">ESTUDIANTE: #{reporteCal.olInfEstudiante}</td>
 							  <td class="xl117"></td>
 							 </tr>
 							 <tr height="20" style="height:17.0pt">
 							  <td height="20" class="xl115" style="height:17.0pt"></td>
 							  <td colspan="4" class="xl122"></td>
 							  <td class="xl101"></td>
-							  <td colspan="4" class="xl109" width="456" style="width:344pt">AÑO BÁSICO:</td>
+							  <td colspan="4" class="xl109" width="456" style="width:344pt">#{reporteCal.olCurso.toUpperCase()}</td>
 							  <td class="xl117"></td>
 							 </tr>
 							 <tr height="20" style="height:17.0pt">
@@ -591,7 +591,7 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 							 <tr height="20" style="height:17.0pt">
 							  <td height="20" class="xl115" style="height:17.0pt"></td>
 							  <td class="xl101"></td>
-							  <td colspan="3" class="xl123">Guayaquil, 7 de marzo del 2019</td>
+							  <td colspan="3" class="xl123"> #{general.infoEscuela(10)}, ___ de ______________ del 20___ </td>
 							  <td class="xl101"></td>
 							  <td colspan="2" class="xl109" width="228" style="width:172pt">PROVINCIA: #{general.infoEscuela(9)}</td>
 							  <td colspan="2" class="xl109" width="228" style="width:172pt">CANTON: #{general.infoEscuela(10)}</td>
@@ -653,7 +653,7 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 							  <td height="24" class="xl115" style="height:18.0pt"></td>
 							  <td class="xl101"></td>
 							  <td class="xl101"></td>
-							  <td colspan="2" class="xl111" width="228" style="width:172pt">2019-2020</td>
+							  <td colspan="2" class="xl111" width="228" style="width:172pt">#{reporteCal.olInfPeriodo}</td>
 							  <td class="xl101"></td>
 							  <td class="xl117"></td>
 							 </tr>
@@ -813,17 +813,17 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 							            </p:row>
 							             <p:row>
 							            	<p:column footerText="COMPORTAMIENTO" style="font-size: 9px; color: #000" />
-							            	<p:column footerText="" style="font-size: 9px; color: #000" />
-							            	<p:column footerText="" style="font-size: 9px; color: #000" />
-							            	<p:column footerText="" style="font-size: 9px; color: #000" />
+							            	<p:column footerText="#{reporteCal.olQ1p1Comportamiento}" style="font-size: 9px; color: #000" />
+							            	<p:column footerText="#{reporteCal.olQ1p2Comportamiento}" style="font-size: 9px; color: #000" />
+							            	<p:column footerText="#{reporteCal.olQ1p3Comportamiento}" style="font-size: 9px; color: #000" />
 							            	
 							                <p:column colspan="4" footerText="PROMEDIO FINAL" style="font-size: 9px; color: #000" />				                
 							                <p:column footerText="#{reporteCal.olQ1PromedioFinal}" style="font-size: 9px; color: #000" />
 							                <p:column footerText="#{reporteCal.olQ1EscalaFinal}" style="font-size: 9px; color: #000" />
 							                
-							                <p:column footerText="" style="font-size: 9px; color: #000" />
-							            	<p:column footerText="" style="font-size: 9px; color: #000" />
-							            	<p:column footerText="" style="font-size: 9px; color: #000" />
+							                <p:column footerText="#{reporteCal.olQ2p1Comportamiento}" style="font-size: 9px; color: #000" />
+							            	<p:column footerText="#{reporteCal.olQ2p2Comportamiento}" style="font-size: 9px; color: #000" />
+							            	<p:column footerText="#{reporteCal.olQ2p3Comportamiento}" style="font-size: 9px; color: #000" />
 							            	
 							            	<p:column colspan="4" footerText="PROMEDIO FINAL" style="font-size: 9px; color: #000" />				                
 							                <p:column footerText="#{reporteCal.olQ2PromedioFinal}" style="font-size: 9px; color: #000" />
@@ -888,49 +888,49 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 							 </tr>
 							 <tr height="21" style="height:16pt">
 							  <td height="21" class="xl84" width="149" style="height:17.0pt;width:112pt">DÍAS ASISTIDOS</td>
-							  <td class="xl85"></td>
-							  <td class="xl85"></td>
-							  <td class="xl86"></td>
+							  <td class="xl85">#{reporteCal.olQ1p1Aistencias}</td>
+							  <td class="xl85">#{reporteCal.olQ1p2Aistencias}</td>
+							  <td class="xl86">#{reporteCal.olQ1p3Aistencias}</td>
 							  <td></td>
 							  <td class="xl84" width="149" style="border-left:none;width:112pt">DÍAS ASISTIDOS</td>
-							  <td class="xl85"></td>
-							  <td class="xl85"></td>
-							  <td class="xl86"></td>
+							  <td class="xl85">#{reporteCal.olQ2p1Aistencias}</td>
+							  <td class="xl85">#{reporteCal.olQ2p2Aistencias}</td>
+							  <td class="xl86">#{reporteCal.olQ2p3Aistencias}</td>
 							  <td></td>
 							 </tr>
 							 <tr height="21" style="height:16pt">
 							  <td height="21" class="xl84" width="149" style="height:17.0pt;width:112pt">FALTAS JUTIFICADAS</td>
-							  <td class="xl85"></td>
-							  <td class="xl85"></td>
-							  <td class="xl86"></td>
+							  <td class="xl85">#{reporteCal.olQ1p1FaltasJustif}</td>
+							  <td class="xl85">#{reporteCal.olQ1p2FaltasJustif}</td>
+							  <td class="xl86">#{reporteCal.olQ1p3FaltasJustif}</td>
 							  <td class="xl99"></td>
 							  <td class="xl89" width="149" style="width:112pt">FALTAS JUTIFICADAS</td>
-							  <td class="xl85"></td>
-							  <td class="xl85"></td>
-							  <td class="xl86"></td>
+							  <td class="xl85">#{reporteCal.olQ2p1FaltasJustif}</td>
+							  <td class="xl85">#{reporteCal.olQ2p2FaltasJustif}</td>
+							  <td class="xl86">#{reporteCal.olQ2p3FaltasJustif}</td>
 							  <td class="xl99"></td>
 							 </tr>
 							 <tr height="20" style="height:17.0pt">
 							  <td height="20" class="xl84" width="149" style="height:17.0pt;width:112pt">FALTAS INJUTIFICADAS</td>
-							  <td class="xl85"></td>
-							  <td class="xl85"></td>
-							  <td class="xl86"></td>
+							  <td class="xl85">#{reporteCal.olQ1p1Faltas}</td>
+							  <td class="xl85">#{reporteCal.olQ1p2Faltas}</td>
+							  <td class="xl86">#{reporteCal.olQ1p3Faltas}</td>
 							  <td rowspan="2" class="xl91" width="146" style="width:110pt">#{general.infoEscuela(2)} DIRECTORA</td>
 							  <td class="xl89" width="149" style="width:112pt">FALTAS INJUTIFICADAS</td>
-							  <td class="xl85"></td>
-							  <td class="xl85"></td>
-							  <td class="xl86"></td>
+							  <td class="xl85">#{reporteCal.olQ2p1Faltas}</td>
+							  <td class="xl85">#{reporteCal.olQ2p2Faltas}</td>
+							  <td class="xl86">#{reporteCal.olQ2p3Faltas}</td>
 							  <td rowspan="2" class="xl91" width="146" style="width:110pt">#{general.infoEscuela(2)} DIRECTORA</td>
 							 </tr>
 							 <tr height="21" style="height:16pt">
 							  <td height="21" class="xl84" width="149" style="height:17.0pt;width:112pt">ATRASOS</td>
-							  <td class="xl85"></td>
-							  <td class="xl85"></td>
-							  <td class="xl86"></td>
+							  <td class="xl85">#{reporteCal.olQ1p1Atrasos}</td>
+							  <td class="xl85">#{reporteCal.olQ1p2Atrasos}</td>
+							  <td class="xl86">#{reporteCal.olQ1p3Atrasos}</td>
 							  <td class="xl89" width="149" style="width:112pt">ATRASOS</td>
-							  <td class="xl85"></td>
-							  <td class="xl85"></td>
-							  <td class="xl86"></td>
+							  <td class="xl85">#{reporteCal.olQ2p1Atrasos}</td>
+							  <td class="xl85">#{reporteCal.olQ2p2Atrasos}</td>
+							  <td class="xl86">#{reporteCal.olQ2p3Atrasos}</td>
 							 </tr>
 							 <tr height="37" style="height:27.75pt">
 							  <td colspan="4" height="37" class="xl69" width="269" style="border-right:1.0pt solid black; height:27.75pt;width:202pt">PROYECTOS ESCOLARES</td>
@@ -949,50 +949,98 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 							 </tr>
 							 <tr height="21" style="height:16pt">
 							  <td height="21" class="xl84" width="149" style="height:17.0pt;width:112pt">EX: EXCELENTE</td>
-							  <td class="xl89" width="40" style="width:30pt"></td>
-							  <td class="xl89" width="40" style="width:30pt"></td>
-							  <td class="xl94" width="40" style="width:30pt"></td>
+							  <td class="xl89" width="40" style="width:30pt">
+							  	<h:outputText value="#{reporteCal.olQ1p1Proyectos}" style="font-weight: normal; display: #{reporteCal.olQ1p1Proyectos eq 'EX' ? '':'none' }" />
+							  </td>
+							  <td class="xl89" width="40" style="width:30pt">
+							  	<h:outputText value="#{reporteCal.olQ1p2Proyectos}" style="font-weight: normal; display: #{reporteCal.olQ1p2Proyectos eq 'EX' ? '':'none' }" />
+							  </td>
+							  <td class="xl94" width="40" style="width:30pt">
+							  	<h:outputText value="#{reporteCal.olQ1p3Proyectos}" style="font-weight: normal; display: #{reporteCal.olQ1p3Proyectos eq 'EX' ? '':'none' }" />
+							  </td>
 							  <td class="xl91" width="146" style="width:110pt">DOCENTE</td>
 							  <td class="xl89" width="149" style="width:112pt">EX: EXCELENTE</td>
-							  <td class="xl85"></td>
-							  <td class="xl85"></td>
-							  <td class="xl86"></td>
+							  <td class="xl85">
+							  	<h:outputText value="#{reporteCal.olQ2p1Proyectos}" style="font-weight: normal; display: #{reporteCal.olQ2p1Proyectos eq 'EX' ? '':'none' }" />
+							  </td>
+							  <td class="xl85">
+							  	<h:outputText value="#{reporteCal.olQ2p2Proyectos}" style="font-weight: normal; display: #{reporteCal.olQ2p2Proyectos eq 'EX' ? '':'none' }" />
+							  </td>
+							  <td class="xl86">
+							  	<h:outputText value="#{reporteCal.olQ2p3Proyectos}" style="font-weight: normal; display: #{reporteCal.olQ2p3Proyectos eq 'EX' ? '':'none' }" />
+							  </td>
 							  <td class="xl91" width="146" style="width:110pt">DOCENTE</td>
 							 </tr>
 							 <tr height="21" style="height:16pt">
 							  <td height="21" class="xl84" width="149" style="height:17.0pt;width:112pt">MB: MUY BUENO</td>
-							  <td class="xl89" width="40" style="width:30pt"></td>
-							  <td class="xl89" width="40" style="width:30pt"></td>
-							  <td class="xl94" width="40" style="width:30pt"></td>
+							 <td class="xl89" width="40" style="width:30pt">
+							  	<h:outputText value="#{reporteCal.olQ1p1Proyectos}" style="font-weight: normal; display: #{reporteCal.olQ1p1Proyectos eq 'MB' ? '':'none' }" />
+							  </td>
+							  <td class="xl89" width="40" style="width:30pt">
+							  	<h:outputText value="#{reporteCal.olQ1p2Proyectos}" style="font-weight: normal; display: #{reporteCal.olQ1p2Proyectos eq 'MB' ? '':'none' }" />
+							  </td>
+							  <td class="xl94" width="40" style="width:30pt">
+							  	<h:outputText value="#{reporteCal.olQ1p3Proyectos}" style="font-weight: normal; display: #{reporteCal.olQ1p3Proyectos eq 'MB' ? '':'none' }" />
+							  </td>
 							  <td class="xl95" width="146" style="width:110pt"></td>
 							  <td class="xl89" width="149" style="width:112pt">MB: MUY BUENO</td>
-							  <td class="xl85"></td>
-							  <td class="xl85"></td>
-							  <td class="xl86"></td>
+							 <td class="xl85">
+							  	<h:outputText value="#{reporteCal.olQ2p1Proyectos}" style="font-weight: normal; display: #{reporteCal.olQ2p1Proyectos eq 'MB' ? '':'none' }" />
+							  </td>
+							  <td class="xl85">
+							  	<h:outputText value="#{reporteCal.olQ2p2Proyectos}" style="font-weight: normal; display: #{reporteCal.olQ2p2Proyectos eq 'MB' ? '':'none' }" />
+							  </td>
+							  <td class="xl86">
+							  	<h:outputText value="#{reporteCal.olQ2p3Proyectos}" style="font-weight: normal; display: #{reporteCal.olQ2p3Proyectos eq 'MB' ? '':'none' }" />
+							  </td>
 							  <td class="xl95" width="146" style="width:110pt"></td>
 							 </tr>
 							 <tr height="21" style="height:16pt">
 							  <td height="21" class="xl84" width="149" style="height:17.0pt;width:112pt">B: BUENO</td>
-							  <td class="xl89" width="40" style="width:30pt"></td>
-							  <td class="xl89" width="40" style="width:30pt"></td>
-							  <td class="xl94" width="40" style="width:30pt"></td>
+							  <td class="xl89" width="40" style="width:30pt">
+							  	<h:outputText value="#{reporteCal.olQ1p1Proyectos}" style="font-weight: normal; display: #{reporteCal.olQ1p1Proyectos eq 'B' ? '':'none' }" />
+							  </td>
+							  <td class="xl89" width="40" style="width:30pt">
+							  	<h:outputText value="#{reporteCal.olQ1p2Proyectos}" style="font-weight: normal; display: #{reporteCal.olQ1p2Proyectos eq 'B' ? '':'none' }" />
+							  </td>
+							  <td class="xl94" width="40" style="width:30pt">
+							  	<h:outputText value="#{reporteCal.olQ1p3Proyectos}" style="font-weight: normal; display: #{reporteCal.olQ1p3Proyectos eq 'B' ? '':'none' }" />
+							  </td>
 							  <td class="xl99"></td>
 							  <td class="xl89" width="149" style="width:112pt">B: BUENO</td>
-							  <td class="xl85"></td>
-							  <td class="xl85"></td>
-							  <td class="xl86"></td>
+							  <td class="xl85">
+							  	<h:outputText value="#{reporteCal.olQ2p1Proyectos}" style="font-weight: normal; display: #{reporteCal.olQ2p1Proyectos eq 'B' ? '':'none' }" />
+							  </td>
+							  <td class="xl85">
+							  	<h:outputText value="#{reporteCal.olQ2p2Proyectos}" style="font-weight: normal; display: #{reporteCal.olQ2p2Proyectos eq 'B' ? '':'none' }" />
+							  </td>
+							  <td class="xl86">
+							  	<h:outputText value="#{reporteCal.olQ2p3Proyectos}" style="font-weight: normal; display: #{reporteCal.olQ2p3Proyectos eq 'B' ? '':'none' }" />
+							  </td>
 							  <td class="xl99"></td>
 							 </tr>
 							 <tr height="21" style="height:16pt">
 							  <td height="21" class="xl84" width="149" style="height:17.0pt;width:112pt">R: REGULAR</td>
-							  <td class="xl89" width="40" style="width:30pt"></td>
-							  <td class="xl89" width="40" style="width:30pt"></td>
-							  <td class="xl94" width="40" style="width:30pt"></td>
+							  <td class="xl89" width="40" style="width:30pt">
+							  	<h:outputText value="#{reporteCal.olQ1p1Proyectos}" style="font-weight: normal; display: #{reporteCal.olQ1p1Proyectos eq 'R' ? '':'none' }" />
+							  </td>
+							  <td class="xl89" width="40" style="width:30pt">
+							  	<h:outputText value="#{reporteCal.olQ1p2Proyectos}" style="font-weight: normal; display: #{reporteCal.olQ1p2Proyectos eq 'R' ? '':'none' }" />
+							  </td>
+							  <td class="xl94" width="40" style="width:30pt">
+							  	<h:outputText value="#{reporteCal.olQ1p3Proyectos}" style="font-weight: normal; display: #{reporteCal.olQ1p3Proyectos eq 'R' ? '':'none' }" />
+							  </td>
 							  <td class="xl97" width="146" style="width:110pt">REPRESENTANTE</td>
 							  <td class="xl89" width="149" style="width:112pt">R: REGULAR</td>
-							  <td class="xl85"></td>
-							  <td class="xl85"></td>
-							  <td class="xl86"></td>
+							  <td class="xl85">
+							  	<h:outputText value="#{reporteCal.olQ2p1Proyectos}" style="font-weight: normal; display: #{reporteCal.olQ2p1Proyectos eq 'R' ? '':'none' }" />
+							  </td>
+							  <td class="xl85">
+							  	<h:outputText value="#{reporteCal.olQ2p2Proyectos}" style="font-weight: normal; display: #{reporteCal.olQ2p2Proyectos eq 'R' ? '':'none' }" />
+							  </td>
+							  <td class="xl86">
+							  	<h:outputText value="#{reporteCal.olQ2p3Proyectos}" style="font-weight: normal; display: #{reporteCal.olQ2p3Proyectos eq 'R' ? '':'none' }" />
+							  </td>
 							  <td class="xl97" width="146" style="width:110pt">REPRESENTANTE</td>
 							 </tr>
 							  <tr height="0" style="display:none">

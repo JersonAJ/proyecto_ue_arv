@@ -59,18 +59,7 @@
 			<artifactId>primefaces-extensions</artifactId>
 			<version>6.2.9</version>
 		</dependency>
-
-		<dependency>
-			<groupId>org.ocpsoft.rewrite</groupId>
-			<artifactId>rewrite-servlet</artifactId>
-			<version>3.4.1.Final</version>
-		</dependency>
-		<dependency>
-			<groupId>org.ocpsoft.rewrite</groupId>
-			<artifactId>rewrite-config-prettyfaces</artifactId>
-			<version>3.4.1.Final</version>
-		</dependency>
-
+		
 		<dependency>
 			<groupId>commons-fileupload</groupId>
 			<artifactId>commons-fileupload</artifactId>
@@ -142,19 +131,7 @@
 			<artifactId>poi-ooxml</artifactId>
 			<version>3.16</version>
 		</dependency>
-
-		<!-- <dependency> -->
-		<!-- <groupId>com.liferay.faces</groupId> -->
-		<!-- <artifactId>com.liferay.faces.bridge.ext</artifactId> -->
-		<!-- <version>5.0.3</version> -->
-		<!-- </dependency> -->
-
-		<!-- <dependency> -->
-		<!-- <groupId>com.liferay.faces</groupId> -->
-		<!-- <artifactId>com.liferay.faces.bridge.impl</artifactId> -->
-		<!-- <version>4.1.2</version> -->
-		<!-- </dependency> -->
-
+	
 	</dependencies>
 	<build>
 		<finalName>sistema_ue_arv</finalName>
