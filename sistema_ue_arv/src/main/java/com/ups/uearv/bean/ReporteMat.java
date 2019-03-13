@@ -378,6 +378,14 @@ public class ReporteMat implements Serializable {
 		}
 	}
 	
+	public String cantMatOferta(String periodo, String  oferta, String  estado) {
+		try {
+			return DAO.cantMatOferta(periodo, oferta, estado);	
+		} catch (Exception e) {
+			return "";
+		}		
+	}
+	
 	public void limpiarGrafica() {
 		porPeriodo = new PieChartModel();
 		porPeriodo.set("No hay datos", 0);

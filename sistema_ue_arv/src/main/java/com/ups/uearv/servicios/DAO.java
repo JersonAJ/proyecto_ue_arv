@@ -96,7 +96,7 @@ public class DAO {
 
 	// FUNCIONES SEGURIDAD
 	public static List<Object> consultaMenu(String idPerfil, int idMenuPadre) {
-		Query query = em.createNativeQuery(" CALL consulta_menu_perfil (" + idPerfil + ", " + idMenuPadre + ") ");
+		Query query = em.createNativeQuery(" CALL consulta_menu_perfil (" + idPerfil + ", " + idMenuPadre + ")");
 		return query.getResultList();
 	}
 	
@@ -104,7 +104,7 @@ public class DAO {
 		try {
 			SegUsuario u = (SegUsuario) DAO.buscarObject(new SegUsuario(), " from SegUsuario u where u.idUsuario = '" + usuario + "'");
 			int idPerfil = u.getIdPerfil();
-			Query query = em.createNativeQuery(" SELECT id_menu FROM seg_perfil_menu WHERE id_perfil = " + idPerfil);
+			Query query = em.createNativeQuery("SELECT id_menu FROM seg_perfil_menu WHERE id_perfil = " + idPerfil);
 			return query.getResultList();
 		} catch (Exception e) {
 			return null;
@@ -113,13 +113,27 @@ public class DAO {
 
 	public static String getPerfil(String usuario) {
 		Query query = em.createNativeQuery(
-				" SELECT k.descripcion FROM seg_usuario u INNER JOIN seg_perfil k ON k.id_perfil = u.id_perfil WHERE id_usuario = '" + usuario + "' ");
+				"SELECT k.descripcion FROM seg_usuario u INNER JOIN seg_perfil k ON k.id_perfil = u.id_perfil WHERE id_usuario = '" + usuario + "'");
 		List<Object> result = query.getResultList();
 		Iterator<Object> itr = result.iterator();
 		Object obj = (Object) itr.next();
 		String perfil = String.valueOf(obj);
 
 		return perfil;
+	}
+	
+	
+	public static String cantMatOferta(String periodo, String oferta, String estado) {
+		Query query = em.createNativeQuery(
+				"SELECT COUNT(1) \r\n" + 
+				"FROM mat_matricula m 	\r\n" + 
+				"WHERE m.id_periodo = '" + periodo + "' AND m.sn_aprobado = 'S' AND id_oferta = '" + oferta + "' AND m.estado = '" + estado + "'");
+		List<Object> result = query.getResultList();
+		Iterator<Object> itr = result.iterator();
+		Object obj = (Object) itr.next();
+		String cant = String.valueOf(obj);
+
+		return cant;
 	}
 	
 	public static Query spActualizaDiaVence(int dia, int idPeriodo) {
@@ -134,13 +148,13 @@ public class DAO {
 	
 	// FUNCIONES GENERALES
 	public static Query getPerfiles() {
-		Query query = em.createNativeQuery(" SELECT id_perfil, descripcion FROM seg_perfil WHERE estado = 'AC' ORDER BY descripcion");
+		Query query = em.createNativeQuery("SELECT id_perfil, descripcion FROM seg_perfil WHERE estado = 'AC' ORDER BY descripcion");
 		return query;
 	}
 		
 	public static String getNombre(String usuario) {
 		Query query = em.createNativeQuery(
-				" SELECT CONCAT(IFNULL(SUBSTRING_INDEX(nombres, ' ', 1), ''), ' ', IFNULL(SUBSTRING_INDEX(apellidos, ' ', 1), '')) FROM seg_usuario WHERE id_usuario = '" + usuario + "' ");
+				"SELECT CONCAT(IFNULL(SUBSTRING_INDEX(nombres, ' ', 1), ''), ' ', IFNULL(SUBSTRING_INDEX(apellidos, ' ', 1), '')) FROM seg_usuario WHERE id_usuario = '" + usuario + "'");
 		List<Object> result = query.getResultList();
 		Iterator<Object> itr = result.iterator();
 		Object obj = (Object) itr.next();
@@ -151,12 +165,12 @@ public class DAO {
 	
 	// GRAFICA
 	public static List<Object> getGraficaDepartamento(String idPeriodo) {
-		Query query = em.createNativeQuery("CALL grafico_matriculas (" + idPeriodo + ") ");
+		Query query = em.createNativeQuery("CALL grafico_matriculas (" + idPeriodo + ")");
 		return query.getResultList();
 	}
 	
 	public static List<Object> getGraficaEstadoCuentas(String idPeriodo) {
-		Query query = em.createNativeQuery("CALL grafico_estado_cuentas (" + idPeriodo + ") ");
+		Query query = em.createNativeQuery("CALL grafico_estado_cuentas (" + idPeriodo + ")");
 		return query.getResultList();
 	}
 	
@@ -180,25 +194,25 @@ public class DAO {
 	
 	public static Query getDocentes() {
 		Query query = em.createNativeQuery(
-				" SELECT id_docente, CONCAT(IFNULL(SUBSTRING_INDEX(nombres, ' ', 1), ''), ' ', IFNULL(SUBSTRING_INDEX(apellidos, ' ', 1), '')) nombre FROM mat_docente WHERE estado = 'AC' order by 2 ");
+				"SELECT id_docente, CONCAT(IFNULL(SUBSTRING_INDEX(nombres, ' ', 1), ''), ' ', IFNULL(SUBSTRING_INDEX(apellidos, ' ', 1), '')) nombre FROM mat_docente WHERE estado = 'AC' order by 2");
 		return query;
 	}
 
 	public static Query getRepresentantes() {
 		Query query = em.createNativeQuery(
-				" SELECT id_representante, CONCAT(IFNULL(SUBSTRING_INDEX(nombres, ' ', 1), ''), ' ', IFNULL(SUBSTRING_INDEX(apellidos, ' ', 1), '')) nombre FROM mat_representante WHERE estado = 'AC' ORDER BY 2 ");
+				"SELECT id_representante, CONCAT(IFNULL(SUBSTRING_INDEX(nombres, ' ', 1), ''), ' ', IFNULL(SUBSTRING_INDEX(apellidos, ' ', 1), '')) nombre FROM mat_representante WHERE estado = 'AC' ORDER BY 2");
 		return query;
 	}
 
 	public static Query getEstudiantes() {
 		Query query = em.createNativeQuery(
-				" SELECT id_estudiante, CONCAT(IFNULL(SUBSTRING_INDEX(nombres, ' ', 1), ''), ' ', IFNULL(SUBSTRING_INDEX(apellidos, ' ', 1), '')) nombre FROM mat_estudiante WHERE estado = 'AC' ORDER BY 2 ");
+				"SELECT id_estudiante, CONCAT(IFNULL(SUBSTRING_INDEX(nombres, ' ', 1), ''), ' ', IFNULL(SUBSTRING_INDEX(apellidos, ' ', 1), '')) nombre FROM mat_estudiante WHERE estado = 'AC' ORDER BY 2");
 		return query;
 	}
 	
 	public static Query getCursos(String det) {
 		Query query = em.createNativeQuery(
-				" SELECT id_curso, descripcion FROM mat_curso WHERE nivel = '" + det + "' AND estado = 'AC' ORDER BY descripcion ");
+				"SELECT id_curso, descripcion FROM mat_curso WHERE nivel = '" + det + "' AND estado = 'AC' ORDER BY descripcion");
 		return query;
 	}
 	
@@ -208,7 +222,7 @@ public class DAO {
 				"FROM mat_oferta o \r\n" + 
 				"  	INNER JOIN mat_curso c ON c.id_curso = o.id_curso \r\n" + 
 				"	INNER JOIN catalogo_det k ON k.codigo_det = c.nivel \r\n" + 
-				"WHERE o.id_periodo = '" + periodo + "' AND o.estado = 'AC' ORDER BY k.codigo_det, c.id_curso ");
+				"WHERE o.id_periodo = '" + periodo + "' AND o.estado = 'AC' ORDER BY k.codigo_det, c.id_curso");
 		return query;
 	}
 			
@@ -218,49 +232,49 @@ public class DAO {
 				"FROM cal_asignatura a \r\n" + 
 				"	INNER JOIN cal_reparto r ON r.id_asignatura = a.id_asignatura AND r.estado = 'AC' \r\n" + 
 				"	INNER JOIN mat_oferta o ON o.id_curso = r.id_curso \r\n" + 
-				"WHERE o.id_oferta = '" + oferta + "' AND a.estado = 'AC' ");
+				"WHERE o.id_oferta = '" + oferta + "' AND a.estado = 'AC'");
 		return query;
 	}		
 	
 	public static Query getPeriodosRep() {
 		Query query = em.createNativeQuery(
-				" SELECT id_periodo, descripcion FROM mat_periodo WHERE estado = 'AC' ORDER BY descripcion ");
+				"SELECT id_periodo, descripcion FROM mat_periodo WHERE estado = 'AC' ORDER BY descripcion");
 		return query;
 	}
 	
 	public static Query getPeriodos() {
 		Query query = em.createNativeQuery(
-				" SELECT id_periodo, descripcion FROM mat_periodo WHERE sn_cerrado = 'NO' AND estado = 'AC' ORDER BY descripcion ");
+				"SELECT id_periodo, descripcion FROM mat_periodo WHERE sn_cerrado = 'NO' AND estado = 'AC' ORDER BY descripcion");
 		return query;
 	}
 	
 	public static Query getDescuentos() {
 		Query query = em.createNativeQuery(
-				" SELECT id_descuento, nombre FROM ges_descuento WHERE estado = 'AC' ORDER BY nombre ");
+				"SELECT id_descuento, nombre FROM ges_descuento WHERE estado = 'AC' ORDER BY nombre");
 		return query;
 	}		
 	
 	public static Query getCursos() {
 		Query query = em.createNativeQuery(
-				" SELECT c.id_curso, c.descripcion FROM mat_curso c INNER JOIN catalogo_det k ON k.codigo_det = c.nivel WHERE c.estado = 'AC' ORDER BY k.codigo_det, c.id_curso ");
+				"SELECT c.id_curso, c.descripcion FROM mat_curso c INNER JOIN catalogo_det k ON k.codigo_det = c.nivel WHERE c.estado = 'AC' ORDER BY k.codigo_det, c.id_curso");
 		return query;
 	}
 	
 	public static Query getParalelos() {
 		Query query = em.createNativeQuery(
-				" SELECT id_paralelo, descripcion FROM mat_paralelo WHERE estado = 'AC' ORDER BY descripcion ");
+				"SELECT id_paralelo, descripcion FROM mat_paralelo WHERE estado = 'AC' ORDER BY descripcion");
 		return query;
 	}
 	
 	public static Query getAsignaturas(String det) {
 		Query query = em.createNativeQuery(
-				" SELECT id_asignatura, nombre FROM cal_asignatura WHERE nivel = '" + det + "' AND estado = 'AC' ORDER BY descripcion ");
+				"SELECT id_asignatura, nombre FROM cal_asignatura WHERE nivel = '" + det + "' AND estado = 'AC' ORDER BY descripcion");
 		return query;
 	}
 	
 	public static Query getDetCatalogo(String cab) {
 		Query query = em.createNativeQuery(
-				" SELECT codigo_det, descripcion FROM catalogo_det WHERE codigo_cab = '" + cab + "' AND estado = 'AC' ORDER BY descripcion ");
+				"SELECT codigo_det, descripcion FROM catalogo_det WHERE codigo_cab = '" + cab + "' AND estado = 'AC' ORDER BY descripcion");
 		return query;
 	}	
 	

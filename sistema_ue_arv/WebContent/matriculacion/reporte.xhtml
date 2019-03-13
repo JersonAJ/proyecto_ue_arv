@@ -93,7 +93,7 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 							<p:outputLabel value="#{reporteMat.itApellidos} #{reporteMat.itNombres}" style="width: 250px; font-size: 12px" />
 																						
 							<p:outputPanel style="font-size: 12px">Representante:</p:outputPanel>
-						    <p:outputLabel value="#{reporteMat.soRepresentante}" />			        
+						    <p:outputLabel value="#{reporteMat.soRepresentante}" style="width: 250px; font-size: 12px" />
 					       					
 							<p:outputPanel style="font-size: 12px">Género:</p:outputPanel>
 							<h:selectOneRadio disabled="true" style="font-size: 12px" value="#{reporteMat.sorGenero}">            
@@ -590,6 +590,11 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 							
 							<p:column headerText="[Período] [Oferta] [Paralelo]" groupRow="true">
 						    	<h:outputText value="#{mat.matOferta.descripcion}" />
+						    	<br />
+						    	<h:outputText value="Activas : #{reporteMat.cantMatOferta(reporteMat.soPeriodo,mat.matOferta.idOferta,'AC')}" />
+						    	<br />
+						    	<h:outputText value="Inactivas : #{reporteMat.cantMatOferta(reporteMat.soPeriodo,mat.matOferta.idOferta,'IC')}" />
+						    	
 						    </p:column>
 						    
 						    <p:column headerText="Código" style="text-align: center">
