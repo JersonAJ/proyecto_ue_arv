@@ -357,7 +357,7 @@ public class Pension implements Serializable {
 			try { representante = representante.substring(0, representante.indexOf(' ')); } catch (Exception e) { }
 			String estudiante = pen.getMatMatricula().getMatEstudiante().getApellidos().trim() + " " + pen.getMatMatricula().getMatEstudiante().getNombres().trim();
 			String concepto = (pen.getSecuencia() == 0 ? "Pago de Matrícula" : "Pago de Pensión No. " + String.format("%02d", pen.getSecuencia()));
-			BigDecimal valor = pen.getTotalPagar();
+			BigDecimal valor = pen.getSaldo();
 			
 			General gen = new General();
 			

@@ -563,7 +563,7 @@ xmlns:pe="http://primefaces.org/ui/extensions">
 						<p:spacer width="10px" />
 						
 						<p:commandLink id="btnImp" title="Imprimir notificación" 
-							onclick="printNotificacion('#{general.infoEscuela(1)}','#{pension.olRepresentante}','#{pension.inTotalPagar}','#{pension.olEstudiante}','#{pension.olSecuencia}')">	
+							onclick="printNotificacion('#{general.infoEscuela(1)}','#{pension.olRepresentante}','#{pension.olEstudiante}','#{pension.inSaldo}','#{pension.olSecuencia}')">	
 							<i class="fa fa-print" /> Imprimir							 
 						</p:commandLink>
 						<br /><br />	
@@ -581,7 +581,7 @@ xmlns:pe="http://primefaces.org/ui/extensions">
 											Buen día estimado(a) Sr(a). <p:outputLabel value="#{pension.olRepresentante}" />, reciba un cordial saludo
 											de parte de la Escuela de Educación Básica Particular #{general.infoEscuela(1)} 
 											<br/>
-											El motivo de este mensaje es para recordarle que tiene un valor pendiente <b>($ <p:outputLabel value="#{pension.inTotalPagar}" />)</b> de
+											El motivo de este mensaje es para recordarle que tiene un valor pendiente <b>($ <p:outputLabel value="#{pension.inSaldo}" />)</b> de
 											cancelar por concepto de: 
 											<b>										
 											<p:outputLabel value="#{pension.olSecuencia eq '0'?'Pago de Matrícula':'Pago de Pensión No. '}" />										
