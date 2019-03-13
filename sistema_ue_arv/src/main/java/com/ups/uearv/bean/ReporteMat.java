@@ -211,15 +211,13 @@ public class ReporteMat implements Serializable {
 			"SELECT * FROM mat_matricula \r\n" + 
 			"WHERE id_periodo = " + soPeriodo + " AND sn_aprobado = 'S' AND estado = 'AC' ";
 			List<Object> l_AC = DAO.nqObject(new MatMatricula(), jpql);
-			if (!l_AC.isEmpty()) 				
-				olCantAC = String.valueOf(l_AC.size());
+			olCantAC = String.valueOf(l_AC.size());
 			
 			jpql = 
 			"SELECT * FROM mat_matricula \r\n" + 
 			"WHERE id_periodo = " + soPeriodo + " AND sn_aprobado = 'S' AND estado = 'IC' ";
 			List<Object> l_IC = DAO.nqObject(new MatMatricula(), jpql);
-			if (!l_IC.isEmpty()) 
-				olCantIC = String.valueOf(l_IC.size());		
+			olCantIC = String.valueOf(l_IC.size());		
 		}	
 	}
 
