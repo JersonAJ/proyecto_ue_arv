@@ -456,7 +456,29 @@ public class ReporteMat implements Serializable {
 		itOperado = "______________________________________";
 		itMinusvalia = "_________________________";
 		soGradoMinusvalia = "_______";
-
+		
+		soPaEstadoCivil = "_________________";
+		opPaEstudios = "";	
+		opPaOcupacion = "";
+		soMaEstadoCivil = "_________________";
+		opMaEstudios = "";	
+		opMaOcupacion = "";
+		snHermanos = "";
+		opViveCon = "";
+		opRelacionPadres = "";
+		snClasesPart = "";
+		snEstudiosFuera = "";
+		opRendimiento = "";
+		snCumples = "";
+		opEnfermedad = "";
+		snAlergiaMed = "";
+		snAlergiaIns = "";
+		snAlergiaAli = "";
+		snTratamientoAct = "";
+		snTratamientoAnt = "";
+		snHospital = "";
+		snOperado = "";
+		snMinusvalia = "";
 	}
 
 	public List<SelectItem> llenaComboPeriodo() {
