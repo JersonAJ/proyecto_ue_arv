@@ -5,6 +5,8 @@
  */
 package com.ups.uearv.bean;
 
+import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.sql.Timestamp;
@@ -186,6 +188,16 @@ public class Estudiante {
 	public List<SelectItem> llenaComboEstadoCivil() {
 		return Util.llenaCombo(DAO.getDetCatalogo("EC000"), 2);
 	}
+	
+	private BufferedImage resize(BufferedImage img, int width, int height) {
+		int type = img.getType() == 0 ? BufferedImage.TYPE_INT_ARGB : img.getType();
+		BufferedImage resizedImage = new BufferedImage(width, height, type);
+		Graphics2D g = resizedImage.createGraphics();
+		g.drawImage(img, 0, 0, width, height, null);
+		g.dispose();
+
+		return resizedImage;
+	}  
 		
 	// INGRESO - ACTUALIZACION		
 	public void guardar() throws IOException {
@@ -202,9 +214,11 @@ public class Estudiante {
 				return;
 			}			
 			if (foto.getWidth() > 200 && foto.getHeight() > 250) {
-				mensaje = "Las dimensiones de la imagen no deben ser mayor a 200(ancho) y 250(alto)";
-				FacesContext.getCurrentInstance().addMessage("growl", new FacesMessage(FacesMessage.SEVERITY_ERROR, mensajeTitulo, mensaje));
-				return;
+				foto = resize(foto, 200, 250);								
+				itImagen = "data:image/jpeg;base64," + Util.encodeToString(foto, "jpeg");				
+//				mensaje = "Las dimensiones de la imagen no deben ser mayor a 200(ancho) y 250(alto)";
+//				FacesContext.getCurrentInstance().addMessage("growl", new FacesMessage(FacesMessage.SEVERITY_ERROR, mensajeTitulo, mensaje));
+//				return;
 			}		
 		}
 	

@@ -2,6 +2,7 @@ package com.ups.uearv.servicios;
 
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -202,6 +203,21 @@ public class Util {
         	System.out.println("ERROR: Clase Util; Función decodeToImage(imageString)");
         }
         return image;
+    }
+	
+	public static String encodeToString(BufferedImage image, String type) {
+        String imageString = null;
+        ByteArrayOutputStream bos = new ByteArrayOutputStream(); 
+        try {
+            ImageIO.write(image, type, bos);
+            byte[] imageBytes = bos.toByteArray();             
+            imageString =  Base64.getEncoder().encodeToString(imageBytes); 
+            bos.close();
+        } catch (IOException e) {
+           // e.printStackTrace();
+        	System.out.println("ERROR: Clase Util; Función encodeToString(image,type)");
+        }
+        return imageString;
     }
 
 	public static void main(String[] args) throws IOException, NoSuchAlgorithmException, ParseException {					
