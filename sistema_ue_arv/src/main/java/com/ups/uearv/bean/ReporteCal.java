@@ -40,7 +40,7 @@ public class ReporteCal implements Serializable {
 	private static EntityManager em = emf.createEntityManager();	
 
 	private static final long serialVersionUID = 1L;
-	
+
 	String mensaje = "";
 	String mensajeTitulo = "Mensaje del sistema";
 	String jpql = "";
@@ -67,7 +67,7 @@ public class ReporteCal implements Serializable {
 	String olQuimestre = "";
 	String olGrado = "";
 	String olParalelo = "";
-	
+
 	private List<Object> libretaList = new ArrayList<Object>();
 	String olLibComportamiento = "";
 	String olLibPromedioFinal = "";
@@ -77,7 +77,7 @@ public class ReporteCal implements Serializable {
 	String olLibFaltas = "";
 	String olLibFaltasJustif = "";
 	String olLibProyectos = "";	
-	
+
 	// VARIABLES INFORME FINAL
 	String olInfPeriodo = "";
 	String olInfEstudiante = "";
@@ -89,34 +89,34 @@ public class ReporteCal implements Serializable {
 	String olInfPromedioFinal = "";
 	String olInfEscalaFinal = "";
 	String olCurso = "";
-		
+
 	private List<Object> informeFinalList = new ArrayList<Object>();
-	
+
 	/*Q1*/
 	String olQ1Comportamiento = "";
 	String olQ1PromedioFinal = "";
 	String olQ1EscalaFinal = "";
-	
+
 	String olQ1p1Comportamiento = "";
 	String olQ1p2Comportamiento = "";
 	String olQ1p3Comportamiento = "";
-			
+
 	String olQ1p1Aistencias = "";
 	String olQ1p2Aistencias = "";
 	String olQ1p3Aistencias = "";
-	
+
 	String olQ1p1Atrasos = "";
 	String olQ1p2Atrasos = "";
 	String olQ1p3Atrasos = "";
-	
+
 	String olQ1p1Faltas = "";
 	String olQ1p2Faltas = "";
 	String olQ1p3Faltas = "";
-	
+
 	String olQ1p1FaltasJustif = "";
 	String olQ1p2FaltasJustif = "";
 	String olQ1p3FaltasJustif = "";
-	
+
 	String olQ1p1Proyectos = "";	
 	String olQ1p2Proyectos = "";
 	String olQ1p3Proyectos = "";
@@ -124,27 +124,27 @@ public class ReporteCal implements Serializable {
 	String olQ2Comportamiento = "";
 	String olQ2PromedioFinal = "";
 	String olQ2EscalaFinal = "";
-	
+
 	String olQ2p1Comportamiento = "";
 	String olQ2p2Comportamiento = "";
 	String olQ2p3Comportamiento = "";
-			
+
 	String olQ2p1Aistencias = "";
 	String olQ2p2Aistencias = "";
 	String olQ2p3Aistencias = "";
-	
+
 	String olQ2p1Atrasos = "";
 	String olQ2p2Atrasos = "";
 	String olQ2p3Atrasos = "";
-	
+
 	String olQ2p1Faltas = "";
 	String olQ2p2Faltas = "";
 	String olQ2p3Faltas = "";
-	
+
 	String olQ2p1FaltasJustif = "";
 	String olQ2p2FaltasJustif = "";
 	String olQ2p3FaltasJustif = "";
-	
+
 	String olQ2p1Proyectos = "";	
 	String olQ2p2Proyectos = "";
 	String olQ2p3Proyectos = "";
@@ -165,7 +165,7 @@ public class ReporteCal implements Serializable {
 		llenarListaComportamiento();
 		llenarListaEscala();
 	}
-	
+
 	// VARIABLES GENERALES
 	private List<Object> comportamientoList = new ArrayList<Object>();
 	private List<Object> escalaList = new ArrayList<Object>();
@@ -199,7 +199,7 @@ public class ReporteCal implements Serializable {
 	@SuppressWarnings("unchecked")
 	public void verLibretaCalifinaciones() {
 		limpiarLibreta();
-		
+
 		if (soPeriodoCal.equals("NA")) {
 			mensaje = "Debe seleccionarel período";
 			FacesContext.getCurrentInstance().addMessage("growl", new FacesMessage(FacesMessage.SEVERITY_ERROR, mensajeTitulo, mensaje));
@@ -215,7 +215,7 @@ public class ReporteCal implements Serializable {
 			FacesContext.getCurrentInstance().addMessage("growl", new FacesMessage(FacesMessage.SEVERITY_ERROR, mensajeTitulo, mensaje));
 			return;
 		}
-		
+
 		if (soParcial.equals("1")) { olParcial = "PRIMER PARCIAL"; }
 		if (soParcial.equals("2")) { olParcial = "SEGUNDO PARCIAL"; }
 		if (soParcial.equals("3")) { olParcial = "TERCER PARCIAL"; }					
@@ -240,7 +240,7 @@ public class ReporteCal implements Serializable {
 				e.setPromedio(obj[7] == null ? "" : obj[7].toString());
 				e.setEscala(obj[8] == null ? "" : obj[8].toString());
 				libretaList.add(e);
-				
+
 				olLibPromedioFinal = obj[9] == null ? "" : obj[9].toString();
 				olLibEscalaFinal = obj[10] == null ? "" : obj[10].toString();
 			}
@@ -275,7 +275,7 @@ public class ReporteCal implements Serializable {
 			return;
 		}
 	}
-	
+
 	public void limpiarLibreta() {
 		libretaList.clear();		
 		olEstudiante = "";
@@ -296,7 +296,7 @@ public class ReporteCal implements Serializable {
 	@SuppressWarnings("unchecked")
 	public void verInformeFinal() {	
 		limpiarInformeFinal();
-		
+
 		if (soPeriodoCal.equals("NA")) {
 			mensaje = "Debe seleccionarel período";
 			FacesContext.getCurrentInstance().addMessage("growl", new FacesMessage(FacesMessage.SEVERITY_ERROR, mensajeTitulo, mensaje));
@@ -321,10 +321,10 @@ public class ReporteCal implements Serializable {
 			for (int k = 0; k < result1.size(); k++) {
 				Object[] obj = (Object[]) itr1.next();					
 				InformeFinal e = new InformeFinal();
-				
+
 				e.setIdAsignatura(obj[0] == null ? "" : obj[0].toString());
 				e.setAsignatura(obj[1] == null ? "" : obj[1].toString());
-				
+
 				e.setQ1p1(obj[2] == null ? "" : obj[2].toString());
 				e.setQ1p2(obj[3] == null ? "" : obj[3].toString());
 				e.setQ1p3(obj[4] == null ? "" : obj[4].toString());
@@ -334,7 +334,7 @@ public class ReporteCal implements Serializable {
 				e.setQ120(obj[8] == null ? "" : obj[7].toString());
 				e.setQ1pr(obj[9] == null ? "" : obj[8].toString());
 				e.setQ1Escala(obj[10] == null ? "" : obj[10].toString());
-				
+
 				e.setQ2p1(obj[11] == null ? "" : obj[11].toString());
 				e.setQ2p2(obj[12] == null ? "" : obj[12].toString());
 				e.setQ2p3(obj[13] == null ? "" : obj[13].toString());
@@ -344,91 +344,91 @@ public class ReporteCal implements Serializable {
 				e.setQ220(obj[17] == null ? "" : obj[17].toString());
 				e.setQ2pr(obj[18] == null ? "" : obj[18].toString());
 				e.setQ2Escala(obj[19] == null ? "" : obj[19].toString());
-				
+
 				e.setNotaq1(obj[20] == null ? "" : obj[20].toString());
 				e.setNotaq2(obj[21] == null ? "" : obj[21].toString());
-				
+
 				e.setPromedio(obj[22] == null ? "" : obj[22].toString());
 				e.setEscala(obj[23] == null ? "" : obj[23].toString());
-				
+
 				olQ1PromedioFinal = 	obj[24] == null ? "" : obj[24].toString();
 				olQ1EscalaFinal = 		obj[25] == null ? "" : obj[25].toString();
-				
+
 				olQ2PromedioFinal =		obj[26] == null ? "" : obj[26].toString();
 				olQ2EscalaFinal = 		obj[27] == null ? "" : obj[27].toString();
-								
+
 				olSumaTotal = 			obj[28] == null ? "" : obj[28].toString();
 				olInfPromedioFinal = 	obj[29] == null ? "" : obj[29].toString();
 				olInfEscalaFinal = 		obj[30] == null ? "" : obj[30].toString();
 				olDesAprovechamiento = 	obj[31] == null ? "" : obj[31].toString();
-				
+
 				informeFinalList.add(e);
 			}
-			
-			// CABECERA
-			jpql = "CALL consulta_informe_final_cab (" + soPeriodoCal + "," + soOfertaCal + ",'" + soEstudianteCal + "')";
-			List<Object> result2 = em.createNativeQuery(jpql).getResultList();
-			if (!result2.isEmpty()) {
-				Iterator<Object> itr2 = result2.iterator();
-				Object[] obj = (Object[]) itr2.next();
-				
-				olInfEstudiante = 		obj[0] == null ? "" : obj[0].toString();
-				olCurso = 				obj[1] == null ? "" : obj[1].toString();
-				olInfPeriodo =			obj[2] == null ? "" : obj[2].toString();
-				
-				olQ1p1Aistencias = 		obj[3] == null ? "" : obj[3].toString();
-				olQ1p1Atrasos = 		obj[4] == null ? "" : obj[4].toString();
-				olQ1p1Faltas = 			obj[5] == null ? "" : obj[5].toString();
-				olQ1p1FaltasJustif = 	obj[6] == null ? "" : obj[6].toString();
-				olQ1p1Comportamiento = 	obj[7] == null ? "" : obj[7].toString();
-				olQ1p1Proyectos = 		obj[8] == null ? "" : obj[8].toString();
-				
-				olQ1p2Aistencias = 		obj[9] == null ? "" : obj[9].toString();
-				olQ1p2Atrasos = 		obj[10] == null ? "" : obj[10].toString();
-				olQ1p2Faltas = 			obj[11] == null ? "" : obj[11].toString();
-				olQ1p2FaltasJustif = 	obj[12] == null ? "" : obj[12].toString();
-				olQ1p2Comportamiento = 	obj[13] == null ? "" : obj[13].toString();
-				olQ1p2Proyectos = 		obj[14] == null ? "" : obj[14].toString();
-				
-				olQ1p3Aistencias = 		obj[15] == null ? "" : obj[15].toString();
-				olQ1p3Atrasos = 		obj[16] == null ? "" : obj[16].toString();
-				olQ1p3Faltas = 			obj[17] == null ? "" : obj[17].toString();
-				olQ1p3FaltasJustif = 	obj[18] == null ? "" : obj[18].toString();
-				olQ1p3Comportamiento = 	obj[19] == null ? "" : obj[19].toString();
-				olQ1p3Proyectos = 		obj[20] == null ? "" : obj[20].toString();
-				
-				olQ2p1Aistencias = 		obj[21] == null ? "" : obj[21].toString();
-				olQ2p1Atrasos = 		obj[22] == null ? "" : obj[22].toString();
-				olQ2p1Faltas = 			obj[23] == null ? "" : obj[23].toString();
-				olQ2p1FaltasJustif = 	obj[24] == null ? "" : obj[24].toString();
-				olQ2p1Comportamiento = 	obj[25] == null ? "" : obj[25].toString();
-				olQ2p1Proyectos = 		obj[26] == null ? "" : obj[26].toString();
-				
-				olQ2p2Aistencias = 		obj[27] == null ? "" : obj[27].toString();
-				olQ2p2Atrasos = 		obj[28] == null ? "" : obj[28].toString();
-				olQ2p2Faltas = 			obj[29] == null ? "" : obj[29].toString();
-				olQ2p2FaltasJustif = 	obj[30] == null ? "" : obj[30].toString();
-				olQ2p2Comportamiento = 	obj[31] == null ? "" : obj[31].toString();
-				olQ2p2Proyectos = 		obj[32] == null ? "" : obj[32].toString();
-				
-				olQ2p3Aistencias = 		obj[33] == null ? "" : obj[33].toString();
-				olQ2p3Atrasos = 		obj[34] == null ? "" : obj[34].toString();
-				olQ2p3Faltas = 			obj[35] == null ? "" : obj[35].toString();
-				olQ2p3FaltasJustif = 	obj[36] == null ? "" : obj[36].toString();
-				olQ2p3Comportamiento = 	obj[37] == null ? "" : obj[37].toString();
-				olQ2p3Proyectos = 		obj[38] == null ? "" : obj[38].toString();
-				
-				olQ1Comportamiento = 	obj[39] == null ? "" : obj[39].toString();
-				olQ2Comportamiento = 	obj[40] == null ? "" : obj[40].toString();
-				
-				olInfComportamiento = 	obj[41] == null ? "" : obj[41].toString();
-				olDesComportamiento = 	obj[42] == null ? "" : obj[42].toString();
-				
-				olFotoEst = 			obj[43] == null ? "" : obj[43].toString();
-			} 
+		}
+		
+		// CABECERA
+		jpql = "CALL consulta_informe_final_cab (" + soPeriodoCal + "," + soOfertaCal + ",'" + soEstudianteCal + "')";
+		List<Object> result2 = em.createNativeQuery(jpql).getResultList();
+		if (!result2.isEmpty()) {
+			Iterator<Object> itr2 = result2.iterator();
+			Object[] obj = (Object[]) itr2.next();
+
+			olInfEstudiante = 		obj[0] == null ? "" : obj[0].toString();
+			olCurso = 				obj[1] == null ? "" : obj[1].toString();
+			olInfPeriodo =			obj[2] == null ? "" : obj[2].toString();
+
+			olQ1p1Aistencias = 		obj[3] == null ? "" : obj[3].toString();
+			olQ1p1Atrasos = 		obj[4] == null ? "" : obj[4].toString();
+			olQ1p1Faltas = 			obj[5] == null ? "" : obj[5].toString();
+			olQ1p1FaltasJustif = 	obj[6] == null ? "" : obj[6].toString();
+			olQ1p1Comportamiento = 	obj[7] == null ? "" : obj[7].toString();
+			olQ1p1Proyectos = 		obj[8] == null ? "" : obj[8].toString();
+
+			olQ1p2Aistencias = 		obj[9] == null ? "" : obj[9].toString();
+			olQ1p2Atrasos = 		obj[10] == null ? "" : obj[10].toString();
+			olQ1p2Faltas = 			obj[11] == null ? "" : obj[11].toString();
+			olQ1p2FaltasJustif = 	obj[12] == null ? "" : obj[12].toString();
+			olQ1p2Comportamiento = 	obj[13] == null ? "" : obj[13].toString();
+			olQ1p2Proyectos = 		obj[14] == null ? "" : obj[14].toString();
+
+			olQ1p3Aistencias = 		obj[15] == null ? "" : obj[15].toString();
+			olQ1p3Atrasos = 		obj[16] == null ? "" : obj[16].toString();
+			olQ1p3Faltas = 			obj[17] == null ? "" : obj[17].toString();
+			olQ1p3FaltasJustif = 	obj[18] == null ? "" : obj[18].toString();
+			olQ1p3Comportamiento = 	obj[19] == null ? "" : obj[19].toString();
+			olQ1p3Proyectos = 		obj[20] == null ? "" : obj[20].toString();
+
+			olQ2p1Aistencias = 		obj[21] == null ? "" : obj[21].toString();
+			olQ2p1Atrasos = 		obj[22] == null ? "" : obj[22].toString();
+			olQ2p1Faltas = 			obj[23] == null ? "" : obj[23].toString();
+			olQ2p1FaltasJustif = 	obj[24] == null ? "" : obj[24].toString();
+			olQ2p1Comportamiento = 	obj[25] == null ? "" : obj[25].toString();
+			olQ2p1Proyectos = 		obj[26] == null ? "" : obj[26].toString();
+
+			olQ2p2Aistencias = 		obj[27] == null ? "" : obj[27].toString();
+			olQ2p2Atrasos = 		obj[28] == null ? "" : obj[28].toString();
+			olQ2p2Faltas = 			obj[29] == null ? "" : obj[29].toString();
+			olQ2p2FaltasJustif = 	obj[30] == null ? "" : obj[30].toString();
+			olQ2p2Comportamiento = 	obj[31] == null ? "" : obj[31].toString();
+			olQ2p2Proyectos = 		obj[32] == null ? "" : obj[32].toString();
+
+			olQ2p3Aistencias = 		obj[33] == null ? "" : obj[33].toString();
+			olQ2p3Atrasos = 		obj[34] == null ? "" : obj[34].toString();
+			olQ2p3Faltas = 			obj[35] == null ? "" : obj[35].toString();
+			olQ2p3FaltasJustif = 	obj[36] == null ? "" : obj[36].toString();
+			olQ2p3Comportamiento = 	obj[37] == null ? "" : obj[37].toString();
+			olQ2p3Proyectos = 		obj[38] == null ? "" : obj[38].toString();
+
+			olQ1Comportamiento = 	obj[39] == null ? "" : obj[39].toString();
+			olQ2Comportamiento = 	obj[40] == null ? "" : obj[40].toString();
+
+			olInfComportamiento = 	obj[41] == null ? "" : obj[41].toString();
+			olDesComportamiento = 	obj[42] == null ? "" : obj[42].toString();
+
+			olFotoEst = 			obj[43] == null ? "" : obj[43].toString();
 		} 
 	}
-	
+
 	public void limpiarInformeFinal() {		
 		informeFinalList.clear();		
 		olInfPeriodo = "";
@@ -441,67 +441,67 @@ public class ReporteCal implements Serializable {
 		olInfPromedioFinal = "";
 		olInfEscalaFinal = "";
 		olCurso = "";	
-		
+
 		/*Q1*/
 		olQ1Comportamiento = "";
 		olQ1PromedioFinal = "";
 		olQ1EscalaFinal = "";
-		
+
 		olQ1p1Comportamiento = "";
 		olQ1p2Comportamiento = "";
 		olQ1p3Comportamiento = "";
-				
+
 		olQ1p1Aistencias = "";
 		olQ1p2Aistencias = "";
 		olQ1p3Aistencias = "";
-		
+
 		olQ1p1Atrasos = "";
 		olQ1p2Atrasos = "";
 		olQ1p3Atrasos = "";
-		
+
 		olQ1p1Faltas = "";
 		olQ1p2Faltas = "";
 		olQ1p3Faltas = "";
-		
+
 		olQ1p1FaltasJustif = "";
 		olQ1p2FaltasJustif = "";
 		olQ1p3FaltasJustif = "";
-		
+
 		olQ1p1Proyectos = "";	
 		olQ1p2Proyectos = "";
 		olQ1p3Proyectos = "";
-		
+
 		/*Q2*/
 		olQ2Comportamiento = "";
 		olQ2PromedioFinal = "";
 		olQ2EscalaFinal = "";
-		
+
 		olQ2p1Comportamiento = "";
 		olQ2p2Comportamiento = "";
 		olQ2p3Comportamiento = "";
-				
+
 		olQ2p1Aistencias = "";
 		olQ2p2Aistencias = "";
 		olQ2p3Aistencias = "";
-		
+
 		olQ2p1Atrasos = "";
 		olQ2p2Atrasos = "";
 		olQ2p3Atrasos = "";
-		
+
 		olQ2p1Faltas = "";
 		olQ2p2Faltas = "";
 		olQ2p3Faltas = "";
-		
+
 		olQ2p1FaltasJustif = "";
 		olQ2p2FaltasJustif = "";
 		olQ2p3FaltasJustif = "";
-		
+
 		olQ2p1Proyectos = "";	
 		olQ2p2Proyectos = "";
 		olQ2p3Proyectos = "";
 
 	}
-	
+
 	public List<SelectItem> llenaComboPeriodo() {
 		return Util.llenaCombo(DAO.getPeriodosRep(), 2);
 	}
@@ -521,12 +521,12 @@ public class ReporteCal implements Serializable {
 	public Query getEstudiantesOferta() {		
 		String jpql = 
 				"SELECT e.id_estudiante, CONCAT(IFNULL(e.apellidos, ''), ' ', IFNULL(e.nombres, '')) nombre \r\n" + 
-				"FROM mat_estudiante e \r\n" + 
-				"	INNER JOIN mat_matricula m ON m.id_estudiante = e.id_estudiante \r\n" + 
-				"WHERE m.id_periodo = '" + soPeriodoCal + "' \r\n"+
-				"AND m.id_oferta = '" + soOfertaCal + "' \r\n"+
-				"AND m.estado = 'AC' AND e.estado = 'AC' AND m.sn_aprobado = 'S' \r\n" + 
-				"ORDER BY 2";
+						"FROM mat_estudiante e \r\n" + 
+						"	INNER JOIN mat_matricula m ON m.id_estudiante = e.id_estudiante \r\n" + 
+						"WHERE m.id_periodo = '" + soPeriodoCal + "' \r\n"+
+						"AND m.id_oferta = '" + soOfertaCal + "' \r\n"+
+						"AND m.estado = 'AC' AND e.estado = 'AC' AND m.sn_aprobado = 'S' \r\n" + 
+						"ORDER BY 2";
 
 		Query query = em.createNativeQuery(jpql);
 		return query;
@@ -627,7 +627,7 @@ public class ReporteCal implements Serializable {
 
 		public String idAsignatura;
 		public String asignatura;
-		
+
 		public String q1p1;
 		public String q1p2;
 		public String q1p3;
@@ -637,7 +637,7 @@ public class ReporteCal implements Serializable {
 		public String q120;
 		public String q1pr;
 		public String q1Escala;
-		
+
 		public String q2p1;
 		public String q2p2;
 		public String q2p3;
@@ -647,13 +647,13 @@ public class ReporteCal implements Serializable {
 		public String q220;
 		public String q2pr;
 		public String q2Escala;
-		
+
 		public String notaq1;
 		public String notaq2;
-		
+
 		public String promedio;
 		public String escala;
-		
+
 		public String getIdAsignatura() {
 			return idAsignatura;
 		}
@@ -799,7 +799,7 @@ public class ReporteCal implements Serializable {
 			this.escala = escala;
 		}	
 	}
-	
+
 	// GETTERS AND SETTERS
 	public String getSoPeriodoCal() {
 		return soPeriodoCal;
