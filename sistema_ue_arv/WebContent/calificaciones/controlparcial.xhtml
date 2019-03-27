@@ -75,17 +75,13 @@ xmlns:pe="http://primefaces.org/ui/extensions">
 			  			   			  
 			    <pe:sheetcolumn headerText="Estudiante" readonly="true" value="#{row.nomEstudiante}" sortBy="#{row.nomEstudiante}" />
 			    	
-			    <pe:sheetcolumn headerText="AS" value="#{row.asistencias}" colWidth="30"
-			    	styleClass="htRight #{row.asistencias gt 0 ? 'positive' : 'negative'}" colType="numeric" numericPattern="0" />
+			    <pe:sheetcolumn headerText="AS" value="#{row.asistencias}" colWidth="30" styleClass="htRight" colType="numeric" numericPattern="0"  />
 			    
-			    <pe:sheetcolumn headerText="AT" value="#{row.atrasos}" colWidth="30"
-			    	styleClass="htRight #{row.atrasos gt 0 ? 'positive' : 'negative'}" colType="numeric" numericPattern="0" />
+			    <pe:sheetcolumn headerText="AT" value="#{row.atrasos}" colWidth="30" styleClass="htRight" colType="numeric" numericPattern="0" />
 			     
-			    <pe:sheetcolumn headerText="FT" value="#{row.faltas}" colWidth="30" 
-			   		styleClass="htRight #{row.faltas gt 0 ? 'positive' : 'negative'}" colType="numeric" numericPattern="0" />
+			    <pe:sheetcolumn headerText="FT" value="#{row.faltas}" colWidth="30" styleClass="htRight" colType="numeric" numericPattern="0" />
 			     
-			    <pe:sheetcolumn headerText="FJ" value="#{row.justificados}" colWidth="30" 
-					styleClass="htRight #{row.justificados gt 0 ? 'positive' : 'negative'}" colType="numeric" numericPattern="0" />
+			    <pe:sheetcolumn headerText="FJ" value="#{row.justificados}" colWidth="30" styleClass="htRight" colType="numeric" numericPattern="0" />
 					
 				<pe:sheetcolumn headerText="Comportamiento" value="#{row.nomComportamiento}" colType="dropdown" colWidth="450"
 					selectItems="#{asistencia.llenaComboComportamiento()}" sortBy="#{row.nomComportamiento}" />	    			    
@@ -102,7 +98,7 @@ xmlns:pe="http://primefaces.org/ui/extensions">
 			        </span>			        
 			    </f:facet>  
 			</pe:sheet>
-			<br/>
+			<br/>		
 									
 	   	</h:form>
 	</ui:define>		

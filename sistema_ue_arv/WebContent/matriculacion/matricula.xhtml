@@ -219,11 +219,11 @@ xmlns:pe="http://primefaces.org/ui/extensions">
 			  
 			    <p:ajax event="change" listener="#{matricula.cellChangeEvent}" />  
 			  			   			  
-			    <pe:sheetcolumn headerText="Matrícula" readonly="true" value="#{row.codMatricula}" colWidth="55" styleClass="htCenter" sortBy="#{row.codMatricula}" />   
+			    <pe:sheetcolumn headerText="Matrícula" readOnly="true" value="#{row.codMatricula}" colWidth="55" styleClass="htCenter" sortBy="#{row.codMatricula}" />   
 			    				
-			    <pe:sheetcolumn headerText="Cédula" readonly="true" value="#{row.codEstudiante}" colWidth="60" styleClass="htCenter" />			    
+			    <pe:sheetcolumn headerText="Cédula" readOnly="true" value="#{row.codEstudiante}" colWidth="60" styleClass="htCenter" />			    
 			    				
-			   	<pe:sheetcolumn headerText="Estudiante" readonly="true" value="#{row.nomEstudiante}" sortBy="#{row.nomEstudiante}" />
+			   	<pe:sheetcolumn headerText="Estudiante" readOnly="true" value="#{row.nomEstudiante}" sortBy="#{row.nomEstudiante}" />
 			    
 			    <pe:sheetcolumn headerText="Oferta" value="#{row.nomOferta}" colWidth="200" colType="dropdown" selectItems="#{matricula.llenaComboOfertas()}" sortBy="#{row.nomOferta}" />
 			       

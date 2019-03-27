@@ -252,7 +252,7 @@ xmlns:pe="http://primefaces.org/ui/extensions">
 				        </div>
 				    </f:facet>
 				  			   			  
-				    <pe:sheetcolumn headerText="Estudiante" readonly="true" value="#{row.nomEstudiante}" sortBy="#{row.nomEstudiante}" />
+				    <pe:sheetcolumn headerText="Estudiante" readOnly="true" value="#{row.nomEstudiante}" sortBy="#{row.nomEstudiante}" />
 				    	
 				    <pe:sheetcolumn headerText="T1" value="#{row.tarea1}" colWidth="40"
 				   		styleClass="htRight #{row.tarea1 gt 0 ? 'positive' : 'negative'}" colType="numeric" numericPattern="0.00" />
@@ -328,7 +328,7 @@ xmlns:pe="http://primefaces.org/ui/extensions">
 				        </div>
 				    </f:facet>  
 				  			   			  
-				    <pe:sheetcolumn headerText="Estudiante" readonly="true" value="#{row.nomEstudiante}" sortBy="#{row.nomEstudiante}" />
+				    <pe:sheetcolumn headerText="Estudiante" readOnly="true" value="#{row.nomEstudiante}" sortBy="#{row.nomEstudiante}" />
 				    	
 				    <pe:sheetcolumn id="Examen" headerText="Examen" value="#{row.examen}" colWidth="40"
 				    	styleClass="info htRight #{row.examen gt 0 ? 'positive' : 'negative'}" colType="numeric" numericPattern="0.00" />
@@ -339,6 +339,11 @@ xmlns:pe="http://primefaces.org/ui/extensions">
 				</pe:sheet>    
 			</p:outputPanel>
 			<br/>
+			
+			<style type="text/css">  
+				.positive {color : Blue}  
+				.negative {color : Red}			  
+			</style>  
 									
 	   	</h:form>
 	</ui:define>		
