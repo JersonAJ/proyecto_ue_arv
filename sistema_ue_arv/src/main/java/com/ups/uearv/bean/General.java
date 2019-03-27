@@ -20,7 +20,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
-import org.primefaces.context.RequestContext;
+import org.primefaces.PrimeFaces;
 
 import com.ups.uearv.entidades.CatalogoDet;
 import com.ups.uearv.entidades.InfoEscuela;
@@ -60,13 +60,11 @@ public class General implements Serializable {
 	// MOSTRAR CAMBIO DE CLAVE
 	String displayMensajeClave = "none";
 
-	@SuppressWarnings("deprecation")
 	public void mostrarCambioClave() {		
 		if (Session.getUserName() != null) {
 			SegUsuario ob = (SegUsuario) DAO.buscarObject(new SegUsuario(), "from SegUsuario c where c.idUsuario = '" + Session.getUserName() + "'");
 			if (ob.getSnNuevo().equals("S")) {
-				RequestContext context = RequestContext.getCurrentInstance();
-				context.execute("PF('dglClave').show();");
+				PrimeFaces.current().executeScript("PF('dglClave').show();");
 				displayMensajeClave ="";	
 			}		
 		}
