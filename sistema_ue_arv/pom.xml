@@ -4,7 +4,7 @@
 
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.ups.uearv</groupId>
-	<artifactId>sistema_ue_arv</artifactId>
+	<artifactId>sismacc</artifactId>
 	<packaging>war</packaging>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>sistema_ue_arv Maven Webapp</name>

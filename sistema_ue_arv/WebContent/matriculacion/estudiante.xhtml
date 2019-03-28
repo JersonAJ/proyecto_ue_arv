@@ -143,7 +143,7 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
                 paginator="true" rows="5" rowsPerPageTemplate="5,10" paginatorPosition="top" emptyMessage="No existen datos a mostrar" 
                 selectionMode="single" rowKey="#{dtestudiante.idEstudiante}">
 			 	
-			 	<p:column headerText="Foto" width="50">
+			 	<p:column headerText="Foto" width="50" exportable="false">
 					<div align="center">
 						<div class="circle-lista" align="center">
 							<img width="50px" height="50px" src="#{dtestudiante.foto eq null? '/sistema_ue_arv/fotos/FOTO_DEFAULT.png' : dtestudiante.foto}" />

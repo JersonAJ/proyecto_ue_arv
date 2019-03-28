@@ -85,7 +85,7 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 					        </p:outputPanel>  
 						</div>									
 																
-						<p:dataTable var="cab" value="#{reporteGes.estadoCuentaList}" widgetVar="cabTable"
+						<p:dataTable id="dt" var="cab" value="#{reporteGes.estadoCuentaList}" widgetVar="cabTable"
 							tableStyle="width: auto; min-width: 100%; font-size: 12px" emptyMessage="No existen datos a mostrar">
 							
 							<p:columnGroup type="header">
@@ -137,9 +137,8 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 					                </p:row>
 					            </p:columnGroup>
 					        </p:subTable>
-					    </p:dataTable>
-						
-					</p:outputPanel>		           
+					    </p:dataTable>						
+					</p:outputPanel>	           
 		       </p:tab>
 		       
 		       <p:tab title="Gráfica">
