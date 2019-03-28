@@ -62,7 +62,7 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 			    </p:column>
 			    
 			    <p:column headerText="Editar" width="20" exportable="false">
-			    	<p:outputPanel style="text-align: center">
+			    	<p:outputPanel style="text-align: center; display: #{dtPerfil.idPerfil eq 1? 'none':''}">
 						<p:commandLink update=":form:pnl" oncomplete="PF('dgl').show()">	
 							<i class="fa fa-pencil" />
 													
@@ -76,7 +76,7 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 			    </p:column>
 			    
 			     <p:column headerText="Permisos(Menú)" width="20">
-			    	<p:outputPanel style="text-align: center">
+			    	<p:outputPanel style="text-align: center; display: #{dtPerfil.idPerfil eq 1? 'none':''}">
 						<p:commandLink update=":form:dglMenu" oncomplete="PF('dglMenu').show()">	
 							<i class="fa fa-bars" />
 													
