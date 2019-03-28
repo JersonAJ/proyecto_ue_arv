@@ -81,7 +81,7 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 			    </p:column>
 			    
 			    <p:column headerText="Editar" width="20" exportable="false">
-			    	<p:outputPanel style="text-align: center">
+			    	<p:outputPanel style="text-align: center; display: #{dtUsuario.idUsuario eq 'admin'? 'none':''}">
 						<p:commandLink update=":form:pnl :form:pnlMsj" oncomplete="PF('dgl').show()">	
 							<i class="fa fa-pencil" />
 													
@@ -101,7 +101,7 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 			    </p:column>			
 			    
 			    <p:column headerText="Resetear Clave" width="100" exportable="false">
-			    	<p:outputPanel style="text-align: center">
+			    	<p:outputPanel style="text-align: center; display: #{dtUsuario.idUsuario eq 'admin'? 'none':''}">
 						<p:commandLink actionListener="#{usuario.resetearClave(dtUsuario.idUsuario)}" update="form">	
 							<i class="fa fa-refresh" />							
 							<p:confirm header="Confirmación" message="¿Está seguro(a) que desea resetear la clave de '#{dtUsuario.idUsuario}' a '#{usuario.nuevaClave()}'?" 
