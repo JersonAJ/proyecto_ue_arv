@@ -145,9 +145,6 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 					<p:outputPanel style="text-align: end; padding: 5px">Apellidos:</p:outputPanel>
 					<p:inputText value="#{usuario.itApellidos}" style="width: 90%" />
 									
-<!-- 					<p:outputPanel style="text-align: end; padding: 5px">Intentos:</p:outputPanel> -->
-<!-- 					<p:inputNumber decimalPlaces="0" value="#{usuario.inIntentos}" inputStyle="width: 30px"/> -->
-					
 					<p:outputPanel style="text-align: end; padding: 5px">Bloqueado:</p:outputPanel>
 					<h:selectBooleanCheckbox value="#{usuario.ckBloqueado}" />
 					
@@ -163,7 +160,10 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 						</h:panelGroup>
 					</f:facet>						
 				</h:panelGrid>
-			</p:dialog>			
+			</p:dialog>
+			
+			<!-- 					<p:outputPanel style="text-align: end; padding: 5px">Intentos:</p:outputPanel> -->
+<!-- 					<p:inputNumber decimalPlaces="0" value="#{usuario.inIntentos}" inputStyle="width: 30px"/> -->	
 									
 	   	</h:form>    	    
 	</ui:define>		
