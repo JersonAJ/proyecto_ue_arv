@@ -266,7 +266,7 @@ public class ReporteMat implements Serializable {
 			itEdad = String.valueOf(calculateAge(cFechaNac, new Date())); } catch (Exception ex) {}
 			try { ckDiscapacidad = (e.getSnDiscapacidad().equals("S") ? true : false); } catch (Exception ex) {}
 			try { itObservacion = e.getObservacion(); } catch (Exception ex) {}
-			try { itImagen = (e.getFoto() == null ? "/sistema_ue_arv/fotos/FOTO_DEFAULT.png" : e.getFoto()); } catch (Exception ex) {}
+			try { itImagen = (e.getFoto() == null ? "/sismacc/fotos/FOTO_DEFAULT.png" : e.getFoto()); } catch (Exception ex) {}
 
 			try { itProvincia = e.getProvincia(); } catch (Exception ex) {}
 			try { itCanton = e.getCanton(); } catch (Exception ex) {}
@@ -404,7 +404,7 @@ public class ReporteMat implements Serializable {
 		itNombres = "___________________";
 		itApellidos = "___________________";
 		soRepresentante = "_______________________________________";
-		itImagen = "/sistema_ue_arv/fotos/FOTO_DEFAULT.png";
+		itImagen = "/sismacc/fotos/FOTO_DEFAULT.png";
 		soTipoSangre = "__________";
 
 		itLugarNac = "_________________";

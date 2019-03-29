@@ -201,7 +201,7 @@ public class Estudiante {
 	// INGRESO - ACTUALIZACION		
 	public void guardar() throws IOException {
 		// VALICADIONES FOTO
-		if (!itImagen.equals("/sistema_ue_arv/fotos/FOTO_DEFAULT.png")) {
+		if (!itImagen.equals("/sismacc/fotos/FOTO_DEFAULT.png")) {
 			String base64 = itImagen;
 			base64 = base64.replace("data:image/jpeg;base64,", "");
 			base64 = base64.replace("data:image/jpg;base64,", "");

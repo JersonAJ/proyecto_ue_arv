@@ -81,7 +81,7 @@ public class ReporteCal implements Serializable {
 	// VARIABLES INFORME FINAL
 	String olInfPeriodo = "";
 	String olInfEstudiante = "";
-	String olFotoEst = "/sistema_ue_arv/fotos/FOTO_DEFAULT.png";
+	String olFotoEst = "/sismacc/fotos/FOTO_DEFAULT.png";
 	String olDesAprovechamiento = "";
 	String olDesComportamiento = "";
 	String olInfComportamiento = "";
@@ -433,7 +433,7 @@ public class ReporteCal implements Serializable {
 		informeFinalList.clear();		
 		olInfPeriodo = "";
 		olInfEstudiante = "";		
-		olFotoEst = "/sistema_ue_arv/fotos/FOTO_DEFAULT.png";
+		olFotoEst = "/sismacc/fotos/FOTO_DEFAULT.png";
 		olDesAprovechamiento = "";
 		olDesComportamiento = "";
 		olInfComportamiento = "";

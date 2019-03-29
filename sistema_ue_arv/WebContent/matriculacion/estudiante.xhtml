@@ -146,7 +146,7 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 			 	<p:column headerText="Foto" width="50" exportable="false">
 					<div align="center">
 						<div class="circle-lista" align="center">
-							<img width="50px" height="50px" src="#{dtestudiante.foto eq null? '/sistema_ue_arv/fotos/FOTO_DEFAULT.png' : dtestudiante.foto}" />
+							<img width="50px" height="50px" src="#{dtestudiante.foto eq null? '/sismacc/fotos/FOTO_DEFAULT.png' : dtestudiante.foto}" />
 						</div>
 					</div>
 				</p:column>
@@ -203,7 +203,7 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 							<f:setPropertyActionListener value="#{general.getSINO(dtestudiante.snDiscapacidad)}" target="#{estudiante.ckDiscapacidad}" />
 							<f:setPropertyActionListener value="#{general.getEstado(dtestudiante.estado)}" target="#{estudiante.ckEstado}" />
 							<f:setPropertyActionListener value="#{dtestudiante.observacion}" target="#{estudiante.itObservacion}" />							
-							<f:setPropertyActionListener value="#{dtestudiante.foto eq null? '/sistema_ue_arv/fotos/FOTO_DEFAULT.png' : dtestudiante.foto}" target="#{estudiante.itImagen}" />
+							<f:setPropertyActionListener value="#{dtestudiante.foto eq null? '/sismacc/fotos/FOTO_DEFAULT.png' : dtestudiante.foto}" target="#{estudiante.itImagen}" />
 																			
 							<f:setPropertyActionListener value="#{dtestudiante.provincia}" target="#{estudiante.itProvincia}" />
 							<f:setPropertyActionListener value="#{dtestudiante.canton}" target="#{estudiante.itCanton}" />
