@@ -116,8 +116,12 @@ public class Matricula implements Serializable {
 			EntityManager em = emf.createEntityManager();
 			em.getTransaction().begin();
 			try {
-				MatOferta oferta = (MatOferta) DAO.buscarObject(new MatOferta(), "from MatOferta c where c.descripcion = '" + ((MatriculaEst) asset).getNomOferta() + "'");
-				MatMatricula mat = (MatMatricula) DAO.buscarObject(new MatMatricula(), "from MatMatricula c where c.idMatricula = '" + ((MatriculaEst) asset).getCodMatricula() + "'");
+				MatOferta oferta = (MatOferta) DAO.buscarObject(new MatOferta(),
+						"from MatOferta c where c.descripcion = '" + ((MatriculaEst) asset).getNomOferta()
+								+ "' and c.matPeriodo.idPeriodo = '" + soPeriodo + "'");
+				
+				MatMatricula mat = (MatMatricula) DAO.buscarObject(new MatMatricula(),
+						"from MatMatricula c where c.idMatricula = '" + ((MatriculaEst) asset).getCodMatricula() + "'");
 								
 				mat.setSnAprobado(((MatriculaEst) asset).isSnAprobada() ? "S" : "N");
 				mat.setMatOferta(oferta);
